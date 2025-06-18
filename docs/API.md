@@ -573,7 +573,7 @@ All responses are formatted for readability and include:
 
 > **📊 For comprehensive API coverage analysis, see [API-COVERAGE-ANALYSIS.md](API-COVERAGE-ANALYSIS.md)**
 > 
-> **Current Status (v1.1.2)**:
+> **Current Status (v1.1.3)**:
 > - **29 MCP Tools** available
 > - **60+ CloudStack API methods** implemented  
 > - **~35-40% CloudStack API coverage**

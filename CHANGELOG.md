@@ -5,6 +5,20 @@ All notable changes to the CloudStack MCP Server project will be documented in t
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.3] - 2025-06-18
+
+### Changed
+- **License Change**: Changed from MIT to Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+- **License Restrictions**: Now prohibits commercial use while allowing personal, educational, and non-profit usage
+- **Documentation Cleanup**: Removed internal versioning information from public README
+- **Vibe Coding Disclaimer**: Added warning about AI-assisted development and production deployment considerations
+
+### Documentation
+- Updated LICENSE file with CC BY-NC-SA 4.0 terms
+- Updated package.json license field
+- Updated README.md license badge and section
+- Added important notice about vibe coding methodology
+
 ## [1.1.2] - 2025-06-18
 
 ### Added

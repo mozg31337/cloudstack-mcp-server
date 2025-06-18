@@ -1,6 +1,6 @@
 # CloudStack MCP Server
 
-[![Version](https://img.shields.io/badge/version-1.1.2-blue.svg)](https://github.com/mozg31337/cloudstack-mcp-server)
+[![Version](https://img.shields.io/badge/version-1.1.3-blue.svg)](https://github.com/mozg31337/cloudstack-mcp-server)
 [![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
 
