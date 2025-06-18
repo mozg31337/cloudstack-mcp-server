@@ -1,6 +1,6 @@
 # CloudStack MCP Server
 
-[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/mozg31337/cloudstack-mcp-server)
+[![Version](https://img.shields.io/badge/version-1.1.1-blue.svg)](https://github.com/mozg31337/cloudstack-mcp-server)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
 
@@ -103,9 +103,10 @@ This project follows [Semantic Versioning](https://semver.org/) (X.Y.Z):
 - **Y (Minor)**: Major functions and milestones, significant new feature sets  
 - **Z (Patch)**: Bug fixes, performance improvements, individual tool additions
 
-**Current Version**: 1.1.0
+**Current Version**: 1.1.1
 
 ### Version History
+- **v1.1.1**: Improved build process and version management enhancements
 - **v1.1.0**: Complete VM, Volume, and Network management capabilities
 - **v1.0.0**: Initial release with basic CloudStack integration
 
