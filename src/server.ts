@@ -209,6 +209,404 @@ class CloudStackMCPServer {
             type: 'object',
             properties: {}
           }
+        },
+        {
+          name: 'deploy_virtual_machine',
+          description: 'Deploy a new virtual machine in CloudStack',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              serviceofferingid: {
+                type: 'string',
+                description: 'Service offering ID for the VM'
+              },
+              templateid: {
+                type: 'string',
+                description: 'Template ID to deploy from'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID where to deploy the VM'
+              },
+              name: {
+                type: 'string',
+                description: 'Name for the new VM'
+              },
+              displayname: {
+                type: 'string',
+                description: 'Display name for the new VM'
+              },
+              networkids: {
+                type: 'string',
+                description: 'Network IDs (comma-separated) to attach to VM'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name (optional)'
+              },
+              group: {
+                type: 'string',
+                description: 'Group name for the VM (optional)'
+              }
+            },
+            required: ['serviceofferingid', 'templateid', 'zoneid']
+          }
+        },
+        {
+          name: 'start_virtual_machine',
+          description: 'Start a stopped virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Virtual machine ID to start'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'stop_virtual_machine',
+          description: 'Stop a running virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Virtual machine ID to stop'
+              },
+              forced: {
+                type: 'boolean',
+                description: 'Force stop the VM (default: false)'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'reboot_virtual_machine',
+          description: 'Reboot a virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Virtual machine ID to reboot'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'destroy_virtual_machine',
+          description: 'Destroy (delete) a virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Virtual machine ID to destroy'
+              },
+              expunge: {
+                type: 'boolean',
+                description: 'Immediately expunge the VM (default: false)'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'update_virtual_machine',
+          description: 'Update virtual machine properties',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Virtual machine ID to update'
+              },
+              displayname: {
+                type: 'string',
+                description: 'New display name'
+              },
+              group: {
+                type: 'string',
+                description: 'New group name'
+              },
+              haenable: {
+                type: 'boolean',
+                description: 'Enable/disable high availability'
+              },
+              ostypeid: {
+                type: 'string',
+                description: 'New OS type ID'
+              },
+              userdata: {
+                type: 'string',
+                description: 'User data for the VM'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'change_service_offering',
+          description: 'Change the service offering of a virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              },
+              serviceofferingid: {
+                type: 'string',
+                description: 'New service offering ID'
+              }
+            },
+            required: ['id', 'serviceofferingid']
+          }
+        },
+        {
+          name: 'create_volume',
+          description: 'Create a new data volume',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'Name for the new volume'
+              },
+              diskofferingid: {
+                type: 'string',
+                description: 'Disk offering ID for the volume'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID where to create the volume'
+              },
+              size: {
+                type: 'number',
+                description: 'Size in GB (for custom disk offerings)'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name (optional)'
+              }
+            },
+            required: ['name', 'diskofferingid', 'zoneid']
+          }
+        },
+        {
+          name: 'attach_volume',
+          description: 'Attach a volume to a virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Volume ID to attach'
+              },
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID to attach to'
+              },
+              deviceid: {
+                type: 'number',
+                description: 'Device ID (optional)'
+              }
+            },
+            required: ['id', 'virtualmachineid']
+          }
+        },
+        {
+          name: 'detach_volume',
+          description: 'Detach a volume from a virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Volume ID to detach'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'delete_volume',
+          description: 'Delete a volume',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Volume ID to delete'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'resize_volume',
+          description: 'Resize a volume',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Volume ID to resize'
+              },
+              size: {
+                type: 'number',
+                description: 'New size in GB'
+              },
+              shrinkok: {
+                type: 'boolean',
+                description: 'Allow shrinking the volume (default: false)'
+              }
+            },
+            required: ['id', 'size']
+          }
+        },
+        {
+          name: 'create_snapshot',
+          description: 'Create a snapshot of a volume',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              volumeid: {
+                type: 'string',
+                description: 'Volume ID to snapshot'
+              },
+              name: {
+                type: 'string',
+                description: 'Name for the snapshot (optional)'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name (optional)'
+              }
+            },
+            required: ['volumeid']
+          }
+        },
+        {
+          name: 'delete_snapshot',
+          description: 'Delete a volume snapshot',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Snapshot ID to delete'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'create_volume_from_snapshot',
+          description: 'Create a new volume from a snapshot',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              snapshotid: {
+                type: 'string',
+                description: 'Snapshot ID to create volume from'
+              },
+              name: {
+                type: 'string',
+                description: 'Name for the new volume'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name (optional)'
+              }
+            },
+            required: ['snapshotid', 'name']
+          }
+        },
+        {
+          name: 'create_security_group',
+          description: 'Create a security group',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'Name for the security group'
+              },
+              description: {
+                type: 'string',
+                description: 'Description for the security group'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name (optional)'
+              }
+            },
+            required: ['name']
+          }
+        },
+        {
+          name: 'delete_security_group',
+          description: 'Delete a security group',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Security group ID to delete'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'authorize_security_group_ingress',
+          description: 'Add ingress rule to security group',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              securitygroupid: {
+                type: 'string',
+                description: 'Security group ID'
+              },
+              protocol: {
+                type: 'string',
+                description: 'Protocol (TCP, UDP, ICMP)'
+              },
+              startport: {
+                type: 'number',
+                description: 'Start port'
+              },
+              endport: {
+                type: 'number',
+                description: 'End port'
+              },
+              cidrlist: {
+                type: 'string',
+                description: 'CIDR list (comma-separated)'
+              }
+            },
+            required: ['securitygroupid', 'protocol']
+          }
+        },
+        {
+          name: 'revoke_security_group_ingress',
+          description: 'Remove ingress rule from security group',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Rule ID to revoke'
+              }
+            },
+            required: ['id']
+          }
         }
       ];
 
@@ -248,6 +646,63 @@ class CloudStackMCPServer {
           
           case 'get_cloudstack_info':
             return await this.handleGetCloudStackInfo(args);
+          
+          case 'deploy_virtual_machine':
+            return await this.handleDeployVirtualMachine(args);
+          
+          case 'start_virtual_machine':
+            return await this.handleStartVirtualMachine(args);
+          
+          case 'stop_virtual_machine':
+            return await this.handleStopVirtualMachine(args);
+          
+          case 'reboot_virtual_machine':
+            return await this.handleRebootVirtualMachine(args);
+          
+          case 'destroy_virtual_machine':
+            return await this.handleDestroyVirtualMachine(args);
+          
+          case 'update_virtual_machine':
+            return await this.handleUpdateVirtualMachine(args);
+          
+          case 'change_service_offering':
+            return await this.handleChangeServiceOffering(args);
+          
+          case 'create_volume':
+            return await this.handleCreateVolume(args);
+          
+          case 'attach_volume':
+            return await this.handleAttachVolume(args);
+          
+          case 'detach_volume':
+            return await this.handleDetachVolume(args);
+          
+          case 'delete_volume':
+            return await this.handleDeleteVolume(args);
+          
+          case 'resize_volume':
+            return await this.handleResizeVolume(args);
+          
+          case 'create_snapshot':
+            return await this.handleCreateSnapshot(args);
+          
+          case 'delete_snapshot':
+            return await this.handleDeleteSnapshot(args);
+          
+          case 'create_volume_from_snapshot':
+            return await this.handleCreateVolumeFromSnapshot(args);
+          
+          case 'create_security_group':
+            return await this.handleCreateSecurityGroup(args);
+          
+          case 'delete_security_group':
+            return await this.handleDeleteSecurityGroup(args);
+          
+          case 'authorize_security_group_ingress':
+            return await this.handleAuthorizeSecurityGroupIngress(args);
+          
+          case 'revoke_security_group_ingress':
+            return await this.handleRevokeSecurityGroupIngress(args);
           
           default:
             throw new Error(`Unknown tool: ${name}`);
@@ -625,6 +1080,434 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
       await this.server.close();
       process.exit(0);
     });
+  }
+
+  // Virtual Machine Management Handlers
+  private async handleDeployVirtualMachine(args: any): Promise<any> {
+    const requiredParams = ['serviceofferingid', 'templateid', 'zoneid'];
+    const optionalParams = ['name', 'displayname', 'networkids', 'account', 'group'];
+    const params = this.buildParams(args, [...requiredParams, ...optionalParams]);
+    
+    // Validate required parameters
+    for (const param of requiredParams) {
+      if (!params[param]) {
+        throw new Error(`Missing required parameter: ${param}`);
+      }
+    }
+    
+    const response = await this.client.deployVirtualMachine(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('VM deployment', response)
+        }
+      ]
+    };
+  }
+
+  private async handleStartVirtualMachine(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Virtual machine ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.startVirtualMachine(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('VM start', response)
+        }
+      ]
+    };
+  }
+
+  private async handleStopVirtualMachine(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Virtual machine ID is required');
+    }
+    
+    const params: Record<string, any> = { id: args.id };
+    if (args.forced) {
+      params.forced = args.forced;
+    }
+    
+    const response = await this.client.stopVirtualMachine(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('VM stop', response)
+        }
+      ]
+    };
+  }
+
+  private async handleRebootVirtualMachine(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Virtual machine ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.rebootVirtualMachine(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('VM reboot', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDestroyVirtualMachine(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Virtual machine ID is required');
+    }
+    
+    const params: Record<string, any> = { id: args.id };
+    if (args.expunge) {
+      params.expunge = args.expunge;
+    }
+    
+    const response = await this.client.destroyVirtualMachine(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('VM destroy', response)
+        }
+      ]
+    };
+  }
+
+  private async handleUpdateVirtualMachine(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Virtual machine ID is required');
+    }
+    
+    const allowedParams = ['id', 'displayname', 'group', 'haenable', 'ostypeid', 'userdata'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.updateVirtualMachine(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatVirtualMachineUpdateResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleChangeServiceOffering(args: any): Promise<any> {
+    if (!args.id || !args.serviceofferingid) {
+      throw new Error('Virtual machine ID and service offering ID are required');
+    }
+    
+    const params = {
+      id: args.id,
+      serviceofferingid: args.serviceofferingid
+    };
+    
+    const response = await this.client.changeServiceForVirtualMachine(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatVirtualMachineUpdateResponse(response)
+        }
+      ]
+    };
+  }
+
+  // Response Formatting Helpers
+  private formatAsyncJobResponse(operation: string, response: any): string {
+    if (response.jobid) {
+      return `${operation} initiated successfully.\nJob ID: ${response.jobid}\nStatus: The operation is running asynchronously. You can check the job status or list VMs to see the current state.`;
+    }
+    
+    if (response.virtualmachine) {
+      const vm = response.virtualmachine;
+      return `${operation} completed successfully.\nVM: ${vm.name} (${vm.id})\nState: ${vm.state}\nDisplay Name: ${vm.displayname || 'N/A'}`;
+    }
+    
+    return `${operation} initiated. Please check the virtual machine status for updates.`;
+  }
+
+  private formatVirtualMachineUpdateResponse(response: any): string {
+    if (response.virtualmachine) {
+      const vm = response.virtualmachine;
+      return `Virtual machine updated successfully.\nVM: ${vm.name} (${vm.id})\nDisplay Name: ${vm.displayname || 'N/A'}\nState: ${vm.state}\nUpdated: ${new Date().toISOString()}`;
+    }
+    
+    return 'Virtual machine update completed successfully.';
+  }
+
+  // Volume Management Handlers
+  private async handleCreateVolume(args: any): Promise<any> {
+    const requiredParams = ['name', 'diskofferingid', 'zoneid'];
+    const optionalParams = ['size', 'account'];
+    const params = this.buildParams(args, [...requiredParams, ...optionalParams]);
+    
+    // Validate required parameters
+    for (const param of requiredParams) {
+      if (!params[param]) {
+        throw new Error(`Missing required parameter: ${param}`);
+      }
+    }
+    
+    const response = await this.client.createVolume(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Volume creation', response)
+        }
+      ]
+    };
+  }
+
+  private async handleAttachVolume(args: any): Promise<any> {
+    if (!args.id || !args.virtualmachineid) {
+      throw new Error('Volume ID and virtual machine ID are required');
+    }
+    
+    const params: Record<string, any> = {
+      id: args.id,
+      virtualmachineid: args.virtualmachineid
+    };
+    
+    if (args.deviceid !== undefined) {
+      params.deviceid = args.deviceid;
+    }
+    
+    const response = await this.client.attachVolume(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Volume attachment', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDetachVolume(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Volume ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.detachVolume(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Volume detachment', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteVolume(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Volume ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.deleteVolume(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Volume deletion', response)
+        }
+      ]
+    };
+  }
+
+  private async handleResizeVolume(args: any): Promise<any> {
+    if (!args.id || !args.size) {
+      throw new Error('Volume ID and size are required');
+    }
+    
+    const params: Record<string, any> = {
+      id: args.id,
+      size: args.size
+    };
+    
+    if (args.shrinkok !== undefined) {
+      params.shrinkok = args.shrinkok;
+    }
+    
+    const response = await this.client.resizeVolume(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Volume resize', response)
+        }
+      ]
+    };
+  }
+
+  // Snapshot Management Handlers
+  private async handleCreateSnapshot(args: any): Promise<any> {
+    if (!args.volumeid) {
+      throw new Error('Volume ID is required');
+    }
+    
+    const allowedParams = ['volumeid', 'name', 'account'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.createSnapshot(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Snapshot creation', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteSnapshot(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Snapshot ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.deleteSnapshot(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Snapshot deletion', response)
+        }
+      ]
+    };
+  }
+
+  private async handleCreateVolumeFromSnapshot(args: any): Promise<any> {
+    if (!args.snapshotid || !args.name) {
+      throw new Error('Snapshot ID and volume name are required');
+    }
+    
+    const allowedParams = ['snapshotid', 'name', 'account'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.createVolumeFromSnapshot(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Volume creation from snapshot', response)
+        }
+      ]
+    };
+  }
+
+  // Security Group Management Handlers
+  private async handleCreateSecurityGroup(args: any): Promise<any> {
+    if (!args.name) {
+      throw new Error('Security group name is required');
+    }
+    
+    const allowedParams = ['name', 'description', 'account'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.createSecurityGroup(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatSecurityGroupResponse('Security group creation', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteSecurityGroup(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Security group ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.deleteSecurityGroup(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: 'Security group deleted successfully.'
+        }
+      ]
+    };
+  }
+
+  private async handleAuthorizeSecurityGroupIngress(args: any): Promise<any> {
+    if (!args.securitygroupid || !args.protocol) {
+      throw new Error('Security group ID and protocol are required');
+    }
+    
+    const allowedParams = ['securitygroupid', 'protocol', 'startport', 'endport', 'cidrlist'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.authorizeSecurityGroupIngress(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Security group rule authorization', response)
+        }
+      ]
+    };
+  }
+
+  private async handleRevokeSecurityGroupIngress(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Rule ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.revokeSecurityGroupIngress(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Security group rule revocation', response)
+        }
+      ]
+    };
+  }
+
+  private formatSecurityGroupResponse(operation: string, response: any): string {
+    if (response.securitygroup) {
+      const sg = response.securitygroup;
+      return `${operation} completed successfully.\nSecurity Group: ${sg.name} (${sg.id})\nDescription: ${sg.description || 'N/A'}\nAccount: ${sg.account || 'N/A'}`;
+    }
+    
+    return `${operation} completed successfully.`;
   }
 
   public async run(): Promise<void> {

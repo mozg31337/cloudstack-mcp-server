@@ -180,4 +180,155 @@ export class CloudStackClient {
   public async listSecurityGroups(params: Record<string, any> = {}): Promise<any> {
     return this.makeRequest('listSecurityGroups', params);
   }
+
+  // Virtual Machine Management
+  public async deployVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deployVirtualMachine', params);
+  }
+
+  public async startVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('startVirtualMachine', params);
+  }
+
+  public async stopVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('stopVirtualMachine', params);
+  }
+
+  public async rebootVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('rebootVirtualMachine', params);
+  }
+
+  public async destroyVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('destroyVirtualMachine', params);
+  }
+
+  public async restoreVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('restoreVirtualMachine', params);
+  }
+
+  public async updateVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateVirtualMachine', params);
+  }
+
+  public async changeServiceForVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('changeServiceForVirtualMachine', params);
+  }
+
+  // Volume Management
+  public async createVolume(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createVolume', params);
+  }
+
+  public async attachVolume(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('attachVolume', params);
+  }
+
+  public async detachVolume(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('detachVolume', params);
+  }
+
+  public async deleteVolume(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteVolume', params);
+  }
+
+  public async resizeVolume(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('resizeVolume', params);
+  }
+
+  public async migrateVolume(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('migrateVolume', params);
+  }
+
+  // Snapshot Management
+  public async createSnapshot(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createSnapshot', params);
+  }
+
+  public async deleteSnapshot(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteSnapshot', params);
+  }
+
+  public async createVolumeFromSnapshot(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createVolumeFromSnapshot', params);
+  }
+
+  public async revertSnapshot(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('revertSnapshot', params);
+  }
+
+  // Network Management
+  public async createNetwork(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createNetwork', params);
+  }
+
+  public async deleteNetwork(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteNetwork', params);
+  }
+
+  public async updateNetwork(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateNetwork', params);
+  }
+
+  public async restartNetwork(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('restartNetwork', params);
+  }
+
+  // Security Group Management
+  public async createSecurityGroup(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createSecurityGroup', params);
+  }
+
+  public async deleteSecurityGroup(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteSecurityGroup', params);
+  }
+
+  public async authorizeSecurityGroupIngress(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('authorizeSecurityGroupIngress', params);
+  }
+
+  public async authorizeSecurityGroupEgress(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('authorizeSecurityGroupEgress', params);
+  }
+
+  public async revokeSecurityGroupIngress(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('revokeSecurityGroupIngress', params);
+  }
+
+  public async revokeSecurityGroupEgress(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('revokeSecurityGroupEgress', params);
+  }
+
+  // Template Management
+  public async createTemplate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createTemplate', params);
+  }
+
+  public async deleteTemplate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteTemplate', params);
+  }
+
+  public async updateTemplate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateTemplate', params);
+  }
+
+  public async copyTemplate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('copyTemplate', params);
+  }
+
+  // Load Balancer Management
+  public async createLoadBalancerRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createLoadBalancerRule', params);
+  }
+
+  public async deleteLoadBalancerRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteLoadBalancerRule', params);
+  }
+
+  public async assignToLoadBalancerRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('assignToLoadBalancerRule', params);
+  }
+
+  public async removeFromLoadBalancerRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('removeFromLoadBalancerRule', params);
+  }
 }
