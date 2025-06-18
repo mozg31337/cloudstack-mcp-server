@@ -1,0 +1,25 @@
+{
+  "environments": {
+    "default": {
+      "name": "Production CloudStack",
+      "apiUrl": "https://cloudstack.example.com/client/api",
+      "apiKey": "your-api-key-here",
+      "secretKey": "your-secret-key-here",
+      "timeout": 30000,
+      "retries": 3
+    },
+    "dev": {
+      "name": "Development CloudStack",
+      "apiUrl": "https://dev-cloudstack.example.com/client/api",
+      "apiKey": "your-dev-api-key-here", 
+      "secretKey": "your-dev-secret-key-here",
+      "timeout": 30000,
+      "retries": 3
+    }
+  },
+  "defaultEnvironment": "default",
+  "logging": {
+    "level": "info",
+    "file": "logs/cloudstack-mcp.log"
+  }
+}
