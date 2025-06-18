@@ -4,7 +4,7 @@ This document describes all available tools and their usage in the CloudStack MC
 
 ## Available Tools
 
-### Virtual Machines
+### Virtual Machine Management
 
 #### `list_virtual_machines`
 Lists virtual machines in your CloudStack environment.
@@ -31,6 +31,112 @@ Find VMs for account admin
 - Network interfaces and IP addresses
 - Creation date and account
 
+#### `deploy_virtual_machine`
+Deploy a new virtual machine in CloudStack.
+
+**Parameters:**
+- `serviceofferingid` (required): Service offering ID for the VM
+- `templateid` (required): Template ID to deploy from
+- `zoneid` (required): Zone ID where to deploy the VM
+- `name` (optional): Name for the new VM
+- `displayname` (optional): Display name for the new VM
+- `networkids` (optional): Network IDs (comma-separated) to attach to VM
+- `account` (optional): Account name
+- `group` (optional): Group name for the VM
+
+**Example usage:**
+```
+Deploy a new web server VM
+Create VM with Ubuntu template in zone-1
+Deploy medium VM with specific network
+```
+
+**Response includes:**
+- Job ID for async operation tracking
+- VM ID and current state
+- Deployment progress information
+
+#### `start_virtual_machine`
+Start a stopped virtual machine.
+
+**Parameters:**
+- `id` (required): Virtual machine ID to start
+
+**Example usage:**
+```
+Start VM vm-12345
+Start the web server VM
+```
+
+#### `stop_virtual_machine`
+Stop a running virtual machine.
+
+**Parameters:**
+- `id` (required): Virtual machine ID to stop
+- `forced` (optional): Force stop the VM (default: false)
+
+**Example usage:**
+```
+Stop VM vm-12345
+Force stop the database server
+```
+
+#### `reboot_virtual_machine`
+Reboot a virtual machine.
+
+**Parameters:**
+- `id` (required): Virtual machine ID to reboot
+
+**Example usage:**
+```
+Reboot VM vm-12345
+Restart the web server
+```
+
+#### `destroy_virtual_machine`
+Destroy (delete) a virtual machine.
+
+**Parameters:**
+- `id` (required): Virtual machine ID to destroy
+- `expunge` (optional): Immediately expunge the VM (default: false)
+
+**Example usage:**
+```
+Destroy VM vm-12345
+Delete and expunge the old server
+```
+
+#### `update_virtual_machine`
+Update virtual machine properties.
+
+**Parameters:**
+- `id` (required): Virtual machine ID to update
+- `displayname` (optional): New display name
+- `group` (optional): New group name
+- `haenable` (optional): Enable/disable high availability
+- `ostypeid` (optional): New OS type ID
+- `userdata` (optional): User data for the VM
+
+**Example usage:**
+```
+Update VM display name
+Enable HA for VM vm-12345
+Change VM group to production
+```
+
+#### `change_service_offering`
+Change the service offering (CPU/memory) of a virtual machine.
+
+**Parameters:**
+- `id` (required): Virtual machine ID
+- `serviceofferingid` (required): New service offering ID
+
+**Example usage:**
+```
+Upgrade VM to larger service offering
+Change VM to high-performance offering
+```
+
 ### Networks
 
 #### `list_networks`
@@ -56,7 +162,7 @@ List networks in zone-1
 - VLAN information
 - Associated services
 
-### Storage
+### Volume Management
 
 #### `list_volumes`
 Lists storage volumes in your CloudStack environment.
@@ -82,6 +188,76 @@ Show data disks
 - Creation date
 - Disk offering details
 
+#### `create_volume`
+Create a new data volume.
+
+**Parameters:**
+- `name` (required): Name for the new volume
+- `diskofferingid` (required): Disk offering ID for the volume
+- `zoneid` (required): Zone ID where to create the volume
+- `size` (optional): Size in GB (for custom disk offerings)
+- `account` (optional): Account name
+
+**Example usage:**
+```
+Create 100GB data volume in zone-1
+Create volume for backup storage
+```
+
+#### `attach_volume`
+Attach a volume to a virtual machine.
+
+**Parameters:**
+- `id` (required): Volume ID to attach
+- `virtualmachineid` (required): Virtual machine ID to attach to
+- `deviceid` (optional): Device ID
+
+**Example usage:**
+```
+Attach volume vol-123 to VM vm-456
+Attach storage volume to web server
+```
+
+#### `detach_volume`
+Detach a volume from a virtual machine.
+
+**Parameters:**
+- `id` (required): Volume ID to detach
+
+**Example usage:**
+```
+Detach volume vol-123
+Remove storage volume from VM
+```
+
+#### `delete_volume`
+Delete a volume.
+
+**Parameters:**
+- `id` (required): Volume ID to delete
+
+**Example usage:**
+```
+Delete volume vol-123
+Remove old backup volume
+```
+
+#### `resize_volume`
+Resize a volume.
+
+**Parameters:**
+- `id` (required): Volume ID to resize
+- `size` (required): New size in GB
+- `shrinkok` (optional): Allow shrinking the volume (default: false)
+
+**Example usage:**
+```
+Resize volume vol-123 to 200GB
+Expand storage volume
+```
+
+### Snapshot Management
+
 #### `list_snapshots`
 Lists volume snapshots in your CloudStack environment.
 
@@ -104,6 +280,103 @@ Show daily snapshots
 - Snapshot type and state
 - Creation date
 - Physical size
+
+#### `create_snapshot`
+Create a snapshot of a volume.
+
+**Parameters:**
+- `volumeid` (required): Volume ID to snapshot
+- `name` (optional): Name for the snapshot
+- `account` (optional): Account name
+
+**Example usage:**
+```
+Create snapshot of volume vol-123
+Backup data volume before maintenance
+```
+
+#### `delete_snapshot`
+Delete a volume snapshot.
+
+**Parameters:**
+- `id` (required): Snapshot ID to delete
+
+**Example usage:**
+```
+Delete snapshot snap-456
+Remove old backup snapshot
+```
+
+#### `create_volume_from_snapshot`
+Create a new volume from a snapshot.
+
+**Parameters:**
+- `snapshotid` (required): Snapshot ID to create volume from
+- `name` (required): Name for the new volume
+- `account` (optional): Account name
+
+**Example usage:**
+```
+Restore volume from snapshot snap-123
+Create new volume from backup
+```
+
+### Security Group Management
+
+#### `create_security_group`
+Create a security group.
+
+**Parameters:**
+- `name` (required): Name for the security group
+- `description` (optional): Description for the security group
+- `account` (optional): Account name
+
+**Example usage:**
+```
+Create web-servers security group
+Create security group for database tier
+```
+
+#### `delete_security_group`
+Delete a security group.
+
+**Parameters:**
+- `id` (required): Security group ID to delete
+
+**Example usage:**
+```
+Delete security group sg-123
+Remove old firewall rules
+```
+
+#### `authorize_security_group_ingress`
+Add ingress rule to security group.
+
+**Parameters:**
+- `securitygroupid` (required): Security group ID
+- `protocol` (required): Protocol (TCP, UDP, ICMP)
+- `startport` (optional): Start port
+- `endport` (optional): End port
+- `cidrlist` (optional): CIDR list (comma-separated)
+
+**Example usage:**
+```
+Allow HTTP traffic on port 80
+Open SSH access from specific IP range
+Allow database access on port 3306
+```
+
+#### `revoke_security_group_ingress`
+Remove ingress rule from security group.
+
+**Parameters:**
+- `id` (required): Rule ID to revoke
+
+**Example usage:**
+```
+Remove HTTP rule from security group
+Revoke SSH access rule
+```
 
 ### Infrastructure
 
@@ -219,28 +492,43 @@ Check CloudStack configuration
 
 The MCP server responds to natural language queries. Here are examples:
 
-**Virtual Machines:**
+**Virtual Machine Management:**
 - "List all my virtual machines"
 - "Show me running VMs"
-- "Find VMs in the production zone"
-- "What VMs does the admin account have?"
+- "Deploy a new Ubuntu server in zone-1"
+- "Start VM vm-12345"
+- "Stop the web server VM"
+- "Destroy old test VMs"
+- "Update VM display name to 'Production Web Server'"
+- "Upgrade VM to larger service offering"
 
 **Networks:**
 - "Show me all networks"
 - "List isolated networks"
 - "What networks are in zone-1?"
 
-**Storage:**
+**Volume and Storage Management:**
 - "List all volumes"
-- "Show me root disks"
-- "What snapshots exist for volume vol-123?"
-- "List all manual snapshots"
+- "Create a 100GB data volume in zone-1"
+- "Attach volume vol-123 to VM vm-456"
+- "Detach storage volume from web server"
+- "Resize volume vol-789 to 200GB"
+- "Create snapshot of data volume"
+- "Restore volume from snapshot snap-123"
+- "Delete old backup volumes"
 
 **Infrastructure:**
 - "Show me all zones"
 - "List available zones"
 - "What hosts are running?"
 - "Show me disconnected hosts"
+
+**Security Management:**
+- "Create web-servers security group"
+- "Allow HTTP traffic on port 80"
+- "Open SSH access from 192.168.1.0/24"
+- "Remove old firewall rules"
+- "Delete unused security groups"
 
 **Templates and Offerings:**
 - "List all service offerings"
@@ -254,8 +542,10 @@ You can combine parameters for more specific queries:
 ```
 List running VMs in zone-1
 Show isolated networks for admin account
-List root volumes in the production zone
-Show manual snapshots for volume vol-123
+Deploy medium VM with Ubuntu template in production zone
+Create 50GB volume and attach to web server
+Create security group and allow HTTPS traffic
+Resize volume to 200GB and create snapshot
 ```
 
 ## Response Formats
@@ -285,10 +575,34 @@ This table shows how MCP tools map to CloudStack API commands:
 
 | MCP Tool | CloudStack API Command |
 |----------|------------------------|
+| **Virtual Machine Management** |
 | `list_virtual_machines` | `listVirtualMachines` |
-| `list_networks` | `listNetworks` |
+| `deploy_virtual_machine` | `deployVirtualMachine` |
+| `start_virtual_machine` | `startVirtualMachine` |
+| `stop_virtual_machine` | `stopVirtualMachine` |
+| `reboot_virtual_machine` | `rebootVirtualMachine` |
+| `destroy_virtual_machine` | `destroyVirtualMachine` |
+| `update_virtual_machine` | `updateVirtualMachine` |
+| `change_service_offering` | `changeServiceForVirtualMachine` |
+| **Volume Management** |
 | `list_volumes` | `listVolumes` |
+| `create_volume` | `createVolume` |
+| `attach_volume` | `attachVolume` |
+| `detach_volume` | `detachVolume` |
+| `delete_volume` | `deleteVolume` |
+| `resize_volume` | `resizeVolume` |
+| **Snapshot Management** |
 | `list_snapshots` | `listSnapshots` |
+| `create_snapshot` | `createSnapshot` |
+| `delete_snapshot` | `deleteSnapshot` |
+| `create_volume_from_snapshot` | `createVolumeFromSnapshot` |
+| **Security Groups** |
+| `create_security_group` | `createSecurityGroup` |
+| `delete_security_group` | `deleteSecurityGroup` |
+| `authorize_security_group_ingress` | `authorizeSecurityGroupIngress` |
+| `revoke_security_group_ingress` | `revokeSecurityGroupIngress` |
+| **Infrastructure** |
+| `list_networks` | `listNetworks` |
 | `list_zones` | `listZones` |
 | `list_hosts` | `listHosts` |
 | `list_service_offerings` | `listServiceOfferings` |

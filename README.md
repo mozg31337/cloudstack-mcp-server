@@ -4,13 +4,19 @@ A Model Context Protocol (MCP) server that integrates CloudStack with Claude Des
 
 ## Features
 
-- **Compute Management**: List and manage virtual machines, system VMs, and Kubernetes clusters
-- **Network Operations**: Control networks, load balancers, VPN, and firewall configurations  
-- **Storage Management**: Handle volumes, snapshots, and image repositories
-- **Infrastructure Control**: Manage zones, pods, clusters, and hosts
-- **Modular Architecture**: Extensible design for adding new CloudStack capabilities
+### 🔧 Complete Infrastructure Management
+- **Virtual Machine Lifecycle**: Deploy, start, stop, reboot, destroy, and update VMs
+- **Volume Operations**: Create, attach, detach, resize, and delete storage volumes
+- **Snapshot Management**: Create, delete, and restore volumes from snapshots
+- **Security Groups**: Create groups and manage ingress/egress firewall rules
+- **Resource Discovery**: List VMs, networks, volumes, zones, hosts, and templates
+
+### 🏗️ Enterprise-Ready Architecture
+- **Modular Design**: Extensible architecture for adding new CloudStack APIs
 - **Type-Safe**: Full TypeScript implementation with comprehensive type definitions
 - **Multi-Environment**: Support for multiple CloudStack deployments
+- **Async Job Handling**: Proper tracking of long-running CloudStack operations
+- **Error Management**: Comprehensive error handling and user-friendly messages
 
 ## Installation
 
@@ -98,6 +104,37 @@ src/
     ├── config.ts          # Configuration management
     └── logger.ts          # Logging utilities
 ```
+
+## Usage Examples
+
+Try asking Claude:
+
+**Infrastructure Discovery:**
+- "List all my virtual machines"
+- "Show me running VMs in zone-1"
+- "What networks are available?"
+- "List all volumes and their sizes"
+
+**VM Management:**
+- "Deploy a new Ubuntu server in zone-1"
+- "Start VM vm-12345"
+- "Stop the web server VM"
+- "Update VM display name to 'Production Server'"
+
+**Storage Operations:**
+- "Create a 100GB data volume"
+- "Attach volume vol-123 to VM vm-456" 
+- "Create snapshot of my data volume"
+- "Resize volume to 200GB"
+
+**Security Management:**
+- "Create web-servers security group"
+- "Allow HTTP traffic on port 80"
+- "Open SSH access from my IP range"
+
+**System Information:**
+- "Get CloudStack environment information"
+- "Show me available service offerings"
 
 ## Contributing
 
