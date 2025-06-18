@@ -1,6 +1,6 @@
 {
   "name": "cloudstack-mcp-server",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "CloudStack MCP Server for Claude Desktop integration",
   "main": "dist/server.js",
   "type": "module",
@@ -13,7 +13,11 @@
     "test:coverage": "jest --config jest.config.cjs --coverage",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "version:patch": "npm version patch && node scripts/sync-version.js",
+    "version:minor": "npm version minor && node scripts/sync-version.js",
+    "version:major": "npm version major && node scripts/sync-version.js",
+    "sync-version": "node scripts/sync-version.js"
   },
   "keywords": [
     "cloudstack",
