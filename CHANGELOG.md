@@ -5,6 +5,24 @@ All notable changes to the CloudStack MCP Server project will be documented in t
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.2] - 2025-06-18
+
+### Added
+- **Comprehensive API Coverage Analysis**: Detailed analysis document comparing our capabilities vs CloudStack API
+- **Enhanced Documentation**: Complete tool mapping table with all 29 MCP tools
+- **Coverage Metrics**: 35-40% CloudStack API coverage analysis with growth tracking
+- **Enterprise Readiness Assessment**: Functional coverage by category and use case
+
+### Changed
+- **Updated API Documentation**: Complete mapping of all current tools to CloudStack APIs
+- **Enhanced README**: Added API coverage highlights and analysis references
+- **Improved Cross-References**: Better documentation navigation and discoverability
+
+### Documentation
+- Created `docs/API-COVERAGE-ANALYSIS.md` with comprehensive capability comparison
+- Updated API mapping table in `docs/API.md` with all current tools
+- Added API coverage section to README with enterprise readiness highlights
+
 ## [1.1.1] - 2025-06-18
 
 ### Changed
