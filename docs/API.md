@@ -574,10 +574,12 @@ All responses are formatted for readability and include:
 > **📊 For comprehensive API coverage analysis, see [API-COVERAGE-ANALYSIS.md](API-COVERAGE-ANALYSIS.md)**
 > 
 > **Current Status (v1.1.3)**:
-> - **29 MCP Tools** available
-> - **60+ CloudStack API methods** implemented  
-> - **~35-40% CloudStack API coverage**
+> - **85 MCP Tools** available (844% growth from v1.0.0)
+> - **127 CloudStack API methods** implemented (1,170% growth from v1.0.0)
+> - **~28% CloudStack API coverage** (1,200% growth from v1.0.0)
 > - **Complete** VM, Volume, Network, and Infrastructure management
+> - **94% coverage** of VM operations, **80% coverage** of volume operations
+> - **Enterprise-ready** with advanced features like HA, backup integration, and VM snapshots
 
 This table shows how MCP tools map to CloudStack API commands:
 
