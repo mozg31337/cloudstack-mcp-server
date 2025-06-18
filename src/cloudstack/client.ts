@@ -331,4 +331,225 @@ export class CloudStackClient {
   public async removeFromLoadBalancerRule(params: Record<string, any>): Promise<any> {
     return this.makeRequest('removeFromLoadBalancerRule', params);
   }
+
+  // Advanced Virtual Machine Management
+  public async migrateVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('migrateVirtualMachine', params);
+  }
+
+  public async scaleVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('scaleVirtualMachine', params);
+  }
+
+  public async assignVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('assignVirtualMachine', params);
+  }
+
+  public async recoverVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('recoverVirtualMachine', params);
+  }
+
+  public async resetPasswordForVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('resetPasswordForVirtualMachine', params);
+  }
+
+  public async getVMPassword(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getVMPassword', params);
+  }
+
+  public async addNicToVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addNicToVirtualMachine', params);
+  }
+
+  public async removeNicFromVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('removeNicFromVirtualMachine', params);
+  }
+
+  public async updateDefaultNicForVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateDefaultNicForVirtualMachine', params);
+  }
+
+  public async addResourceDetail(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addResourceDetail', params);
+  }
+
+  public async removeResourceDetail(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('removeResourceDetail', params);
+  }
+
+  public async listResourceDetails(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listResourceDetails', params);
+  }
+
+  public async expungeVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('expungeVirtualMachine', params);
+  }
+
+  // Advanced Volume Management
+  public async extractVolume(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('extractVolume', params);
+  }
+
+  public async uploadVolume(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('uploadVolume', params);
+  }
+
+  public async listVolumeMetrics(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listVolumeMetrics', params);
+  }
+
+  public async createVolumeOnFiler(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createVolumeOnFiler', params);
+  }
+
+  public async destroyVolumeOnFiler(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('destroyVolumeOnFiler', params);
+  }
+
+  // Network Management
+  public async createNetworkOffering(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createNetworkOffering', params);
+  }
+
+  public async deleteNetworkOffering(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteNetworkOffering', params);
+  }
+
+  public async updateNetworkOffering(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateNetworkOffering', params);
+  }
+
+  public async listNetworkOfferings(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listNetworkOfferings', params);
+  }
+
+  // IP Address Management
+  public async associateIpAddress(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('associateIpAddress', params);
+  }
+
+  public async disassociateIpAddress(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('disassociateIpAddress', params);
+  }
+
+  public async listPublicIpAddresses(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listPublicIpAddresses', params);
+  }
+
+  public async updateIpAddress(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateIpAddress', params);
+  }
+
+  // Static NAT Management
+  public async enableStaticNat(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('enableStaticNat', params);
+  }
+
+  public async disableStaticNat(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('disableStaticNat', params);
+  }
+
+  public async createIpForwardingRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createIpForwardingRule', params);
+  }
+
+  public async deleteIpForwardingRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteIpForwardingRule', params);
+  }
+
+  public async listIpForwardingRules(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listIpForwardingRules', params);
+  }
+
+  // Port Forwarding Management
+  public async createPortForwardingRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createPortForwardingRule', params);
+  }
+
+  public async deletePortForwardingRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deletePortForwardingRule', params);
+  }
+
+  public async listPortForwardingRules(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listPortForwardingRules', params);
+  }
+
+  public async updatePortForwardingRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updatePortForwardingRule', params);
+  }
+
+  // VLAN Management
+  public async dedicatePublicIpRange(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('dedicatePublicIpRange', params);
+  }
+
+  public async releasePublicIpRange(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('releasePublicIpRange', params);
+  }
+
+  public async createVlanIpRange(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createVlanIpRange', params);
+  }
+
+  public async deleteVlanIpRange(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteVlanIpRange', params);
+  }
+
+  public async listVlanIpRanges(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listVlanIpRanges', params);
+  }
+
+  // Network ACL Management
+  public async createNetworkACL(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createNetworkACL', params);
+  }
+
+  public async deleteNetworkACL(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteNetworkACL', params);
+  }
+
+  public async listNetworkACLs(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listNetworkACLs', params);
+  }
+
+  public async replaceNetworkACLList(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('replaceNetworkACLList', params);
+  }
+
+  public async createNetworkACLList(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createNetworkACLList', params);
+  }
+
+  public async deleteNetworkACLList(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteNetworkACLList', params);
+  }
+
+  public async listNetworkACLLists(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listNetworkACLLists', params);
+  }
+
+  // Virtual Router Management
+  public async startRouter(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('startRouter', params);
+  }
+
+  public async stopRouter(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('stopRouter', params);
+  }
+
+  public async rebootRouter(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('rebootRouter', params);
+  }
+
+  public async destroyRouter(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('destroyRouter', params);
+  }
+
+  public async listRouters(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listRouters', params);
+  }
+
+  public async changeServiceForRouter(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('changeServiceForRouter', params);
+  }
 }

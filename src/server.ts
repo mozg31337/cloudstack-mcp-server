@@ -529,6 +529,548 @@ class CloudStackMCPServer {
           }
         },
         {
+          name: 'migrate_virtual_machine',
+          description: 'Migrate a virtual machine to another host',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID to migrate'
+              },
+              hostid: {
+                type: 'string',
+                description: 'Destination host ID (optional - auto-select if not provided)'
+              }
+            },
+            required: ['virtualmachineid']
+          }
+        },
+        {
+          name: 'scale_virtual_machine',
+          description: 'Scale virtual machine CPU/memory',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Virtual machine ID to scale'
+              },
+              serviceofferingid: {
+                type: 'string',
+                description: 'New service offering ID'
+              },
+              details: {
+                type: 'string',
+                description: 'Custom CPU/memory details (JSON format)'
+              }
+            },
+            required: ['id', 'serviceofferingid']
+          }
+        },
+        {
+          name: 'reset_vm_password',
+          description: 'Reset virtual machine password',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'get_vm_password',
+          description: 'Get virtual machine password',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'add_nic_to_vm',
+          description: 'Add network interface to virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              },
+              networkid: {
+                type: 'string',
+                description: 'Network ID to attach'
+              },
+              ipaddress: {
+                type: 'string',
+                description: 'Specific IP address (optional)'
+              }
+            },
+            required: ['virtualmachineid', 'networkid']
+          }
+        },
+        {
+          name: 'remove_nic_from_vm',
+          description: 'Remove network interface from virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              },
+              nicid: {
+                type: 'string',
+                description: 'Network interface ID to remove'
+              }
+            },
+            required: ['virtualmachineid', 'nicid']
+          }
+        },
+        {
+          name: 'recover_virtual_machine',
+          description: 'Recover a destroyed virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Virtual machine ID to recover'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'expunge_virtual_machine',
+          description: 'Permanently delete a virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Virtual machine ID to expunge'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'migrate_volume',
+          description: 'Migrate a volume to another storage pool',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              volumeid: {
+                type: 'string',
+                description: 'Volume ID to migrate'
+              },
+              storageid: {
+                type: 'string',
+                description: 'Destination storage pool ID'
+              },
+              livemigrate: {
+                type: 'boolean',
+                description: 'Perform live migration (default: false)'
+              }
+            },
+            required: ['volumeid', 'storageid']
+          }
+        },
+        {
+          name: 'extract_volume',
+          description: 'Extract volume for download',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Volume ID to extract'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID for extraction'
+              },
+              mode: {
+                type: 'string',
+                description: 'Extraction mode (HTTP_DOWNLOAD, FTP_UPLOAD)'
+              }
+            },
+            required: ['id', 'zoneid', 'mode']
+          }
+        },
+        {
+          name: 'upload_volume',
+          description: 'Upload a volume from URL',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'Name for the volume'
+              },
+              url: {
+                type: 'string',
+                description: 'URL to download volume from'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID for upload'
+              },
+              format: {
+                type: 'string',
+                description: 'Volume format (VHD, QCOW2, OVA, etc.)'
+              },
+              diskofferingid: {
+                type: 'string',
+                description: 'Disk offering ID (optional)'
+              }
+            },
+            required: ['name', 'url', 'zoneid', 'format']
+          }
+        },
+        {
+          name: 'list_volume_metrics',
+          description: 'List volume performance metrics',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              ids: {
+                type: 'string',
+                description: 'Comma-separated volume IDs'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name to filter'
+              }
+            }
+          }
+        },
+        {
+          name: 'create_network',
+          description: 'Create a new network',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'Name for the network'
+              },
+              displaytext: {
+                type: 'string',
+                description: 'Display text for the network'
+              },
+              networkofferingid: {
+                type: 'string',
+                description: 'Network offering ID'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID for the network'
+              },
+              gateway: {
+                type: 'string',
+                description: 'Gateway IP address (optional)'
+              },
+              netmask: {
+                type: 'string',
+                description: 'Netmask (optional)'
+              },
+              startip: {
+                type: 'string',
+                description: 'Start IP range (optional)'
+              },
+              endip: {
+                type: 'string',
+                description: 'End IP range (optional)'
+              },
+              vlan: {
+                type: 'string',
+                description: 'VLAN ID (optional)'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name (optional)'
+              }
+            },
+            required: ['name', 'displaytext', 'networkofferingid', 'zoneid']
+          }
+        },
+        {
+          name: 'delete_network',
+          description: 'Delete a network',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Network ID to delete'
+              },
+              forced: {
+                type: 'boolean',
+                description: 'Force delete the network'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'update_network',
+          description: 'Update network properties',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Network ID to update'
+              },
+              name: {
+                type: 'string',
+                description: 'New network name (optional)'
+              },
+              displaytext: {
+                type: 'string',
+                description: 'New display text (optional)'
+              },
+              networkdomain: {
+                type: 'string',
+                description: 'Network domain (optional)'
+              },
+              changecidr: {
+                type: 'boolean',
+                description: 'Change CIDR (optional)'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'restart_network',
+          description: 'Restart network with cleanup',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Network ID to restart'
+              },
+              cleanup: {
+                type: 'boolean',
+                description: 'Cleanup network (default: false)'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_network_offerings',
+          description: 'List available network offerings',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'Network offering name filter'
+              },
+              state: {
+                type: 'string',
+                description: 'Network offering state (Enabled, Disabled)'
+              },
+              availability: {
+                type: 'string',
+                description: 'Availability (Optional, Required)'
+              },
+              isdefault: {
+                type: 'boolean',
+                description: 'Show only default offerings'
+              }
+            }
+          }
+        },
+        {
+          name: 'associate_ip_address',
+          description: 'Associate a public IP address',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID for IP association'
+              },
+              networkid: {
+                type: 'string',
+                description: 'Network ID (optional)'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name (optional)'
+              },
+              isportable: {
+                type: 'boolean',
+                description: 'Make IP portable (optional)'
+              }
+            },
+            required: ['zoneid']
+          }
+        },
+        {
+          name: 'disassociate_ip_address',
+          description: 'Disassociate a public IP address',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Public IP address ID to disassociate'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_public_ip_addresses',
+          description: 'List public IP addresses',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name filter'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID filter'
+              },
+              associatednetworkid: {
+                type: 'string',
+                description: 'Associated network ID filter'
+              },
+              isstaticnat: {
+                type: 'boolean',
+                description: 'Filter by static NAT enabled'
+              }
+            }
+          }
+        },
+        {
+          name: 'enable_static_nat',
+          description: 'Enable static NAT for IP address',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              ipaddressid: {
+                type: 'string',
+                description: 'Public IP address ID'
+              },
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID for static NAT'
+              },
+              networkid: {
+                type: 'string',
+                description: 'Network ID (optional)'
+              }
+            },
+            required: ['ipaddressid', 'virtualmachineid']
+          }
+        },
+        {
+          name: 'disable_static_nat',
+          description: 'Disable static NAT for IP address',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              ipaddressid: {
+                type: 'string',
+                description: 'Public IP address ID'
+              }
+            },
+            required: ['ipaddressid']
+          }
+        },
+        {
+          name: 'create_port_forwarding_rule',
+          description: 'Create port forwarding rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              ipaddressid: {
+                type: 'string',
+                description: 'Public IP address ID'
+              },
+              protocol: {
+                type: 'string',
+                description: 'Protocol (TCP, UDP)'
+              },
+              publicport: {
+                type: 'number',
+                description: 'Public port number'
+              },
+              privateport: {
+                type: 'number',
+                description: 'Private port number'
+              },
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              },
+              publicendport: {
+                type: 'number',
+                description: 'Public end port (for range)'
+              },
+              privateendport: {
+                type: 'number',
+                description: 'Private end port (for range)'
+              }
+            },
+            required: ['ipaddressid', 'protocol', 'publicport', 'privateport', 'virtualmachineid']
+          }
+        },
+        {
+          name: 'delete_port_forwarding_rule',
+          description: 'Delete port forwarding rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Port forwarding rule ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_port_forwarding_rules',
+          description: 'List port forwarding rules',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name filter'
+              },
+              ipaddressid: {
+                type: 'string',
+                description: 'IP address ID filter'
+              },
+              networkid: {
+                type: 'string',
+                description: 'Network ID filter'
+              }
+            }
+          }
+        },
+        {
           name: 'create_security_group',
           description: 'Create a security group',
           inputSchema: {
@@ -703,6 +1245,81 @@ class CloudStackMCPServer {
           
           case 'revoke_security_group_ingress':
             return await this.handleRevokeSecurityGroupIngress(args);
+          
+          case 'migrate_virtual_machine':
+            return await this.handleMigrateVirtualMachine(args);
+          
+          case 'scale_virtual_machine':
+            return await this.handleScaleVirtualMachine(args);
+          
+          case 'reset_vm_password':
+            return await this.handleResetVMPassword(args);
+          
+          case 'get_vm_password':
+            return await this.handleGetVMPassword(args);
+          
+          case 'add_nic_to_vm':
+            return await this.handleAddNicToVM(args);
+          
+          case 'remove_nic_from_vm':
+            return await this.handleRemoveNicFromVM(args);
+          
+          case 'recover_virtual_machine':
+            return await this.handleRecoverVirtualMachine(args);
+          
+          case 'expunge_virtual_machine':
+            return await this.handleExpungeVirtualMachine(args);
+          
+          case 'migrate_volume':
+            return await this.handleMigrateVolume(args);
+          
+          case 'extract_volume':
+            return await this.handleExtractVolume(args);
+          
+          case 'upload_volume':
+            return await this.handleUploadVolume(args);
+          
+          case 'list_volume_metrics':
+            return await this.handleListVolumeMetrics(args);
+          
+          case 'create_network':
+            return await this.handleCreateNetwork(args);
+          
+          case 'delete_network':
+            return await this.handleDeleteNetwork(args);
+          
+          case 'update_network':
+            return await this.handleUpdateNetwork(args);
+          
+          case 'restart_network':
+            return await this.handleRestartNetwork(args);
+          
+          case 'list_network_offerings':
+            return await this.handleListNetworkOfferings(args);
+          
+          case 'associate_ip_address':
+            return await this.handleAssociateIpAddress(args);
+          
+          case 'disassociate_ip_address':
+            return await this.handleDisassociateIpAddress(args);
+          
+          case 'list_public_ip_addresses':
+            return await this.handleListPublicIpAddresses(args);
+          
+          case 'enable_static_nat':
+            return await this.handleEnableStaticNat(args);
+          
+          case 'disable_static_nat':
+            return await this.handleDisableStaticNat(args);
+          
+          case 'create_port_forwarding_rule':
+            return await this.handleCreatePortForwardingRule(args);
+          
+          case 'delete_port_forwarding_rule':
+            return await this.handleDeletePortForwardingRule(args);
+          
+          case 'list_port_forwarding_rules':
+            return await this.handleListPortForwardingRules(args);
           
           default:
             throw new Error(`Unknown tool: ${name}`);
@@ -1508,6 +2125,606 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     }
     
     return `${operation} completed successfully.`;
+  }
+
+  // Advanced Virtual Machine Management Handlers
+  private async handleMigrateVirtualMachine(args: any): Promise<any> {
+    if (!args.virtualmachineid) {
+      throw new Error('Virtual machine ID is required');
+    }
+    
+    const allowedParams = ['virtualmachineid', 'hostid'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.migrateVirtualMachine(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('VM migration', response)
+        }
+      ]
+    };
+  }
+
+  private async handleScaleVirtualMachine(args: any): Promise<any> {
+    if (!args.id || !args.serviceofferingid) {
+      throw new Error('Virtual machine ID and service offering ID are required');
+    }
+    
+    const allowedParams = ['id', 'serviceofferingid', 'details'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.scaleVirtualMachine(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('VM scaling', response)
+        }
+      ]
+    };
+  }
+
+  private async handleResetVMPassword(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Virtual machine ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.resetPasswordForVirtualMachine(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('VM password reset', response)
+        }
+      ]
+    };
+  }
+
+  private async handleGetVMPassword(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Virtual machine ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.getVMPassword(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatVMPasswordResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleAddNicToVM(args: any): Promise<any> {
+    if (!args.virtualmachineid || !args.networkid) {
+      throw new Error('Virtual machine ID and network ID are required');
+    }
+    
+    const allowedParams = ['virtualmachineid', 'networkid', 'ipaddress'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.addNicToVirtualMachine(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('NIC addition', response)
+        }
+      ]
+    };
+  }
+
+  private async handleRemoveNicFromVM(args: any): Promise<any> {
+    if (!args.virtualmachineid || !args.nicid) {
+      throw new Error('Virtual machine ID and NIC ID are required');
+    }
+    
+    const params = {
+      virtualmachineid: args.virtualmachineid,
+      nicid: args.nicid
+    };
+    
+    const response = await this.client.removeNicFromVirtualMachine(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('NIC removal', response)
+        }
+      ]
+    };
+  }
+
+  private async handleRecoverVirtualMachine(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Virtual machine ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.recoverVirtualMachine(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatVirtualMachineUpdateResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleExpungeVirtualMachine(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Virtual machine ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.expungeVirtualMachine(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('VM expunge', response)
+        }
+      ]
+    };
+  }
+
+  // Advanced Volume Management Handlers
+  private async handleMigrateVolume(args: any): Promise<any> {
+    if (!args.volumeid || !args.storageid) {
+      throw new Error('Volume ID and storage pool ID are required');
+    }
+    
+    const allowedParams = ['volumeid', 'storageid', 'livemigrate'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.migrateVolume(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Volume migration', response)
+        }
+      ]
+    };
+  }
+
+  private async handleExtractVolume(args: any): Promise<any> {
+    const requiredParams = ['id', 'zoneid', 'mode'];
+    for (const param of requiredParams) {
+      if (!args[param]) {
+        throw new Error(`Missing required parameter: ${param}`);
+      }
+    }
+    
+    const params = this.buildParams(args, requiredParams);
+    const response = await this.client.extractVolume(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatExtractResponse('Volume extraction', response)
+        }
+      ]
+    };
+  }
+
+  private async handleUploadVolume(args: any): Promise<any> {
+    const requiredParams = ['name', 'url', 'zoneid', 'format'];
+    for (const param of requiredParams) {
+      if (!args[param]) {
+        throw new Error(`Missing required parameter: ${param}`);
+      }
+    }
+    
+    const allowedParams = [...requiredParams, 'diskofferingid'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.uploadVolume(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Volume upload', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListVolumeMetrics(args: any): Promise<any> {
+    const allowedParams = ['ids', 'account'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listVolumeMetrics(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatVolumeMetricsResponse(response)
+        }
+      ]
+    };
+  }
+
+  // Network Management Handlers
+  private async handleCreateNetwork(args: any): Promise<any> {
+    const requiredParams = ['name', 'displaytext', 'networkofferingid', 'zoneid'];
+    for (const param of requiredParams) {
+      if (!args[param]) {
+        throw new Error(`Missing required parameter: ${param}`);
+      }
+    }
+    
+    const allowedParams = [...requiredParams, 'gateway', 'netmask', 'startip', 'endip', 'vlan', 'account'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.createNetwork(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatNetworkResponse('Network creation', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteNetwork(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Network ID is required');
+    }
+    
+    const allowedParams = ['id', 'forced'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.deleteNetwork(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Network deletion', response)
+        }
+      ]
+    };
+  }
+
+  private async handleUpdateNetwork(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Network ID is required');
+    }
+    
+    const allowedParams = ['id', 'name', 'displaytext', 'networkdomain', 'changecidr'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.updateNetwork(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatNetworkResponse('Network update', response)
+        }
+      ]
+    };
+  }
+
+  private async handleRestartNetwork(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Network ID is required');
+    }
+    
+    const allowedParams = ['id', 'cleanup'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.restartNetwork(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Network restart', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListNetworkOfferings(args: any): Promise<any> {
+    const allowedParams = ['name', 'state', 'availability', 'isdefault'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listNetworkOfferings(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatNetworkOfferingsResponse(response)
+        }
+      ]
+    };
+  }
+
+  // IP Address Management Handlers
+  private async handleAssociateIpAddress(args: any): Promise<any> {
+    if (!args.zoneid) {
+      throw new Error('Zone ID is required');
+    }
+    
+    const allowedParams = ['zoneid', 'networkid', 'account', 'isportable'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.associateIpAddress(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('IP address association', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDisassociateIpAddress(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('IP address ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.disassociateIpAddress(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('IP address disassociation', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListPublicIpAddresses(args: any): Promise<any> {
+    const allowedParams = ['account', 'zoneid', 'associatednetworkid', 'isstaticnat'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listPublicIpAddresses(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatPublicIpAddressesResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleEnableStaticNat(args: any): Promise<any> {
+    if (!args.ipaddressid || !args.virtualmachineid) {
+      throw new Error('IP address ID and virtual machine ID are required');
+    }
+    
+    const allowedParams = ['ipaddressid', 'virtualmachineid', 'networkid'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.enableStaticNat(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: 'Static NAT enabled successfully.'
+        }
+      ]
+    };
+  }
+
+  private async handleDisableStaticNat(args: any): Promise<any> {
+    if (!args.ipaddressid) {
+      throw new Error('IP address ID is required');
+    }
+    
+    const params = { ipaddressid: args.ipaddressid };
+    const response = await this.client.disableStaticNat(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Static NAT disable', response)
+        }
+      ]
+    };
+  }
+
+  // Port Forwarding Handlers
+  private async handleCreatePortForwardingRule(args: any): Promise<any> {
+    const requiredParams = ['ipaddressid', 'protocol', 'publicport', 'privateport', 'virtualmachineid'];
+    for (const param of requiredParams) {
+      if (!args[param]) {
+        throw new Error(`Missing required parameter: ${param}`);
+      }
+    }
+    
+    const allowedParams = [...requiredParams, 'publicendport', 'privateendport'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.createPortForwardingRule(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Port forwarding rule creation', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeletePortForwardingRule(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Port forwarding rule ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.deletePortForwardingRule(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Port forwarding rule deletion', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListPortForwardingRules(args: any): Promise<any> {
+    const allowedParams = ['account', 'ipaddressid', 'networkid'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listPortForwardingRules(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatPortForwardingRulesResponse(response)
+        }
+      ]
+    };
+  }
+
+  // Response Formatting Helpers for New Features
+  private formatVMPasswordResponse(response: any): string {
+    if (response.password) {
+      return `VM Password retrieved successfully.\nPassword: ${response.password}\nEncrypted: ${response.encryptedpassword ? 'Yes' : 'No'}`;
+    }
+    
+    return 'VM password retrieval completed. Please check the VM console for the password.';
+  }
+
+  private formatExtractResponse(operation: string, response: any): string {
+    if (response.url) {
+      return `${operation} initiated successfully.\nDownload URL: ${response.url}\nMode: ${response.mode}\nState: ${response.state}`;
+    }
+    
+    return `${operation} initiated. Please check the job status for the download URL.`;
+  }
+
+  private formatVolumeMetricsResponse(response: any): string {
+    const metrics = response.volume || [];
+    
+    if (metrics.length === 0) {
+      return 'No volume metrics found.';
+    }
+
+    let result = `Found metrics for ${metrics.length} volume(s):\n\n`;
+    
+    for (const metric of metrics) {
+      result += `Volume: ${metric.name} (${metric.id})\n`;
+      result += `  Size: ${metric.size ? (metric.size / (1024 * 1024 * 1024)).toFixed(2) + ' GB' : 'N/A'}\n`;
+      result += `  IOPS: ${metric.diskIopsTotal || 'N/A'}\n`;
+      result += `  Throughput: ${metric.diskKbsTotal || 'N/A'} KB/s\n`;
+      result += `  Storage Pool: ${metric.storage || 'N/A'}\n\n`;
+    }
+
+    return result;
+  }
+
+  private formatNetworkResponse(operation: string, response: any): string {
+    if (response.network) {
+      const network = response.network;
+      return `${operation} completed successfully.\nNetwork: ${network.name} (${network.id})\nType: ${network.type}\nState: ${network.state}\nCIDR: ${network.cidr || 'N/A'}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatNetworkOfferingsResponse(response: any): string {
+    const offerings = response.networkoffering || [];
+    
+    if (offerings.length === 0) {
+      return 'No network offerings found.';
+    }
+
+    let result = `Found ${offerings.length} network offering(s):\n\n`;
+    
+    for (const offering of offerings) {
+      result += `Name: ${offering.name}\n`;
+      result += `  ID: ${offering.id}\n`;
+      result += `  Display Text: ${offering.displaytext || 'N/A'}\n`;
+      result += `  State: ${offering.state || 'N/A'}\n`;
+      result += `  Availability: ${offering.availability || 'N/A'}\n`;
+      result += `  Guest Type: ${offering.guestiptype || 'N/A'}\n`;
+      result += `  Traffic Type: ${offering.traffictype || 'N/A'}\n\n`;
+    }
+
+    return result;
+  }
+
+  private formatPublicIpAddressesResponse(response: any): string {
+    const ips = response.publicipaddress || [];
+    
+    if (ips.length === 0) {
+      return 'No public IP addresses found.';
+    }
+
+    let result = `Found ${ips.length} public IP address(es):\n\n`;
+    
+    for (const ip of ips) {
+      result += `IP Address: ${ip.ipaddress}\n`;
+      result += `  ID: ${ip.id}\n`;
+      result += `  State: ${ip.state || 'N/A'}\n`;
+      result += `  Zone: ${ip.zonename || 'N/A'}\n`;
+      result += `  Network: ${ip.associatednetworkname || 'N/A'}\n`;
+      result += `  VM: ${ip.virtualmachinename || 'N/A'}\n`;
+      result += `  Static NAT: ${ip.isstaticnat ? 'Enabled' : 'Disabled'}\n`;
+      result += `  Source NAT: ${ip.issourcenat ? 'Yes' : 'No'}\n\n`;
+    }
+
+    return result;
+  }
+
+  private formatPortForwardingRulesResponse(response: any): string {
+    const rules = response.portforwardingrule || [];
+    
+    if (rules.length === 0) {
+      return 'No port forwarding rules found.';
+    }
+
+    let result = `Found ${rules.length} port forwarding rule(s):\n\n`;
+    
+    for (const rule of rules) {
+      result += `Rule: ${rule.ipaddress}:${rule.publicport} → ${rule.privateport}\n`;
+      result += `  ID: ${rule.id}\n`;
+      result += `  Protocol: ${rule.protocol || 'N/A'}\n`;
+      result += `  Public Port: ${rule.publicport}${rule.publicendport ? `-${rule.publicendport}` : ''}\n`;
+      result += `  Private Port: ${rule.privateport}${rule.privateendport ? `-${rule.privateendport}` : ''}\n`;
+      result += `  VM: ${rule.virtualmachinename || 'N/A'}\n`;
+      result += `  State: ${rule.state || 'N/A'}\n\n`;
+    }
+
+    return result;
   }
 
   public async run(): Promise<void> {

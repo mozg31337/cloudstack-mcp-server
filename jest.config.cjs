@@ -16,6 +16,9 @@ module.exports = {
   transform: {
     '^.+\\.ts$': 'ts-jest'
   },
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1'
+  },
   modulePathIgnorePatterns: ['<rootDir>/dist/'],
   testTimeout: 10000
 };
