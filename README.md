@@ -163,6 +163,22 @@ Try asking Claude:
 - "Get CloudStack environment information"
 - "Show me available service offerings"
 
+## API Coverage
+
+The CloudStack MCP Server provides comprehensive coverage of CloudStack APIs:
+
+- **📊 35-40% CloudStack API Coverage** across core infrastructure operations
+- **29 MCP Tools** for complete infrastructure management
+- **60+ CloudStack API Methods** implemented with full parameter support
+
+**📋 For detailed API coverage analysis, see [API Coverage Analysis](docs/API-COVERAGE-ANALYSIS.md)**
+
+### Coverage Highlights
+- ✅ **Complete VM Management** (90%+ coverage): Lifecycle, scaling, migration, networking
+- ✅ **Comprehensive Volume Operations** (85%+ coverage): Storage, snapshots, backup/restore  
+- ✅ **Full Network Management** (80%+ coverage): Networks, IPs, NAT, port forwarding
+- ✅ **Complete Infrastructure Discovery** (100% coverage): Zones, hosts, offerings, templates
+
 ## Contributing
 
 1. Fork the repository

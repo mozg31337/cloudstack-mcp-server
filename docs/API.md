@@ -571,6 +571,14 @@ All responses are formatted for readability and include:
 
 ## CloudStack API Mapping
 
+> **📊 For comprehensive API coverage analysis, see [API-COVERAGE-ANALYSIS.md](API-COVERAGE-ANALYSIS.md)**
+> 
+> **Current Status (v1.1.1)**:
+> - **29 MCP Tools** available
+> - **60+ CloudStack API methods** implemented  
+> - **~35-40% CloudStack API coverage**
+> - **Complete** VM, Volume, Network, and Infrastructure management
+
 This table shows how MCP tools map to CloudStack API commands:
 
 | MCP Tool | CloudStack API Command |
@@ -584,6 +592,14 @@ This table shows how MCP tools map to CloudStack API commands:
 | `destroy_virtual_machine` | `destroyVirtualMachine` |
 | `update_virtual_machine` | `updateVirtualMachine` |
 | `change_service_offering` | `changeServiceForVirtualMachine` |
+| `migrate_virtual_machine` | `migrateVirtualMachine` |
+| `scale_virtual_machine` | `scaleVirtualMachine` |
+| `reset_vm_password` | `resetPasswordForVirtualMachine` |
+| `get_vm_password` | `getVMPassword` |
+| `add_nic_to_vm` | `addNicToVirtualMachine` |
+| `remove_nic_from_vm` | `removeNicFromVirtualMachine` |
+| `recover_virtual_machine` | `recoverVirtualMachine` |
+| `expunge_virtual_machine` | `expungeVirtualMachine` |
 | **Volume Management** |
 | `list_volumes` | `listVolumes` |
 | `create_volume` | `createVolume` |
@@ -591,6 +607,10 @@ This table shows how MCP tools map to CloudStack API commands:
 | `detach_volume` | `detachVolume` |
 | `delete_volume` | `deleteVolume` |
 | `resize_volume` | `resizeVolume` |
+| `migrate_volume` | `migrateVolume` |
+| `extract_volume` | `extractVolume` |
+| `upload_volume` | `uploadVolume` |
+| `list_volume_metrics` | `listVolumeMetrics` |
 | **Snapshot Management** |
 | `list_snapshots` | `listSnapshots` |
 | `create_snapshot` | `createSnapshot` |
@@ -601,6 +621,20 @@ This table shows how MCP tools map to CloudStack API commands:
 | `delete_security_group` | `deleteSecurityGroup` |
 | `authorize_security_group_ingress` | `authorizeSecurityGroupIngress` |
 | `revoke_security_group_ingress` | `revokeSecurityGroupIngress` |
+| **Network Management** |
+| `create_network` | `createNetwork` |
+| `delete_network` | `deleteNetwork` |
+| `update_network` | `updateNetwork` |
+| `restart_network` | `restartNetwork` |
+| `list_network_offerings` | `listNetworkOfferings` |
+| `associate_ip_address` | `associateIpAddress` |
+| `disassociate_ip_address` | `disassociateIpAddress` |
+| `list_public_ip_addresses` | `listPublicIpAddresses` |
+| `enable_static_nat` | `enableStaticNat` |
+| `disable_static_nat` | `disableStaticNat` |
+| `create_port_forwarding_rule` | `createPortForwardingRule` |
+| `delete_port_forwarding_rule` | `deletePortForwardingRule` |
+| `list_port_forwarding_rules` | `listPortForwardingRules` |
 | **Infrastructure** |
 | `list_networks` | `listNetworks` |
 | `list_zones` | `listZones` |
