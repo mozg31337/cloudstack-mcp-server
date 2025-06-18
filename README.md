@@ -1,7 +1,7 @@
 # CloudStack MCP Server
 
 [![Version](https://img.shields.io/badge/version-1.1.2-blue.svg)](https://github.com/mozg31337/cloudstack-mcp-server)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
 
 A Model Context Protocol (MCP) server that integrates CloudStack with Claude Desktop, enabling seamless cloud infrastructure management through natural language interactions.
@@ -88,30 +88,7 @@ npm run lint
 # Type checking
 npm run typecheck
 
-# Version management
-npm run version:patch   # Bug fixes and small improvements (Z++)
-npm run version:minor   # New features and capabilities (Y++)
-npm run version:major   # Breaking changes and major updates (X++)
-npm run sync-version    # Sync version between package.json and server.ts
 ```
-
-## Versioning
-
-This project follows [Semantic Versioning](https://semver.org/) (X.Y.Z):
-
-- **X (Major)**: Breaking changes, complete rewrites, major architectural changes
-- **Y (Minor)**: Major functions and milestones, significant new feature sets  
-- **Z (Patch)**: Bug fixes, performance improvements, individual tool additions
-
-**Current Version**: 1.1.2
-
-### Version History
-- **v1.1.2**: Comprehensive API coverage analysis and enhanced documentation
-- **v1.1.1**: Improved build process and version management enhancements
-- **v1.1.0**: Complete VM, Volume, and Network management capabilities
-- **v1.0.0**: Initial release with basic CloudStack integration
-
-See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
 
 ## Project Structure
 
@@ -190,4 +167,10 @@ The CloudStack MCP Server provides comprehensive coverage of CloudStack APIs:
 
 ## License
 
-MIT License - see LICENSE file for details.
+This project is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. See the [LICENSE](LICENSE) file for details.
+
+This license prohibits commercial use while allowing personal, educational, and non-profit usage.
+
+## Important Notice
+
+⚠️ **Vibe Coded Application**: This application has been developed using AI-assisted coding techniques and rapid prototyping methods. While functional and extensively tested, users should exercise caution when deploying in production environments. The codebase should be thoroughly reviewed and tested for your specific use case before deployment in critical infrastructure.
