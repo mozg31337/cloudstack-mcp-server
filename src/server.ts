@@ -1149,6 +1149,628 @@ class CloudStackMCPServer {
             },
             required: ['id']
           }
+        },
+        {
+          name: 'restore_virtual_machine',
+          description: 'Restore a virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID to restore'
+              }
+            },
+            required: ['virtualmachineid']
+          }
+        },
+        {
+          name: 'assign_virtual_machine',
+          description: 'Assign virtual machine to account',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID to assign'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              }
+            },
+            required: ['virtualmachineid', 'account']
+          }
+        },
+        {
+          name: 'update_default_nic_for_vm',
+          description: 'Update default NIC for virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              },
+              nicid: {
+                type: 'string',
+                description: 'NIC ID to set as default'
+              }
+            },
+            required: ['virtualmachineid', 'nicid']
+          }
+        },
+        {
+          name: 'add_resource_detail',
+          description: 'Add resource detail to virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              resourceid: {
+                type: 'string',
+                description: 'Resource ID (VM ID)'
+              },
+              resourcetype: {
+                type: 'string',
+                description: 'Resource type (UserVm)'
+              },
+              details: {
+                type: 'string',
+                description: 'Details as key=value pairs'
+              }
+            },
+            required: ['resourceid', 'resourcetype', 'details']
+          }
+        },
+        {
+          name: 'remove_resource_detail',
+          description: 'Remove resource detail from virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              resourceid: {
+                type: 'string',
+                description: 'Resource ID (VM ID)'
+              },
+              resourcetype: {
+                type: 'string',
+                description: 'Resource type (UserVm)'
+              },
+              key: {
+                type: 'string',
+                description: 'Detail key to remove'
+              }
+            },
+            required: ['resourceid', 'resourcetype', 'key']
+          }
+        },
+        {
+          name: 'list_resource_details',
+          description: 'List resource details for virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              resourceid: {
+                type: 'string',
+                description: 'Resource ID (VM ID)'
+              },
+              resourcetype: {
+                type: 'string',
+                description: 'Resource type (UserVm)'
+              }
+            },
+            required: ['resourceid', 'resourcetype']
+          }
+        },
+        {
+          name: 'assign_vm_to_backup_offering',
+          description: 'Assign virtual machine to backup offering',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              },
+              backupofferingid: {
+                type: 'string',
+                description: 'Backup offering ID'
+              }
+            },
+            required: ['virtualmachineid', 'backupofferingid']
+          }
+        },
+        {
+          name: 'create_vm_schedule',
+          description: 'Create virtual machine schedule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              },
+              action: {
+                type: 'string',
+                description: 'Action to schedule (start, stop, reboot)'
+              },
+              schedule: {
+                type: 'string',
+                description: 'Schedule in cron format'
+              },
+              timezone: {
+                type: 'string',
+                description: 'Timezone for schedule'
+              },
+              description: {
+                type: 'string',
+                description: 'Schedule description'
+              }
+            },
+            required: ['virtualmachineid', 'action', 'schedule']
+          }
+        },
+        {
+          name: 'delete_vm_schedule',
+          description: 'Delete virtual machine schedule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Schedule ID to delete'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_vm_schedule',
+          description: 'List virtual machine schedules',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID filter'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name filter'
+              }
+            }
+          }
+        },
+        {
+          name: 'get_vm_user_data',
+          description: 'Get virtual machine user data',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              }
+            },
+            required: ['virtualmachineid']
+          }
+        },
+        {
+          name: 'reset_vm_user_data',
+          description: 'Reset virtual machine user data',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              },
+              userdata: {
+                type: 'string',
+                description: 'New user data (base64 encoded)'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_vm_metrics',
+          description: 'List virtual machine metrics',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              ids: {
+                type: 'string',
+                description: 'Comma-separated VM IDs'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name filter'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID filter'
+              }
+            }
+          }
+        },
+        {
+          name: 'list_vm_usage_history',
+          description: 'List virtual machine usage history',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              },
+              startdate: {
+                type: 'string',
+                description: 'Start date (YYYY-MM-DD)'
+              },
+              enddate: {
+                type: 'string',
+                description: 'End date (YYYY-MM-DD)'
+              }
+            }
+          }
+        },
+        {
+          name: 'migrate_vm_with_volume',
+          description: 'Migrate virtual machine with volumes',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID to migrate'
+              },
+              hostid: {
+                type: 'string',
+                description: 'Destination host ID'
+              },
+              migrateto: {
+                type: 'string',
+                description: 'Storage pool mappings for volumes'
+              }
+            },
+            required: ['virtualmachineid']
+          }
+        },
+        {
+          name: 'import_vm',
+          description: 'Import virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'VM name'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID'
+              },
+              hypervisor: {
+                type: 'string',
+                description: 'Hypervisor type'
+              },
+              templateid: {
+                type: 'string',
+                description: 'Template ID'
+              },
+              serviceofferingid: {
+                type: 'string',
+                description: 'Service offering ID'
+              }
+            },
+            required: ['name', 'zoneid', 'hypervisor']
+          }
+        },
+        {
+          name: 'import_unmanaged_instance',
+          description: 'Import unmanaged virtual machine instance',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'Instance name'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID'
+              },
+              clusterid: {
+                type: 'string',
+                description: 'Cluster ID'
+              },
+              hypervisor: {
+                type: 'string',
+                description: 'Hypervisor type'
+              }
+            },
+            required: ['name', 'zoneid', 'clusterid', 'hypervisor']
+          }
+        },
+        {
+          name: 'clean_vm_reservations',
+          description: 'Clean virtual machine reservations',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              }
+            }
+          }
+        },
+        {
+          name: 'enable_vm_ha',
+          description: 'Enable high availability for virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'disable_vm_ha',
+          description: 'Disable high availability for virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_vm_snapshots',
+          description: 'List virtual machine snapshots',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID filter'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name filter'
+              },
+              name: {
+                type: 'string',
+                description: 'Snapshot name filter'
+              }
+            }
+          }
+        },
+        {
+          name: 'create_vm_snapshot',
+          description: 'Create virtual machine snapshot',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              },
+              name: {
+                type: 'string',
+                description: 'Snapshot name'
+              },
+              description: {
+                type: 'string',
+                description: 'Snapshot description'
+              },
+              snapshotmemory: {
+                type: 'boolean',
+                description: 'Include memory in snapshot'
+              }
+            },
+            required: ['virtualmachineid']
+          }
+        },
+        {
+          name: 'delete_vm_snapshot',
+          description: 'Delete virtual machine snapshot',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              vmsnapshotid: {
+                type: 'string',
+                description: 'VM snapshot ID to delete'
+              }
+            },
+            required: ['vmsnapshotid']
+          }
+        },
+        {
+          name: 'revert_to_vm_snapshot',
+          description: 'Revert virtual machine to snapshot',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              vmsnapshotid: {
+                type: 'string',
+                description: 'VM snapshot ID to revert to'
+              }
+            },
+            required: ['vmsnapshotid']
+          }
+        },
+        {
+          name: 'update_vm_snapshot',
+          description: 'Update virtual machine snapshot',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'VM snapshot ID'
+              },
+              name: {
+                type: 'string',
+                description: 'New snapshot name'
+              },
+              description: {
+                type: 'string',
+                description: 'New snapshot description'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'configure_virtual_machine',
+          description: 'Configure virtual machine settings',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              },
+              cpunumber: {
+                type: 'number',
+                description: 'Number of CPU cores'
+              },
+              memory: {
+                type: 'number',
+                description: 'Memory in MB'
+              },
+              cpuspeed: {
+                type: 'number',
+                description: 'CPU speed in MHz'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'link_vm_to_backup',
+          description: 'Link virtual machine to backup',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              },
+              backupid: {
+                type: 'string',
+                description: 'Backup ID'
+              }
+            },
+            required: ['virtualmachineid', 'backupid']
+          }
+        },
+        {
+          name: 'unlink_vm_from_backup',
+          description: 'Unlink virtual machine from backup',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              }
+            },
+            required: ['virtualmachineid']
+          }
+        },
+        {
+          name: 'upgrade_virtual_machine',
+          description: 'Upgrade virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              },
+              serviceofferingid: {
+                type: 'string',
+                description: 'New service offering ID'
+              },
+              customized: {
+                type: 'boolean',
+                description: 'Custom service offering'
+              }
+            },
+            required: ['id', 'serviceofferingid']
+          }
+        },
+        {
+          name: 'find_hosts_for_migration',
+          description: 'Find suitable hosts for VM migration',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              }
+            },
+            required: ['virtualmachineid']
+          }
+        },
+        {
+          name: 'list_vm_affinity_groups',
+          description: 'List virtual machine affinity groups',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID filter'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name filter'
+              }
+            }
+          }
+        },
+        {
+          name: 'update_vm_affinity_group',
+          description: 'Update virtual machine affinity group',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              },
+              affinitygroupids: {
+                type: 'string',
+                description: 'Comma-separated affinity group IDs'
+              },
+              affinitygroupnames: {
+                type: 'string',
+                description: 'Comma-separated affinity group names'
+              }
+            },
+            required: ['id']
+          }
         }
       ];
 

@@ -552,4 +552,117 @@ export class CloudStackClient {
   public async changeServiceForRouter(params: Record<string, any>): Promise<any> {
     return this.makeRequest('changeServiceForRouter', params);
   }
+
+  // Complete Virtual Machine Management APIs
+  public async assignVirtualMachineToBackupOffering(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('assignVirtualMachineToBackupOffering', params);
+  }
+
+  public async createVMSchedule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createVMSchedule', params);
+  }
+
+  public async deleteVMSchedule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteVMSchedule', params);
+  }
+
+  public async listVMSchedule(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listVMSchedule', params);
+  }
+
+  public async getVirtualMachineUserData(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getVirtualMachineUserData', params);
+  }
+
+  public async resetUserDataForVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('resetUserDataForVirtualMachine', params);
+  }
+
+  public async listVirtualMachinesMetrics(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listVirtualMachinesMetrics', params);
+  }
+
+  public async listVirtualMachinesUsageHistory(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listVirtualMachinesUsageHistory', params);
+  }
+
+  public async migrateVirtualMachineWithVolume(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('migrateVirtualMachineWithVolume', params);
+  }
+
+  public async importVm(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('importVm', params);
+  }
+
+  public async importUnmanagedInstance(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('importUnmanagedInstance', params);
+  }
+
+  public async cleanVMReservations(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('cleanVMReservations', params);
+  }
+
+  public async enableVirtualMachineHa(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('enableVirtualMachineHa', params);
+  }
+
+  public async disableVirtualMachineHa(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('disableVirtualMachineHa', params);
+  }
+
+  public async listVirtualMachineSnapshots(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listVirtualMachineSnapshots', params);
+  }
+
+  public async createVMSnapshot(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createVMSnapshot', params);
+  }
+
+  public async deleteVMSnapshot(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteVMSnapshot', params);
+  }
+
+  public async revertToVMSnapshot(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('revertToVMSnapshot', params);
+  }
+
+  public async updateVMSnapshot(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateVMSnapshot', params);
+  }
+
+  public async createVirtualMachineSnapshot(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createVirtualMachineSnapshot', params);
+  }
+
+  public async deleteVirtualMachineSnapshot(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteVirtualMachineSnapshot', params);
+  }
+
+  public async configureVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('configureVirtualMachine', params);
+  }
+
+  public async linkVirtualMachineToBackup(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('linkVirtualMachineToBackup', params);
+  }
+
+  public async unlinkVirtualMachineFromBackup(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('unlinkVirtualMachineFromBackup', params);
+  }
+
+  public async upgradeVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('upgradeVirtualMachine', params);
+  }
+
+  public async findHostsForMigration(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('findHostsForMigration', params);
+  }
+
+  public async listVirtualMachineAffinityGroups(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listVirtualMachineAffinityGroups', params);
+  }
+
+  public async updateVMAffinityGroup(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateVMAffinityGroup', params);
+  }
 }

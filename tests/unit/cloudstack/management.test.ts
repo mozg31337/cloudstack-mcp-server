@@ -147,8 +147,218 @@ describe('CloudStack Management Operations', () => {
       const result = await client.updateVirtualMachine(params);
 
       expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('command=updateVirtualMachine'));
-      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('displayname=Updated%20VM'));
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('displayname=Updated VM'));
       expect(result).toEqual(mockResponse.data.updatevirtualmachineresponse);
+    });
+
+    it('should migrate virtual machine', async () => {
+      const mockResponse = {
+        data: {
+          migratevirtualmachineresponse: {
+            jobid: 'job-migrate-123',
+            virtualmachine: {
+              id: 'vm-123',
+              state: 'Migrating'
+            }
+          }
+        }
+      };
+
+      const mockGet = jest.fn().mockResolvedValue(mockResponse);
+      (client as any).httpClient.get = mockGet;
+
+      const params = {
+        virtualmachineid: 'vm-123',
+        hostid: 'host-456'
+      };
+
+      const result = await client.migrateVirtualMachine(params);
+
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('command=migrateVirtualMachine'));
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('virtualmachineid=vm-123'));
+      expect(result).toEqual(mockResponse.data.migratevirtualmachineresponse);
+    });
+
+    it('should scale virtual machine', async () => {
+      const mockResponse = {
+        data: {
+          scalevirtualmachineresponse: {
+            jobid: 'job-scale-123',
+            virtualmachine: {
+              id: 'vm-123',
+              state: 'Running'
+            }
+          }
+        }
+      };
+
+      const mockGet = jest.fn().mockResolvedValue(mockResponse);
+      (client as any).httpClient.get = mockGet;
+
+      const params = {
+        id: 'vm-123',
+        serviceofferingid: 'offering-456'
+      };
+
+      const result = await client.scaleVirtualMachine(params);
+
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('command=scaleVirtualMachine'));
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('serviceofferingid=offering-456'));
+      expect(result).toEqual(mockResponse.data.scalevirtualmachineresponse);
+    });
+
+    it('should reset VM password', async () => {
+      const mockResponse = {
+        data: {
+          resetpasswordforvirtualmachineresponse: {
+            jobid: 'job-reset-123',
+            virtualmachine: {
+              id: 'vm-123',
+              password: 'new-random-password'
+            }
+          }
+        }
+      };
+
+      const mockGet = jest.fn().mockResolvedValue(mockResponse);
+      (client as any).httpClient.get = mockGet;
+
+      const params = {
+        id: 'vm-123'
+      };
+
+      const result = await client.resetPasswordForVirtualMachine(params);
+
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('command=resetPasswordForVirtualMachine'));
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('id=vm-123'));
+      expect(result).toEqual(mockResponse.data.resetpasswordforvirtualmachineresponse);
+    });
+
+    it('should get VM password', async () => {
+      const mockResponse = {
+        data: {
+          getvmpasswordresponse: {
+            password: 'vm-password-123',
+            encryptedpassword: 'encrypted-data'
+          }
+        }
+      };
+
+      const mockGet = jest.fn().mockResolvedValue(mockResponse);
+      (client as any).httpClient.get = mockGet;
+
+      const params = {
+        id: 'vm-123'
+      };
+
+      const result = await client.getVMPassword(params);
+
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('command=getVMPassword'));
+      expect(result).toEqual(mockResponse.data.getvmpasswordresponse);
+    });
+
+    it('should add NIC to virtual machine', async () => {
+      const mockResponse = {
+        data: {
+          addnictovirtualmachineresponse: {
+            jobid: 'job-addnic-123',
+            virtualmachine: {
+              id: 'vm-123',
+              nic: [
+                { id: 'nic-456', networkid: 'network-789' }
+              ]
+            }
+          }
+        }
+      };
+
+      const mockGet = jest.fn().mockResolvedValue(mockResponse);
+      (client as any).httpClient.get = mockGet;
+
+      const params = {
+        virtualmachineid: 'vm-123',
+        networkid: 'network-789'
+      };
+
+      const result = await client.addNicToVirtualMachine(params);
+
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('command=addNicToVirtualMachine'));
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('networkid=network-789'));
+      expect(result).toEqual(mockResponse.data.addnictovirtualmachineresponse);
+    });
+
+    it('should remove NIC from virtual machine', async () => {
+      const mockResponse = {
+        data: {
+          removenicfromvirtualmachineresponse: {
+            jobid: 'job-removenic-123',
+            virtualmachine: {
+              id: 'vm-123'
+            }
+          }
+        }
+      };
+
+      const mockGet = jest.fn().mockResolvedValue(mockResponse);
+      (client as any).httpClient.get = mockGet;
+
+      const params = {
+        virtualmachineid: 'vm-123',
+        nicid: 'nic-456'
+      };
+
+      const result = await client.removeNicFromVirtualMachine(params);
+
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('command=removeNicFromVirtualMachine'));
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('nicid=nic-456'));
+      expect(result).toEqual(mockResponse.data.removenicfromvirtualmachineresponse);
+    });
+
+    it('should recover virtual machine', async () => {
+      const mockResponse = {
+        data: {
+          recovervirtualmachineresponse: {
+            virtualmachine: {
+              id: 'vm-123',
+              state: 'Stopped'
+            }
+          }
+        }
+      };
+
+      const mockGet = jest.fn().mockResolvedValue(mockResponse);
+      (client as any).httpClient.get = mockGet;
+
+      const params = {
+        id: 'vm-123'
+      };
+
+      const result = await client.recoverVirtualMachine(params);
+
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('command=recoverVirtualMachine'));
+      expect(result).toEqual(mockResponse.data.recovervirtualmachineresponse);
+    });
+
+    it('should expunge virtual machine', async () => {
+      const mockResponse = {
+        data: {
+          expungevirtualmachineresponse: {
+            jobid: 'job-expunge-123'
+          }
+        }
+      };
+
+      const mockGet = jest.fn().mockResolvedValue(mockResponse);
+      (client as any).httpClient.get = mockGet;
+
+      const params = {
+        id: 'vm-123'
+      };
+
+      const result = await client.expungeVirtualMachine(params);
+
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('command=expungeVirtualMachine'));
+      expect(result).toEqual(mockResponse.data.expungevirtualmachineresponse);
     });
   });
 
@@ -250,6 +460,125 @@ describe('CloudStack Management Operations', () => {
       expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('command=resizeVolume'));
       expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('size=200'));
       expect(result).toEqual(mockResponse.data.resizevolumeresponse);
+    });
+
+    it('should migrate volume', async () => {
+      const mockResponse = {
+        data: {
+          migratevolumeresponse: {
+            jobid: 'job-migrate-vol-123',
+            volume: {
+              id: 'vol-123',
+              state: 'Migrating'
+            }
+          }
+        }
+      };
+
+      const mockGet = jest.fn().mockResolvedValue(mockResponse);
+      (client as any).httpClient.get = mockGet;
+
+      const params = {
+        volumeid: 'vol-123',
+        storageid: 'storage-456'
+      };
+
+      const result = await client.migrateVolume(params);
+
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('command=migrateVolume'));
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('storageid=storage-456'));
+      expect(result).toEqual(mockResponse.data.migratevolumeresponse);
+    });
+
+    it('should extract volume', async () => {
+      const mockResponse = {
+        data: {
+          extractvolumeresponse: {
+            jobid: 'job-extract-123',
+            volume: {
+              id: 'vol-123',
+              url: 'https://storage.example.com/volume-backup.vhd'
+            }
+          }
+        }
+      };
+
+      const mockGet = jest.fn().mockResolvedValue(mockResponse);
+      (client as any).httpClient.get = mockGet;
+
+      const params = {
+        id: 'vol-123',
+        mode: 'HTTP_DOWNLOAD',
+        zoneid: 'zone-456'
+      };
+
+      const result = await client.extractVolume(params);
+
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('command=extractVolume'));
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('mode=HTTP_DOWNLOAD'));
+      expect(result).toEqual(mockResponse.data.extractvolumeresponse);
+    });
+
+    it('should upload volume', async () => {
+      const mockResponse = {
+        data: {
+          uploadvolumeresponse: {
+            jobid: 'job-upload-123',
+            volume: {
+              id: 'vol-789',
+              name: 'uploaded-volume',
+              state: 'Uploaded'
+            }
+          }
+        }
+      };
+
+      const mockGet = jest.fn().mockResolvedValue(mockResponse);
+      (client as any).httpClient.get = mockGet;
+
+      const params = {
+        name: 'uploaded-volume',
+        url: 'https://storage.example.com/volume.vhd',
+        zoneid: 'zone-456',
+        format: 'VHD'
+      };
+
+      const result = await client.uploadVolume(params);
+
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('command=uploadVolume'));
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('format=VHD'));
+      expect(result).toEqual(mockResponse.data.uploadvolumeresponse);
+    });
+
+    it('should list volume metrics', async () => {
+      const mockResponse = {
+        data: {
+          listvolumemetricsresponse: {
+            volumemetrics: [
+              {
+                id: 'vol-123',
+                name: 'test-volume',
+                sizegb: 100,
+                iopsread: 500,
+                iopswrite: 300
+              }
+            ]
+          }
+        }
+      };
+
+      const mockGet = jest.fn().mockResolvedValue(mockResponse);
+      (client as any).httpClient.get = mockGet;
+
+      const params = {
+        virtualmachineid: 'vm-123'
+      };
+
+      const result = await client.listVolumeMetrics(params);
+
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('command=listVolumeMetrics'));
+      expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('virtualmachineid=vm-123'));
+      expect(result).toEqual(mockResponse.data.listvolumemetricsresponse);
     });
   });
 
