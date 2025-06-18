@@ -22,11 +22,15 @@ const versionRegex = /version: ['"][\d.]+['"],/;
 const newVersionLine = `version: '${version}',`;
 
 if (versionRegex.test(serverContent)) {
+  const oldVersionMatch = serverContent.match(versionRegex);
+  const oldVersion = oldVersionMatch ? oldVersionMatch[0].match(/[\d.]+/)[0] : 'unknown';
+  
   serverContent = serverContent.replace(versionRegex, newVersionLine);
   writeFileSync(serverTsPath, serverContent, 'utf8');
-  console.log(`✅ Updated server.ts version to ${version}`);
+  console.log(`✅ Updated server.ts version: ${oldVersion} → ${version}`);
 } else {
   console.log('❌ Could not find version line in server.ts');
+  console.log('Expected format: version: \'X.Y.Z\',');
   process.exit(1);
 }
 
