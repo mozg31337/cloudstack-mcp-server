@@ -92,8 +92,10 @@ describe('CloudStackClient', () => {
     });
 
     it('should handle network timeouts', async () => {
-      const timeoutError = new Error('timeout');
-      (timeoutError as any).code = 'ECONNABORTED';
+      const timeoutError = {
+        code: 'ECONNABORTED',
+        message: 'timeout of 30000ms exceeded'
+      };
 
       const mockGet = jest.fn().mockRejectedValue(timeoutError);
       (client as any).httpClient.get = mockGet;
@@ -105,11 +107,16 @@ describe('CloudStackClient', () => {
 
     it('should handle authentication errors', async () => {
       const authError = {
+        isAxiosError: true,
         response: {
           status: 401,
           data: { errortext: 'Authentication failed' }
         }
       };
+
+      // Mock axios.isAxiosError to return true
+      const originalIsAxiosError = require('axios').isAxiosError;
+      require('axios').isAxiosError = jest.fn().mockReturnValue(true);
 
       const mockGet = jest.fn().mockRejectedValue(authError);
       (client as any).httpClient.get = mockGet;
@@ -117,15 +124,23 @@ describe('CloudStackClient', () => {
       await expect(client.makeRequest('listVirtualMachines')).rejects.toThrow(
         'Authentication failed - check your API credentials'
       );
+
+      // Restore original function
+      require('axios').isAxiosError = originalIsAxiosError;
     });
 
     it('should handle permission errors', async () => {
       const permissionError = {
+        isAxiosError: true,
         response: {
           status: 403,
           data: { errortext: 'Access denied' }
         }
       };
+
+      // Mock axios.isAxiosError to return true
+      const originalIsAxiosError = require('axios').isAxiosError;
+      require('axios').isAxiosError = jest.fn().mockReturnValue(true);
 
       const mockGet = jest.fn().mockRejectedValue(permissionError);
       (client as any).httpClient.get = mockGet;
@@ -133,6 +148,9 @@ describe('CloudStackClient', () => {
       await expect(client.makeRequest('listVirtualMachines')).rejects.toThrow(
         'Access denied - insufficient permissions'
       );
+
+      // Restore original function
+      require('axios').isAxiosError = originalIsAxiosError;
     });
   });
 

@@ -332,6 +332,95 @@ export class CloudStackClient {
     return this.makeRequest('removeFromLoadBalancerRule', params);
   }
 
+  public async listLoadBalancerRules(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listLoadBalancerRules', params);
+  }
+
+  public async updateLoadBalancerRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateLoadBalancerRule', params);
+  }
+
+  // Load Balancer Health Check Policies
+  public async createLBHealthCheckPolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createLBHealthCheckPolicy', params);
+  }
+
+  public async deleteLBHealthCheckPolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteLBHealthCheckPolicy', params);
+  }
+
+  public async listLBHealthCheckPolicies(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listLBHealthCheckPolicies', params);
+  }
+
+  // Load Balancer Stickiness Policies
+  public async createLBStickinessPolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createLBStickinessPolicy', params);
+  }
+
+  public async deleteLBStickinessPolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteLBStickinessPolicy', params);
+  }
+
+  public async listLBStickinessPolicies(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listLBStickinessPolicies', params);
+  }
+
+  // SSL Certificate Management
+  public async uploadSslCert(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('uploadSslCert', params);
+  }
+
+  public async deleteSslCert(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteSslCert', params);
+  }
+
+  public async listSslCerts(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listSslCerts', params);
+  }
+
+  public async assignCertToLoadBalancer(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('assignCertToLoadBalancer', params);
+  }
+
+  public async removeCertFromLoadBalancer(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('removeCertFromLoadBalancer', params);
+  }
+
+  // Application Load Balancer
+  public async createApplicationLoadBalancer(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createApplicationLoadBalancer', params);
+  }
+
+  public async deleteApplicationLoadBalancer(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteApplicationLoadBalancer', params);
+  }
+
+  public async listApplicationLoadBalancers(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listApplicationLoadBalancers', params);
+  }
+
+  public async configureApplicationLoadBalancer(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('configureApplicationLoadBalancer', params);
+  }
+
+  // Firewall Rules Management
+  public async createFirewallRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createFirewallRule', params);
+  }
+
+  public async deleteFirewallRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteFirewallRule', params);
+  }
+
+  public async listFirewallRules(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listFirewallRules', params);
+  }
+
+  public async updateFirewallRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateFirewallRule', params);
+  }
+
   // Advanced Virtual Machine Management
   public async migrateVirtualMachine(params: Record<string, any>): Promise<any> {
     return this.makeRequest('migrateVirtualMachine', params);

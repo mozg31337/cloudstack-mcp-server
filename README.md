@@ -13,6 +13,11 @@ A Model Context Protocol (MCP) server that integrates CloudStack with Claude Des
 - **Volume Operations**: Create, attach, detach, resize, and delete storage volumes
 - **Snapshot Management**: Create, delete, and restore volumes from snapshots
 - **Security Groups**: Create groups and manage ingress/egress firewall rules
+- **Load Balancer Management**: Create, configure, and manage load balancing rules with health checks
+- **SSL Certificate Management**: Upload, assign, and manage SSL certificates for load balancers
+- **Firewall Rules**: Create and manage firewall rules for public IP addresses
+- **Network ACL Management**: Comprehensive access control list management for VPC networks
+- **Port Forwarding**: Complete port forwarding rule management including updates
 - **Resource Discovery**: List VMs, networks, volumes, zones, hosts, and templates
 
 ### 🏗️ Enterprise-Ready Architecture
@@ -136,6 +141,15 @@ Try asking Claude:
 - "Create web-servers security group"
 - "Allow HTTP traffic on port 80"
 - "Open SSH access from my IP range"
+- "Create firewall rule for SSH access"
+- "Set up Network ACL for web tier"
+
+**Load Balancer Operations:**
+- "Create load balancer for web servers"
+- "Add VMs to load balancer pool"
+- "Configure health check for load balancer"
+- "Upload SSL certificate for HTTPS"
+- "Set up stickiness policy for sessions"
 
 **System Information:**
 - "Get CloudStack environment information"
@@ -145,16 +159,18 @@ Try asking Claude:
 
 The CloudStack MCP Server provides comprehensive coverage of CloudStack APIs:
 
-- **📊 35-40% CloudStack API Coverage** across core infrastructure operations
-- **29 MCP Tools** for complete infrastructure management
-- **60+ CloudStack API Methods** implemented with full parameter support
+- **📊 40-45% CloudStack API Coverage** across core infrastructure operations
+- **85+ MCP Tools** for complete infrastructure management
+- **127+ CloudStack API Methods** implemented with full parameter support
 
 **📋 For detailed API coverage analysis, see [API Coverage Analysis](docs/API-COVERAGE-ANALYSIS.md)**
 
 ### Coverage Highlights
 - ✅ **Complete VM Management** (90%+ coverage): Lifecycle, scaling, migration, networking
 - ✅ **Comprehensive Volume Operations** (85%+ coverage): Storage, snapshots, backup/restore  
-- ✅ **Full Network Management** (80%+ coverage): Networks, IPs, NAT, port forwarding
+- ✅ **Full Network Management** (85%+ coverage): Networks, IPs, NAT, port forwarding
+- ✅ **Complete Security Management** (90%+ coverage): Security groups, firewall rules, Network ACLs
+- ✅ **Full Load Balancer Support** (95%+ coverage): Rules, policies, health checks, SSL certificates
 - ✅ **Complete Infrastructure Discovery** (100% coverage): Zones, hosts, offerings, templates
 
 ## Contributing

@@ -1158,6 +1158,510 @@ class CloudStackMCPServer {
           }
         },
         {
+          name: 'list_security_groups',
+          description: 'List security groups',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name to filter security groups'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID to filter security groups'
+              },
+              securitygroupname: {
+                type: 'string',
+                description: 'Security group name'
+              },
+              tags: {
+                type: 'string',
+                description: 'List security groups by tags'
+              }
+            }
+          }
+        },
+        {
+          name: 'authorize_security_group_egress',
+          description: 'Add egress rule to security group',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              securitygroupid: {
+                type: 'string',
+                description: 'Security group ID'
+              },
+              protocol: {
+                type: 'string',
+                description: 'Protocol (TCP, UDP, ICMP)'
+              },
+              startport: {
+                type: 'number',
+                description: 'Start port'
+              },
+              endport: {
+                type: 'number',
+                description: 'End port'
+              },
+              cidrlist: {
+                type: 'string',
+                description: 'CIDR list (comma-separated)'
+              }
+            },
+            required: ['securitygroupid', 'protocol']
+          }
+        },
+        {
+          name: 'revoke_security_group_egress',
+          description: 'Remove egress rule from security group',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Rule ID to revoke'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'create_load_balancer_rule',
+          description: 'Create a load balancer rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              publicipid: {
+                type: 'string',
+                description: 'Public IP ID for the load balancer'
+              },
+              algorithm: {
+                type: 'string',
+                description: 'Load balancing algorithm (roundrobin, leastconn, source)'
+              },
+              name: {
+                type: 'string',
+                description: 'Name for the load balancer rule'
+              },
+              privateport: {
+                type: 'number',
+                description: 'Private port of the virtual machine'
+              },
+              publicport: {
+                type: 'number',
+                description: 'Public port'
+              },
+              protocol: {
+                type: 'string',
+                description: 'Protocol (TCP, UDP)'
+              }
+            },
+            required: ['publicipid', 'algorithm', 'name', 'privateport', 'publicport']
+          }
+        },
+        {
+          name: 'delete_load_balancer_rule',
+          description: 'Delete a load balancer rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Load balancer rule ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_load_balancer_rules',
+          description: 'List load balancer rules',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              publicipid: {
+                type: 'string',
+                description: 'Public IP ID to filter rules'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name to filter rules'
+              },
+              name: {
+                type: 'string',
+                description: 'Load balancer rule name'
+              }
+            }
+          }
+        },
+        {
+          name: 'assign_to_load_balancer_rule',
+          description: 'Assign virtual machines to load balancer rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Load balancer rule ID'
+              },
+              virtualmachineids: {
+                type: 'string',
+                description: 'Comma-separated list of virtual machine IDs'
+              }
+            },
+            required: ['id', 'virtualmachineids']
+          }
+        },
+        {
+          name: 'remove_from_load_balancer_rule',
+          description: 'Remove virtual machines from load balancer rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Load balancer rule ID'
+              },
+              virtualmachineids: {
+                type: 'string',
+                description: 'Comma-separated list of virtual machine IDs'
+              }
+            },
+            required: ['id', 'virtualmachineids']
+          }
+        },
+        {
+          name: 'update_load_balancer_rule',
+          description: 'Update a load balancer rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Load balancer rule ID'
+              },
+              algorithm: {
+                type: 'string',
+                description: 'Load balancing algorithm'
+              },
+              name: {
+                type: 'string',
+                description: 'New name for the rule'
+              },
+              description: {
+                type: 'string',
+                description: 'Description for the rule'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'create_lb_health_check_policy',
+          description: 'Create load balancer health check policy',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              lbruleid: {
+                type: 'string',
+                description: 'Load balancer rule ID'
+              },
+              healthcheckpolicy: {
+                type: 'string',
+                description: 'Health check policy parameters'
+              }
+            },
+            required: ['lbruleid', 'healthcheckpolicy']
+          }
+        },
+        {
+          name: 'delete_lb_health_check_policy',
+          description: 'Delete load balancer health check policy',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Health check policy ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'create_lb_stickiness_policy',
+          description: 'Create load balancer stickiness policy',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              lbruleid: {
+                type: 'string',
+                description: 'Load balancer rule ID'
+              },
+              methodname: {
+                type: 'string',
+                description: 'Stickiness method (LbCookie, AppCookie, SourceBased)'
+              },
+              name: {
+                type: 'string',
+                description: 'Policy name'
+              }
+            },
+            required: ['lbruleid', 'methodname', 'name']
+          }
+        },
+        {
+          name: 'delete_lb_stickiness_policy',
+          description: 'Delete load balancer stickiness policy',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Stickiness policy ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'upload_ssl_cert',
+          description: 'Upload SSL certificate',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              certificate: {
+                type: 'string',
+                description: 'SSL certificate content'
+              },
+              privatekey: {
+                type: 'string',
+                description: 'Private key content'
+              },
+              certchain: {
+                type: 'string',
+                description: 'Certificate chain (optional)'
+              },
+              name: {
+                type: 'string',
+                description: 'Certificate name'
+              }
+            },
+            required: ['certificate', 'privatekey', 'name']
+          }
+        },
+        {
+          name: 'delete_ssl_cert',
+          description: 'Delete SSL certificate',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'SSL certificate ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_ssl_certs',
+          description: 'List SSL certificates',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name to filter certificates'
+              }
+            }
+          }
+        },
+        {
+          name: 'create_firewall_rule',
+          description: 'Create firewall rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              ipaddressid: {
+                type: 'string',
+                description: 'IP address ID'
+              },
+              protocol: {
+                type: 'string',
+                description: 'Protocol (TCP, UDP, ICMP)'
+              },
+              startport: {
+                type: 'number',
+                description: 'Start port'
+              },
+              endport: {
+                type: 'number',
+                description: 'End port'
+              },
+              cidrlist: {
+                type: 'string',
+                description: 'CIDR list (comma-separated)'
+              }
+            },
+            required: ['ipaddressid', 'protocol']
+          }
+        },
+        {
+          name: 'delete_firewall_rule',
+          description: 'Delete firewall rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Firewall rule ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_firewall_rules',
+          description: 'List firewall rules',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              ipaddressid: {
+                type: 'string',
+                description: 'IP address ID to filter rules'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name to filter rules'
+              }
+            }
+          }
+        },
+        {
+          name: 'create_network_acl',
+          description: 'Create network ACL rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              aclid: {
+                type: 'string',
+                description: 'ACL list ID'
+              },
+              protocol: {
+                type: 'string',
+                description: 'Protocol (TCP, UDP, ICMP, ALL)'
+              },
+              startport: {
+                type: 'number',
+                description: 'Start port'
+              },
+              endport: {
+                type: 'number',
+                description: 'End port'
+              },
+              cidrlist: {
+                type: 'string',
+                description: 'CIDR list (comma-separated)'
+              },
+              traffictype: {
+                type: 'string',
+                description: 'Traffic type (Ingress, Egress)'
+              },
+              action: {
+                type: 'string',
+                description: 'Action (Allow, Deny)'
+              }
+            },
+            required: ['aclid', 'protocol', 'traffictype', 'action']
+          }
+        },
+        {
+          name: 'delete_network_acl',
+          description: 'Delete network ACL rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'ACL rule ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_network_acls',
+          description: 'List network ACL rules',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              aclid: {
+                type: 'string',
+                description: 'ACL list ID to filter rules'
+              },
+              networkid: {
+                type: 'string',
+                description: 'Network ID to filter rules'
+              }
+            }
+          }
+        },
+        {
+          name: 'create_network_acl_list',
+          description: 'Create network ACL list',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'ACL list name'
+              },
+              description: {
+                type: 'string',
+                description: 'ACL list description'
+              },
+              vpcid: {
+                type: 'string',
+                description: 'VPC ID'
+              }
+            },
+            required: ['name', 'vpcid']
+          }
+        },
+        {
+          name: 'delete_network_acl_list',
+          description: 'Delete network ACL list',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'ACL list ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_network_acl_lists',
+          description: 'List network ACL lists',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              vpcid: {
+                type: 'string',
+                description: 'VPC ID to filter ACL lists'
+              },
+              name: {
+                type: 'string',
+                description: 'ACL list name'
+              }
+            }
+          }
+        },
+        {
           name: 'restore_virtual_machine',
           description: 'Restore a virtual machine',
           inputSchema: {
@@ -1874,6 +2378,86 @@ class CloudStackMCPServer {
           
           case 'revoke_security_group_ingress':
             return await this.handleRevokeSecurityGroupIngress(args);
+          
+          case 'list_security_groups':
+            return await this.handleListSecurityGroups(args);
+          
+          case 'authorize_security_group_egress':
+            return await this.handleAuthorizeSecurityGroupEgress(args);
+          
+          case 'revoke_security_group_egress':
+            return await this.handleRevokeSecurityGroupEgress(args);
+
+          // Load Balancer Management
+          case 'create_load_balancer_rule':
+            return await this.handleCreateLoadBalancerRule(args);
+          
+          case 'delete_load_balancer_rule':
+            return await this.handleDeleteLoadBalancerRule(args);
+          
+          case 'list_load_balancer_rules':
+            return await this.handleListLoadBalancerRules(args);
+          
+          case 'assign_to_load_balancer_rule':
+            return await this.handleAssignToLoadBalancerRule(args);
+          
+          case 'remove_from_load_balancer_rule':
+            return await this.handleRemoveFromLoadBalancerRule(args);
+          
+          case 'update_load_balancer_rule':
+            return await this.handleUpdateLoadBalancerRule(args);
+
+          // Load Balancer Policies
+          case 'create_lb_health_check_policy':
+            return await this.handleCreateLBHealthCheckPolicy(args);
+          
+          case 'delete_lb_health_check_policy':
+            return await this.handleDeleteLBHealthCheckPolicy(args);
+          
+          case 'create_lb_stickiness_policy':
+            return await this.handleCreateLBStickinessPolicy(args);
+          
+          case 'delete_lb_stickiness_policy':
+            return await this.handleDeleteLBStickinessPolicy(args);
+
+          // SSL Certificate Management
+          case 'upload_ssl_cert':
+            return await this.handleUploadSslCert(args);
+          
+          case 'delete_ssl_cert':
+            return await this.handleDeleteSslCert(args);
+          
+          case 'list_ssl_certs':
+            return await this.handleListSslCerts(args);
+
+          // Firewall Rules
+          case 'create_firewall_rule':
+            return await this.handleCreateFirewallRule(args);
+          
+          case 'delete_firewall_rule':
+            return await this.handleDeleteFirewallRule(args);
+          
+          case 'list_firewall_rules':
+            return await this.handleListFirewallRules(args);
+
+          // Network ACL Management
+          case 'create_network_acl':
+            return await this.handleCreateNetworkACL(args);
+          
+          case 'delete_network_acl':
+            return await this.handleDeleteNetworkACL(args);
+          
+          case 'list_network_acls':
+            return await this.handleListNetworkACLs(args);
+          
+          case 'create_network_acl_list':
+            return await this.handleCreateNetworkACLList(args);
+          
+          case 'delete_network_acl_list':
+            return await this.handleDeleteNetworkACLList(args);
+          
+          case 'list_network_acl_lists':
+            return await this.handleListNetworkACLLists(args);
           
           case 'migrate_virtual_machine':
             return await this.handleMigrateVirtualMachine(args);
@@ -2756,6 +3340,109 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     return `${operation} completed successfully.`;
   }
 
+  private async handleListSecurityGroups(args: any): Promise<any> {
+    const allowedParams = ['account', 'domainid', 'securitygroupname', 'tags', 'listall'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listSecurityGroups(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatSecurityGroupListResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleAuthorizeSecurityGroupEgress(args: any): Promise<any> {
+    if (!args.securitygroupid || !args.protocol) {
+      throw new Error('Security group ID and protocol are required');
+    }
+    
+    const allowedParams = ['securitygroupid', 'protocol', 'startport', 'endport', 'cidrlist'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.authorizeSecurityGroupEgress(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Security group egress rule authorization', response)
+        }
+      ]
+    };
+  }
+
+  private async handleRevokeSecurityGroupEgress(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Rule ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.revokeSecurityGroupEgress(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Security group egress rule revocation', response)
+        }
+      ]
+    };
+  }
+
+  private formatSecurityGroupListResponse(response: any): string {
+    const groups = response.securitygroup || [];
+    
+    if (groups.length === 0) {
+      return 'No security groups found.';
+    }
+    
+    let result = `Found ${groups.length} security group(s):\n\n`;
+    
+    for (const group of groups) {
+      result += `Security Group: ${group.name} (${group.id})\n`;
+      result += `  Description: ${group.description || 'N/A'}\n`;
+      result += `  Account: ${group.account || 'N/A'}\n`;
+      result += `  Domain: ${group.domain || 'N/A'}\n`;
+      
+      if (group.ingressrule && group.ingressrule.length > 0) {
+        result += `  Ingress Rules (${group.ingressrule.length}):\n`;
+        for (const rule of group.ingressrule) {
+          result += `    ${rule.protocol}`;
+          if (rule.startport) {
+            result += `:${rule.startport}`;
+            if (rule.endport && rule.endport !== rule.startport) {
+              result += `-${rule.endport}`;
+            }
+          }
+          result += ` from ${rule.cidr || rule.securitygroupname || 'Any'}\n`;
+        }
+      }
+      
+      if (group.egressrule && group.egressrule.length > 0) {
+        result += `  Egress Rules (${group.egressrule.length}):\n`;
+        for (const rule of group.egressrule) {
+          result += `    ${rule.protocol}`;
+          if (rule.startport) {
+            result += `:${rule.startport}`;
+            if (rule.endport && rule.endport !== rule.startport) {
+              result += `-${rule.endport}`;
+            }
+          }
+          result += ` to ${rule.cidr || rule.securitygroupname || 'Any'}\n`;
+        }
+      }
+      
+      result += '\n';
+    }
+    
+    return result.trim();
+  }
+
   // Advanced Virtual Machine Management Handlers
   private async handleMigrateVirtualMachine(args: any): Promise<any> {
     if (!args.virtualmachineid) {
@@ -3354,6 +4041,562 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     }
 
     return result;
+  }
+
+  // Load Balancer Management Handlers
+  private async handleCreateLoadBalancerRule(args: any): Promise<any> {
+    if (!args.publicipid || !args.algorithm || !args.name || !args.privateport || !args.publicport) {
+      throw new Error('Public IP ID, algorithm, name, private port, and public port are required');
+    }
+    
+    const allowedParams = ['publicipid', 'algorithm', 'name', 'privateport', 'publicport', 'protocol', 'description'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.createLoadBalancerRule(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Load balancer rule creation', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteLoadBalancerRule(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Load balancer rule ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.deleteLoadBalancerRule(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Load balancer rule deletion', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListLoadBalancerRules(args: any): Promise<any> {
+    const allowedParams = ['publicipid', 'account', 'name', 'listall'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listLoadBalancerRules(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatLoadBalancerRulesResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleAssignToLoadBalancerRule(args: any): Promise<any> {
+    if (!args.id || !args.virtualmachineids) {
+      throw new Error('Load balancer rule ID and virtual machine IDs are required');
+    }
+    
+    const params = {
+      id: args.id,
+      virtualmachineids: args.virtualmachineids
+    };
+    
+    const response = await this.client.assignToLoadBalancerRule(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('VM assignment to load balancer', response)
+        }
+      ]
+    };
+  }
+
+  private async handleRemoveFromLoadBalancerRule(args: any): Promise<any> {
+    if (!args.id || !args.virtualmachineids) {
+      throw new Error('Load balancer rule ID and virtual machine IDs are required');
+    }
+    
+    const params = {
+      id: args.id,
+      virtualmachineids: args.virtualmachineids
+    };
+    
+    const response = await this.client.removeFromLoadBalancerRule(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('VM removal from load balancer', response)
+        }
+      ]
+    };
+  }
+
+  private async handleUpdateLoadBalancerRule(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Load balancer rule ID is required');
+    }
+    
+    const allowedParams = ['id', 'algorithm', 'name', 'description'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.updateLoadBalancerRule(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Load balancer rule update', response)
+        }
+      ]
+    };
+  }
+
+  // Load Balancer Policy Handlers
+  private async handleCreateLBHealthCheckPolicy(args: any): Promise<any> {
+    if (!args.lbruleid || !args.healthcheckpolicy) {
+      throw new Error('Load balancer rule ID and health check policy are required');
+    }
+    
+    const params = {
+      lbruleid: args.lbruleid,
+      healthcheckpolicy: args.healthcheckpolicy
+    };
+    
+    const response = await this.client.createLBHealthCheckPolicy(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Health check policy creation', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteLBHealthCheckPolicy(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Health check policy ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.deleteLBHealthCheckPolicy(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Health check policy deletion', response)
+        }
+      ]
+    };
+  }
+
+  private async handleCreateLBStickinessPolicy(args: any): Promise<any> {
+    if (!args.lbruleid || !args.methodname || !args.name) {
+      throw new Error('Load balancer rule ID, method name, and name are required');
+    }
+    
+    const allowedParams = ['lbruleid', 'methodname', 'name', 'param'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.createLBStickinessPolicy(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Stickiness policy creation', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteLBStickinessPolicy(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Stickiness policy ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.deleteLBStickinessPolicy(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Stickiness policy deletion', response)
+        }
+      ]
+    };
+  }
+
+  // SSL Certificate Handlers
+  private async handleUploadSslCert(args: any): Promise<any> {
+    if (!args.certificate || !args.privatekey || !args.name) {
+      throw new Error('Certificate, private key, and name are required');
+    }
+    
+    const allowedParams = ['certificate', 'privatekey', 'name', 'certchain', 'password'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.uploadSslCert(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatSslCertResponse('SSL certificate upload', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteSslCert(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('SSL certificate ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.deleteSslCert(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: 'SSL certificate deleted successfully.'
+        }
+      ]
+    };
+  }
+
+  private async handleListSslCerts(args: any): Promise<any> {
+    const allowedParams = ['account', 'listall'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listSslCerts(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatSslCertListResponse(response)
+        }
+      ]
+    };
+  }
+
+  // Firewall Rule Handlers
+  private async handleCreateFirewallRule(args: any): Promise<any> {
+    if (!args.ipaddressid || !args.protocol) {
+      throw new Error('IP address ID and protocol are required');
+    }
+    
+    const allowedParams = ['ipaddressid', 'protocol', 'startport', 'endport', 'cidrlist', 'icmptype', 'icmpcode'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.createFirewallRule(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Firewall rule creation', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteFirewallRule(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Firewall rule ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.deleteFirewallRule(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Firewall rule deletion', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListFirewallRules(args: any): Promise<any> {
+    const allowedParams = ['ipaddressid', 'account', 'listall'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listFirewallRules(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatFirewallRulesResponse(response)
+        }
+      ]
+    };
+  }
+
+  // Network ACL Handlers
+  private async handleCreateNetworkACL(args: any): Promise<any> {
+    if (!args.aclid || !args.protocol || !args.traffictype || !args.action) {
+      throw new Error('ACL ID, protocol, traffic type, and action are required');
+    }
+    
+    const allowedParams = ['aclid', 'protocol', 'startport', 'endport', 'cidrlist', 'traffictype', 'action', 'number'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.createNetworkACL(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Network ACL rule creation', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteNetworkACL(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Network ACL rule ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.deleteNetworkACL(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Network ACL rule deletion', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListNetworkACLs(args: any): Promise<any> {
+    const allowedParams = ['aclid', 'networkid', 'listall'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listNetworkACLs(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatNetworkACLResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleCreateNetworkACLList(args: any): Promise<any> {
+    if (!args.name || !args.vpcid) {
+      throw new Error('Name and VPC ID are required');
+    }
+    
+    const allowedParams = ['name', 'description', 'vpcid'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.createNetworkACLList(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatNetworkACLListResponse('Network ACL list creation', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteNetworkACLList(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Network ACL list ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.deleteNetworkACLList(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Network ACL list deletion', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListNetworkACLLists(args: any): Promise<any> {
+    const allowedParams = ['vpcid', 'name', 'listall'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listNetworkACLLists(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatNetworkACLListsResponse(response)
+        }
+      ]
+    };
+  }
+
+  // Response Formatting Methods
+  private formatLoadBalancerRulesResponse(response: any): string {
+    const rules = response.loadbalancerrule || [];
+    
+    if (rules.length === 0) {
+      return 'No load balancer rules found.';
+    }
+    
+    let result = `Found ${rules.length} load balancer rule(s):\n\n`;
+    
+    for (const rule of rules) {
+      result += `Rule: ${rule.name} (${rule.id})\n`;
+      result += `  Algorithm: ${rule.algorithm}\n`;
+      result += `  Public Port: ${rule.publicport}\n`;
+      result += `  Private Port: ${rule.privateport}\n`;
+      result += `  Protocol: ${rule.protocol || 'TCP'}\n`;
+      result += `  State: ${rule.state}\n`;
+      result += `  Public IP: ${rule.publicip}\n`;
+      
+      if (rule.loadbalancerinstance && rule.loadbalancerinstance.length > 0) {
+        result += `  Assigned VMs (${rule.loadbalancerinstance.length}):\n`;
+        for (const vm of rule.loadbalancerinstance) {
+          result += `    ${vm.name} (${vm.id}) - ${vm.ipaddress}\n`;
+        }
+      }
+      
+      result += '\n';
+    }
+    
+    return result.trim();
+  }
+
+  private formatSslCertResponse(operation: string, response: any): string {
+    if (response.sslcert) {
+      const cert = response.sslcert;
+      return `${operation} completed successfully.\nCertificate: ${cert.name} (${cert.id})\nFingerprint: ${cert.fingerprint || 'N/A'}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatSslCertListResponse(response: any): string {
+    const certs = response.sslcert || [];
+    
+    if (certs.length === 0) {
+      return 'No SSL certificates found.';
+    }
+    
+    let result = `Found ${certs.length} SSL certificate(s):\n\n`;
+    
+    for (const cert of certs) {
+      result += `Certificate: ${cert.name} (${cert.id})\n`;
+      result += `  Fingerprint: ${cert.fingerprint || 'N/A'}\n`;
+      result += `  Account: ${cert.account || 'N/A'}\n`;
+      result += '\n';
+    }
+    
+    return result.trim();
+  }
+
+  private formatFirewallRulesResponse(response: any): string {
+    const rules = response.firewallrule || [];
+    
+    if (rules.length === 0) {
+      return 'No firewall rules found.';
+    }
+    
+    let result = `Found ${rules.length} firewall rule(s):\n\n`;
+    
+    for (const rule of rules) {
+      result += `Rule ID: ${rule.id}\n`;
+      result += `  Protocol: ${rule.protocol}`;
+      if (rule.startport) {
+        result += `:${rule.startport}`;
+        if (rule.endport && rule.endport !== rule.startport) {
+          result += `-${rule.endport}`;
+        }
+      }
+      result += `\n  CIDR: ${rule.cidrlist || 'Any'}\n`;
+      result += `  State: ${rule.state}\n`;
+      result += '\n';
+    }
+    
+    return result.trim();
+  }
+
+  private formatNetworkACLResponse(response: any): string {
+    const rules = response.networkacl || [];
+    
+    if (rules.length === 0) {
+      return 'No network ACL rules found.';
+    }
+    
+    let result = `Found ${rules.length} network ACL rule(s):\n\n`;
+    
+    for (const rule of rules) {
+      result += `Rule #${rule.number || rule.id}: ${rule.protocol}`;
+      if (rule.startport) {
+        result += `:${rule.startport}`;
+        if (rule.endport && rule.endport !== rule.startport) {
+          result += `-${rule.endport}`;
+        }
+      }
+      result += `\n  Traffic: ${rule.traffictype} | Action: ${rule.action}\n`;
+      result += `  CIDR: ${rule.cidrlist || 'Any'}\n`;
+      result += `  State: ${rule.state}\n\n`;
+    }
+    
+    return result.trim();
+  }
+
+  private formatNetworkACLListResponse(operation: string, response: any): string {
+    if (response.networkacllist) {
+      const list = response.networkacllist;
+      return `${operation} completed successfully.\nACL List: ${list.name} (${list.id})\nDescription: ${list.description || 'N/A'}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatNetworkACLListsResponse(response: any): string {
+    const lists = response.networkacllist || [];
+    
+    if (lists.length === 0) {
+      return 'No network ACL lists found.';
+    }
+    
+    let result = `Found ${lists.length} network ACL list(s):\n\n`;
+    
+    for (const list of lists) {
+      result += `ACL List: ${list.name} (${list.id})\n`;
+      result += `  Description: ${list.description || 'N/A'}\n`;
+      result += `  VPC: ${list.vpcid}\n`;
+      result += '\n';
+    }
+    
+    return result.trim();
   }
 
   public async run(): Promise<void> {
