@@ -15,10 +15,51 @@ export class Logger {
   private static createLogger(level: string, logFile: string): winston.Logger {
     const logDir = dirname(logFile);
     
+    // Ensure log directory exists
     try {
       mkdirSync(logDir, { recursive: true });
     } catch (error) {
       console.warn(`Failed to create log directory ${logDir}:`, error);
+    }
+
+    // Create file transports array
+    const fileTransports: winston.transport[] = [
+      new winston.transports.Console({
+        format: winston.format.combine(
+          winston.format.colorize(),
+          winston.format.printf(({ level, message, timestamp }) => {
+            return `${timestamp} [${level}]: ${message}`;
+          })
+        )
+      })
+    ];
+
+    // Only add file transport if we can create the directory
+    try {
+      fileTransports.push(new winston.transports.File({
+        filename: logFile,
+        maxsize: 10 * 1024 * 1024, // 10MB
+        maxFiles: 5,
+        tailable: true
+      }));
+    } catch (error) {
+      console.warn(`Failed to create file transport for ${logFile}:`, error);
+    }
+
+    // Create exception and rejection handlers if possible
+    const exceptionHandlers: winston.transport[] = [];
+    const rejectionHandlers: winston.transport[] = [];
+
+    try {
+      exceptionHandlers.push(new winston.transports.File({ filename: `${logDir}/exceptions.log` }));
+    } catch (error) {
+      console.warn(`Failed to create exception handler:`, error);
+    }
+
+    try {
+      rejectionHandlers.push(new winston.transports.File({ filename: `${logDir}/rejections.log` }));
+    } catch (error) {
+      console.warn(`Failed to create rejection handler:`, error);
     }
 
     const logger = winston.createLogger({
@@ -32,28 +73,9 @@ export class Logger {
           return `${timestamp} [${level.toUpperCase()}]: ${stack || message}`;
         })
       ),
-      transports: [
-        new winston.transports.Console({
-          format: winston.format.combine(
-            winston.format.colorize(),
-            winston.format.printf(({ level, message, timestamp }) => {
-              return `${timestamp} [${level}]: ${message}`;
-            })
-          )
-        }),
-        new winston.transports.File({
-          filename: logFile,
-          maxsize: 10 * 1024 * 1024, // 10MB
-          maxFiles: 5,
-          tailable: true
-        })
-      ],
-      exceptionHandlers: [
-        new winston.transports.File({ filename: 'logs/exceptions.log' })
-      ],
-      rejectionHandlers: [
-        new winston.transports.File({ filename: 'logs/rejections.log' })
-      ]
+      transports: fileTransports,
+      exceptionHandlers: exceptionHandlers.length > 0 ? exceptionHandlers : undefined,
+      rejectionHandlers: rejectionHandlers.length > 0 ? rejectionHandlers : undefined
     });
 
     return logger;

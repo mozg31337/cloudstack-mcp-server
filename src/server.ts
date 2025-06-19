@@ -31,15 +31,22 @@ class CloudStackMCPServer {
       }
     );
 
-    this.configManager = new ConfigManager();
-    const environment = this.configManager.getDefaultEnvironment();
-    this.client = new CloudStackClient(environment);
+    try {
+      this.configManager = new ConfigManager();
+      const loggingConfig = this.configManager.getLoggingConfig();
+      
+      // Initialize logger first
+      Logger.getInstance(loggingConfig.level, loggingConfig.file);
+      
+      const environment = this.configManager.getDefaultEnvironment();
+      this.client = new CloudStackClient(environment);
 
-    const loggingConfig = this.configManager.getLoggingConfig();
-    Logger.getInstance(loggingConfig.level, loggingConfig.file);
-
-    this.setupToolHandlers();
-    this.setupErrorHandling();
+      this.setupToolHandlers();
+      this.setupErrorHandling();
+    } catch (error) {
+      console.error('Failed to initialize CloudStack MCP Server:', error);
+      throw error;
+    }
   }
 
   private setupToolHandlers(): void {
@@ -3363,7 +3370,13 @@ async function main(): Promise<void> {
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   main().catch((error) => {
-    Logger.error('Failed to start CloudStack MCP Server', error);
+    // Use console.error as a fallback in case Logger isn't initialized
+    try {
+      Logger.error('Failed to start CloudStack MCP Server', error);
+    } catch (logError) {
+      console.error('Failed to start CloudStack MCP Server:', error);
+      console.error('Logger error:', logError);
+    }
     process.exit(1);
   });
 }
