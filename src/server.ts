@@ -2282,6 +2282,863 @@ class CloudStackMCPServer {
             },
             required: ['id']
           }
+        },
+        // Account Management Tools
+        {
+          name: 'create_account',
+          description: 'Create a new CloudStack account',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              email: {
+                type: 'string',
+                description: 'User email address'
+              },
+              firstname: {
+                type: 'string',
+                description: 'User first name'
+              },
+              lastname: {
+                type: 'string',
+                description: 'User last name'
+              },
+              password: {
+                type: 'string',
+                description: 'User password'
+              },
+              username: {
+                type: 'string',
+                description: 'Unique username'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name (optional)'
+              },
+              accounttype: {
+                type: 'number',
+                description: 'Account type (0=user, 1=admin, 2=domain-admin)'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID where account is created'
+              },
+              roleid: {
+                type: 'string',
+                description: 'Role ID to assign'
+              }
+            },
+            required: ['email', 'firstname', 'lastname', 'password', 'username']
+          }
+        },
+        {
+          name: 'list_accounts',
+          description: 'List CloudStack accounts',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              accounttype: {
+                type: 'number',
+                description: 'Account type filter (0=user, 1=admin, 2=domain-admin)'
+              },
+              domainid: {
+                type: 'string',
+                description: 'List accounts in specific domain'
+              },
+              name: {
+                type: 'string',
+                description: 'Account name filter'
+              },
+              state: {
+                type: 'string',
+                description: 'Account state filter (enabled, disabled, locked)'
+              },
+              isrecursive: {
+                type: 'boolean',
+                description: 'List accounts recursively from parent domain'
+              }
+            }
+          }
+        },
+        {
+          name: 'update_account',
+          description: 'Update account information',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Account ID'
+              },
+              newname: {
+                type: 'string',
+                description: 'New account name'
+              },
+              networkdomain: {
+                type: 'string',
+                description: 'Updated network domain'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'delete_account',
+          description: 'Delete a CloudStack account',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Account ID to delete'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'enable_account',
+          description: 'Enable a disabled account',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              }
+            },
+            required: ['account', 'domainid']
+          }
+        },
+        {
+          name: 'disable_account',
+          description: 'Disable an account',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              lock: {
+                type: 'boolean',
+                description: 'Lock the account'
+              }
+            },
+            required: ['account', 'domainid', 'lock']
+          }
+        },
+        {
+          name: 'lock_account',
+          description: 'Lock an account to prevent login',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              }
+            },
+            required: ['account', 'domainid']
+          }
+        },
+        // Domain Management Tools
+        {
+          name: 'create_domain',
+          description: 'Create a new domain',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'Domain name'
+              },
+              parentdomainid: {
+                type: 'string',
+                description: 'Parent domain ID'
+              },
+              networkdomain: {
+                type: 'string',
+                description: 'Network domain'
+              }
+            },
+            required: ['name']
+          }
+        },
+        {
+          name: 'list_domains',
+          description: 'List domains',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              name: {
+                type: 'string',
+                description: 'Domain name'
+              },
+              level: {
+                type: 'number',
+                description: 'Domain level'
+              },
+              isrecursive: {
+                type: 'boolean',
+                description: 'List subdomains recursively'
+              }
+            }
+          }
+        },
+        {
+          name: 'update_domain',
+          description: 'Update domain information',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              name: {
+                type: 'string',
+                description: 'New domain name'
+              },
+              networkdomain: {
+                type: 'string',
+                description: 'Updated network domain'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'delete_domain',
+          description: 'Delete a domain',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Domain ID to delete'
+              },
+              cleanup: {
+                type: 'boolean',
+                description: 'Clean up domain resources'
+              },
+              force: {
+                type: 'boolean',
+                description: 'Force deletion even with existing resources'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_domain_children',
+          description: 'List immediate children of a domain',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              domainid: {
+                type: 'string',
+                description: 'Parent domain ID'
+              },
+              isrecursive: {
+                type: 'boolean',
+                description: 'List all descendants'
+              },
+              name: {
+                type: 'string',
+                description: 'Child domain name filter'
+              }
+            }
+          }
+        },
+        // User Management Tools
+        {
+          name: 'create_user',
+          description: 'Create a user for an existing account',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name where user is created'
+              },
+              email: {
+                type: 'string',
+                description: 'User email address'
+              },
+              firstname: {
+                type: 'string',
+                description: 'User first name'
+              },
+              lastname: {
+                type: 'string',
+                description: 'User last name'
+              },
+              password: {
+                type: 'string',
+                description: 'User password'
+              },
+              username: {
+                type: 'string',
+                description: 'Unique username'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              timezone: {
+                type: 'string',
+                description: 'User timezone'
+              }
+            },
+            required: ['account', 'email', 'firstname', 'lastname', 'password', 'username']
+          }
+        },
+        {
+          name: 'list_users',
+          description: 'List users',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'List users by account'
+              },
+              accounttype: {
+                type: 'number',
+                description: 'Filter by account type'
+              },
+              domainid: {
+                type: 'string',
+                description: 'List users in specific domain'
+              },
+              id: {
+                type: 'string',
+                description: 'List user by ID'
+              },
+              username: {
+                type: 'string',
+                description: 'List user by username'
+              },
+              state: {
+                type: 'string',
+                description: 'User state filter'
+              }
+            }
+          }
+        },
+        {
+          name: 'update_user',
+          description: 'Update user information',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'User ID'
+              },
+              email: {
+                type: 'string',
+                description: 'Updated email'
+              },
+              firstname: {
+                type: 'string',
+                description: 'Updated first name'
+              },
+              lastname: {
+                type: 'string',
+                description: 'Updated last name'
+              },
+              password: {
+                type: 'string',
+                description: 'New password'
+              },
+              username: {
+                type: 'string',
+                description: 'New username'
+              },
+              timezone: {
+                type: 'string',
+                description: 'Updated timezone'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'delete_user',
+          description: 'Delete a user',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'User ID to delete'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'enable_user',
+          description: 'Enable a previously disabled user',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'User ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'disable_user',
+          description: 'Disable a user',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'User ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'lock_user',
+          description: 'Lock a user account',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'User ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'register_user_keys',
+          description: 'Register API key/secret key for a user',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'User ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        // Resource Limits and Quotas Tools
+        {
+          name: 'list_resource_limits',
+          description: 'List resource limits for accounts, domains, or projects',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'List limits for specific account'
+              },
+              domainid: {
+                type: 'string',
+                description: 'List limits for specific domain'
+              },
+              projectid: {
+                type: 'string',
+                description: 'List limits for project'
+              },
+              resourcetype: {
+                type: 'number',
+                description: 'Resource type (0-11)'
+              },
+              isrecursive: {
+                type: 'boolean',
+                description: 'List limits recursively'
+              }
+            }
+          }
+        },
+        {
+          name: 'update_resource_limit',
+          description: 'Update resource limits for accounts or domains',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              resourcetype: {
+                type: 'number',
+                description: 'Resource type (0-11)'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              projectid: {
+                type: 'string',
+                description: 'Project ID'
+              },
+              max: {
+                type: 'number',
+                description: 'Maximum limit (-1 for unlimited)'
+              }
+            },
+            required: ['resourcetype']
+          }
+        },
+        {
+          name: 'update_resource_count',
+          description: 'Recalculate and update resource usage counts',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              projectid: {
+                type: 'string',
+                description: 'Project ID'
+              },
+              resourcetype: {
+                type: 'number',
+                description: 'Specific resource type'
+              }
+            }
+          }
+        },
+        // Role and Permission Management Tools
+        {
+          name: 'create_role',
+          description: 'Create a new role with specified permissions',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'Unique role name'
+              },
+              type: {
+                type: 'string',
+                description: 'Role type (Admin, ResourceAdmin, DomainAdmin, User)'
+              },
+              description: {
+                type: 'string',
+                description: 'Role description'
+              }
+            },
+            required: ['name', 'type']
+          }
+        },
+        {
+          name: 'list_roles',
+          description: 'List roles in CloudStack',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'List role by ID'
+              },
+              name: {
+                type: 'string',
+                description: 'List role by name'
+              },
+              type: {
+                type: 'string',
+                description: 'List roles by type'
+              }
+            }
+          }
+        },
+        {
+          name: 'update_role',
+          description: 'Update role information',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Role ID'
+              },
+              name: {
+                type: 'string',
+                description: 'New role name'
+              },
+              type: {
+                type: 'string',
+                description: 'New role type'
+              },
+              description: {
+                type: 'string',
+                description: 'Updated description'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'delete_role',
+          description: 'Delete a role',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Role ID to delete'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'create_role_permission',
+          description: 'Create permission rules for a role',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              permission: {
+                type: 'string',
+                description: 'Permission type (allow/deny)'
+              },
+              roleid: {
+                type: 'string',
+                description: 'Role ID'
+              },
+              rule: {
+                type: 'string',
+                description: 'API rule or pattern'
+              },
+              description: {
+                type: 'string',
+                description: 'Permission description'
+              }
+            },
+            required: ['permission', 'roleid', 'rule']
+          }
+        },
+        {
+          name: 'list_role_permissions',
+          description: 'List permissions for a role',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              roleid: {
+                type: 'string',
+                description: 'Role ID'
+              }
+            }
+          }
+        },
+        // Project Management Tools
+        {
+          name: 'create_project',
+          description: 'Create a new project for multi-tenancy',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              displaytext: {
+                type: 'string',
+                description: 'Project display text'
+              },
+              name: {
+                type: 'string',
+                description: 'Project name'
+              },
+              account: {
+                type: 'string',
+                description: 'Project owner account'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              }
+            },
+            required: ['displaytext', 'name']
+          }
+        },
+        {
+          name: 'list_projects',
+          description: 'List projects',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'List projects by account'
+              },
+              domainid: {
+                type: 'string',
+                description: 'List projects in domain'
+              },
+              id: {
+                type: 'string',
+                description: 'List project by ID'
+              },
+              name: {
+                type: 'string',
+                description: 'List project by name'
+              },
+              state: {
+                type: 'string',
+                description: 'Project state filter'
+              },
+              isrecursive: {
+                type: 'boolean',
+                description: 'List projects recursively'
+              }
+            }
+          }
+        },
+        {
+          name: 'update_project',
+          description: 'Update project information',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Project ID'
+              },
+              displaytext: {
+                type: 'string',
+                description: 'Updated display text'
+              },
+              name: {
+                type: 'string',
+                description: 'Updated project name'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'delete_project',
+          description: 'Delete a project and its resources',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Project ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'activate_project',
+          description: 'Activate a suspended project',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Project ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'suspend_project',
+          description: 'Suspend a project',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Project ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'add_account_to_project',
+          description: 'Add an account to a project',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              projectid: {
+                type: 'string',
+                description: 'Project ID'
+              },
+              email: {
+                type: 'string',
+                description: 'Account email'
+              }
+            },
+            required: ['account', 'projectid']
+          }
+        },
+        {
+          name: 'delete_account_from_project',
+          description: 'Remove an account from a project',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              projectid: {
+                type: 'string',
+                description: 'Project ID'
+              }
+            },
+            required: ['account', 'projectid']
+          }
+        },
+        {
+          name: 'list_project_accounts',
+          description: 'List accounts in a project',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              projectid: {
+                type: 'string',
+                description: 'Project ID'
+              },
+              role: {
+                type: 'string',
+                description: 'Filter by project role'
+              }
+            },
+            required: ['projectid']
+          }
         }
       ];
 
@@ -2533,6 +3390,126 @@ class CloudStackMCPServer {
           
           case 'list_port_forwarding_rules':
             return await this.handleListPortForwardingRules(args);
+
+          // Account Management Cases
+          case 'create_account':
+            return await this.handleCreateAccount(args);
+          
+          case 'list_accounts':
+            return await this.handleListAccounts(args);
+          
+          case 'update_account':
+            return await this.handleUpdateAccount(args);
+          
+          case 'delete_account':
+            return await this.handleDeleteAccount(args);
+          
+          case 'enable_account':
+            return await this.handleEnableAccount(args);
+          
+          case 'disable_account':
+            return await this.handleDisableAccount(args);
+          
+          case 'lock_account':
+            return await this.handleLockAccount(args);
+
+          // Domain Management Cases
+          case 'create_domain':
+            return await this.handleCreateDomain(args);
+          
+          case 'list_domains':
+            return await this.handleListDomains(args);
+          
+          case 'update_domain':
+            return await this.handleUpdateDomain(args);
+          
+          case 'delete_domain':
+            return await this.handleDeleteDomain(args);
+          
+          case 'list_domain_children':
+            return await this.handleListDomainChildren(args);
+
+          // User Management Cases
+          case 'create_user':
+            return await this.handleCreateUser(args);
+          
+          case 'list_users':
+            return await this.handleListUsers(args);
+          
+          case 'update_user':
+            return await this.handleUpdateUser(args);
+          
+          case 'delete_user':
+            return await this.handleDeleteUser(args);
+          
+          case 'enable_user':
+            return await this.handleEnableUser(args);
+          
+          case 'disable_user':
+            return await this.handleDisableUser(args);
+          
+          case 'lock_user':
+            return await this.handleLockUser(args);
+          
+          case 'register_user_keys':
+            return await this.handleRegisterUserKeys(args);
+
+          // Resource Limits and Quotas Cases
+          case 'list_resource_limits':
+            return await this.handleListResourceLimits(args);
+          
+          case 'update_resource_limit':
+            return await this.handleUpdateResourceLimit(args);
+          
+          case 'update_resource_count':
+            return await this.handleUpdateResourceCount(args);
+
+          // Role and Permission Management Cases
+          case 'create_role':
+            return await this.handleCreateRole(args);
+          
+          case 'list_roles':
+            return await this.handleListRoles(args);
+          
+          case 'update_role':
+            return await this.handleUpdateRole(args);
+          
+          case 'delete_role':
+            return await this.handleDeleteRole(args);
+          
+          case 'create_role_permission':
+            return await this.handleCreateRolePermission(args);
+          
+          case 'list_role_permissions':
+            return await this.handleListRolePermissions(args);
+
+          // Project Management Cases
+          case 'create_project':
+            return await this.handleCreateProject(args);
+          
+          case 'list_projects':
+            return await this.handleListProjects(args);
+          
+          case 'update_project':
+            return await this.handleUpdateProject(args);
+          
+          case 'delete_project':
+            return await this.handleDeleteProject(args);
+          
+          case 'activate_project':
+            return await this.handleActivateProject(args);
+          
+          case 'suspend_project':
+            return await this.handleSuspendProject(args);
+          
+          case 'add_account_to_project':
+            return await this.handleAddAccountToProject(args);
+          
+          case 'delete_account_from_project':
+            return await this.handleDeleteAccountFromProject(args);
+          
+          case 'list_project_accounts':
+            return await this.handleListProjectAccounts(args);
           
           default:
             throw new Error(`Unknown tool: ${name}`);
@@ -4597,6 +5574,1003 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     }
     
     return result.trim();
+  }
+
+  // Account Management Handlers
+  private async handleCreateAccount(args: any): Promise<any> {
+    const requiredParams = ['email', 'firstname', 'lastname', 'password', 'username'];
+    for (const param of requiredParams) {
+      if (!args[param]) {
+        throw new Error(`Missing required parameter: ${param}`);
+      }
+    }
+    
+    const allowedParams = ['email', 'firstname', 'lastname', 'password', 'username', 'account', 'accounttype', 'domainid', 'roleid', 'timezone'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.createAccount(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAccountResponse('Account creation', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListAccounts(args: any): Promise<any> {
+    const allowedParams = ['accounttype', 'domainid', 'name', 'state', 'isrecursive', 'listall'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listAccounts(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAccountListResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleUpdateAccount(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Account ID is required');
+    }
+    
+    const allowedParams = ['id', 'newname', 'networkdomain'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.updateAccount(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAccountResponse('Account update', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteAccount(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Account ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.deleteAccount(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: `Account deleted successfully. ${response.displaytext || ''}`
+        }
+      ]
+    };
+  }
+
+  private async handleEnableAccount(args: any): Promise<any> {
+    if (!args.account || !args.domainid) {
+      throw new Error('Account name and domain ID are required');
+    }
+    
+    const params = { account: args.account, domainid: args.domainid };
+    const response = await this.client.enableAccount(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAccountResponse('Account enable', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDisableAccount(args: any): Promise<any> {
+    if (!args.account || !args.domainid || args.lock === undefined) {
+      throw new Error('Account name, domain ID, and lock parameter are required');
+    }
+    
+    const params = { account: args.account, domainid: args.domainid, lock: args.lock };
+    const response = await this.client.disableAccount(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAccountResponse('Account disable', response)
+        }
+      ]
+    };
+  }
+
+  private async handleLockAccount(args: any): Promise<any> {
+    if (!args.account || !args.domainid) {
+      throw new Error('Account name and domain ID are required');
+    }
+    
+    const params = { account: args.account, domainid: args.domainid };
+    const response = await this.client.lockAccount(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAccountResponse('Account lock', response)
+        }
+      ]
+    };
+  }
+
+  // Domain Management Handlers
+  private async handleCreateDomain(args: any): Promise<any> {
+    if (!args.name) {
+      throw new Error('Domain name is required');
+    }
+    
+    const allowedParams = ['name', 'parentdomainid', 'networkdomain'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.createDomain(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatDomainResponse('Domain creation', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListDomains(args: any): Promise<any> {
+    const allowedParams = ['id', 'name', 'level', 'isrecursive', 'listall'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listDomains(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatDomainListResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleUpdateDomain(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Domain ID is required');
+    }
+    
+    const allowedParams = ['id', 'name', 'networkdomain'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.updateDomain(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatDomainResponse('Domain update', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteDomain(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Domain ID is required');
+    }
+    
+    const allowedParams = ['id', 'cleanup', 'force'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.deleteDomain(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Domain deletion', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListDomainChildren(args: any): Promise<any> {
+    const allowedParams = ['domainid', 'isrecursive', 'name', 'listall'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listDomainChildren(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatDomainListResponse(response)
+        }
+      ]
+    };
+  }
+
+  // User Management Handlers
+  private async handleCreateUser(args: any): Promise<any> {
+    const requiredParams = ['account', 'email', 'firstname', 'lastname', 'password', 'username'];
+    for (const param of requiredParams) {
+      if (!args[param]) {
+        throw new Error(`Missing required parameter: ${param}`);
+      }
+    }
+    
+    const allowedParams = [...requiredParams, 'domainid', 'timezone'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.createUser(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatUserResponse('User creation', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListUsers(args: any): Promise<any> {
+    const allowedParams = ['account', 'accounttype', 'domainid', 'id', 'username', 'state', 'listall'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listUsers(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatUserListResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleUpdateUser(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('User ID is required');
+    }
+    
+    const allowedParams = ['id', 'email', 'firstname', 'lastname', 'password', 'username', 'timezone'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.updateUser(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatUserResponse('User update', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteUser(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('User ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.deleteUser(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: `User deleted successfully. ${response.displaytext || ''}`
+        }
+      ]
+    };
+  }
+
+  private async handleEnableUser(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('User ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.enableUser(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatUserResponse('User enable', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDisableUser(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('User ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.disableUser(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatUserResponse('User disable', response)
+        }
+      ]
+    };
+  }
+
+  private async handleLockUser(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('User ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.lockUser(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatUserResponse('User lock', response)
+        }
+      ]
+    };
+  }
+
+  private async handleRegisterUserKeys(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('User ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.registerUserKeys(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatUserKeysResponse(response)
+        }
+      ]
+    };
+  }
+
+  // Resource Limits and Quotas Handlers
+  private async handleListResourceLimits(args: any): Promise<any> {
+    const allowedParams = ['account', 'domainid', 'projectid', 'resourcetype', 'isrecursive', 'listall'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listResourceLimits(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatResourceLimitsResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleUpdateResourceLimit(args: any): Promise<any> {
+    if (args.resourcetype === undefined) {
+      throw new Error('Resource type is required');
+    }
+    
+    const allowedParams = ['resourcetype', 'account', 'domainid', 'projectid', 'max'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.updateResourceLimit(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatResourceLimitResponse('Resource limit update', response)
+        }
+      ]
+    };
+  }
+
+  private async handleUpdateResourceCount(args: any): Promise<any> {
+    const allowedParams = ['account', 'domainid', 'projectid', 'resourcetype'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.updateResourceCount(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatResourceCountResponse(response)
+        }
+      ]
+    };
+  }
+
+  // Role and Permission Management Handlers
+  private async handleCreateRole(args: any): Promise<any> {
+    if (!args.name || !args.type) {
+      throw new Error('Role name and type are required');
+    }
+    
+    const allowedParams = ['name', 'type', 'description'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.createRole(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatRoleResponse('Role creation', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListRoles(args: any): Promise<any> {
+    const allowedParams = ['id', 'name', 'type'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listRoles(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatRoleListResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleUpdateRole(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Role ID is required');
+    }
+    
+    const allowedParams = ['id', 'name', 'type', 'description'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.updateRole(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatRoleResponse('Role update', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteRole(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Role ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.deleteRole(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: `Role deleted successfully. ${response.displaytext || ''}`
+        }
+      ]
+    };
+  }
+
+  private async handleCreateRolePermission(args: any): Promise<any> {
+    if (!args.permission || !args.roleid || !args.rule) {
+      throw new Error('Permission, role ID, and rule are required');
+    }
+    
+    const allowedParams = ['permission', 'roleid', 'rule', 'description'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.createRolePermission(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatRolePermissionResponse('Role permission creation', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListRolePermissions(args: any): Promise<any> {
+    const allowedParams = ['roleid'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listRolePermissions(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatRolePermissionListResponse(response)
+        }
+      ]
+    };
+  }
+
+  // Project Management Handlers
+  private async handleCreateProject(args: any): Promise<any> {
+    if (!args.displaytext || !args.name) {
+      throw new Error('Display text and name are required');
+    }
+    
+    const allowedParams = ['displaytext', 'name', 'account', 'domainid'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.createProject(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatProjectResponse('Project creation', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListProjects(args: any): Promise<any> {
+    const allowedParams = ['account', 'domainid', 'id', 'name', 'state', 'isrecursive', 'listall'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listProjects(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatProjectListResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleUpdateProject(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Project ID is required');
+    }
+    
+    const allowedParams = ['id', 'displaytext', 'name'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.updateProject(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatProjectResponse('Project update', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteProject(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Project ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.deleteProject(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: `Project deleted successfully. ${response.displaytext || ''}`
+        }
+      ]
+    };
+  }
+
+  private async handleActivateProject(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Project ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.activateProject(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatProjectResponse('Project activation', response)
+        }
+      ]
+    };
+  }
+
+  private async handleSuspendProject(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Project ID is required');
+    }
+    
+    const params = { id: args.id };
+    const response = await this.client.suspendProject(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatProjectResponse('Project suspension', response)
+        }
+      ]
+    };
+  }
+
+  private async handleAddAccountToProject(args: any): Promise<any> {
+    if (!args.account || !args.projectid) {
+      throw new Error('Account name and project ID are required');
+    }
+    
+    const allowedParams = ['account', 'projectid', 'email'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.addAccountToProject(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatProjectAccountResponse('Account added to project', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteAccountFromProject(args: any): Promise<any> {
+    if (!args.account || !args.projectid) {
+      throw new Error('Account name and project ID are required');
+    }
+    
+    const params = { account: args.account, projectid: args.projectid };
+    const response = await this.client.deleteAccountFromProject(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: `Account removed from project successfully. ${response.displaytext || ''}`
+        }
+      ]
+    };
+  }
+
+  private async handleListProjectAccounts(args: any): Promise<any> {
+    if (!args.projectid) {
+      throw new Error('Project ID is required');
+    }
+    
+    const allowedParams = ['projectid', 'role'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listProjectAccounts(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatProjectAccountListResponse(response)
+        }
+      ]
+    };
+  }
+
+  // Response Formatting Methods for Account Management
+  private formatAccountResponse(operation: string, response: any): string {
+    if (response.account) {
+      const account = response.account;
+      return `${operation} completed successfully.\nAccount: ${account.name} (${account.id})\nType: ${account.accounttype}\nState: ${account.state}\nDomain: ${account.domain || 'N/A'}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatAccountListResponse(response: any): string {
+    const accounts = response.account || [];
+    
+    if (accounts.length === 0) {
+      return 'No accounts found.';
+    }
+
+    let result = `Found ${accounts.length} account(s):\n\n`;
+    
+    for (const account of accounts) {
+      result += `Account: ${account.name} (${account.id})\n`;
+      result += `  Type: ${this.getAccountTypeName(account.accounttype)}\n`;
+      result += `  State: ${account.state}\n`;
+      result += `  Domain: ${account.domain || 'N/A'}\n`;
+      result += `  Created: ${account.created || 'N/A'}\n`;
+      
+      if (account.user && account.user.length > 0) {
+        result += `  Users (${account.user.length}):\n`;
+        for (const user of account.user) {
+          result += `    ${user.firstname} ${user.lastname} (${user.username})\n`;
+        }
+      }
+      
+      result += '\n';
+    }
+
+    return result.trim();
+  }
+
+  private formatDomainResponse(operation: string, response: any): string {
+    if (response.domain) {
+      const domain = response.domain;
+      return `${operation} completed successfully.\nDomain: ${domain.name} (${domain.id})\nPath: ${domain.path || 'N/A'}\nLevel: ${domain.level || 'N/A'}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatDomainListResponse(response: any): string {
+    const domains = response.domain || [];
+    
+    if (domains.length === 0) {
+      return 'No domains found.';
+    }
+
+    let result = `Found ${domains.length} domain(s):\n\n`;
+    
+    for (const domain of domains) {
+      result += `Domain: ${domain.name} (${domain.id})\n`;
+      result += `  Path: ${domain.path || 'N/A'}\n`;
+      result += `  Level: ${domain.level || 'N/A'}\n`;
+      result += `  State: ${domain.state || 'N/A'}\n`;
+      result += `  Network Domain: ${domain.networkdomain || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  private formatUserResponse(operation: string, response: any): string {
+    if (response.user) {
+      const user = response.user;
+      return `${operation} completed successfully.\nUser: ${user.firstname} ${user.lastname} (${user.username})\nEmail: ${user.email}\nAccount: ${user.account}\nState: ${user.state}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatUserListResponse(response: any): string {
+    const users = response.user || [];
+    
+    if (users.length === 0) {
+      return 'No users found.';
+    }
+
+    let result = `Found ${users.length} user(s):\n\n`;
+    
+    for (const user of users) {
+      result += `User: ${user.firstname} ${user.lastname} (${user.username})\n`;
+      result += `  Email: ${user.email}\n`;
+      result += `  Account: ${user.account}\n`;
+      result += `  Domain: ${user.domain || 'N/A'}\n`;
+      result += `  State: ${user.state}\n`;
+      result += `  Created: ${user.created || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  private formatUserKeysResponse(response: any): string {
+    if (response.userkeys) {
+      const keys = response.userkeys;
+      return `User API keys registered successfully.\nAPI Key: ${keys.apikey}\nSecret Key: ${keys.secretkey ? '***' + keys.secretkey.slice(-4) : 'N/A'}`;
+    }
+    
+    return 'User API keys registered successfully.';
+  }
+
+  private formatResourceLimitsResponse(response: any): string {
+    const limits = response.resourcelimit || [];
+    
+    if (limits.length === 0) {
+      return 'No resource limits found.';
+    }
+
+    let result = `Found ${limits.length} resource limit(s):\n\n`;
+    
+    for (const limit of limits) {
+      result += `Resource: ${this.getResourceTypeName(limit.resourcetype)}\n`;
+      result += `  Account: ${limit.account || 'N/A'}\n`;
+      result += `  Domain: ${limit.domain || 'N/A'}\n`;
+      result += `  Max: ${limit.max === -1 ? 'Unlimited' : limit.max}\n`;
+      result += `  Total: ${limit.total || 0}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  private formatResourceLimitResponse(operation: string, response: any): string {
+    if (response.resourcelimit) {
+      const limit = response.resourcelimit;
+      return `${operation} completed successfully.\nResource: ${this.getResourceTypeName(limit.resourcetype)}\nMax: ${limit.max === -1 ? 'Unlimited' : limit.max}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatResourceCountResponse(response: any): string {
+    const counts = response.resourcecount || [];
+    
+    if (counts.length === 0) {
+      return 'Resource counts updated successfully.';
+    }
+
+    let result = 'Resource counts updated successfully:\n\n';
+    
+    for (const count of counts) {
+      result += `${this.getResourceTypeName(count.resourcetype)}: ${count.resourcecount}\n`;
+    }
+
+    return result.trim();
+  }
+
+  private formatRoleResponse(operation: string, response: any): string {
+    if (response.role) {
+      const role = response.role;
+      return `${operation} completed successfully.\nRole: ${role.name} (${role.id})\nType: ${role.type}\nDescription: ${role.description || 'N/A'}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatRoleListResponse(response: any): string {
+    const roles = response.role || [];
+    
+    if (roles.length === 0) {
+      return 'No roles found.';
+    }
+
+    let result = `Found ${roles.length} role(s):\n\n`;
+    
+    for (const role of roles) {
+      result += `Role: ${role.name} (${role.id})\n`;
+      result += `  Type: ${role.type}\n`;
+      result += `  Description: ${role.description || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  private formatRolePermissionResponse(operation: string, response: any): string {
+    if (response.rolepermission) {
+      const permission = response.rolepermission;
+      return `${operation} completed successfully.\nRule: ${permission.rule}\nPermission: ${permission.permission}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatRolePermissionListResponse(response: any): string {
+    const permissions = response.rolepermission || [];
+    
+    if (permissions.length === 0) {
+      return 'No role permissions found.';
+    }
+
+    let result = `Found ${permissions.length} role permission(s):\n\n`;
+    
+    for (const permission of permissions) {
+      result += `Rule: ${permission.rule}\n`;
+      result += `  Permission: ${permission.permission}\n`;
+      result += `  Description: ${permission.description || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  private formatProjectResponse(operation: string, response: any): string {
+    if (response.project) {
+      const project = response.project;
+      return `${operation} completed successfully.\nProject: ${project.name} (${project.id})\nDisplay Text: ${project.displaytext}\nState: ${project.state}\nDomain: ${project.domain || 'N/A'}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatProjectListResponse(response: any): string {
+    const projects = response.project || [];
+    
+    if (projects.length === 0) {
+      return 'No projects found.';
+    }
+
+    let result = `Found ${projects.length} project(s):\n\n`;
+    
+    for (const project of projects) {
+      result += `Project: ${project.name} (${project.id})\n`;
+      result += `  Display Text: ${project.displaytext}\n`;
+      result += `  State: ${project.state}\n`;
+      result += `  Domain: ${project.domain || 'N/A'}\n`;
+      result += `  Created: ${project.created || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  private formatProjectAccountResponse(operation: string, response: any): string {
+    if (response.account) {
+      const account = response.account;
+      return `${operation} completed successfully.\nAccount: ${account.account}\nRole: ${account.role || 'N/A'}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatProjectAccountListResponse(response: any): string {
+    const accounts = response.account || [];
+    
+    if (accounts.length === 0) {
+      return 'No project accounts found.';
+    }
+
+    let result = `Found ${accounts.length} project account(s):\n\n`;
+    
+    for (const account of accounts) {
+      result += `Account: ${account.account}\n`;
+      result += `  Role: ${account.role || 'N/A'}\n`;
+      result += `  Domain: ${account.domain || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  // Helper Methods
+  private getAccountTypeName(type: number): string {
+    switch (type) {
+      case 0: return 'User';
+      case 1: return 'Root Admin';
+      case 2: return 'Domain Admin';
+      default: return `Unknown (${type})`;
+    }
+  }
+
+  private getResourceTypeName(type: number): string {
+    switch (type) {
+      case 0: return 'Instances (VMs)';
+      case 1: return 'Public IP addresses';
+      case 2: return 'Disk volumes';
+      case 3: return 'Snapshots';
+      case 4: return 'Templates';
+      case 6: return 'Networks';
+      case 7: return 'VPCs';
+      case 8: return 'CPU cores';
+      case 9: return 'Memory (RAM)';
+      case 10: return 'Primary storage';
+      case 11: return 'Secondary storage';
+      default: return `Unknown resource type (${type})`;
+    }
   }
 
   public async run(): Promise<void> {

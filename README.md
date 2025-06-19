@@ -20,6 +20,15 @@ A Model Context Protocol (MCP) server that integrates CloudStack with Claude Des
 - **Port Forwarding**: Complete port forwarding rule management including updates
 - **Resource Discovery**: List VMs, networks, volumes, zones, hosts, and templates
 
+### 👥 Account & User Management
+- **Account Lifecycle**: Create, update, delete, enable/disable accounts
+- **Domain Management**: Create hierarchical domain structures and manage domain resources
+- **User Administration**: Full user lifecycle management with role-based access
+- **Resource Quotas**: Set and manage resource limits and quotas per account/domain
+- **Role & Permissions**: Create custom roles and manage fine-grained permissions
+- **Project Management**: Multi-tenant project spaces with user collaboration
+- **LDAP Integration**: Import and synchronize users from LDAP directories
+
 ### 🏗️ Enterprise-Ready Architecture
 - **Modular Design**: Extensible architecture for adding new CloudStack APIs
 - **Type-Safe**: Full TypeScript implementation with comprehensive type definitions
@@ -151,6 +160,17 @@ Try asking Claude:
 - "Upload SSL certificate for HTTPS"
 - "Set up stickiness policy for sessions"
 
+**Account & User Management:**
+- "Create a new user account for development team"
+- "List all accounts in the domain"
+- "Update account information"
+- "Enable/disable user accounts"
+- "Create a new domain for department"
+- "Set resource limits for account"
+- "Create project for team collaboration"
+- "Add users to project"
+- "Manage user roles and permissions"
+
 **System Information:**
 - "Get CloudStack environment information"
 - "Show me available service offerings"
@@ -159,9 +179,9 @@ Try asking Claude:
 
 The CloudStack MCP Server provides comprehensive coverage of CloudStack APIs:
 
-- **📊 40-45% CloudStack API Coverage** across core infrastructure operations
-- **85+ MCP Tools** for complete infrastructure management
-- **127+ CloudStack API Methods** implemented with full parameter support
+- **📊 50+ CloudStack API Coverage** across core infrastructure and management operations
+- **100+ MCP Tools** for complete infrastructure and account management
+- **150+ CloudStack API Methods** implemented with full parameter support
 
 **📋 For detailed API coverage analysis, see [API Coverage Analysis](docs/API-COVERAGE-ANALYSIS.md)**
 
@@ -172,6 +192,8 @@ The CloudStack MCP Server provides comprehensive coverage of CloudStack APIs:
 - ✅ **Complete Security Management** (90%+ coverage): Security groups, firewall rules, Network ACLs
 - ✅ **Full Load Balancer Support** (95%+ coverage): Rules, policies, health checks, SSL certificates
 - ✅ **Complete Infrastructure Discovery** (100% coverage): Zones, hosts, offerings, templates
+- ✅ **Full Account & User Management** (95%+ coverage): Accounts, domains, users, roles, projects, LDAP
+- ✅ **Resource Quota Management** (90%+ coverage): Limits, quotas, resource counting
 
 ## Contributing
 

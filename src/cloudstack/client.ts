@@ -754,4 +754,187 @@ export class CloudStackClient {
   public async updateVMAffinityGroup(params: Record<string, any>): Promise<any> {
     return this.makeRequest('updateVMAffinityGroup', params);
   }
+
+  // Account Management APIs
+  public async createAccount(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createAccount', params);
+  }
+
+  public async listAccounts(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listAccounts', params);
+  }
+
+  public async deleteAccount(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteAccount', params);
+  }
+
+  public async updateAccount(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateAccount', params);
+  }
+
+  public async enableAccount(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('enableAccount', params);
+  }
+
+  public async disableAccount(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('disableAccount', params);
+  }
+
+  public async lockAccount(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('lockAccount', params);
+  }
+
+  // Domain Management APIs
+  public async createDomain(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createDomain', params);
+  }
+
+  public async listDomains(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listDomains', params);
+  }
+
+  public async deleteDomain(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteDomain', params);
+  }
+
+  public async updateDomain(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateDomain', params);
+  }
+
+  public async listDomainChildren(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listDomainChildren', params);
+  }
+
+  // User Management APIs
+  public async createUser(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createUser', params);
+  }
+
+  public async listUsers(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listUsers', params);
+  }
+
+  public async deleteUser(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteUser', params);
+  }
+
+  public async updateUser(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateUser', params);
+  }
+
+  public async enableUser(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('enableUser', params);
+  }
+
+  public async disableUser(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('disableUser', params);
+  }
+
+  public async lockUser(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('lockUser', params);
+  }
+
+  public async registerUserKeys(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('registerUserKeys', params);
+  }
+
+  // Resource Limits and Quotas APIs
+  public async listResourceLimits(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listResourceLimits', params);
+  }
+
+  public async updateResourceLimit(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateResourceLimit', params);
+  }
+
+  public async updateResourceCount(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('updateResourceCount', params);
+  }
+
+  // Role and Permission Management APIs
+  public async createRole(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createRole', params);
+  }
+
+  public async listRoles(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listRoles', params);
+  }
+
+  public async updateRole(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateRole', params);
+  }
+
+  public async deleteRole(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteRole', params);
+  }
+
+  public async createRolePermission(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createRolePermission', params);
+  }
+
+  public async listRolePermissions(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listRolePermissions', params);
+  }
+
+  public async updateRolePermission(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateRolePermission', params);
+  }
+
+  public async deleteRolePermission(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteRolePermission', params);
+  }
+
+  // Project Management APIs
+  public async createProject(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createProject', params);
+  }
+
+  public async listProjects(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listProjects', params);
+  }
+
+  public async deleteProject(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteProject', params);
+  }
+
+  public async updateProject(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateProject', params);
+  }
+
+  public async activateProject(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('activateProject', params);
+  }
+
+  public async suspendProject(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('suspendProject', params);
+  }
+
+  public async addAccountToProject(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addAccountToProject', params);
+  }
+
+  public async deleteAccountFromProject(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteAccountFromProject', params);
+  }
+
+  public async listProjectAccounts(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('listProjectAccounts', params);
+  }
+
+  // LDAP Integration APIs
+  public async addLdapConfiguration(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addLdapConfiguration', params);
+  }
+
+  public async listLdapUsers(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listLdapUsers', params);
+  }
+
+  public async ldapCreateAccount(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('ldapCreateAccount', params);
+  }
+
+  public async importLdapUsers(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('importLdapUsers', params);
+  }
 }
