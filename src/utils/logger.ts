@@ -22,17 +22,8 @@ export class Logger {
       console.warn(`Failed to create log directory ${logDir}:`, error);
     }
 
-    // Create file transports array
-    const fileTransports: winston.transport[] = [
-      new winston.transports.Console({
-        format: winston.format.combine(
-          winston.format.colorize(),
-          winston.format.printf(({ level, message, timestamp }) => {
-            return `${timestamp} [${level}]: ${message}`;
-          })
-        )
-      })
-    ];
+    // Create file transports array - NO console transport for MCP servers
+    const fileTransports: winston.transport[] = [];
 
     // Only add file transport if we can create the directory
     try {
@@ -44,6 +35,7 @@ export class Logger {
       }));
     } catch (error) {
       console.warn(`Failed to create file transport for ${logFile}:`, error);
+      // If file logging fails, don't add any transports to avoid stdout pollution
     }
 
     // Create exception and rejection handlers if possible
