@@ -29,6 +29,22 @@ A Model Context Protocol (MCP) server that integrates CloudStack with Claude Des
 - **Project Management**: Multi-tenant project spaces with user collaboration
 - **LDAP Integration**: Import and synchronize users from LDAP directories
 
+### 💿 Template & ISO Management
+- **Template Lifecycle**: Create, register, update, delete, copy templates across zones
+- **Template Registration**: Register templates from external URLs with format support
+- **Template Extraction**: Extract templates for download and backup
+- **ISO Management**: Complete ISO lifecycle from registration to VM attachment
+- **Cross-Zone Operations**: Copy templates and ISOs between different zones
+- **Metadata Management**: Update template properties and OS type configurations
+
+### 🌐 VPC & Advanced Networking
+- **VPC Management**: Create, configure, and manage Virtual Private Clouds
+- **Private Gateways**: Connect VPCs to on-premises networks
+- **Static Routing**: Configure custom routing within VPC environments  
+- **VPN Services**: Site-to-Site and Remote Access VPN connectivity
+- **VPN Gateways**: Manage VPN endpoints and customer gateways
+- **Network Isolation**: Advanced network segmentation and access control
+
 ### 🏗️ Enterprise-Ready Architecture
 - **Modular Design**: Extensible architecture for adding new CloudStack APIs
 - **Type-Safe**: Full TypeScript implementation with comprehensive type definitions
@@ -171,6 +187,26 @@ Try asking Claude:
 - "Add users to project"
 - "Manage user roles and permissions"
 
+**Template & ISO Management:**
+- "Create template from running VM"
+- "Register template from external URL"
+- "Copy template between zones"
+- "Extract template for download"
+- "List all available ISOs"
+- "Register ISO from download URL"
+- "Attach ISO to virtual machine"
+- "Update template metadata"
+
+**VPC & Advanced Networking:**
+- "Create VPC with custom CIDR"
+- "List all VPCs in account"
+- "Create private gateway for VPC"
+- "Set up static routing"
+- "Create Site-to-Site VPN connection"
+- "Configure VPN gateway"
+- "Add Remote Access VPN users"
+- "List VPN connections and status"
+
 **System Information:**
 - "Get CloudStack environment information"
 - "Show me available service offerings"
@@ -179,9 +215,9 @@ Try asking Claude:
 
 The CloudStack MCP Server provides comprehensive coverage of CloudStack APIs:
 
-- **📊 50+ CloudStack API Coverage** across core infrastructure and management operations
-- **100+ MCP Tools** for complete infrastructure and account management
-- **150+ CloudStack API Methods** implemented with full parameter support
+- **📊 65+ CloudStack API Coverage** across infrastructure, networking, and management operations
+- **130+ MCP Tools** for complete infrastructure, networking, and account management
+- **180+ CloudStack API Methods** implemented with full parameter support
 
 **📋 For detailed API coverage analysis, see [API Coverage Analysis](docs/API-COVERAGE-ANALYSIS.md)**
 
@@ -194,6 +230,8 @@ The CloudStack MCP Server provides comprehensive coverage of CloudStack APIs:
 - ✅ **Complete Infrastructure Discovery** (100% coverage): Zones, hosts, offerings, templates
 - ✅ **Full Account & User Management** (95%+ coverage): Accounts, domains, users, roles, projects, LDAP
 - ✅ **Resource Quota Management** (90%+ coverage): Limits, quotas, resource counting
+- ✅ **Complete Template & ISO Management** (100% coverage): Templates, ISOs, cross-zone operations
+- ✅ **VPC & Advanced Networking** (85%+ coverage): VPCs, VPNs, private gateways, routing
 
 ## Contributing
 

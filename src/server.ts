@@ -967,6 +967,362 @@ class CloudStackMCPServer {
             required: ['id']
           }
         },
+        // VPN Services Tools
+        {
+          name: 'create_vpn_connection',
+          description: 'Create a Site-to-Site VPN connection',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              customergatewayid: {
+                type: 'string',
+                description: 'Customer gateway ID'
+              },
+              vpngatewayid: {
+                type: 'string',
+                description: 'VPN gateway ID'
+              },
+              passive: {
+                type: 'boolean',
+                description: 'Passive connection'
+              }
+            },
+            required: ['customergatewayid', 'vpngatewayid']
+          }
+        },
+        {
+          name: 'list_vpn_connections',
+          description: 'List VPN connections',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              id: {
+                type: 'string',
+                description: 'VPN connection ID'
+              },
+              vpcid: {
+                type: 'string',
+                description: 'VPC ID'
+              }
+            }
+          }
+        },
+        {
+          name: 'delete_vpn_connection',
+          description: 'Delete a VPN connection',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'VPN connection ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'reset_vpn_connection',
+          description: 'Reset a VPN connection',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'VPN connection ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'create_vpn_gateway',
+          description: 'Create a VPN gateway',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              vpcid: {
+                type: 'string',
+                description: 'VPC ID'
+              }
+            },
+            required: ['vpcid']
+          }
+        },
+        {
+          name: 'list_vpn_gateways',
+          description: 'List VPN gateways',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              id: {
+                type: 'string',
+                description: 'VPN gateway ID'
+              },
+              vpcid: {
+                type: 'string',
+                description: 'VPC ID'
+              }
+            }
+          }
+        },
+        {
+          name: 'delete_vpn_gateway',
+          description: 'Delete a VPN gateway',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'VPN gateway ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'create_customer_gateway',
+          description: 'Create a customer gateway',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              cidrlist: {
+                type: 'string',
+                description: 'Customer CIDR list'
+              },
+              esppolicy: {
+                type: 'string',
+                description: 'ESP policy'
+              },
+              gateway: {
+                type: 'string',
+                description: 'Customer gateway IP'
+              },
+              ikepolicy: {
+                type: 'string',
+                description: 'IKE policy'
+              },
+              ipsecpsk: {
+                type: 'string',
+                description: 'IPsec pre-shared key'
+              },
+              name: {
+                type: 'string',
+                description: 'Customer gateway name'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              }
+            },
+            required: ['cidrlist', 'esppolicy', 'gateway', 'ikepolicy', 'ipsecpsk', 'name']
+          }
+        },
+        {
+          name: 'list_customer_gateways',
+          description: 'List customer gateways',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              id: {
+                type: 'string',
+                description: 'Customer gateway ID'
+              },
+              keyword: {
+                type: 'string',
+                description: 'Keyword search'
+              }
+            }
+          }
+        },
+        {
+          name: 'delete_customer_gateway',
+          description: 'Delete a customer gateway',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Customer gateway ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'create_remote_access_vpn',
+          description: 'Create Remote Access VPN',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              publicipid: {
+                type: 'string',
+                description: 'Public IP ID'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              iprange: {
+                type: 'string',
+                description: 'IP range for VPN clients'
+              },
+              openfirewall: {
+                type: 'boolean',
+                description: 'Open firewall for VPN'
+              }
+            },
+            required: ['publicipid']
+          }
+        },
+        {
+          name: 'list_remote_access_vpns',
+          description: 'List Remote Access VPNs',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              id: {
+                type: 'string',
+                description: 'Remote Access VPN ID'
+              },
+              networkid: {
+                type: 'string',
+                description: 'Network ID'
+              },
+              publicipid: {
+                type: 'string',
+                description: 'Public IP ID'
+              }
+            }
+          }
+        },
+        {
+          name: 'delete_remote_access_vpn',
+          description: 'Delete Remote Access VPN',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              publicipid: {
+                type: 'string',
+                description: 'Public IP ID'
+              }
+            },
+            required: ['publicipid']
+          }
+        },
+        {
+          name: 'add_vpn_user',
+          description: 'Add VPN user for Remote Access VPN',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              password: {
+                type: 'string',
+                description: 'VPN user password'
+              },
+              username: {
+                type: 'string',
+                description: 'VPN username'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              }
+            },
+            required: ['password', 'username']
+          }
+        },
+        {
+          name: 'list_vpn_users',
+          description: 'List VPN users',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              id: {
+                type: 'string',
+                description: 'VPN user ID'
+              },
+              username: {
+                type: 'string',
+                description: 'Username filter'
+              }
+            }
+          }
+        },
+        {
+          name: 'remove_vpn_user',
+          description: 'Remove VPN user',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              username: {
+                type: 'string',
+                description: 'VPN username to remove'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              }
+            },
+            required: ['username']
+          }
+        },
         {
           name: 'deploy_virtual_machine',
           description: 'Deploy a new virtual machine in CloudStack',
@@ -4006,6 +4362,55 @@ class CloudStackMCPServer {
           
           case 'delete_static_route':
             return await this.handleDeleteStaticRoute(args);
+          
+          // VPN Services Handlers
+          case 'create_vpn_connection':
+            return await this.handleCreateVpnConnection(args);
+          
+          case 'list_vpn_connections':
+            return await this.handleListVpnConnections(args);
+          
+          case 'delete_vpn_connection':
+            return await this.handleDeleteVpnConnection(args);
+          
+          case 'reset_vpn_connection':
+            return await this.handleResetVpnConnection(args);
+          
+          case 'create_vpn_gateway':
+            return await this.handleCreateVpnGateway(args);
+          
+          case 'list_vpn_gateways':
+            return await this.handleListVpnGateways(args);
+          
+          case 'delete_vpn_gateway':
+            return await this.handleDeleteVpnGateway(args);
+          
+          case 'create_customer_gateway':
+            return await this.handleCreateCustomerGateway(args);
+          
+          case 'list_customer_gateways':
+            return await this.handleListCustomerGateways(args);
+          
+          case 'delete_customer_gateway':
+            return await this.handleDeleteCustomerGateway(args);
+          
+          case 'create_remote_access_vpn':
+            return await this.handleCreateRemoteAccessVpn(args);
+          
+          case 'list_remote_access_vpns':
+            return await this.handleListRemoteAccessVpns(args);
+          
+          case 'delete_remote_access_vpn':
+            return await this.handleDeleteRemoteAccessVpn(args);
+          
+          case 'add_vpn_user':
+            return await this.handleAddVpnUser(args);
+          
+          case 'list_vpn_users':
+            return await this.handleListVpnUsers(args);
+          
+          case 'remove_vpn_user':
+            return await this.handleRemoveVpnUser(args);
           
           case 'get_cloudstack_info':
             return await this.handleGetCloudStackInfo(args);
