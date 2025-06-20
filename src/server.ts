@@ -209,12 +209,762 @@ class CloudStackMCPServer {
             }
           }
         },
+        // Template Management Tools
+        {
+          name: 'create_template',
+          description: 'Create a template from a virtual machine or volume',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              displaytext: {
+                type: 'string',
+                description: 'Template display text'
+              },
+              name: {
+                type: 'string',
+                description: 'Template name'
+              },
+              ostypeid: {
+                type: 'string',
+                description: 'OS Type ID'
+              },
+              virtualmachineid: {
+                type: 'string',
+                description: 'VM ID to create template from'
+              },
+              volumeid: {
+                type: 'string',
+                description: 'Volume ID to create template from'
+              },
+              snapshotid: {
+                type: 'string',
+                description: 'Snapshot ID to create template from'
+              },
+              isfeatured: {
+                type: 'boolean',
+                description: 'Make template featured'
+              },
+              ispublic: {
+                type: 'boolean',
+                description: 'Make template public'
+              },
+              passwordenabled: {
+                type: 'boolean',
+                description: 'Enable password reset'
+              }
+            },
+            required: ['displaytext', 'name', 'ostypeid']
+          }
+        },
+        {
+          name: 'register_template',
+          description: 'Register a template from external URL',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              displaytext: {
+                type: 'string',
+                description: 'Template display text'
+              },
+              format: {
+                type: 'string',
+                description: 'Template format (VHD, QCOW2, RAW, OVA, etc.)'
+              },
+              hypervisor: {
+                type: 'string',
+                description: 'Hypervisor type'
+              },
+              name: {
+                type: 'string',
+                description: 'Template name'
+              },
+              ostypeid: {
+                type: 'string',
+                description: 'OS Type ID'
+              },
+              url: {
+                type: 'string',
+                description: 'Template download URL'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID where template will be available'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              isfeatured: {
+                type: 'boolean',
+                description: 'Make template featured'
+              },
+              ispublic: {
+                type: 'boolean',
+                description: 'Make template public'
+              },
+              passwordenabled: {
+                type: 'boolean',
+                description: 'Enable password reset'
+              },
+              requireshvm: {
+                type: 'boolean',
+                description: 'Requires HVM'
+              }
+            },
+            required: ['displaytext', 'format', 'hypervisor', 'name', 'ostypeid', 'url', 'zoneid']
+          }
+        },
+        {
+          name: 'update_template',
+          description: 'Update template properties',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Template ID'
+              },
+              displaytext: {
+                type: 'string',
+                description: 'Updated display text'
+              },
+              name: {
+                type: 'string',
+                description: 'Updated template name'
+              },
+              ostypeid: {
+                type: 'string',
+                description: 'Updated OS Type ID'
+              },
+              passwordenabled: {
+                type: 'boolean',
+                description: 'Enable/disable password reset'
+              },
+              sortkey: {
+                type: 'number',
+                description: 'Sort key for ordering'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'copy_template',
+          description: 'Copy template to another zone',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Template ID'
+              },
+              destzoneid: {
+                type: 'string',
+                description: 'Destination zone ID'
+              },
+              sourcezoneid: {
+                type: 'string',
+                description: 'Source zone ID'
+              }
+            },
+            required: ['id', 'destzoneid']
+          }
+        },
+        {
+          name: 'delete_template',
+          description: 'Delete a template',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Template ID'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID (optional, deletes from specific zone)'
+              },
+              forced: {
+                type: 'boolean',
+                description: 'Force deletion even if template is in use'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'extract_template',
+          description: 'Extract template for download',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Template ID'
+              },
+              mode: {
+                type: 'string',
+                description: 'Extraction mode (HTTP_DOWNLOAD, FTP_UPLOAD)',
+                default: 'HTTP_DOWNLOAD'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID'
+              },
+              url: {
+                type: 'string',
+                description: 'Upload URL for FTP_UPLOAD mode'
+              }
+            },
+            required: ['id', 'mode', 'zoneid']
+          }
+        },
+        {
+          name: 'prepare_template',
+          description: 'Prepare template in a specific zone',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              templateid: {
+                type: 'string',
+                description: 'Template ID'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID where template should be prepared'
+              }
+            },
+            required: ['templateid', 'zoneid']
+          }
+        },
+        // ISO Management Tools
+        {
+          name: 'list_isos',
+          description: 'List ISOs available in CloudStack',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name to filter ISOs'
+              },
+              bootable: {
+                type: 'boolean',
+                description: 'Filter by bootable ISOs'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID to filter ISOs'
+              },
+              hypervisor: {
+                type: 'string',
+                description: 'Hypervisor type'
+              },
+              id: {
+                type: 'string',
+                description: 'ISO ID'
+              },
+              isofilter: {
+                type: 'string',
+                description: 'ISO filter (featured, self, selfexecutable, etc.)',
+                default: 'executable'
+              },
+              ispublic: {
+                type: 'boolean',
+                description: 'Filter by public ISOs'
+              },
+              isready: {
+                type: 'boolean',
+                description: 'Filter by ready state'
+              },
+              keyword: {
+                type: 'string',
+                description: 'Keyword search'
+              },
+              name: {
+                type: 'string',
+                description: 'ISO name'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID to filter ISOs'
+              }
+            }
+          }
+        },
+        {
+          name: 'register_iso',
+          description: 'Register an ISO from external URL',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              displaytext: {
+                type: 'string',
+                description: 'ISO display text'
+              },
+              name: {
+                type: 'string',
+                description: 'ISO name'
+              },
+              url: {
+                type: 'string',
+                description: 'ISO download URL'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID where ISO will be available'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              bootable: {
+                type: 'boolean',
+                description: 'Make ISO bootable'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              isfeatured: {
+                type: 'boolean',
+                description: 'Make ISO featured'
+              },
+              ispublic: {
+                type: 'boolean',
+                description: 'Make ISO public'
+              },
+              ostypeid: {
+                type: 'string',
+                description: 'OS Type ID'
+              }
+            },
+            required: ['displaytext', 'name', 'url', 'zoneid']
+          }
+        },
+        {
+          name: 'update_iso',
+          description: 'Update ISO properties',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'ISO ID'
+              },
+              displaytext: {
+                type: 'string',
+                description: 'Updated display text'
+              },
+              name: {
+                type: 'string',
+                description: 'Updated ISO name'
+              },
+              ostypeid: {
+                type: 'string',
+                description: 'Updated OS Type ID'
+              },
+              bootable: {
+                type: 'boolean',
+                description: 'Update bootable flag'
+              },
+              sortkey: {
+                type: 'number',
+                description: 'Sort key for ordering'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'copy_iso',
+          description: 'Copy ISO to another zone',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'ISO ID'
+              },
+              destzoneid: {
+                type: 'string',
+                description: 'Destination zone ID'
+              },
+              sourcezoneid: {
+                type: 'string',
+                description: 'Source zone ID'
+              }
+            },
+            required: ['id', 'destzoneid']
+          }
+        },
+        {
+          name: 'delete_iso',
+          description: 'Delete an ISO',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'ISO ID'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID (optional, deletes from specific zone)'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'extract_iso',
+          description: 'Extract ISO for download',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'ISO ID'
+              },
+              mode: {
+                type: 'string',
+                description: 'Extraction mode (HTTP_DOWNLOAD, FTP_UPLOAD)',
+                default: 'HTTP_DOWNLOAD'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID'
+              },
+              url: {
+                type: 'string',
+                description: 'Upload URL for FTP_UPLOAD mode'
+              }
+            },
+            required: ['id', 'mode', 'zoneid']
+          }
+        },
+        {
+          name: 'attach_iso',
+          description: 'Attach ISO to a virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'ISO ID'
+              },
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              }
+            },
+            required: ['id', 'virtualmachineid']
+          }
+        },
+        {
+          name: 'detach_iso',
+          description: 'Detach ISO from a virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: {
+                type: 'string',
+                description: 'Virtual machine ID'
+              }
+            },
+            required: ['virtualmachineid']
+          }
+        },
         {
           name: 'get_cloudstack_info',
           description: 'Get CloudStack environment information and connection status',
           inputSchema: {
             type: 'object',
             properties: {}
+          }
+        },
+        // VPC Management Tools
+        {
+          name: 'create_vpc',
+          description: 'Create a Virtual Private Cloud',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              cidr: {
+                type: 'string',
+                description: 'CIDR block for the VPC'
+              },
+              displaytext: {
+                type: 'string',
+                description: 'VPC display text'
+              },
+              name: {
+                type: 'string',
+                description: 'VPC name'
+              },
+              vpcofferingid: {
+                type: 'string',
+                description: 'VPC offering ID'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID where VPC will be created'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              networkdomain: {
+                type: 'string',
+                description: 'Network domain for the VPC'
+              }
+            },
+            required: ['cidr', 'displaytext', 'name', 'vpcofferingid', 'zoneid']
+          }
+        },
+        {
+          name: 'list_vpcs',
+          description: 'List Virtual Private Clouds',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              id: {
+                type: 'string',
+                description: 'VPC ID'
+              },
+              keyword: {
+                type: 'string',
+                description: 'Keyword search'
+              },
+              name: {
+                type: 'string',
+                description: 'VPC name'
+              },
+              state: {
+                type: 'string',
+                description: 'VPC state'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID'
+              },
+              isrecursive: {
+                type: 'boolean',
+                description: 'List VPCs recursively'
+              }
+            }
+          }
+        },
+        {
+          name: 'delete_vpc',
+          description: 'Delete a Virtual Private Cloud',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'VPC ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'update_vpc',
+          description: 'Update VPC properties',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'VPC ID'
+              },
+              displaytext: {
+                type: 'string',
+                description: 'Updated display text'
+              },
+              name: {
+                type: 'string',
+                description: 'Updated VPC name'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'restart_vpc',
+          description: 'Restart a Virtual Private Cloud',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'VPC ID'
+              },
+              cleanup: {
+                type: 'boolean',
+                description: 'Clean up VPC resources during restart'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'create_private_gateway',
+          description: 'Create a private gateway for VPC',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              gateway: {
+                type: 'string',
+                description: 'Gateway IP address'
+              },
+              ipaddress: {
+                type: 'string',
+                description: 'IP address for the gateway'
+              },
+              netmask: {
+                type: 'string',
+                description: 'Netmask for the gateway'
+              },
+              vlan: {
+                type: 'string',
+                description: 'VLAN tag'
+              },
+              vpcid: {
+                type: 'string',
+                description: 'VPC ID'
+              },
+              aclid: {
+                type: 'string',
+                description: 'ACL ID to apply'
+              }
+            },
+            required: ['gateway', 'ipaddress', 'netmask', 'vlan', 'vpcid']
+          }
+        },
+        {
+          name: 'list_private_gateways',
+          description: 'List private gateways',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              id: {
+                type: 'string',
+                description: 'Private gateway ID'
+              },
+              ipaddress: {
+                type: 'string',
+                description: 'IP address'
+              },
+              state: {
+                type: 'string',
+                description: 'Gateway state'
+              },
+              vpcid: {
+                type: 'string',
+                description: 'VPC ID'
+              }
+            }
+          }
+        },
+        {
+          name: 'delete_private_gateway',
+          description: 'Delete a private gateway',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Private gateway ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'create_static_route',
+          description: 'Create a static route for VPC',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              cidr: {
+                type: 'string',
+                description: 'CIDR block for the route'
+              },
+              gatewayid: {
+                type: 'string',
+                description: 'Private gateway ID'
+              }
+            },
+            required: ['cidr', 'gatewayid']
+          }
+        },
+        {
+          name: 'list_static_routes',
+          description: 'List static routes',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              gatewayid: {
+                type: 'string',
+                description: 'Private gateway ID'
+              },
+              id: {
+                type: 'string',
+                description: 'Static route ID'
+              },
+              vpcid: {
+                type: 'string',
+                description: 'VPC ID'
+              }
+            }
+          }
+        },
+        {
+          name: 'delete_static_route',
+          description: 'Delete a static route',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Static route ID'
+              }
+            },
+            required: ['id']
           }
         },
         {
@@ -3176,6 +3926,87 @@ class CloudStackMCPServer {
           case 'list_templates':
             return await this.handleListTemplates(args);
           
+          // Template Management Handlers
+          case 'create_template':
+            return await this.handleCreateTemplate(args);
+          
+          case 'register_template':
+            return await this.handleRegisterTemplate(args);
+          
+          case 'update_template':
+            return await this.handleUpdateTemplate(args);
+          
+          case 'copy_template':
+            return await this.handleCopyTemplate(args);
+          
+          case 'delete_template':
+            return await this.handleDeleteTemplate(args);
+          
+          case 'extract_template':
+            return await this.handleExtractTemplate(args);
+          
+          case 'prepare_template':
+            return await this.handlePrepareTemplate(args);
+          
+          // ISO Management Handlers
+          case 'list_isos':
+            return await this.handleListIsos(args);
+          
+          case 'register_iso':
+            return await this.handleRegisterIso(args);
+          
+          case 'update_iso':
+            return await this.handleUpdateIso(args);
+          
+          case 'copy_iso':
+            return await this.handleCopyIso(args);
+          
+          case 'delete_iso':
+            return await this.handleDeleteIso(args);
+          
+          case 'extract_iso':
+            return await this.handleExtractIso(args);
+          
+          case 'attach_iso':
+            return await this.handleAttachIso(args);
+          
+          case 'detach_iso':
+            return await this.handleDetachIso(args);
+          
+          // VPC Management Handlers
+          case 'create_vpc':
+            return await this.handleCreateVpc(args);
+          
+          case 'list_vpcs':
+            return await this.handleListVpcs(args);
+          
+          case 'delete_vpc':
+            return await this.handleDeleteVpc(args);
+          
+          case 'update_vpc':
+            return await this.handleUpdateVpc(args);
+          
+          case 'restart_vpc':
+            return await this.handleRestartVpc(args);
+          
+          case 'create_private_gateway':
+            return await this.handleCreatePrivateGateway(args);
+          
+          case 'list_private_gateways':
+            return await this.handleListPrivateGateways(args);
+          
+          case 'delete_private_gateway':
+            return await this.handleDeletePrivateGateway(args);
+          
+          case 'create_static_route':
+            return await this.handleCreateStaticRoute(args);
+          
+          case 'list_static_routes':
+            return await this.handleListStaticRoutes(args);
+          
+          case 'delete_static_route':
+            return await this.handleDeleteStaticRoute(args);
+          
           case 'get_cloudstack_info':
             return await this.handleGetCloudStackInfo(args);
           
@@ -3643,6 +4474,409 @@ class CloudStackMCPServer {
     };
   }
 
+  // Template Management Handlers
+  private async handleCreateTemplate(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'displaytext', 'name', 'ostypeid', 'virtualmachineid', 'volumeid', 
+      'snapshotid', 'isfeatured', 'ispublic', 'passwordenabled'
+    ]);
+    const response = await this.client.createTemplate(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatTemplateResponse('Template creation initiated', response)
+        }
+      ]
+    };
+  }
+
+  private async handleRegisterTemplate(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'displaytext', 'format', 'hypervisor', 'name', 'ostypeid', 'url', 'zoneid',
+      'account', 'domainid', 'isfeatured', 'ispublic', 'passwordenabled', 'requireshvm'
+    ]);
+    const response = await this.client.registerTemplate(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatTemplateResponse('Template registration initiated', response)
+        }
+      ]
+    };
+  }
+
+  private async handleUpdateTemplate(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'id', 'displaytext', 'name', 'ostypeid', 'passwordenabled', 'sortkey'
+    ]);
+    const response = await this.client.updateTemplate(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatTemplateResponse('Template updated successfully', response)
+        }
+      ]
+    };
+  }
+
+  private async handleCopyTemplate(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'destzoneid', 'sourcezoneid']);
+    const response = await this.client.copyTemplate(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatTemplateResponse('Template copy initiated', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteTemplate(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'zoneid', 'forced']);
+    const response = await this.client.deleteTemplate(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatTemplateResponse('Template deletion initiated', response)
+        }
+      ]
+    };
+  }
+
+  private async handleExtractTemplate(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'mode', 'zoneid', 'url']);
+    if (!params.mode) {
+      params.mode = 'HTTP_DOWNLOAD';
+    }
+    const response = await this.client.extractTemplate(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatTemplateResponse('Template extraction initiated', response)
+        }
+      ]
+    };
+  }
+
+  private async handlePrepareTemplate(args: any): Promise<any> {
+    const params = this.buildParams(args, ['templateid', 'zoneid']);
+    const response = await this.client.prepareTemplate(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatTemplateResponse('Template preparation initiated', response)
+        }
+      ]
+    };
+  }
+
+  // ISO Management Handlers
+  private async handleListIsos(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'account', 'bootable', 'domainid', 'hypervisor', 'id', 'isofilter',
+      'ispublic', 'isready', 'keyword', 'name', 'zoneid'
+    ]);
+    if (!params.isofilter) {
+      params.isofilter = 'executable';
+    }
+    const response = await this.client.listIsos(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatIsosResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleRegisterIso(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'displaytext', 'name', 'url', 'zoneid', 'account', 'bootable',
+      'domainid', 'isfeatured', 'ispublic', 'ostypeid'
+    ]);
+    const response = await this.client.registerIso(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatIsoResponse('ISO registration initiated', response)
+        }
+      ]
+    };
+  }
+
+  private async handleUpdateIso(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'id', 'displaytext', 'name', 'ostypeid', 'bootable', 'sortkey'
+    ]);
+    const response = await this.client.updateIso(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatIsoResponse('ISO updated successfully', response)
+        }
+      ]
+    };
+  }
+
+  private async handleCopyIso(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'destzoneid', 'sourcezoneid']);
+    const response = await this.client.copyIso(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatIsoResponse('ISO copy initiated', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteIso(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'zoneid']);
+    const response = await this.client.deleteIso(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatIsoResponse('ISO deletion initiated', response)
+        }
+      ]
+    };
+  }
+
+  private async handleExtractIso(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'mode', 'zoneid', 'url']);
+    if (!params.mode) {
+      params.mode = 'HTTP_DOWNLOAD';
+    }
+    const response = await this.client.extractIso(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatIsoResponse('ISO extraction initiated', response)
+        }
+      ]
+    };
+  }
+
+  private async handleAttachIso(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'virtualmachineid']);
+    const response = await this.client.attachIso(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatIsoResponse('ISO attached to VM', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDetachIso(args: any): Promise<any> {
+    const params = this.buildParams(args, ['virtualmachineid']);
+    const response = await this.client.detachIso(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatIsoResponse('ISO detached from VM', response)
+        }
+      ]
+    };
+  }
+
+  // VPC Management Handlers
+  private async handleCreateVpc(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'cidr', 'displaytext', 'name', 'vpcofferingid', 'zoneid',
+      'account', 'domainid', 'networkdomain'
+    ]);
+    const response = await this.client.createVPC(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatVpcResponse('VPC creation initiated', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListVpcs(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'account', 'domainid', 'id', 'keyword', 'name', 'state', 'zoneid', 'isrecursive'
+    ]);
+    const response = await this.client.listVPCs(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatVpcsResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteVpc(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteVPC(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatVpcResponse('VPC deletion initiated', response)
+        }
+      ]
+    };
+  }
+
+  private async handleUpdateVpc(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'displaytext', 'name']);
+    const response = await this.client.updateVPC(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatVpcResponse('VPC updated successfully', response)
+        }
+      ]
+    };
+  }
+
+  private async handleRestartVpc(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'cleanup']);
+    const response = await this.client.restartVPC(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatVpcResponse('VPC restart initiated', response)
+        }
+      ]
+    };
+  }
+
+  private async handleCreatePrivateGateway(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'gateway', 'ipaddress', 'netmask', 'vlan', 'vpcid', 'aclid'
+    ]);
+    const response = await this.client.createPrivateGateway(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatPrivateGatewayResponse('Private gateway created', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListPrivateGateways(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'account', 'domainid', 'id', 'ipaddress', 'state', 'vpcid'
+    ]);
+    const response = await this.client.listPrivateGateways(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatPrivateGatewaysResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeletePrivateGateway(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deletePrivateGateway(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatPrivateGatewayResponse('Private gateway deletion initiated', response)
+        }
+      ]
+    };
+  }
+
+  private async handleCreateStaticRoute(args: any): Promise<any> {
+    const params = this.buildParams(args, ['cidr', 'gatewayid']);
+    const response = await this.client.createStaticRoute(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatStaticRouteResponse('Static route created', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListStaticRoutes(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'account', 'domainid', 'gatewayid', 'id', 'vpcid'
+    ]);
+    const response = await this.client.listStaticRoutes(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatStaticRoutesResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteStaticRoute(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteStaticRoute(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatStaticRouteResponse('Static route deletion initiated', response)
+        }
+      ]
+    };
+  }
+
   private async handleGetCloudStackInfo(args: any): Promise<any> {
     const environmentInfo = this.client.getEnvironmentInfo();
     const connectionStatus = await this.client.testConnection();
@@ -3866,6 +5100,164 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
       result += `  Ready: ${template.isready ? 'Yes' : 'No'}\n`;
       result += `  Public: ${template.ispublic ? 'Yes' : 'No'}\n`;
       result += `  Created: ${template.created || 'N/A'}\n\n`;
+    }
+
+    return result;
+  }
+
+  private formatTemplateResponse(operation: string, response: any): string {
+    if (response.template) {
+      const template = response.template;
+      return `${operation}.\nTemplate: ${template.name} (${template.id})\nStatus: ${template.status || 'N/A'}\nCreated: ${template.created || 'N/A'}`;
+    }
+    
+    if (response.jobid) {
+      return `${operation}.\nJob ID: ${response.jobid}\nStatus: ${response.jobstatus === 0 ? 'In Progress' : response.jobstatus === 1 ? 'Completed' : 'Failed'}`;
+    }
+    
+    return `${operation}.`;
+  }
+
+  private formatIsosResponse(response: any): string {
+    const isos = response.iso || [];
+    
+    if (isos.length === 0) {
+      return 'No ISOs found.';
+    }
+
+    let result = `Found ${isos.length} ISO(s):\n\n`;
+    
+    for (const iso of isos) {
+      result += `Name: ${iso.name}\n`;
+      result += `  ID: ${iso.id}\n`;
+      result += `  Display Text: ${iso.displaytext || 'N/A'}\n`;
+      result += `  OS Type: ${iso.ostypename || 'N/A'}\n`;
+      result += `  Size: ${iso.size ? (iso.size / (1024 * 1024)).toFixed(2) + ' MB' : 'N/A'}\n`;
+      result += `  Bootable: ${iso.bootable ? 'Yes' : 'No'}\n`;
+      result += `  Ready: ${iso.isready ? 'Yes' : 'No'}\n`;
+      result += `  Public: ${iso.ispublic ? 'Yes' : 'No'}\n`;
+      result += `  Featured: ${iso.isfeatured ? 'Yes' : 'No'}\n`;
+      result += `  Created: ${iso.created || 'N/A'}\n\n`;
+    }
+
+    return result;
+  }
+
+  private formatIsoResponse(operation: string, response: any): string {
+    if (response.iso) {
+      const iso = response.iso;
+      return `${operation}.\nISO: ${iso.name} (${iso.id})\nBootable: ${iso.bootable ? 'Yes' : 'No'}\nCreated: ${iso.created || 'N/A'}`;
+    }
+    
+    if (response.jobid) {
+      return `${operation}.\nJob ID: ${response.jobid}\nStatus: ${response.jobstatus === 0 ? 'In Progress' : response.jobstatus === 1 ? 'Completed' : 'Failed'}`;
+    }
+    
+    return `${operation}.`;
+  }
+
+  private formatVpcResponse(operation: string, response: any): string {
+    if (response.vpc) {
+      const vpc = response.vpc;
+      return `${operation}.\nVPC: ${vpc.name} (${vpc.id})\nCIDR: ${vpc.cidr}\nState: ${vpc.state || 'N/A'}\nCreated: ${vpc.created || 'N/A'}`;
+    }
+    
+    if (response.jobid) {
+      return `${operation}.\nJob ID: ${response.jobid}\nStatus: ${response.jobstatus === 0 ? 'In Progress' : response.jobstatus === 1 ? 'Completed' : 'Failed'}`;
+    }
+    
+    return `${operation}.`;
+  }
+
+  private formatVpcsResponse(response: any): string {
+    const vpcs = response.vpc || [];
+    
+    if (vpcs.length === 0) {
+      return 'No VPCs found.';
+    }
+
+    let result = `Found ${vpcs.length} VPC(s):\n\n`;
+    
+    for (const vpc of vpcs) {
+      result += `Name: ${vpc.name}\n`;
+      result += `  ID: ${vpc.id}\n`;
+      result += `  Display Text: ${vpc.displaytext || 'N/A'}\n`;
+      result += `  CIDR: ${vpc.cidr}\n`;
+      result += `  State: ${vpc.state || 'N/A'}\n`;
+      result += `  Zone: ${vpc.zonename || vpc.zoneid || 'N/A'}\n`;
+      result += `  Network Domain: ${vpc.networkdomain || 'N/A'}\n`;
+      result += `  Restart Required: ${vpc.restartrequired ? 'Yes' : 'No'}\n`;
+      result += `  Created: ${vpc.created || 'N/A'}\n\n`;
+    }
+
+    return result;
+  }
+
+  private formatPrivateGatewayResponse(operation: string, response: any): string {
+    if (response.privategateway) {
+      const gateway = response.privategateway;
+      return `${operation}.\nGateway: ${gateway.gateway} (${gateway.id})\nIP: ${gateway.ipaddress}\nState: ${gateway.state || 'N/A'}`;
+    }
+    
+    if (response.jobid) {
+      return `${operation}.\nJob ID: ${response.jobid}\nStatus: ${response.jobstatus === 0 ? 'In Progress' : response.jobstatus === 1 ? 'Completed' : 'Failed'}`;
+    }
+    
+    return `${operation}.`;
+  }
+
+  private formatPrivateGatewaysResponse(response: any): string {
+    const gateways = response.privategateway || [];
+    
+    if (gateways.length === 0) {
+      return 'No private gateways found.';
+    }
+
+    let result = `Found ${gateways.length} private gateway(s):\n\n`;
+    
+    for (const gateway of gateways) {
+      result += `Gateway: ${gateway.gateway}\n`;
+      result += `  ID: ${gateway.id}\n`;
+      result += `  IP Address: ${gateway.ipaddress}\n`;
+      result += `  Netmask: ${gateway.netmask}\n`;
+      result += `  VLAN: ${gateway.vlan}\n`;
+      result += `  VPC: ${gateway.vpcname || gateway.vpcid || 'N/A'}\n`;
+      result += `  State: ${gateway.state || 'N/A'}\n`;
+      result += `  Created: ${gateway.created || 'N/A'}\n\n`;
+    }
+
+    return result;
+  }
+
+  private formatStaticRouteResponse(operation: string, response: any): string {
+    if (response.staticroute) {
+      const route = response.staticroute;
+      return `${operation}.\nRoute: ${route.cidr} (${route.id})\nGateway: ${route.gatewayid}\nState: ${route.state || 'N/A'}`;
+    }
+    
+    if (response.jobid) {
+      return `${operation}.\nJob ID: ${response.jobid}\nStatus: ${response.jobstatus === 0 ? 'In Progress' : response.jobstatus === 1 ? 'Completed' : 'Failed'}`;
+    }
+    
+    return `${operation}.`;
+  }
+
+  private formatStaticRoutesResponse(response: any): string {
+    const routes = response.staticroute || [];
+    
+    if (routes.length === 0) {
+      return 'No static routes found.';
+    }
+
+    let result = `Found ${routes.length} static route(s):\n\n`;
+    
+    for (const route of routes) {
+      result += `CIDR: ${route.cidr}\n`;
+      result += `  ID: ${route.id}\n`;
+      result += `  Gateway ID: ${route.gatewayid}\n`;
+      result += `  VPC: ${route.vpcname || route.vpcid || 'N/A'}\n`;
+      result += `  State: ${route.state || 'N/A'}\n`;
+      result += `  Created: ${route.created || 'N/A'}\n\n`;
     }
 
     return result;

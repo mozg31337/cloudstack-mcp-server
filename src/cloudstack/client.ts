@@ -177,6 +177,103 @@ export class CloudStackClient {
     return this.makeRequest('listTemplates', params);
   }
 
+  // Template Management
+  public async registerTemplate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('registerTemplate', params);
+  }
+
+  public async extractTemplate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('extractTemplate', params);
+  }
+
+  public async prepareTemplate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('prepareTemplate', params);
+  }
+
+  public async updateTemplatePermissions(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateTemplatePermissions', params);
+  }
+
+  // ISO Management
+  public async listIsos(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listIsos', params);
+  }
+
+  public async registerIso(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('registerIso', params);
+  }
+
+  public async updateIso(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateIso', params);
+  }
+
+  public async deleteIso(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteIso', params);
+  }
+
+  public async copyIso(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('copyIso', params);
+  }
+
+  public async extractIso(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('extractIso', params);
+  }
+
+  public async attachIso(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('attachIso', params);
+  }
+
+  public async detachIso(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('detachIso', params);
+  }
+
+  // VPC Management
+  public async createVPC(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createVPC', params);
+  }
+
+  public async listVPCs(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listVPCs', params);
+  }
+
+  public async deleteVPC(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteVPC', params);
+  }
+
+  public async updateVPC(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateVPC', params);
+  }
+
+  public async restartVPC(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('restartVPC', params);
+  }
+
+  // Private Gateway Management
+  public async createPrivateGateway(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createPrivateGateway', params);
+  }
+
+  public async listPrivateGateways(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listPrivateGateways', params);
+  }
+
+  public async deletePrivateGateway(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deletePrivateGateway', params);
+  }
+
+  // Static Route Management
+  public async createStaticRoute(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createStaticRoute', params);
+  }
+
+  public async listStaticRoutes(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listStaticRoutes', params);
+  }
+
+  public async deleteStaticRoute(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteStaticRoute', params);
+  }
+
   public async listSecurityGroups(params: Record<string, any> = {}): Promise<any> {
     return this.makeRequest('listSecurityGroups', params);
   }
