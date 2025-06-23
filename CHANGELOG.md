@@ -5,6 +5,36 @@ All notable changes to the CloudStack MCP Server project will be documented in t
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2025-06-23
+
+### Added
+- **Complete Kubernetes Service Management (14 tools)**: Achieved 100% CloudStack Kubernetes API coverage
+- **Cluster Lifecycle Management (5 tools)**: Create, delete, start, stop, and upgrade Kubernetes clusters with full lifecycle support
+- **Cluster Configuration (2 tools)**: Get cluster configuration and list clusters with comprehensive details
+- **Cluster Scaling (3 tools)**: Scale clusters, add VMs to clusters, and remove VMs from clusters for dynamic resource management
+- **Version Management (4 tools)**: Add, delete, update, and list Kubernetes supported versions with complete version lifecycle
+- **14 New MCP Tools**: Expanded from 310 to 324 total tools for complete enterprise cloud management
+- **14 New API Methods**: Extended CloudStack client with 364+ total API method implementations
+- **100% Kubernetes Coverage**: Achieved complete CloudStack Kubernetes Service API surface coverage
+
+### Changed
+- **Major Milestone Achievement**: Complete Kubernetes Service Management with 100% API coverage
+- **Kubernetes Integration**: From 0% to 100% coverage with full cluster lifecycle, scaling, configuration, and version management
+- **Tool Count Growth**: 4.5% increase in available tools (310 → 324)
+- **API Method Expansion**: 4% increase in API methods (350+ → 364+)
+- **Management Categories**: Added 9th management category (Kubernetes Service) to existing 8 categories
+
+### Technical
+- **Comprehensive Kubernetes Implementation**: Added 14 new Kubernetes Service client methods including cluster lifecycle, scaling, configuration, and version management
+- **Enhanced Error Handling**: Complete validation for all new Kubernetes Service management tools
+- **Response Formatting**: Added 4 new response formatting methods for user-friendly Kubernetes operation output
+- **Performance Optimization**: Streamlined Kubernetes operation handling with proper async job management
+
+### Documentation
+- **Updated API Coverage Analysis**: Comprehensive analysis reflecting 100% Kubernetes Service API coverage achievement
+- **Enhanced Coverage Metrics**: Detailed breakdown of 324 tools with complete Kubernetes Service management capabilities
+- **Complete Implementation Documentation**: Full documentation of Kubernetes Service management features
+
 ## [1.4.0] - 2025-06-23
 
 ### Added

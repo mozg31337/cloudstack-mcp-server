@@ -1738,4 +1738,61 @@ export class CloudStackClient {
     return this.makeRequest('updateAnnotationVisibility', params);
   }
 
+  // Kubernetes Service Management
+  public async addKubernetesSupportedVersion(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addKubernetesSupportedVersion', params);
+  }
+
+  public async addVirtualMachinesToKubernetesCluster(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addVirtualMachinesToKubernetesCluster', params);
+  }
+
+  public async createKubernetesCluster(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createKubernetesCluster', params);
+  }
+
+  public async deleteKubernetesCluster(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteKubernetesCluster', params);
+  }
+
+  public async deleteKubernetesSupportedVersion(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteKubernetesSupportedVersion', params);
+  }
+
+  public async getKubernetesClusterConfig(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getKubernetesClusterConfig', params);
+  }
+
+  public async listKubernetesClusters(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listKubernetesClusters', params);
+  }
+
+  public async listKubernetesSupportedVersions(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listKubernetesSupportedVersions', params);
+  }
+
+  public async removeVirtualMachinesFromKubernetesCluster(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('removeVirtualMachinesFromKubernetesCluster', params);
+  }
+
+  public async scaleKubernetesCluster(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('scaleKubernetesCluster', params);
+  }
+
+  public async startKubernetesCluster(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('startKubernetesCluster', params);
+  }
+
+  public async stopKubernetesCluster(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('stopKubernetesCluster', params);
+  }
+
+  public async updateKubernetesSupportedVersion(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateKubernetesSupportedVersion', params);
+  }
+
+  public async upgradeKubernetesCluster(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('upgradeKubernetesCluster', params);
+  }
+
 }

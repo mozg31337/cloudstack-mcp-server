@@ -22,7 +22,7 @@ class CloudStackMCPServer {
     this.server = new Server(
       {
         name: 'cloudstack-mcp-server',
-        version: '1.4.0',
+        version: '1.5.0',
       },
       {
         capabilities: {
@@ -6334,6 +6334,187 @@ class CloudStackMCPServer {
               objectstorageid: { type: 'string', description: 'Object storage ID' }
             }
           }
+        },
+        {
+          name: 'add_kubernetes_supported_version',
+          description: 'Add a new supported Kubernetes version',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              minkubernetesnodecount: { type: 'number', description: 'Minimum node count' },
+              maxkubernetesnodecount: { type: 'number', description: 'Maximum node count' },
+              kubernetesversionname: { type: 'string', description: 'Kubernetes version name' },
+              url: { type: 'string', description: 'URL for Kubernetes binaries' },
+              checksum: { type: 'string', description: 'Checksum for verification' }
+            },
+            required: ['kubernetesversionname', 'url']
+          }
+        },
+        {
+          name: 'add_vms_to_kubernetes_cluster',
+          description: 'Add virtual machines to an existing Kubernetes cluster',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Kubernetes cluster ID' },
+              virtualmachineids: { type: 'string', description: 'Comma-separated VM IDs to add' }
+            },
+            required: ['id', 'virtualmachineids']
+          }
+        },
+        {
+          name: 'create_kubernetes_cluster',
+          description: 'Create a new Kubernetes cluster',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: { type: 'string', description: 'Cluster name' },
+              description: { type: 'string', description: 'Cluster description' },
+              kubernetesversionid: { type: 'string', description: 'Kubernetes version ID' },
+              size: { type: 'number', description: 'Number of nodes' },
+              masterNodes: { type: 'number', description: 'Number of master nodes' },
+              serviceofferingid: { type: 'string', description: 'Service offering ID' },
+              zoneid: { type: 'string', description: 'Zone ID' },
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' },
+              networkid: { type: 'string', description: 'Network ID' },
+              keypair: { type: 'string', description: 'SSH key pair name' },
+              externalloadbalanceripaddress: { type: 'string', description: 'External load balancer IP' }
+            },
+            required: ['name', 'kubernetesversionid', 'size', 'serviceofferingid', 'zoneid']
+          }
+        },
+        {
+          name: 'delete_kubernetes_cluster',
+          description: 'Delete an existing Kubernetes cluster',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Kubernetes cluster ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'delete_kubernetes_supported_version',
+          description: 'Remove a previously added Kubernetes version',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Kubernetes version ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'get_kubernetes_cluster_config',
+          description: 'Retrieve configuration for a Kubernetes cluster',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Kubernetes cluster ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_kubernetes_clusters',
+          description: 'List all Kubernetes clusters',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' },
+              id: { type: 'string', description: 'Cluster ID' },
+              name: { type: 'string', description: 'Cluster name' },
+              state: { type: 'string', description: 'Cluster state' },
+              zoneid: { type: 'string', description: 'Zone ID' },
+              keyword: { type: 'string', description: 'Keyword for search' }
+            }
+          }
+        },
+        {
+          name: 'list_kubernetes_supported_versions',
+          description: 'Display supported Kubernetes versions',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Version ID' },
+              keyword: { type: 'string', description: 'Keyword for search' }
+            }
+          }
+        },
+        {
+          name: 'remove_vms_from_kubernetes_cluster',
+          description: 'Remove virtual machines from a Kubernetes cluster',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Kubernetes cluster ID' },
+              virtualmachineids: { type: 'string', description: 'Comma-separated VM IDs to remove' }
+            },
+            required: ['id', 'virtualmachineids']
+          }
+        },
+        {
+          name: 'scale_kubernetes_cluster',
+          description: 'Scale a Kubernetes cluster up or down',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Kubernetes cluster ID' },
+              size: { type: 'number', description: 'New cluster size' },
+              masterNodes: { type: 'number', description: 'Number of master nodes' },
+              serviceofferingid: { type: 'string', description: 'Service offering ID' }
+            },
+            required: ['id', 'size']
+          }
+        },
+        {
+          name: 'start_kubernetes_cluster',
+          description: 'Start a Kubernetes cluster',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Kubernetes cluster ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'stop_kubernetes_cluster',
+          description: 'Stop a running Kubernetes cluster',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Kubernetes cluster ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'update_kubernetes_supported_version',
+          description: 'Update a previously added Kubernetes version',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Kubernetes version ID' },
+              state: { type: 'string', description: 'Version state (Enabled/Disabled)' }
+            },
+            required: ['id', 'state']
+          }
+        },
+        {
+          name: 'upgrade_kubernetes_cluster',
+          description: 'Upgrade a Kubernetes cluster to a different version',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Kubernetes cluster ID' },
+              kubernetesversionid: { type: 'string', description: 'Target Kubernetes version ID' }
+            },
+            required: ['id', 'kubernetesversionid']
+          }
         }
       ];
 
@@ -7118,6 +7299,49 @@ class CloudStackMCPServer {
           
           case 'update_site2site_vpn_connection':
             return await this.handleUpdateSite2SiteVpnConnection(args);
+          
+          // Kubernetes Service Handlers
+          case 'add_kubernetes_supported_version':
+            return await this.handleAddKubernetesSupportedVersion(args);
+          
+          case 'add_vms_to_kubernetes_cluster':
+            return await this.handleAddVmsToKubernetesCluster(args);
+          
+          case 'create_kubernetes_cluster':
+            return await this.handleCreateKubernetesCluster(args);
+          
+          case 'delete_kubernetes_cluster':
+            return await this.handleDeleteKubernetesCluster(args);
+          
+          case 'delete_kubernetes_supported_version':
+            return await this.handleDeleteKubernetesSupportedVersion(args);
+          
+          case 'get_kubernetes_cluster_config':
+            return await this.handleGetKubernetesClusterConfig(args);
+          
+          case 'list_kubernetes_clusters':
+            return await this.handleListKubernetesClusters(args);
+          
+          case 'list_kubernetes_supported_versions':
+            return await this.handleListKubernetesSupportedVersions(args);
+          
+          case 'remove_vms_from_kubernetes_cluster':
+            return await this.handleRemoveVmsFromKubernetesCluster(args);
+          
+          case 'scale_kubernetes_cluster':
+            return await this.handleScaleKubernetesCluster(args);
+          
+          case 'start_kubernetes_cluster':
+            return await this.handleStartKubernetesCluster(args);
+          
+          case 'stop_kubernetes_cluster':
+            return await this.handleStopKubernetesCluster(args);
+          
+          case 'update_kubernetes_supported_version':
+            return await this.handleUpdateKubernetesSupportedVersion(args);
+          
+          case 'upgrade_kubernetes_cluster':
+            return await this.handleUpgradeKubernetesCluster(args);
           
           default:
             throw new Error(`Unknown tool: ${name}`);
@@ -11838,6 +12062,184 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     };
   }
 
+  // Kubernetes Service Handlers
+  private async handleAddKubernetesSupportedVersion(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'minkubernetesnodecount', 'maxkubernetesnodecount', 'kubernetesversionname', 
+      'url', 'checksum'
+    ]);
+    const response = await this.client.addKubernetesSupportedVersion(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatKubernetesVersionResponse('Kubernetes version added', response)
+      }]
+    };
+  }
+
+  private async handleAddVmsToKubernetesCluster(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'virtualmachineids']);
+    const response = await this.client.addVirtualMachinesToKubernetesCluster(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('VMs addition to Kubernetes cluster', response)
+      }]
+    };
+  }
+
+  private async handleCreateKubernetesCluster(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'name', 'description', 'kubernetesversionid', 'size', 'masterNodes',
+      'serviceofferingid', 'zoneid', 'account', 'domainid', 'networkid',
+      'keypair', 'externalloadbalanceripaddress'
+    ]);
+    const response = await this.client.createKubernetesCluster(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Kubernetes cluster creation', response)
+      }]
+    };
+  }
+
+  private async handleDeleteKubernetesCluster(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteKubernetesCluster(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Kubernetes cluster deletion', response)
+      }]
+    };
+  }
+
+  private async handleDeleteKubernetesSupportedVersion(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteKubernetesSupportedVersion(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Kubernetes version deletion', response)
+      }]
+    };
+  }
+
+  private async handleGetKubernetesClusterConfig(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.getKubernetesClusterConfig(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatKubernetesConfigResponse(response)
+      }]
+    };
+  }
+
+  private async handleListKubernetesClusters(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'account', 'domainid', 'id', 'name', 'state', 'zoneid', 'keyword'
+    ]);
+    const response = await this.client.listKubernetesClusters(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatKubernetesClustersResponse(response)
+      }]
+    };
+  }
+
+  private async handleListKubernetesSupportedVersions(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'keyword']);
+    const response = await this.client.listKubernetesSupportedVersions(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatKubernetesVersionsResponse(response)
+      }]
+    };
+  }
+
+  private async handleRemoveVmsFromKubernetesCluster(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'virtualmachineids']);
+    const response = await this.client.removeVirtualMachinesFromKubernetesCluster(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('VMs removal from Kubernetes cluster', response)
+      }]
+    };
+  }
+
+  private async handleScaleKubernetesCluster(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'size', 'masterNodes', 'serviceofferingid']);
+    const response = await this.client.scaleKubernetesCluster(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Kubernetes cluster scaling', response)
+      }]
+    };
+  }
+
+  private async handleStartKubernetesCluster(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.startKubernetesCluster(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Kubernetes cluster start', response)
+      }]
+    };
+  }
+
+  private async handleStopKubernetesCluster(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.stopKubernetesCluster(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Kubernetes cluster stop', response)
+      }]
+    };
+  }
+
+  private async handleUpdateKubernetesSupportedVersion(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'state']);
+    const response = await this.client.updateKubernetesSupportedVersion(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatKubernetesVersionResponse('Kubernetes version updated', response)
+      }]
+    };
+  }
+
+  private async handleUpgradeKubernetesCluster(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'kubernetesversionid']);
+    const response = await this.client.upgradeKubernetesCluster(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Kubernetes cluster upgrade', response)
+      }]
+    };
+  }
+
   // Response Formatting Methods for Account Management
   private formatAccountResponse(operation: string, response: any): string {
     if (response.account) {
@@ -12941,6 +13343,79 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     }
     
     return 'No site-to-site VPN connections found.';
+  }
+
+  // Kubernetes Service Response Formatting Methods
+  private formatKubernetesVersionResponse(operation: string, response: any): string {
+    if (response.kubernetessupportedversion) {
+      const version = response.kubernetessupportedversion;
+      return `${operation} completed successfully.\nVersion: ${version.name || 'N/A'} (${version.id})\nState: ${version.state || 'N/A'}\nMin Nodes: ${version.minkubernetesnodecount || 'N/A'}\nMax Nodes: ${version.maxkubernetesnodecount || 'N/A'}\nURL: ${version.url || 'N/A'}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatKubernetesConfigResponse(response: any): string {
+    if (response.kubernetesclusterconfig) {
+      const config = response.kubernetesclusterconfig;
+      return `Kubernetes cluster configuration retrieved successfully.\nCluster ID: ${config.clusterid || 'N/A'}\nConfig Data:\n${config.configdata || 'Configuration data not available'}`;
+    }
+    
+    return 'Kubernetes cluster configuration not available.';
+  }
+
+  private formatKubernetesClustersResponse(response: any): string {
+    const clusters = response.kubernetescluster || [];
+    
+    if (clusters.length === 0) {
+      return 'No Kubernetes clusters found.';
+    }
+
+    let result = `Found ${clusters.length} Kubernetes cluster(s):\n\n`;
+    
+    for (const cluster of clusters) {
+      result += `Name: ${cluster.name}\n`;
+      result += `  ID: ${cluster.id}\n`;
+      result += `  Description: ${cluster.description || 'N/A'}\n`;
+      result += `  State: ${cluster.state || 'N/A'}\n`;
+      result += `  Zone: ${cluster.zonename || 'N/A'}\n`;
+      result += `  Kubernetes Version: ${cluster.kubernetesversionname || 'N/A'}\n`;
+      result += `  Size: ${cluster.size || 'N/A'} nodes\n`;
+      result += `  Master Nodes: ${cluster.masternodes || 'N/A'}\n`;
+      result += `  Control Node Count: ${cluster.controlnodes || 'N/A'}\n`;
+      result += `  Service Offering: ${cluster.serviceofferingname || 'N/A'}\n`;
+      result += `  Network: ${cluster.associatednetworkname || 'N/A'}\n`;
+      result += `  Key Pair: ${cluster.keypair || 'N/A'}\n`;
+      result += `  Created: ${cluster.created || 'N/A'}\n`;
+      result += `  Account: ${cluster.account || 'N/A'}\n`;
+      result += `  Domain: ${cluster.domain || 'N/A'}\n\n`;
+    }
+
+    return result;
+  }
+
+  private formatKubernetesVersionsResponse(response: any): string {
+    const versions = response.kubernetessupportedversion || [];
+    
+    if (versions.length === 0) {
+      return 'No Kubernetes versions found.';
+    }
+
+    let result = `Found ${versions.length} Kubernetes version(s):\n\n`;
+    
+    for (const version of versions) {
+      result += `Version: ${version.name}\n`;
+      result += `  ID: ${version.id}\n`;
+      result += `  State: ${version.state || 'N/A'}\n`;
+      result += `  Min Node Count: ${version.minkubernetesnodecount || 'N/A'}\n`;
+      result += `  Max Node Count: ${version.maxkubernetesnodecount || 'N/A'}\n`;
+      result += `  Download URL: ${version.url || 'N/A'}\n`;
+      result += `  Checksum: ${version.checksum || 'N/A'}\n`;
+      result += `  Zone: ${version.zonename || 'N/A'}\n`;
+      result += `  Created: ${version.created || 'N/A'}\n\n`;
+    }
+
+    return result;
   }
 
   public async run(): Promise<void> {
