@@ -22,7 +22,7 @@ class CloudStackMCPServer {
     this.server = new Server(
       {
         name: 'cloudstack-mcp-server',
-        version: '1.3.0',
+        version: '1.4.0',
       },
       {
         capabilities: {
@@ -5888,6 +5888,452 @@ class CloudStackMCPServer {
             },
             required: ['id']
           }
+        },
+
+        // VM Guest OS Management
+        {
+          name: 'update_vm_guest_os',
+          description: 'Update virtual machine guest OS type',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'VM ID' },
+              ostypeid: { type: 'string', description: 'OS type ID' }
+            },
+            required: ['id', 'ostypeid']
+          }
+        },
+        {
+          name: 'list_guest_os_mapping',
+          description: 'List guest OS mappings',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Mapping ID' },
+              osversionid: { type: 'string', description: 'OS version ID' }
+            }
+          }
+        },
+        {
+          name: 'add_guest_os_mapping',
+          description: 'Add guest OS mapping',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              hypervisor: { type: 'string', description: 'Hypervisor type' },
+              hypervisorversion: { type: 'string', description: 'Hypervisor version' },
+              osnameforhypervisor: { type: 'string', description: 'OS name for hypervisor' },
+              ostypeid: { type: 'string', description: 'OS type ID' }
+            },
+            required: ['hypervisor', 'hypervisorversion', 'osnameforhypervisor', 'ostypeid']
+          }
+        },
+        {
+          name: 'remove_guest_os_mapping',
+          description: 'Remove guest OS mapping',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Mapping ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_os_types',
+          description: 'List supported OS types',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'OS type ID' },
+              oscategoryid: { type: 'string', description: 'OS category ID' },
+              description: { type: 'string', description: 'OS description' }
+            }
+          }
+        },
+        {
+          name: 'list_os_categories',
+          description: 'List OS categories',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Category ID' },
+              name: { type: 'string', description: 'Category name' }
+            }
+          }
+        },
+
+        // VM Console & Remote Access
+        {
+          name: 'get_vm_console_url',
+          description: 'Get virtual machine console URL',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: { type: 'string', description: 'VM ID' }
+            },
+            required: ['virtualmachineid']
+          }
+        },
+        {
+          name: 'get_vm_vnc_url',
+          description: 'Get virtual machine VNC console URL',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: { type: 'string', description: 'VM ID' }
+            },
+            required: ['virtualmachineid']
+          }
+        },
+
+        // VM Template & Cloning Operations
+        {
+          name: 'create_template_from_vm',
+          description: 'Create template from virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: { type: 'string', description: 'VM ID' },
+              name: { type: 'string', description: 'Template name' },
+              displaytext: { type: 'string', description: 'Template display text' },
+              ostypeid: { type: 'string', description: 'OS type ID' },
+              volumeid: { type: 'string', description: 'Volume ID' }
+            },
+            required: ['virtualmachineid', 'name', 'displaytext', 'ostypeid']
+          }
+        },
+        {
+          name: 'clone_virtual_machine',
+          description: 'Clone virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: { type: 'string', description: 'VM ID to clone' },
+              name: { type: 'string', description: 'New VM name' },
+              displayname: { type: 'string', description: 'New VM display name' }
+            },
+            required: ['virtualmachineid', 'name']
+          }
+        },
+        {
+          name: 'copy_virtual_machine',
+          description: 'Copy virtual machine to another zone',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: { type: 'string', description: 'VM ID to copy' },
+              destzoneid: { type: 'string', description: 'Destination zone ID' }
+            },
+            required: ['virtualmachineid', 'destzoneid']
+          }
+        },
+
+        // Advanced Volume Operations
+        {
+          name: 'assign_volume',
+          description: 'Assign volume to different account',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              volumeid: { type: 'string', description: 'Volume ID' },
+              account: { type: 'string', description: 'Target account' },
+              domainid: { type: 'string', description: 'Domain ID' }
+            },
+            required: ['volumeid', 'account']
+          }
+        },
+        {
+          name: 'check_volume',
+          description: 'Check volume integrity',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              volumeid: { type: 'string', description: 'Volume ID' }
+            },
+            required: ['volumeid']
+          }
+        },
+        {
+          name: 'update_volume',
+          description: 'Update volume properties',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Volume ID' },
+              name: { type: 'string', description: 'Volume name' },
+              displayvolume: { type: 'boolean', description: 'Display volume' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'recover_volume',
+          description: 'Recover deleted volume',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Volume ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'change_volume_offering',
+          description: 'Change disk offering for volume',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Volume ID' },
+              diskofferingid: { type: 'string', description: 'New disk offering ID' }
+            },
+            required: ['id', 'diskofferingid']
+          }
+        },
+
+        // Disk Offering Management
+        {
+          name: 'create_disk_offering',
+          description: 'Create disk offering',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              displaytext: { type: 'string', description: 'Display text' },
+              name: { type: 'string', description: 'Offering name' },
+              disksize: { type: 'number', description: 'Disk size in GB' }
+            },
+            required: ['displaytext', 'name']
+          }
+        },
+        {
+          name: 'delete_disk_offering',
+          description: 'Delete disk offering',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Disk offering ID' }
+            },
+            required: ['id']
+          }
+        },
+
+        // Advanced Snapshot Operations
+        {
+          name: 'create_snapshot_policy',
+          description: 'Create snapshot policy',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              intervaltype: { type: 'string', description: 'Interval type (HOURLY, DAILY, WEEKLY, MONTHLY)' },
+              maxsnaps: { type: 'number', description: 'Maximum snapshots to retain' },
+              schedule: { type: 'string', description: 'Schedule time' },
+              timezone: { type: 'string', description: 'Timezone' },
+              volumeid: { type: 'string', description: 'Volume ID' }
+            },
+            required: ['intervaltype', 'maxsnaps', 'schedule', 'timezone', 'volumeid']
+          }
+        },
+        {
+          name: 'list_snapshot_policies',
+          description: 'List snapshot policies',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              volumeid: { type: 'string', description: 'Volume ID' },
+              account: { type: 'string', description: 'Account name' }
+            }
+          }
+        },
+        {
+          name: 'delete_snapshot_policies',
+          description: 'Delete snapshot policies',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Policy ID' },
+              ids: { type: 'string', description: 'Comma-separated policy IDs' }
+            }
+          }
+        },
+
+        // Template Management
+        {
+          name: 'create_template',
+          description: 'Create template',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              displaytext: { type: 'string', description: 'Display text' },
+              name: { type: 'string', description: 'Template name' },
+              ostypeid: { type: 'string', description: 'OS type ID' },
+              volumeid: { type: 'string', description: 'Volume ID' },
+              snapshotid: { type: 'string', description: 'Snapshot ID' }
+            },
+            required: ['displaytext', 'name', 'ostypeid']
+          }
+        },
+        {
+          name: 'list_templates',
+          description: 'List templates',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              templatefilter: { type: 'string', description: 'Template filter (featured, self, selfexecutable, sharedexecutable, executable, community)' },
+              account: { type: 'string', description: 'Account name' },
+              hypervisor: { type: 'string', description: 'Hypervisor type' }
+            },
+            required: ['templatefilter']
+          }
+        },
+        {
+          name: 'update_template',
+          description: 'Update template',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Template ID' },
+              displaytext: { type: 'string', description: 'Display text' },
+              name: { type: 'string', description: 'Template name' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'delete_template',
+          description: 'Delete template',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Template ID' },
+              zoneid: { type: 'string', description: 'Zone ID' }
+            },
+            required: ['id']
+          }
+        },
+
+        // ISO Management
+        {
+          name: 'attach_iso',
+          description: 'Attach ISO to virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'ISO ID' },
+              virtualmachineid: { type: 'string', description: 'VM ID' }
+            },
+            required: ['id', 'virtualmachineid']
+          }
+        },
+        {
+          name: 'detach_iso',
+          description: 'Detach ISO from virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: { type: 'string', description: 'VM ID' }
+            },
+            required: ['virtualmachineid']
+          }
+        },
+        {
+          name: 'list_isos',
+          description: 'List ISOs',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              isofilter: { type: 'string', description: 'ISO filter (featured, self, selfexecutable, sharedexecutable, executable, community)' },
+              account: { type: 'string', description: 'Account name' },
+              bootable: { type: 'boolean', description: 'Bootable ISO' }
+            },
+            required: ['isofilter']
+          }
+        },
+        {
+          name: 'register_iso',
+          description: 'Register ISO',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              displaytext: { type: 'string', description: 'Display text' },
+              name: { type: 'string', description: 'ISO name' },
+              url: { type: 'string', description: 'ISO URL' },
+              zoneid: { type: 'string', description: 'Zone ID' },
+              ostypeid: { type: 'string', description: 'OS type ID' }
+            },
+            required: ['displaytext', 'name', 'url', 'zoneid']
+          }
+        },
+
+        // Backup and Recovery
+        {
+          name: 'create_backup',
+          description: 'Create backup',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: { type: 'string', description: 'VM ID' },
+              quiescevm: { type: 'boolean', description: 'Quiesce VM before backup' }
+            },
+            required: ['virtualmachineid']
+          }
+        },
+        {
+          name: 'list_backups',
+          description: 'List backups',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: { type: 'string', description: 'VM ID' },
+              account: { type: 'string', description: 'Account name' }
+            }
+          }
+        },
+        {
+          name: 'restore_backup',
+          description: 'Restore backup',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Backup ID' }
+            },
+            required: ['id']
+          }
+        },
+
+        // Object Storage Integration
+        {
+          name: 'list_object_storage_pools',
+          description: 'List object storage pools',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Pool ID' },
+              name: { type: 'string', description: 'Pool name' }
+            }
+          }
+        },
+        {
+          name: 'create_bucket',
+          description: 'Create storage bucket',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: { type: 'string', description: 'Bucket name' },
+              objectstorageid: { type: 'string', description: 'Object storage ID' }
+            },
+            required: ['name', 'objectstorageid']
+          }
+        },
+        {
+          name: 'list_buckets',
+          description: 'List storage buckets',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: { type: 'string', description: 'Account name' },
+              objectstorageid: { type: 'string', description: 'Object storage ID' }
+            }
+          }
         }
       ];
 
@@ -10249,98 +10695,7 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     };
   }
 
-  private async handleCreateRemoteAccessVpn(args: any): Promise<any> {
-    if (!args.publicipid) {
-      throw new Error('Public IP ID is required');
-    }
-    
-    const allowedParams = ['publicipid', 'account', 'domainid', 'iprange', 'openfirewall'];
-    const params = this.buildParams(args, allowedParams);
-    const response = await this.client.createRemoteAccessVpn(params);
-    
-    return {
-      content: [{
-        type: 'text',
-        text: this.formatAsyncJobResponse('Remote Access VPN creation initiated', response)
-      }]
-    };
-  }
-
-  private async handleListRemoteAccessVpns(args: any): Promise<any> {
-    const allowedParams = ['account', 'domainid', 'fordisplay', 'id', 'listall', 'networkid', 'page', 'pagesize', 'projectid', 'publicipid'];
-    const params = this.buildParams(args, allowedParams);
-    const response = await this.client.listRemoteAccessVpns(params);
-    
-    return {
-      content: [{
-        type: 'text',
-        text: this.formatRemoteAccessVpnListResponse(response)
-      }]
-    };
-  }
-
-  private async handleDeleteRemoteAccessVpn(args: any): Promise<any> {
-    if (!args.publicipid) {
-      throw new Error('Public IP ID is required');
-    }
-    
-    const params = this.buildParams(args, ['publicipid']);
-    const response = await this.client.deleteRemoteAccessVpn(params);
-    
-    return {
-      content: [{
-        type: 'text',
-        text: this.formatAsyncJobResponse('Remote Access VPN deletion initiated', response)
-      }]
-    };
-  }
-
-  private async handleAddVpnUser(args: any): Promise<any> {
-    if (!args.password || !args.username) {
-      throw new Error('Password and username are required');
-    }
-    
-    const allowedParams = ['password', 'username', 'account', 'domainid', 'projectid'];
-    const params = this.buildParams(args, allowedParams);
-    const response = await this.client.addVpnUser(params);
-    
-    return {
-      content: [{
-        type: 'text',
-        text: this.formatAsyncJobResponse('VPN user addition initiated', response)
-      }]
-    };
-  }
-
-  private async handleListVpnUsers(args: any): Promise<any> {
-    const allowedParams = ['account', 'domainid', 'id', 'keyword', 'listall', 'page', 'pagesize', 'projectid', 'username'];
-    const params = this.buildParams(args, allowedParams);
-    const response = await this.client.listVpnUsers(params);
-    
-    return {
-      content: [{
-        type: 'text',
-        text: this.formatVpnUserListResponse(response)
-      }]
-    };
-  }
-
-  private async handleRemoveVpnUser(args: any): Promise<any> {
-    if (!args.username) {
-      throw new Error('Username is required');
-    }
-    
-    const allowedParams = ['username', 'account', 'domainid', 'projectid'];
-    const params = this.buildParams(args, allowedParams);
-    const response = await this.client.removeVpnUser(params);
-    
-    return {
-      content: [{
-        type: 'text',
-        text: this.formatAsyncJobResponse('VPN user removal initiated', response)
-      }]
-    };
-  }
+  // Duplicate Remote Access VPN handlers removed - kept versions located later in file
 
   // VPC Offerings Handler Methods
   private async handleCreateVpcOffering(args: any): Promise<any> {

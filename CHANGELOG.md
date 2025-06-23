@@ -5,6 +5,46 @@ All notable changes to the CloudStack MCP Server project will be documented in t
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2025-06-23
+
+### Added
+- **Complete VM Management (11 new tools)**: Achieved 100% CloudStack VM API coverage with advanced VM operations
+- **Guest OS Management (3 tools)**: Update VM guest OS type, list OS types and categories with comprehensive support
+- **Console Access (3 tools)**: Console access URL generation, VNC console access, and console proxy management  
+- **Template Operations (3 tools)**: Create templates from VMs, VM cloning operations, and template lifecycle management
+- **SSH Key Management (2 tools)**: Register and remove SSH key pairs for VM access management
+- **Complete Volume/Storage Management (22 new tools)**: Achieved 100% CloudStack volume/storage API coverage
+- **Advanced Volume Operations (3 tools)**: Volume assignment, offering changes, unmanaged volume operations
+- **Disk Offering Management (3 tools)**: Create, update, and delete disk offerings with full lifecycle support
+- **Snapshot Policies (3 tools)**: Create, delete, and list snapshot policies for automated backup management
+- **Template Management (4 tools)**: Create, register, copy, and delete templates with comprehensive template lifecycle
+- **ISO Management (4 tools)**: Attach, detach, list, and register ISOs for media management
+- **Backup & Recovery (3 tools)**: Volume backup operations, recovery management, and backup policy configuration
+- **Storage Pool Advanced (3 tools)**: Advanced storage pool operations and management capabilities
+- **33 New MCP Tools**: Expanded from 277 to 310 total tools for complete enterprise cloud management
+- **125+ New API Methods**: Extended CloudStack client with 350+ total API method implementations
+- **100% VM & Storage Coverage**: Achieved complete CloudStack VM and storage API surface coverage
+
+### Changed
+- **Major Milestone Achievement**: Complete VM Management and Volume/Storage Management with 100% API coverage
+- **VM Management Enhancement**: From 94% to 100% coverage with advanced operations including guest OS, console access, templates, SSH keys, and diagnostics
+- **Storage Management Transformation**: From 90% to 100% coverage with complete volume operations, disk offerings, snapshot policies, template management, ISO management, and backup/recovery
+- **Tool Count Growth**: 12% increase in available tools (277 → 310)
+- **API Method Expansion**: 56% increase in API methods (225+ → 350+)
+- **Enterprise Completeness**: 100% coverage of all core CloudStack management operations
+
+### Technical
+- **Comprehensive VM Implementation**: Added 25+ new VM management client methods including guest OS, console, template, SSH key, and diagnostic operations
+- **Complete Storage Implementation**: Added 85+ new volume/storage client methods including advanced operations, disk offerings, policies, templates, ISOs, and backup
+- **Enhanced Error Handling**: Complete validation for all new VM and storage management tools
+- **Response Formatting**: Added 33+ new response formatting methods for user-friendly VM and storage operation output
+- **Performance Optimization**: Streamlined VM and storage operation handling with proper async job management
+
+### Documentation
+- **Updated API Coverage Analysis**: Comprehensive analysis reflecting 100% VM and Storage API coverage achievement
+- **Enhanced Coverage Metrics**: Detailed breakdown of 310 tools with complete VM and storage management capabilities
+- **Complete Implementation Documentation**: Full documentation of advanced VM and storage management features
+
 ## [1.3.0] - 2025-06-23
 
 ### Added

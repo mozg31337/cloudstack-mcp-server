@@ -173,60 +173,6 @@ export class CloudStackClient {
     return this.makeRequest('listDiskOfferings', params);
   }
 
-  public async listTemplates(params: Record<string, any> = {}): Promise<any> {
-    return this.makeRequest('listTemplates', params);
-  }
-
-  // Template Management
-  public async registerTemplate(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('registerTemplate', params);
-  }
-
-  public async extractTemplate(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('extractTemplate', params);
-  }
-
-  public async prepareTemplate(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('prepareTemplate', params);
-  }
-
-  public async updateTemplatePermissions(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('updateTemplatePermissions', params);
-  }
-
-  // ISO Management
-  public async listIsos(params: Record<string, any> = {}): Promise<any> {
-    return this.makeRequest('listIsos', params);
-  }
-
-  public async registerIso(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('registerIso', params);
-  }
-
-  public async updateIso(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('updateIso', params);
-  }
-
-  public async deleteIso(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('deleteIso', params);
-  }
-
-  public async copyIso(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('copyIso', params);
-  }
-
-  public async extractIso(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('extractIso', params);
-  }
-
-  public async attachIso(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('attachIso', params);
-  }
-
-  public async detachIso(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('detachIso', params);
-  }
-
   // VPC Management
   public async createVPC(params: Record<string, any>): Promise<any> {
     return this.makeRequest('createVPC', params);
@@ -369,10 +315,6 @@ export class CloudStackClient {
     return this.makeRequest('deleteNetworkAclList', params);
   }
 
-  public async replaceNetworkACLList(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('replaceNetworkAclList', params);
-  }
-
   public async listSecurityGroups(params: Record<string, any> = {}): Promise<any> {
     return this.makeRequest('listSecurityGroups', params);
   }
@@ -494,22 +436,7 @@ export class CloudStackClient {
     return this.makeRequest('revokeSecurityGroupEgress', params);
   }
 
-  // Template Management
-  public async createTemplate(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('createTemplate', params);
-  }
-
-  public async deleteTemplate(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('deleteTemplate', params);
-  }
-
-  public async updateTemplate(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('updateTemplate', params);
-  }
-
-  public async copyTemplate(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('copyTemplate', params);
-  }
+  // Template Management functions moved to avoid duplication
 
   // Load Balancer Management
   public async createLoadBalancerRule(params: Record<string, any>): Promise<any> {
@@ -1237,15 +1164,7 @@ export class CloudStackClient {
     return this.makeRequest('queryAsyncJobResult', params);
   }
 
-  // Volume Encryption
-  public async changeOfferingForVolume(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('changeOfferingForVolume', params);
-  }
-
-  public async createDiskOffering(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('createDiskOffering', params);
-  }
-
+  // Volume Encryption and Disk Offering functions moved to avoid duplication
   public async updateDiskOffering(params: Record<string, any>): Promise<any> {
     return this.makeRequest('updateDiskOffering', params);
   }
@@ -1342,6 +1261,481 @@ export class CloudStackClient {
 
   public async listTags(params: Record<string, any> = {}): Promise<any> {
     return this.makeRequest('listTags', params);
+  }
+
+  // VM Guest OS Management
+  public async updateVirtualMachineGuestOs(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateVirtualMachineGuestOs', params);
+  }
+
+  public async listGuestOsMapping(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listGuestOsMapping', params);
+  }
+
+  public async addGuestOsMapping(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addGuestOsMapping', params);
+  }
+
+  public async removeGuestOsMapping(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('removeGuestOsMapping', params);
+  }
+
+  public async listOsTypes(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listOsTypes', params);
+  }
+
+  public async listOsCategories(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listOsCategories', params);
+  }
+
+  // VM Console & Remote Access
+  public async getVirtualMachineConsoleUrl(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getVirtualMachineConsoleUrl', params);
+  }
+
+  public async getVirtualMachineVncUrl(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getVirtualMachineVncUrl', params);
+  }
+
+  // VM Template & Cloning Operations
+  public async createTemplateFromVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createTemplateFromVirtualMachine', params);
+  }
+
+  public async cloneVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('cloneVirtualMachine', params);
+  }
+
+  public async copyVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('copyVirtualMachine', params);
+  }
+
+  // VM Backup & Recovery (Extended)
+  public async createVirtualMachineBackup(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createVirtualMachineBackup', params);
+  }
+
+  public async restoreVirtualMachineBackup(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('restoreVirtualMachineBackup', params);
+  }
+
+  public async listVirtualMachineBackups(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listVirtualMachineBackups', params);
+  }
+
+  public async deleteVirtualMachineBackup(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteVirtualMachineBackup', params);
+  }
+
+  public async scheduleVirtualMachineBackup(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('scheduleVirtualMachineBackup', params);
+  }
+
+  // VM User Data & Metadata (Extended)
+  public async updateVirtualMachineMetadata(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateVirtualMachineMetadata', params);
+  }
+
+  public async listVirtualMachineMetadata(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('listVirtualMachineMetadata', params);
+  }
+
+  public async deleteVirtualMachineMetadata(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteVirtualMachineMetadata', params);
+  }
+
+  public async updateVirtualMachineUserData(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateVirtualMachineUserData', params);
+  }
+
+  // VM SSH Key Management
+  public async resetSSHKeyForVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('resetSSHKeyForVirtualMachine', params);
+  }
+
+  public async addSSHKeyToVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addSSHKeyToVirtualMachine', params);
+  }
+
+  public async removeSSHKeyFromVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('removeSSHKeyFromVirtualMachine', params);
+  }
+
+  public async listVirtualMachineSSHKeys(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('listVirtualMachineSSHKeys', params);
+  }
+
+  // VM Network Advanced Operations
+  public async addIpToNic(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addIpToNic', params);
+  }
+
+  public async removeIpFromNic(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('removeIpFromNic', params);
+  }
+
+  public async updateVirtualMachineNicIp(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateVirtualMachineNicIp', params);
+  }
+
+  public async listVirtualMachineNics(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('listVirtualMachineNics', params);
+  }
+
+  // VM Performance & Diagnostics
+  public async getVirtualMachineStatistics(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getVirtualMachineStatistics', params);
+  }
+
+  public async getVirtualMachinePerformanceMetrics(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getVirtualMachinePerformanceMetrics', params);
+  }
+
+  public async runVirtualMachineDiagnostics(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('runVirtualMachineDiagnostics', params);
+  }
+
+  public async getVirtualMachineSystemEvents(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getVirtualMachineSystemEvents', params);
+  }
+
+  // VM Unmanaged Operations
+  public async unmanageVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('unmanageVirtualMachine', params);
+  }
+
+  public async adoptVirtualMachine(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('adoptVirtualMachine', params);
+  }
+
+  public async listUnmanagedVirtualMachines(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listUnmanagedVirtualMachines', params);
+  }
+
+  // Advanced Volume Operations
+  public async assignVolume(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('assignVolume', params);
+  }
+
+  public async checkVolume(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('checkVolume', params);
+  }
+
+  public async destroyVolume(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('destroyVolume', params);
+  }
+
+  public async getPathForVolume(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getPathForVolume', params);
+  }
+
+  public async getUploadParamsForVolume(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getUploadParamsForVolume', params);
+  }
+
+  public async getVolumeiScsiName(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getVolumeiScsiName', params);
+  }
+
+  public async importVolume(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('importVolume', params);
+  }
+
+  public async listVolumesForImport(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listVolumesForImport', params);
+  }
+
+  public async listVolumesUsageHistory(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listVolumesUsageHistory', params);
+  }
+
+  public async recoverVolume(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('recoverVolume', params);
+  }
+
+  public async restoreVolumeFromBackupAndAttachToVM(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('restoreVolumeFromBackupAndAttachToVM', params);
+  }
+
+  public async unmanageVolume(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('unmanageVolume', params);
+  }
+
+  public async updateVolume(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateVolume', params);
+  }
+
+  public async changeOfferingForVolume(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('changeOfferingForVolume', params);
+  }
+
+  // Disk Offering Management
+  public async createDiskOffering(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createDiskOffering', params);
+  }
+
+  public async deleteDiskOffering(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteDiskOffering', params);
+  }
+
+  // Advanced Snapshot Operations
+  public async archiveSnapshot(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('archiveSnapshot', params);
+  }
+
+  public async copySnapshot(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('copySnapshot', params);
+  }
+
+  public async createSnapshotFromVMSnapshot(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createSnapshotFromVMSnapshot', params);
+  }
+
+  public async createSnapshotPolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createSnapshotPolicy', params);
+  }
+
+  public async deleteSnapshotPolicies(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteSnapshotPolicies', params);
+  }
+
+  public async extractSnapshot(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('extractSnapshot', params);
+  }
+
+  public async getVolumeSnapshotDetails(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getVolumeSnapshotDetails', params);
+  }
+
+  public async listSnapshotPolicies(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listSnapshotPolicies', params);
+  }
+
+  public async updateSnapshotPolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateSnapshotPolicy', params);
+  }
+
+  // Storage Pool Advanced Management
+  public async changeStoragePoolScope(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('changeStoragePoolScope', params);
+  }
+
+  public async listAffectedVmsForStorageScopeChange(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('listAffectedVmsForStorageScopeChange', params);
+  }
+
+  public async listStoragePoolObjects(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('listStoragePoolObjects', params);
+  }
+
+  public async listStorageProviders(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listStorageProviders', params);
+  }
+
+  public async syncStoragePool(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('syncStoragePool', params);
+  }
+
+  public async updateStorageCapabilities(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateStorageCapabilities', params);
+  }
+
+  // Secondary Storage Management
+  public async addSecondaryStorage(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addSecondaryStorage', params);
+  }
+
+  public async createSecondaryStagingStore(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createSecondaryStagingStore', params);
+  }
+
+  public async deleteSecondaryStagingStore(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteSecondaryStagingStore', params);
+  }
+
+  public async listSecondaryStagingStores(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listSecondaryStagingStores', params);
+  }
+
+  public async migrateSecondaryStorageData(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('migrateSecondaryStorageData', params);
+  }
+
+  // Template Management
+  public async copyTemplate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('copyTemplate', params);
+  }
+
+  public async createTemplate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createTemplate', params);
+  }
+
+  public async deleteTemplate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteTemplate', params);
+  }
+
+  public async extractTemplate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('extractTemplate', params);
+  }
+
+  public async getUploadParamsForTemplate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getUploadParamsForTemplate', params);
+  }
+
+  public async listTemplatePermissions(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('listTemplatePermissions', params);
+  }
+
+  public async listTemplates(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listTemplates', params);
+  }
+
+  public async prepareTemplate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('prepareTemplate', params);
+  }
+
+  public async registerTemplate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('registerTemplate', params);
+  }
+
+  public async updateTemplate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateTemplate', params);
+  }
+
+  public async updateTemplatePermissions(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateTemplatePermissions', params);
+  }
+
+  // ISO Management
+  public async attachIso(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('attachIso', params);
+  }
+
+  public async copyIso(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('copyIso', params);
+  }
+
+  public async deleteIso(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteIso', params);
+  }
+
+  public async detachIso(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('detachIso', params);
+  }
+
+  public async extractIso(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('extractIso', params);
+  }
+
+  public async getUploadParamsForIso(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getUploadParamsForIso', params);
+  }
+
+  public async listIsoPermissions(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('listIsoPermissions', params);
+  }
+
+  public async listIsos(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listIsos', params);
+  }
+
+  public async registerIso(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('registerIso', params);
+  }
+
+  public async updateIso(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateIso', params);
+  }
+
+  public async updateIsoPermissions(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateIsoPermissions', params);
+  }
+
+  // Backup and Recovery
+  public async createBackup(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createBackup', params);
+  }
+
+  public async createBackupSchedule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createBackupSchedule', params);
+  }
+
+  public async deleteBackup(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteBackup', params);
+  }
+
+  public async deleteBackupOffering(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteBackupOffering', params);
+  }
+
+  public async deleteBackupSchedule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteBackupSchedule', params);
+  }
+
+  public async listBackupOfferings(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listBackupOfferings', params);
+  }
+
+  public async listBackups(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listBackups', params);
+  }
+
+  public async restoreBackup(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('restoreBackup', params);
+  }
+
+  public async updateBackupSchedule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateBackupSchedule', params);
+  }
+
+  // Object Storage Integration
+  public async addObjectStoragePool(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addObjectStoragePool', params);
+  }
+
+  public async createBucket(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createBucket', params);
+  }
+
+  public async deleteBucket(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteBucket', params);
+  }
+
+  public async deleteObjectStoragePool(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteObjectStoragePool', params);
+  }
+
+  public async listBuckets(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listBuckets', params);
+  }
+
+  public async listObjectStoragePools(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listObjectStoragePools', params);
+  }
+
+  public async updateBucket(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateBucket', params);
+  }
+
+  public async updateObjectStoragePool(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateObjectStoragePool', params);
+  }
+
+  // Volume Annotations
+  public async addAnnotation(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addAnnotation', params);
+  }
+
+  public async listAnnotations(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listAnnotations', params);
+  }
+
+  public async removeAnnotation(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('removeAnnotation', params);
+  }
+
+  public async updateAnnotationVisibility(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateAnnotationVisibility', params);
   }
 
 }
