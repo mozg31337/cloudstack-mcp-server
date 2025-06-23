@@ -274,6 +274,105 @@ export class CloudStackClient {
     return this.makeRequest('deleteStaticRoute', params);
   }
 
+  // VPN Services Management
+  public async createVpnConnection(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createVpnConnection', params);
+  }
+
+  public async listVpnConnections(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listVpnConnections', params);
+  }
+
+  public async deleteVpnConnection(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteVpnConnection', params);
+  }
+
+  public async resetVpnConnection(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('resetVpnConnection', params);
+  }
+
+  public async createVpnGateway(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createVpnGateway', params);
+  }
+
+  public async listVpnGateways(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listVpnGateways', params);
+  }
+
+  public async deleteVpnGateway(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteVpnGateway', params);
+  }
+
+  public async createVpnCustomerGateway(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createVpnCustomerGateway', params);
+  }
+
+  public async listVpnCustomerGateways(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listVpnCustomerGateways', params);
+  }
+
+  public async deleteVpnCustomerGateway(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteVpnCustomerGateway', params);
+  }
+
+  public async createRemoteAccessVpn(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createRemoteAccessVpn', params);
+  }
+
+  public async listRemoteAccessVpns(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listRemoteAccessVpns', params);
+  }
+
+  public async deleteRemoteAccessVpn(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteRemoteAccessVpn', params);
+  }
+
+  public async addVpnUser(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addVpnUser', params);
+  }
+
+  public async listVpnUsers(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listVpnUsers', params);
+  }
+
+  public async removeVpnUser(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('removeVpnUser', params);
+  }
+
+  // VPC Offerings Management
+  public async createVpcOffering(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createVpcOffering', params);
+  }
+
+  public async listVpcOfferings(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listVpcOfferings', params);
+  }
+
+  public async updateVpcOffering(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateVpcOffering', params);
+  }
+
+  public async deleteVpcOffering(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteVpcOffering', params);
+  }
+
+  // Network ACL Lists Management
+  public async createNetworkACLList(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createNetworkAclList', params);
+  }
+
+  public async listNetworkACLLists(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listNetworkAclLists', params);
+  }
+
+  public async deleteNetworkACLList(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteNetworkAclList', params);
+  }
+
+  public async replaceNetworkACLList(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('replaceNetworkAclList', params);
+  }
+
   public async listSecurityGroups(params: Record<string, any> = {}): Promise<any> {
     return this.makeRequest('listSecurityGroups', params);
   }
@@ -698,22 +797,6 @@ export class CloudStackClient {
     return this.makeRequest('listNetworkACLs', params);
   }
 
-  public async replaceNetworkACLList(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('replaceNetworkACLList', params);
-  }
-
-  public async createNetworkACLList(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('createNetworkACLList', params);
-  }
-
-  public async deleteNetworkACLList(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('deleteNetworkACLList', params);
-  }
-
-  public async listNetworkACLLists(params: Record<string, any> = {}): Promise<any> {
-    return this.makeRequest('listNetworkACLLists', params);
-  }
-
   // Virtual Router Management
   public async startRouter(params: Record<string, any>): Promise<any> {
     return this.makeRequest('startRouter', params);
@@ -1033,5 +1116,133 @@ export class CloudStackClient {
 
   public async importLdapUsers(params: Record<string, any> = {}): Promise<any> {
     return this.makeRequest('importLdapUsers', params);
+  }
+
+  // System Administration & Configuration
+  public async listConfigurations(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listConfigurations', params);
+  }
+
+  public async updateConfiguration(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateConfiguration', params);
+  }
+
+  public async listCapabilities(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listCapabilities', params);
+  }
+
+  public async listAlerts(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listAlerts', params);
+  }
+
+  public async archiveAlerts(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('archiveAlerts', params);
+  }
+
+  public async deleteAlerts(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteAlerts', params);
+  }
+
+  public async listEvents(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listEvents', params);
+  }
+
+  public async archiveEvents(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('archiveEvents', params);
+  }
+
+  public async deleteEvents(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteEvents', params);
+  }
+
+  public async listSystemVms(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listSystemVms', params);
+  }
+
+  public async startSystemVm(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('startSystemVm', params);
+  }
+
+  public async stopSystemVm(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('stopSystemVm', params);
+  }
+
+  public async rebootSystemVm(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('rebootSystemVm', params);
+  }
+
+  public async destroySystemVm(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('destroySystemVm', params);
+  }
+
+  public async migrateSystemVm(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('migrateSystemVm', params);
+  }
+
+  // Resource Management
+  public async findStoragePoolsForMigration(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('findStoragePoolsForMigration', params);
+  }
+
+  public async listStoragePools(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listStoragePools', params);
+  }
+
+  public async createStoragePool(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createStoragePool', params);
+  }
+
+  public async updateStoragePool(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateStoragePool', params);
+  }
+
+  public async deleteStoragePool(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteStoragePool', params);
+  }
+
+  public async enableStorageMaintenance(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('enableStorageMaintenance', params);
+  }
+
+  public async cancelStorageMaintenance(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('cancelStorageMaintenance', params);
+  }
+
+  // Monitoring & Metrics
+  public async listUsageRecords(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listUsageRecords', params);
+  }
+
+  public async generateUsageRecords(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('generateUsageRecords', params);
+  }
+
+  public async listUsageTypes(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listUsageTypes', params);
+  }
+
+  public async listCapacity(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listCapacity', params);
+  }
+
+  public async listAsyncJobs(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listAsyncJobs', params);
+  }
+
+  public async queryAsyncJobResult(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('queryAsyncJobResult', params);
+  }
+
+  // Volume Encryption
+  public async changeOfferingForVolume(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('changeOfferingForVolume', params);
+  }
+
+  public async createDiskOffering(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createDiskOffering', params);
+  }
+
+  public async updateDiskOffering(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateDiskOffering', params);
   }
 }

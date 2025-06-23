@@ -1323,6 +1323,498 @@ class CloudStackMCPServer {
             required: ['username']
           }
         },
+        // Advanced Networking Tools (exposing existing client methods)
+        {
+          name: 'create_network_offering',
+          description: 'Create a new network offering',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              displaytext: {
+                type: 'string',
+                description: 'Display text for the offering'
+              },
+              guestiptype: {
+                type: 'string',
+                description: 'Guest IP type (Isolated, Shared, L2, etc.)'
+              },
+              name: {
+                type: 'string',
+                description: 'Network offering name'
+              },
+              supportedservices: {
+                type: 'string',
+                description: 'Supported services (comma-separated)'
+              },
+              traffictype: {
+                type: 'string',
+                description: 'Traffic type (Guest, Management, Public, etc.)'
+              },
+              availability: {
+                type: 'string',
+                description: 'Availability (Optional, Required)'
+              },
+              networkrate: {
+                type: 'number',
+                description: 'Network rate in Mbps'
+              },
+              conservemode: {
+                type: 'boolean',
+                description: 'Enable/disable conserve mode'
+              }
+            },
+            required: ['displaytext', 'guestiptype', 'name', 'supportedservices', 'traffictype']
+          }
+        },
+        {
+          name: 'delete_network_offering',
+          description: 'Delete a network offering',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Network offering ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'update_network_offering',
+          description: 'Update network offering properties',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Network offering ID'
+              },
+              displaytext: {
+                type: 'string',
+                description: 'Updated display text'
+              },
+              name: {
+                type: 'string',
+                description: 'Updated name'
+              },
+              availability: {
+                type: 'string',
+                description: 'Updated availability'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'create_vpc_offering',
+          description: 'Create a new VPC offering',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              displaytext: {
+                type: 'string',
+                description: 'Display text for the VPC offering'
+              },
+              name: {
+                type: 'string',
+                description: 'VPC offering name'
+              },
+              supportedservices: {
+                type: 'string',
+                description: 'Supported services (comma-separated)'
+              }
+            },
+            required: ['displaytext', 'name', 'supportedservices']
+          }
+        },
+        {
+          name: 'list_vpc_offerings',
+          description: 'List VPC offerings',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'VPC offering ID'
+              },
+              name: {
+                type: 'string',
+                description: 'VPC offering name'
+              },
+              state: {
+                type: 'string',
+                description: 'VPC offering state'
+              }
+            }
+          }
+        },
+        {
+          name: 'update_vpc_offering',
+          description: 'Update VPC offering properties',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'VPC offering ID'
+              },
+              displaytext: {
+                type: 'string',
+                description: 'Updated display text'
+              },
+              name: {
+                type: 'string',
+                description: 'Updated name'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'delete_vpc_offering',
+          description: 'Delete a VPC offering',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'VPC offering ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        // Network ACL Lists Management Tools
+        {
+          name: 'create_network_acl_list',
+          description: 'Create a new Network ACL list for VPC',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'ACL list name'
+              },
+              description: {
+                type: 'string',
+                description: 'ACL list description'
+              },
+              vpcid: {
+                type: 'string',
+                description: 'VPC ID'
+              }
+            },
+            required: ['name', 'vpcid']
+          }
+        },
+        {
+          name: 'list_network_acl_lists',
+          description: 'List Network ACL lists',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              id: {
+                type: 'string',
+                description: 'ACL list ID'
+              },
+              name: {
+                type: 'string',
+                description: 'ACL list name'
+              },
+              vpcid: {
+                type: 'string',
+                description: 'VPC ID'
+              }
+            }
+          }
+        },
+        {
+          name: 'delete_network_acl_list',
+          description: 'Delete a Network ACL list',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'ACL list ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'replace_network_acl_list',
+          description: 'Replace Network ACL list for a network',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              aclid: {
+                type: 'string',
+                description: 'New ACL list ID'
+              },
+              networkid: {
+                type: 'string',
+                description: 'Network ID'
+              }
+            },
+            required: ['aclid', 'networkid']
+          }
+        },
+        {
+          name: 'create_vlan_ip_range',
+          description: 'Create a VLAN IP range',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              endip: {
+                type: 'string',
+                description: 'End IP address'
+              },
+              gateway: {
+                type: 'string',
+                description: 'Gateway IP address'
+              },
+              netmask: {
+                type: 'string',
+                description: 'Netmask'
+              },
+              startip: {
+                type: 'string',
+                description: 'Start IP address'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID'
+              },
+              vlan: {
+                type: 'string',
+                description: 'VLAN tag'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              }
+            },
+            required: ['endip', 'gateway', 'netmask', 'startip', 'zoneid']
+          }
+        },
+        {
+          name: 'delete_vlan_ip_range',
+          description: 'Delete a VLAN IP range',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'VLAN IP range ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_vlan_ip_ranges',
+          description: 'List VLAN IP ranges',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              id: {
+                type: 'string',
+                description: 'VLAN IP range ID'
+              },
+              keyword: {
+                type: 'string',
+                description: 'Keyword search'
+              },
+              networkid: {
+                type: 'string',
+                description: 'Network ID'
+              },
+              vlan: {
+                type: 'string',
+                description: 'VLAN tag'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID'
+              }
+            }
+          }
+        },
+        {
+          name: 'dedicate_public_ip_range',
+          description: 'Dedicate a public IP range to an account',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              id: {
+                type: 'string',
+                description: 'VLAN IP range ID'
+              }
+            },
+            required: ['account', 'domainid', 'id']
+          }
+        },
+        {
+          name: 'release_public_ip_range',
+          description: 'Release a dedicated public IP range',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'VLAN IP range ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'update_ip_address',
+          description: 'Update IP address information',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'IP address ID'
+              },
+              customid: {
+                type: 'string',
+                description: 'Custom ID'
+              },
+              fordisplay: {
+                type: 'boolean',
+                description: 'Display flag'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'create_ip_forwarding_rule',
+          description: 'Create an IP forwarding rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              ipaddressid: {
+                type: 'string',
+                description: 'Public IP address ID'
+              },
+              protocol: {
+                type: 'string',
+                description: 'Protocol (TCP, UDP)'
+              },
+              startport: {
+                type: 'number',
+                description: 'Start port'
+              },
+              endport: {
+                type: 'number',
+                description: 'End port'
+              }
+            },
+            required: ['ipaddressid', 'protocol', 'startport']
+          }
+        },
+        {
+          name: 'delete_ip_forwarding_rule',
+          description: 'Delete an IP forwarding rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'IP forwarding rule ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_ip_forwarding_rules',
+          description: 'List IP forwarding rules',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              id: {
+                type: 'string',
+                description: 'Rule ID'
+              },
+              ipaddressid: {
+                type: 'string',
+                description: 'IP address ID'
+              },
+              virtualmachineid: {
+                type: 'string',
+                description: 'VM ID'
+              }
+            }
+          }
+        },
+        {
+          name: 'update_port_forwarding_rule',
+          description: 'Update port forwarding rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Port forwarding rule ID'
+              },
+              customid: {
+                type: 'string',
+                description: 'Custom ID'
+              },
+              fordisplay: {
+                type: 'boolean',
+                description: 'Display flag'
+              },
+              virtualmachineid: {
+                type: 'string',
+                description: 'VM ID'
+              }
+            },
+            required: ['id']
+          }
+        },
         {
           name: 'deploy_virtual_machine',
           description: 'Deploy a new virtual machine in CloudStack',
@@ -4245,6 +4737,497 @@ class CloudStackMCPServer {
             },
             required: ['projectid']
           }
+        },
+        // System Administration & Configuration Tools
+        {
+          name: 'list_configurations',
+          description: 'List CloudStack global configurations',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              category: {
+                type: 'string',
+                description: 'Configuration category'
+              },
+              name: {
+                type: 'string',
+                description: 'Configuration name'
+              },
+              keyword: {
+                type: 'string',
+                description: 'Search keyword'
+              }
+            }
+          }
+        },
+        {
+          name: 'update_configuration',
+          description: 'Update a CloudStack global configuration',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'Configuration name'
+              },
+              value: {
+                type: 'string',
+                description: 'New configuration value'
+              }
+            },
+            required: ['name', 'value']
+          }
+        },
+        {
+          name: 'list_capabilities',
+          description: 'List CloudStack capabilities and features',
+          inputSchema: {
+            type: 'object',
+            properties: {}
+          }
+        },
+        {
+          name: 'list_alerts',
+          description: 'List system alerts',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Alert ID'
+              },
+              type: {
+                type: 'string',
+                description: 'Alert type'
+              },
+              keyword: {
+                type: 'string',
+                description: 'Search keyword'
+              }
+            }
+          }
+        },
+        {
+          name: 'archive_alerts',
+          description: 'Archive system alerts',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              ids: {
+                type: 'string',
+                description: 'Comma-separated alert IDs'
+              },
+              startdate: {
+                type: 'string',
+                description: 'Start date for archiving (yyyy-MM-dd)'
+              },
+              enddate: {
+                type: 'string',
+                description: 'End date for archiving (yyyy-MM-dd)'
+              }
+            }
+          }
+        },
+        {
+          name: 'delete_alerts',
+          description: 'Delete system alerts',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              ids: {
+                type: 'string',
+                description: 'Comma-separated alert IDs'
+              },
+              startdate: {
+                type: 'string',
+                description: 'Start date for deletion (yyyy-MM-dd)'
+              },
+              enddate: {
+                type: 'string',
+                description: 'End date for deletion (yyyy-MM-dd)'
+              }
+            }
+          }
+        },
+        {
+          name: 'list_events',
+          description: 'List system events',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              duration: {
+                type: 'number',
+                description: 'Duration in days'
+              },
+              level: {
+                type: 'string',
+                description: 'Event level (INFO, WARN, ERROR)'
+              },
+              type: {
+                type: 'string',
+                description: 'Event type'
+              }
+            }
+          }
+        },
+        {
+          name: 'list_system_vms',
+          description: 'List system virtual machines',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              hostid: {
+                type: 'string',
+                description: 'Host ID'
+              },
+              id: {
+                type: 'string',
+                description: 'System VM ID'
+              },
+              name: {
+                type: 'string',
+                description: 'System VM name'
+              },
+              podid: {
+                type: 'string',
+                description: 'Pod ID'
+              },
+              state: {
+                type: 'string',
+                description: 'System VM state'
+              },
+              systemvmtype: {
+                type: 'string',
+                description: 'System VM type (consoleproxy, secondarystoragevm)'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID'
+              }
+            }
+          }
+        },
+        {
+          name: 'start_system_vm',
+          description: 'Start a system virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'System VM ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'stop_system_vm',
+          description: 'Stop a system virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'System VM ID'
+              },
+              forced: {
+                type: 'boolean',
+                description: 'Force stop the system VM'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'reboot_system_vm',
+          description: 'Reboot a system virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'System VM ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_routers',
+          description: 'List virtual routers',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              hostid: {
+                type: 'string',
+                description: 'Host ID'
+              },
+              id: {
+                type: 'string',
+                description: 'Router ID'
+              },
+              name: {
+                type: 'string',
+                description: 'Router name'
+              },
+              networkid: {
+                type: 'string',
+                description: 'Network ID'
+              },
+              state: {
+                type: 'string',
+                description: 'Router state'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID'
+              }
+            }
+          }
+        },
+        // Storage Pool Management Tools
+        {
+          name: 'list_storage_pools',
+          description: 'List storage pools',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              clusterid: {
+                type: 'string',
+                description: 'Cluster ID'
+              },
+              id: {
+                type: 'string',
+                description: 'Storage pool ID'
+              },
+              name: {
+                type: 'string',
+                description: 'Storage pool name'
+              },
+              path: {
+                type: 'string',
+                description: 'Storage pool path'
+              },
+              podid: {
+                type: 'string',
+                description: 'Pod ID'
+              },
+              scope: {
+                type: 'string',
+                description: 'Storage pool scope'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID'
+              }
+            }
+          }
+        },
+        {
+          name: 'create_storage_pool',
+          description: 'Create a new storage pool',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'Storage pool name'
+              },
+              url: {
+                type: 'string',
+                description: 'Storage pool URL'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID'
+              },
+              clusterid: {
+                type: 'string',
+                description: 'Cluster ID'
+              },
+              podid: {
+                type: 'string',
+                description: 'Pod ID'
+              },
+              scope: {
+                type: 'string',
+                description: 'Storage pool scope'
+              },
+              tags: {
+                type: 'string',
+                description: 'Storage tags'
+              }
+            },
+            required: ['name', 'url', 'zoneid']
+          }
+        },
+        {
+          name: 'update_storage_pool',
+          description: 'Update storage pool properties',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Storage pool ID'
+              },
+              tags: {
+                type: 'string',
+                description: 'Storage tags'
+              },
+              capacitybytes: {
+                type: 'number',
+                description: 'Storage capacity in bytes'
+              },
+              capacityiops: {
+                type: 'number',
+                description: 'Storage IOPS capacity'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'delete_storage_pool',
+          description: 'Delete a storage pool',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Storage pool ID'
+              },
+              forced: {
+                type: 'boolean',
+                description: 'Force deletion'
+              }
+            },
+            required: ['id']
+          }
+        },
+        // Monitoring & Usage Tools
+        {
+          name: 'list_usage_records',
+          description: 'List usage records for billing',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              enddate: {
+                type: 'string',
+                description: 'End date (yyyy-MM-dd)'
+              },
+              startdate: {
+                type: 'string',
+                description: 'Start date (yyyy-MM-dd)'
+              },
+              type: {
+                type: 'number',
+                description: 'Usage type'
+              }
+            },
+            required: ['enddate', 'startdate']
+          }
+        },
+        {
+          name: 'list_capacity',
+          description: 'List system capacity information',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              clusterid: {
+                type: 'string',
+                description: 'Cluster ID'
+              },
+              fetchlatest: {
+                type: 'boolean',
+                description: 'Fetch latest capacity data'
+              },
+              hostid: {
+                type: 'string',
+                description: 'Host ID'
+              },
+              podid: {
+                type: 'string',
+                description: 'Pod ID'
+              },
+              sortby: {
+                type: 'string',
+                description: 'Sort by field'
+              },
+              type: {
+                type: 'number',
+                description: 'Capacity type'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID'
+              }
+            }
+          }
+        },
+        {
+          name: 'list_async_jobs',
+          description: 'List asynchronous jobs',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              keyword: {
+                type: 'string',
+                description: 'Search keyword'
+              },
+              startdate: {
+                type: 'string',
+                description: 'Start date'
+              }
+            }
+          }
+        },
+        {
+          name: 'query_async_job_result',
+          description: 'Query the result of an asynchronous job',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              jobid: {
+                type: 'string',
+                description: 'Job ID'
+              }
+            },
+            required: ['jobid']
+          }
         }
       ];
 
@@ -4411,6 +5394,95 @@ class CloudStackMCPServer {
           
           case 'remove_vpn_user':
             return await this.handleRemoveVpnUser(args);
+
+          // VPC Offerings Handlers
+          case 'create_vpc_offering':
+            return await this.handleCreateVpcOffering(args);
+          
+          case 'list_vpc_offerings':
+            return await this.handleListVpcOfferings(args);
+          
+          case 'update_vpc_offering':
+            return await this.handleUpdateVpcOffering(args);
+          
+          case 'delete_vpc_offering':
+            return await this.handleDeleteVpcOffering(args);
+
+          // Network ACL Lists Handlers  
+          case 'create_network_acl_list':
+            return await this.handleCreateNetworkAclList(args);
+          
+          case 'list_network_acl_lists':
+            return await this.handleListNetworkAclLists(args);
+          
+          case 'delete_network_acl_list':
+            return await this.handleDeleteNetworkAclList(args);
+          
+          case 'replace_network_acl_list':
+            return await this.handleReplaceNetworkAclList(args);
+
+          // System Administration Handlers
+          case 'list_configurations':
+            return await this.handleListConfigurations(args);
+          
+          case 'update_configuration':
+            return await this.handleUpdateConfiguration(args);
+          
+          case 'list_capabilities':
+            return await this.handleListCapabilities(args);
+          
+          case 'list_alerts':
+            return await this.handleListAlerts(args);
+          
+          case 'archive_alerts':
+            return await this.handleArchiveAlerts(args);
+          
+          case 'delete_alerts':
+            return await this.handleDeleteAlerts(args);
+          
+          case 'list_events':
+            return await this.handleListEvents(args);
+          
+          case 'list_system_vms':
+            return await this.handleListSystemVms(args);
+          
+          case 'start_system_vm':
+            return await this.handleStartSystemVm(args);
+          
+          case 'stop_system_vm':
+            return await this.handleStopSystemVm(args);
+          
+          case 'reboot_system_vm':
+            return await this.handleRebootSystemVm(args);
+          
+          case 'list_routers':
+            return await this.handleListRouters(args);
+
+          // Storage Pool Management Handlers
+          case 'list_storage_pools':
+            return await this.handleListStoragePools(args);
+          
+          case 'create_storage_pool':
+            return await this.handleCreateStoragePool(args);
+          
+          case 'update_storage_pool':
+            return await this.handleUpdateStoragePool(args);
+          
+          case 'delete_storage_pool':
+            return await this.handleDeleteStoragePool(args);
+
+          // Monitoring & Usage Handlers
+          case 'list_usage_records':
+            return await this.handleListUsageRecords(args);
+          
+          case 'list_capacity':
+            return await this.handleListCapacity(args);
+          
+          case 'list_async_jobs':
+            return await this.handleListAsyncJobs(args);
+          
+          case 'query_async_job_result':
+            return await this.handleQueryAsyncJobResult(args);
           
           case 'get_cloudstack_info':
             return await this.handleGetCloudStackInfo(args);
@@ -4746,6 +5818,48 @@ class CloudStackMCPServer {
           
           case 'list_project_accounts':
             return await this.handleListProjectAccounts(args);
+          
+          // Advanced Networking Tools - Network Offering Management
+          case 'create_network_offering':
+            return await this.handleCreateNetworkOffering(args);
+          
+          case 'delete_network_offering':
+            return await this.handleDeleteNetworkOffering(args);
+          
+          case 'update_network_offering':
+            return await this.handleUpdateNetworkOffering(args);
+          
+          // VLAN IP Range Management
+          case 'create_vlan_ip_range':
+            return await this.handleCreateVlanIpRange(args);
+          
+          case 'delete_vlan_ip_range':
+            return await this.handleDeleteVlanIpRange(args);
+          
+          case 'list_vlan_ip_ranges':
+            return await this.handleListVlanIpRanges(args);
+          
+          case 'dedicate_public_ip_range':
+            return await this.handleDedicatePublicIpRange(args);
+          
+          case 'release_public_ip_range':
+            return await this.handleReleasePublicIpRange(args);
+          
+          // IP Address & Forwarding Management
+          case 'update_ip_address':
+            return await this.handleUpdateIpAddress(args);
+          
+          case 'create_ip_forwarding_rule':
+            return await this.handleCreateIpForwardingRule(args);
+          
+          case 'delete_ip_forwarding_rule':
+            return await this.handleDeleteIpForwardingRule(args);
+          
+          case 'list_ip_forwarding_rules':
+            return await this.handleListIpForwardingRules(args);
+          
+          case 'update_port_forwarding_rule':
+            return await this.handleUpdatePortForwardingRule(args);
           
           default:
             throw new Error(`Unknown tool: ${name}`);
@@ -8081,6 +9195,893 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     };
   }
 
+  // Advanced Networking Handler Methods
+
+  // Network Offering Management Handlers
+  private async handleCreateNetworkOffering(args: any): Promise<any> {
+    const requiredParams = ['displaytext', 'guestiptype', 'name', 'supportedservices', 'traffictype'];
+    const allowedParams = [...requiredParams, 'availability', 'networkrate', 'conservemode'];
+    
+    for (const param of requiredParams) {
+      if (!args[param]) {
+        throw new Error(`${param} is required`);
+      }
+    }
+    
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.createNetworkOffering(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatNetworkOfferingResponse('Network offering creation initiated', response)
+      }]
+    };
+  }
+
+  private async handleDeleteNetworkOffering(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Network offering ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteNetworkOffering(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Network offering deletion initiated', response)
+      }]
+    };
+  }
+
+  private async handleUpdateNetworkOffering(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Network offering ID is required');
+    }
+    
+    const allowedParams = ['id', 'displaytext', 'name', 'sortkey', 'tags'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.updateNetworkOffering(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatNetworkOfferingResponse('Network offering updated', response)
+      }]
+    };
+  }
+
+  // VLAN IP Range Management Handlers
+  private async handleCreateVlanIpRange(args: any): Promise<any> {
+    if (!args.startip || !args.endip) {
+      throw new Error('Start IP and End IP are required');
+    }
+    
+    const allowedParams = ['startip', 'endip', 'vlan', 'gateway', 'netmask', 'zoneid', 'podid', 'networkid', 'physicalnetworkid', 'account', 'domainid'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.createVlanIpRange(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatVlanIpRangeResponse('VLAN IP range created', response)
+      }]
+    };
+  }
+
+  private async handleDeleteVlanIpRange(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('VLAN IP range ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteVlanIpRange(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('VLAN IP range deletion initiated', response)
+      }]
+    };
+  }
+
+  private async handleListVlanIpRanges(args: any): Promise<any> {
+    const allowedParams = ['account', 'domainid', 'forvirtualnetwork', 'id', 'keyword', 'networkid', 'physicalnetworkid', 'podid', 'vlan', 'zoneid'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.listVlanIpRanges(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatVlanIpRangeListResponse(response)
+      }]
+    };
+  }
+
+  private async handleDedicatePublicIpRange(args: any): Promise<any> {
+    if (!args.account || !args.domainid || !args.id) {
+      throw new Error('Account, Domain ID, and VLAN IP range ID are required');
+    }
+    
+    const params = this.buildParams(args, ['account', 'domainid', 'id']);
+    const response = await this.client.dedicatePublicIpRange(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Public IP range dedication initiated', response)
+      }]
+    };
+  }
+
+  private async handleReleasePublicIpRange(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('VLAN IP range ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.releasePublicIpRange(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Public IP range release initiated', response)
+      }]
+    };
+  }
+
+  // IP Address & Forwarding Management Handlers
+  private async handleUpdateIpAddress(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('IP address ID is required');
+    }
+    
+    const allowedParams = ['id', 'customid', 'fordisplay'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.updateIpAddress(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('IP address update initiated', response)
+      }]
+    };
+  }
+
+  private async handleCreateIpForwardingRule(args: any): Promise<any> {
+    if (!args.ipaddressid || !args.protocol || !args.startport) {
+      throw new Error('IP address ID, protocol, and start port are required');
+    }
+    
+    const allowedParams = ['ipaddressid', 'protocol', 'startport', 'endport'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.createIpForwardingRule(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('IP forwarding rule creation initiated', response)
+      }]
+    };
+  }
+
+  private async handleDeleteIpForwardingRule(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('IP forwarding rule ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteIpForwardingRule(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('IP forwarding rule deletion initiated', response)
+      }]
+    };
+  }
+
+  private async handleListIpForwardingRules(args: any): Promise<any> {
+    const allowedParams = ['account', 'domainid', 'id', 'ipaddressid', 'virtualmachineid'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.listIpForwardingRules(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatIpForwardingRuleListResponse(response)
+      }]
+    };
+  }
+
+  private async handleUpdatePortForwardingRule(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Port forwarding rule ID is required');
+    }
+    
+    const allowedParams = ['id', 'customid', 'fordisplay', 'virtualmachineid'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.updatePortForwardingRule(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Port forwarding rule update initiated', response)
+      }]
+    };
+  }
+
+  // VPN Services Handler Methods
+  private async handleCreateVpnConnection(args: any): Promise<any> {
+    if (!args.customergatewayid || !args.vpngatewayid) {
+      throw new Error('Customer gateway ID and VPN gateway ID are required');
+    }
+    
+    const allowedParams = ['customergatewayid', 'vpngatewayid', 'passive'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.createVpnConnection(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('VPN connection creation initiated', response)
+      }]
+    };
+  }
+
+  private async handleListVpnConnections(args: any): Promise<any> {
+    const allowedParams = ['account', 'domainid', 'id', 'keyword', 'listall', 'page', 'pagesize', 'projectid', 'vpcid'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.listVpnConnections(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatVpnConnectionListResponse(response)
+      }]
+    };
+  }
+
+  private async handleDeleteVpnConnection(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('VPN connection ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteVpnConnection(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('VPN connection deletion initiated', response)
+      }]
+    };
+  }
+
+  private async handleResetVpnConnection(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('VPN connection ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.resetVpnConnection(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('VPN connection reset initiated', response)
+      }]
+    };
+  }
+
+  private async handleCreateVpnGateway(args: any): Promise<any> {
+    if (!args.vpcid) {
+      throw new Error('VPC ID is required');
+    }
+    
+    const allowedParams = ['vpcid', 'fordisplay'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.createVpnGateway(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('VPN gateway creation initiated', response)
+      }]
+    };
+  }
+
+  private async handleListVpnGateways(args: any): Promise<any> {
+    const allowedParams = ['account', 'domainid', 'fordisplay', 'id', 'keyword', 'listall', 'page', 'pagesize', 'projectid', 'vpcid'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.listVpnGateways(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatVpnGatewayListResponse(response)
+      }]
+    };
+  }
+
+  private async handleDeleteVpnGateway(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('VPN gateway ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteVpnGateway(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('VPN gateway deletion initiated', response)
+      }]
+    };
+  }
+
+  private async handleCreateCustomerGateway(args: any): Promise<any> {
+    if (!args.cidrlist || !args.esppolicy || !args.gateway || !args.ikepolicy || !args.ipsecpsk) {
+      throw new Error('CIDR list, ESP policy, gateway, IKE policy, and IPSec PSK are required');
+    }
+    
+    const allowedParams = ['cidrlist', 'esppolicy', 'gateway', 'ikepolicy', 'ipsecpsk', 'account', 'domainid', 'name'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.createVpnCustomerGateway(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Customer gateway creation initiated', response)
+      }]
+    };
+  }
+
+  private async handleListCustomerGateways(args: any): Promise<any> {
+    const allowedParams = ['account', 'domainid', 'id', 'keyword', 'listall', 'page', 'pagesize', 'projectid'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.listVpnCustomerGateways(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatCustomerGatewayListResponse(response)
+      }]
+    };
+  }
+
+  private async handleDeleteCustomerGateway(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Customer gateway ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteVpnCustomerGateway(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Customer gateway deletion initiated', response)
+      }]
+    };
+  }
+
+  private async handleCreateRemoteAccessVpn(args: any): Promise<any> {
+    if (!args.publicipid) {
+      throw new Error('Public IP ID is required');
+    }
+    
+    const allowedParams = ['publicipid', 'account', 'domainid', 'iprange', 'openfirewall'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.createRemoteAccessVpn(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Remote Access VPN creation initiated', response)
+      }]
+    };
+  }
+
+  private async handleListRemoteAccessVpns(args: any): Promise<any> {
+    const allowedParams = ['account', 'domainid', 'fordisplay', 'id', 'listall', 'networkid', 'page', 'pagesize', 'projectid', 'publicipid'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.listRemoteAccessVpns(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatRemoteAccessVpnListResponse(response)
+      }]
+    };
+  }
+
+  private async handleDeleteRemoteAccessVpn(args: any): Promise<any> {
+    if (!args.publicipid) {
+      throw new Error('Public IP ID is required');
+    }
+    
+    const params = this.buildParams(args, ['publicipid']);
+    const response = await this.client.deleteRemoteAccessVpn(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Remote Access VPN deletion initiated', response)
+      }]
+    };
+  }
+
+  private async handleAddVpnUser(args: any): Promise<any> {
+    if (!args.password || !args.username) {
+      throw new Error('Password and username are required');
+    }
+    
+    const allowedParams = ['password', 'username', 'account', 'domainid', 'projectid'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.addVpnUser(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('VPN user addition initiated', response)
+      }]
+    };
+  }
+
+  private async handleListVpnUsers(args: any): Promise<any> {
+    const allowedParams = ['account', 'domainid', 'id', 'keyword', 'listall', 'page', 'pagesize', 'projectid', 'username'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.listVpnUsers(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatVpnUserListResponse(response)
+      }]
+    };
+  }
+
+  private async handleRemoveVpnUser(args: any): Promise<any> {
+    if (!args.username) {
+      throw new Error('Username is required');
+    }
+    
+    const allowedParams = ['username', 'account', 'domainid', 'projectid'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.removeVpnUser(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('VPN user removal initiated', response)
+      }]
+    };
+  }
+
+  // VPC Offerings Handler Methods
+  private async handleCreateVpcOffering(args: any): Promise<any> {
+    if (!args.displaytext || !args.name) {
+      throw new Error('Display text and name are required');
+    }
+    
+    const allowedParams = ['displaytext', 'name', 'supportedservices', 'availability', 'conservemode', 'tags'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.createVpcOffering(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatVpcOfferingResponse('VPC offering creation initiated', response)
+      }]
+    };
+  }
+
+  private async handleListVpcOfferings(args: any): Promise<any> {
+    const allowedParams = ['id', 'isdefault', 'keyword', 'name', 'state', 'supportedservices'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.listVpcOfferings(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatVpcOfferingListResponse(response)
+      }]
+    };
+  }
+
+  private async handleUpdateVpcOffering(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('VPC offering ID is required');
+    }
+    
+    const allowedParams = ['id', 'displaytext', 'name', 'sortkey', 'state'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.updateVpcOffering(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatVpcOfferingResponse('VPC offering updated', response)
+      }]
+    };
+  }
+
+  private async handleDeleteVpcOffering(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('VPC offering ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteVpcOffering(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('VPC offering deletion initiated', response)
+      }]
+    };
+  }
+
+  // Network ACL Lists Handler Methods
+  private async handleCreateNetworkAclList(args: any): Promise<any> {
+    if (!args.name || !args.vpcid) {
+      throw new Error('Name and VPC ID are required');
+    }
+    
+    const allowedParams = ['name', 'vpcid', 'description', 'fordisplay'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.createNetworkACLList(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Network ACL list creation initiated', response)
+      }]
+    };
+  }
+
+  private async handleListNetworkAclLists(args: any): Promise<any> {
+    const allowedParams = ['account', 'domainid', 'fordisplay', 'id', 'keyword', 'listall', 'name', 'networkid', 'page', 'pagesize', 'projectid', 'vpcid'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.listNetworkACLLists(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatNetworkAclListResponse(response)
+      }]
+    };
+  }
+
+  private async handleDeleteNetworkAclList(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Network ACL list ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteNetworkACLList(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Network ACL list deletion initiated', response)
+      }]
+    };
+  }
+
+  private async handleReplaceNetworkAclList(args: any): Promise<any> {
+    if (!args.aclid || !args.networkid) {
+      throw new Error('ACL ID and Network ID are required');
+    }
+    
+    const allowedParams = ['aclid', 'networkid'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.replaceNetworkACLList(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Network ACL list replacement initiated', response)
+      }]
+    };
+  }
+
+  // System Administration Handler Methods
+  private async handleListConfigurations(args: any): Promise<any> {
+    const allowedParams = ['category', 'keyword', 'name', 'page', 'pagesize'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.listConfigurations(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatConfigurationListResponse(response)
+      }]
+    };
+  }
+
+  private async handleUpdateConfiguration(args: any): Promise<any> {
+    if (!args.name || !args.value) {
+      throw new Error('Configuration name and value are required');
+    }
+    
+    const allowedParams = ['name', 'value'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.updateConfiguration(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatConfigurationResponse('Configuration updated', response)
+      }]
+    };
+  }
+
+  private async handleListCapabilities(args: any): Promise<any> {
+    const response = await this.client.listCapabilities();
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatCapabilitiesResponse(response)
+      }]
+    };
+  }
+
+  private async handleListAlerts(args: any): Promise<any> {
+    const allowedParams = ['id', 'keyword', 'name', 'page', 'pagesize', 'type'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.listAlerts(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAlertListResponse(response)
+      }]
+    };
+  }
+
+  private async handleArchiveAlerts(args: any): Promise<any> {
+    const allowedParams = ['enddate', 'ids', 'startdate', 'type'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.archiveAlerts(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Alert archival initiated', response)
+      }]
+    };
+  }
+
+  private async handleDeleteAlerts(args: any): Promise<any> {
+    const allowedParams = ['enddate', 'ids', 'startdate', 'type'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.deleteAlerts(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Alert deletion initiated', response)
+      }]
+    };
+  }
+
+  private async handleListEvents(args: any): Promise<any> {
+    const allowedParams = ['account', 'domainid', 'duration', 'enddate', 'entrytime', 'id', 'isrecursive', 'keyword', 'level', 'listall', 'page', 'pagesize', 'projectid', 'startdate', 'type'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.listEvents(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatEventListResponse(response)
+      }]
+    };
+  }
+
+  private async handleListSystemVms(args: any): Promise<any> {
+    const allowedParams = ['hostid', 'id', 'keyword', 'name', 'page', 'pagesize', 'podid', 'state', 'storageid', 'systemvmtype', 'zoneid'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.listSystemVms(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatSystemVmListResponse(response)
+      }]
+    };
+  }
+
+  private async handleStartSystemVm(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('System VM ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.startSystemVm(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('System VM start initiated', response)
+      }]
+    };
+  }
+
+  private async handleStopSystemVm(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('System VM ID is required');
+    }
+    
+    const allowedParams = ['id', 'forced'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.stopSystemVm(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('System VM stop initiated', response)
+      }]
+    };
+  }
+
+  private async handleRebootSystemVm(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('System VM ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.rebootSystemVm(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('System VM reboot initiated', response)
+      }]
+    };
+  }
+
+  private async handleListRouters(args: any): Promise<any> {
+    const allowedParams = ['account', 'clusterid', 'domainid', 'fordisplay', 'hostid', 'id', 'isrecursive', 'keyword', 'listall', 'name', 'networkid', 'page', 'pagesize', 'podid', 'projectid', 'state', 'version', 'vpcid', 'zoneid'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.listRouters(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatRouterListResponse(response)
+      }]
+    };
+  }
+
+  // Storage Pool Management Handler Methods
+  private async handleListStoragePools(args: any): Promise<any> {
+    const allowedParams = ['clusterid', 'id', 'ipaddress', 'keyword', 'name', 'page', 'pagesize', 'path', 'podid', 'scope', 'zoneid'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.listStoragePools(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatStoragePoolListResponse(response)
+      }]
+    };
+  }
+
+  private async handleCreateStoragePool(args: any): Promise<any> {
+    if (!args.name || !args.url || !args.zoneid) {
+      throw new Error('Name, URL, and Zone ID are required');
+    }
+    
+    const allowedParams = ['name', 'url', 'zoneid', 'clusterid', 'details', 'hypervisor', 'managed', 'podid', 'provider', 'scope', 'tags'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.createStoragePool(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatStoragePoolResponse('Storage pool creation initiated', response)
+      }]
+    };
+  }
+
+  private async handleUpdateStoragePool(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Storage pool ID is required');
+    }
+    
+    const allowedParams = ['id', 'capacitybytes', 'capacityiops', 'enabled', 'tags'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.updateStoragePool(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatStoragePoolResponse('Storage pool updated', response)
+      }]
+    };
+  }
+
+  private async handleDeleteStoragePool(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Storage pool ID is required');
+    }
+    
+    const allowedParams = ['id', 'forced'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.deleteStoragePool(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Storage pool deletion initiated', response)
+      }]
+    };
+  }
+
+  // Monitoring & Usage Handler Methods
+  private async handleListUsageRecords(args: any): Promise<any> {
+    if (!args.enddate || !args.startdate) {
+      throw new Error('Start date and end date are required');
+    }
+    
+    const allowedParams = ['enddate', 'startdate', 'account', 'domainid', 'keyword', 'page', 'pagesize', 'projectid', 'type', 'usageid'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.listUsageRecords(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatUsageRecordListResponse(response)
+      }]
+    };
+  }
+
+  private async handleListCapacity(args: any): Promise<any> {
+    const allowedParams = ['clusterid', 'fetchlatest', 'hostid', 'keyword', 'page', 'pagesize', 'podid', 'sortby', 'type', 'zoneid'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.listCapacity(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatCapacityListResponse(response)
+      }]
+    };
+  }
+
+  private async handleListAsyncJobs(args: any): Promise<any> {
+    const allowedParams = ['account', 'domainid', 'keyword', 'listall', 'page', 'pagesize', 'startdate'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.listAsyncJobs(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobListResponse(response)
+      }]
+    };
+  }
+
+  private async handleQueryAsyncJobResult(args: any): Promise<any> {
+    if (!args.jobid) {
+      throw new Error('Job ID is required');
+    }
+    
+    const params = this.buildParams(args, ['jobid']);
+    const response = await this.client.queryAsyncJobResult(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResultResponse(response)
+      }]
+    };
+  }
+
   // Response Formatting Methods for Account Management
   private formatAccountResponse(operation: string, response: any): string {
     if (response.account) {
@@ -8343,6 +10344,499 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     return result.trim();
   }
 
+  // Advanced Networking Response Formatting Methods
+  private formatNetworkOfferingResponse(operation: string, response: any): string {
+    if (response.networkoffering) {
+      const offering = response.networkoffering;
+      return `${operation} completed successfully.\nNetwork Offering: ${offering.name} (${offering.id})\nDisplay Text: ${offering.displaytext}\nType: ${offering.guestiptype}\nTraffic Type: ${offering.traffictype}\nState: ${offering.state || 'N/A'}`;
+    }
+    
+    if (response.jobid) {
+      return `${operation} - Job ID: ${response.jobid}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatVlanIpRangeResponse(operation: string, response: any): string {
+    if (response.vlan) {
+      const vlan = response.vlan;
+      return `${operation} successfully.\nVLAN: ${vlan.vlan || 'N/A'} (${vlan.id})\nIP Range: ${vlan.startip} - ${vlan.endip}\nGateway: ${vlan.gateway || 'N/A'}\nNetmask: ${vlan.netmask || 'N/A'}\nZone: ${vlan.zonename || vlan.zoneid || 'N/A'}`;
+    }
+    
+    if (response.jobid) {
+      return `${operation} - Job ID: ${response.jobid}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatVlanIpRangeListResponse(response: any): string {
+    const vlans = response.vlan || [];
+    
+    if (vlans.length === 0) {
+      return 'No VLAN IP ranges found.';
+    }
+
+    let result = `Found ${vlans.length} VLAN IP range(s):\n\n`;
+    
+    for (const vlan of vlans) {
+      result += `VLAN: ${vlan.vlan || 'N/A'} (${vlan.id})\n`;
+      result += `  IP Range: ${vlan.startip} - ${vlan.endip}\n`;
+      result += `  Gateway: ${vlan.gateway || 'N/A'}\n`;
+      result += `  Netmask: ${vlan.netmask || 'N/A'}\n`;
+      result += `  Zone: ${vlan.zonename || vlan.zoneid || 'N/A'}\n`;
+      result += `  Physical Network: ${vlan.physicalnetworkname || vlan.physicalnetworkid || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  private formatIpForwardingRuleListResponse(response: any): string {
+    const rules = response.ipforwardingrule || [];
+    
+    if (rules.length === 0) {
+      return 'No IP forwarding rules found.';
+    }
+
+    let result = `Found ${rules.length} IP forwarding rule(s):\n\n`;
+    
+    for (const rule of rules) {
+      result += `Rule ID: ${rule.id}\n`;
+      result += `  Protocol: ${rule.protocol}\n`;
+      result += `  Port Range: ${rule.startport}`;
+      if (rule.endport && rule.endport !== rule.startport) {
+        result += ` - ${rule.endport}`;
+      }
+      result += `\n`;
+      result += `  Public IP: ${rule.publicip || 'N/A'}\n`;
+      result += `  VM: ${rule.virtualmachinename || 'N/A'} (${rule.virtualmachineid || 'N/A'})\n`;
+      result += `  State: ${rule.state || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  // VPN Services Response Formatting Methods
+  private formatVpnConnectionListResponse(response: any): string {
+    const connections = response.vpnconnection || [];
+    
+    if (connections.length === 0) {
+      return 'No VPN connections found.';
+    }
+
+    let result = `Found ${connections.length} VPN connection(s):\n\n`;
+    
+    for (const conn of connections) {
+      result += `Connection ID: ${conn.id}\n`;
+      result += `  State: ${conn.state || 'N/A'}\n`;
+      result += `  Customer Gateway: ${conn.customergatewayid || 'N/A'}\n`;
+      result += `  VPN Gateway: ${conn.vpngatewayid || 'N/A'}\n`;
+      result += `  Public IP: ${conn.publicip || 'N/A'}\n`;
+      result += `  Gateway: ${conn.gateway || 'N/A'}\n`;
+      result += `  CIDR List: ${conn.cidrlist || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  private formatVpnGatewayListResponse(response: any): string {
+    const gateways = response.vpngateway || [];
+    
+    if (gateways.length === 0) {
+      return 'No VPN gateways found.';
+    }
+
+    let result = `Found ${gateways.length} VPN gateway(s):\n\n`;
+    
+    for (const gw of gateways) {
+      result += `Gateway ID: ${gw.id}\n`;
+      result += `  VPC: ${gw.vpcname || gw.vpcid || 'N/A'}\n`;
+      result += `  Public IP: ${gw.publicip || 'N/A'}\n`;
+      result += `  Account: ${gw.account || 'N/A'}\n`;
+      result += `  Domain: ${gw.domain || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  private formatCustomerGatewayListResponse(response: any): string {
+    const gateways = response.vpncustomergateway || [];
+    
+    if (gateways.length === 0) {
+      return 'No customer gateways found.';
+    }
+
+    let result = `Found ${gateways.length} customer gateway(s):\n\n`;
+    
+    for (const gw of gateways) {
+      result += `Gateway ID: ${gw.id}\n`;
+      result += `  Name: ${gw.name || 'N/A'}\n`;
+      result += `  Gateway: ${gw.gateway || 'N/A'}\n`;
+      result += `  CIDR List: ${gw.cidrlist || 'N/A'}\n`;
+      result += `  ESP Policy: ${gw.esppolicy || 'N/A'}\n`;
+      result += `  IKE Policy: ${gw.ikepolicy || 'N/A'}\n`;
+      result += `  Account: ${gw.account || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  private formatRemoteAccessVpnListResponse(response: any): string {
+    const vpns = response.remoteaccessvpn || [];
+    
+    if (vpns.length === 0) {
+      return 'No Remote Access VPNs found.';
+    }
+
+    let result = `Found ${vpns.length} Remote Access VPN(s):\n\n`;
+    
+    for (const vpn of vpns) {
+      result += `VPN ID: ${vpn.id}\n`;
+      result += `  Public IP: ${vpn.publicip || 'N/A'}\n`;
+      result += `  IP Range: ${vpn.iprange || 'N/A'}\n`;
+      result += `  Pre-shared Key: ${vpn.presharedkey || 'N/A'}\n`;
+      result += `  State: ${vpn.state || 'N/A'}\n`;
+      result += `  Account: ${vpn.account || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  private formatVpnUserListResponse(response: any): string {
+    const users = response.vpnuser || [];
+    
+    if (users.length === 0) {
+      return 'No VPN users found.';
+    }
+
+    let result = `Found ${users.length} VPN user(s):\n\n`;
+    
+    for (const user of users) {
+      result += `User ID: ${user.id}\n`;
+      result += `  Username: ${user.username || 'N/A'}\n`;
+      result += `  Account: ${user.account || 'N/A'}\n`;
+      result += `  Domain: ${user.domain || 'N/A'}\n`;
+      result += `  State: ${user.state || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  // VPC Offerings Response Formatting Methods
+  private formatVpcOfferingResponse(operation: string, response: any): string {
+    if (response.vpcoffering) {
+      const offering = response.vpcoffering;
+      return `${operation} completed successfully.\nVPC Offering: ${offering.name} (${offering.id})\nDisplay Text: ${offering.displaytext}\nState: ${offering.state || 'N/A'}\nDefault: ${offering.isdefault ? 'Yes' : 'No'}`;
+    }
+    
+    if (response.jobid) {
+      return `${operation} - Job ID: ${response.jobid}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatVpcOfferingListResponse(response: any): string {
+    const offerings = response.vpcoffering || [];
+    
+    if (offerings.length === 0) {
+      return 'No VPC offerings found.';
+    }
+
+    let result = `Found ${offerings.length} VPC offering(s):\n\n`;
+    
+    for (const offering of offerings) {
+      result += `VPC Offering: ${offering.name} (${offering.id})\n`;
+      result += `  Display Text: ${offering.displaytext}\n`;
+      result += `  State: ${offering.state || 'N/A'}\n`;
+      result += `  Default: ${offering.isdefault ? 'Yes' : 'No'}\n`;
+      result += `  Created: ${offering.created || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  // Network ACL Lists Response Formatting Methods
+  private formatNetworkAclListResponse(response: any): string {
+    const acllists = response.networkacl || [];
+    
+    if (acllists.length === 0) {
+      return 'No Network ACL lists found.';
+    }
+
+    let result = `Found ${acllists.length} Network ACL list(s):\n\n`;
+    
+    for (const acl of acllists) {
+      result += `ACL List: ${acl.name} (${acl.id})\n`;
+      result += `  Description: ${acl.description || 'N/A'}\n`;
+      result += `  VPC: ${acl.vpcname || acl.vpcid || 'N/A'}\n`;
+      result += `  Account: ${acl.account || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  // System Administration Response Formatting Methods
+  private formatConfigurationListResponse(response: any): string {
+    const configs = response.configuration || [];
+    
+    if (configs.length === 0) {
+      return 'No configurations found.';
+    }
+
+    let result = `Found ${configs.length} configuration(s):\n\n`;
+    
+    for (const config of configs) {
+      result += `${config.name}:\n`;
+      result += `  Value: ${config.value || 'N/A'}\n`;
+      result += `  Category: ${config.category || 'N/A'}\n`;
+      result += `  Description: ${config.description || 'N/A'}\n`;
+      result += `  Scope: ${config.scope || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  private formatConfigurationResponse(operation: string, response: any): string {
+    if (response.configuration) {
+      const config = response.configuration;
+      return `${operation} completed successfully.\nConfiguration: ${config.name}\nNew Value: ${config.value}\nCategory: ${config.category || 'N/A'}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatCapabilitiesResponse(response: any): string {
+    if (response.capability) {
+      const cap = response.capability;
+      let result = 'CloudStack Capabilities:\n\n';
+      result += `CloudStack Version: ${cap.cloudstackversion || 'N/A'}\n`;
+      result += `User Public Template Creation: ${cap.userpublictemplateenabled ? 'Enabled' : 'Disabled'}\n`;
+      result += `Custom Disk Offering: ${cap.customdiskofferingdisplaytext ? 'Enabled' : 'Disabled'}\n`;
+      result += `Project Invitations: ${cap.allowuserexpungerecovervm ? 'Enabled' : 'Disabled'}\n`;
+      result += `Dynamic Roles: ${cap.dynamicrolesenabled ? 'Enabled' : 'Disabled'}\n`;
+      result += `Security Groups: ${cap.securitygroupsenabled ? 'Enabled' : 'Disabled'}\n`;
+      
+      if (cap.supportELB) {
+        result += `Elastic Load Balancer: Supported\n`;
+      }
+      
+      return result;
+    }
+    
+    return 'No capability information available.';
+  }
+
+  private formatAlertListResponse(response: any): string {
+    const alerts = response.alert || [];
+    
+    if (alerts.length === 0) {
+      return 'No alerts found.';
+    }
+
+    let result = `Found ${alerts.length} alert(s):\n\n`;
+    
+    for (const alert of alerts) {
+      result += `Alert: ${alert.name || alert.type || 'N/A'} (${alert.id})\n`;
+      result += `  Type: ${alert.type || 'N/A'}\n`;
+      result += `  Subject: ${alert.subject || 'N/A'}\n`;
+      result += `  Description: ${alert.description || 'N/A'}\n`;
+      result += `  Sent: ${alert.sent || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  private formatEventListResponse(response: any): string {
+    const events = response.event || [];
+    
+    if (events.length === 0) {
+      return 'No events found.';
+    }
+
+    let result = `Found ${events.length} event(s):\n\n`;
+    
+    for (const event of events) {
+      result += `Event: ${event.type || 'N/A'} (${event.id})\n`;
+      result += `  Description: ${event.description || 'N/A'}\n`;
+      result += `  Level: ${event.level || 'N/A'}\n`;
+      result += `  Account: ${event.account || 'N/A'}\n`;
+      result += `  Created: ${event.created || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  private formatSystemVmListResponse(response: any): string {
+    const vms = response.systemvm || [];
+    
+    if (vms.length === 0) {
+      return 'No system VMs found.';
+    }
+
+    let result = `Found ${vms.length} system VM(s):\n\n`;
+    
+    for (const vm of vms) {
+      result += `System VM: ${vm.name || 'N/A'} (${vm.id})\n`;
+      result += `  Type: ${vm.systemvmtype || 'N/A'}\n`;
+      result += `  State: ${vm.state || 'N/A'}\n`;
+      result += `  Host: ${vm.hostname || vm.hostid || 'N/A'}\n`;
+      result += `  Zone: ${vm.zonename || vm.zoneid || 'N/A'}\n`;
+      result += `  Public IP: ${vm.publicip || 'N/A'}\n`;
+      result += `  Private IP: ${vm.privateip || 'N/A'}\n`;
+      result += `  Created: ${vm.created || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  private formatRouterListResponse(response: any): string {
+    const routers = response.router || [];
+    
+    if (routers.length === 0) {
+      return 'No virtual routers found.';
+    }
+
+    let result = `Found ${routers.length} virtual router(s):\n\n`;
+    
+    for (const router of routers) {
+      result += `Router: ${router.name || 'N/A'} (${router.id})\n`;
+      result += `  State: ${router.state || 'N/A'}\n`;
+      result += `  Account: ${router.account || 'N/A'}\n`;
+      result += `  Zone: ${router.zonename || router.zoneid || 'N/A'}\n`;
+      result += `  Host: ${router.hostname || router.hostid || 'N/A'}\n`;
+      result += `  Public IP: ${router.publicip || 'N/A'}\n`;
+      result += `  Link Local IP: ${router.linklocalip || 'N/A'}\n`;
+      result += `  Role: ${router.role || 'N/A'}\n`;
+      result += `  Created: ${router.created || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  // Storage Pool Management Response Formatting Methods
+  private formatStoragePoolListResponse(response: any): string {
+    const pools = response.storagepool || [];
+    
+    if (pools.length === 0) {
+      return 'No storage pools found.';
+    }
+
+    let result = `Found ${pools.length} storage pool(s):\n\n`;
+    
+    for (const pool of pools) {
+      result += `Storage Pool: ${pool.name || 'N/A'} (${pool.id})\n`;
+      result += `  Type: ${pool.type || 'N/A'}\n`;
+      result += `  State: ${pool.state || 'N/A'}\n`;
+      result += `  Path: ${pool.path || 'N/A'}\n`;
+      result += `  Zone: ${pool.zonename || pool.zoneid || 'N/A'}\n`;
+      result += `  Cluster: ${pool.clustername || pool.clusterid || 'N/A'}\n`;
+      result += `  Scope: ${pool.scope || 'N/A'}\n`;
+      result += `  Capacity: ${pool.disksizeallocated || 'N/A'} / ${pool.disksizetotal || 'N/A'}\n`;
+      result += `  Tags: ${pool.tags || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  private formatStoragePoolResponse(operation: string, response: any): string {
+    if (response.storagepool) {
+      const pool = response.storagepool;
+      return `${operation} completed successfully.\nStorage Pool: ${pool.name} (${pool.id})\nType: ${pool.type}\nState: ${pool.state}\nPath: ${pool.path}`;
+    }
+    
+    if (response.jobid) {
+      return `${operation} - Job ID: ${response.jobid}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  // Monitoring & Usage Response Formatting Methods
+  private formatUsageRecordListResponse(response: any): string {
+    const records = response.usagerecord || [];
+    
+    if (records.length === 0) {
+      return 'No usage records found.';
+    }
+
+    let result = `Found ${records.length} usage record(s):\n\n`;
+    
+    for (const record of records) {
+      result += `Usage Record: ${record.usageid || 'N/A'}\n`;
+      result += `  Account: ${record.account || 'N/A'}\n`;
+      result += `  Type: ${record.usagetype || 'N/A'}\n`;
+      result += `  Description: ${record.description || 'N/A'}\n`;
+      result += `  Usage: ${record.usage || 'N/A'}\n`;
+      result += `  Start Date: ${record.startdate || 'N/A'}\n`;
+      result += `  End Date: ${record.enddate || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  private formatCapacityListResponse(response: any): string {
+    const capacities = response.capacity || [];
+    
+    if (capacities.length === 0) {
+      return 'No capacity information found.';
+    }
+
+    let result = `Found ${capacities.length} capacity item(s):\n\n`;
+    
+    for (const cap of capacities) {
+      result += `Capacity Type: ${this.getCapacityTypeName(cap.type)} (${cap.type})\n`;
+      result += `  Zone: ${cap.zonename || cap.zoneid || 'N/A'}\n`;
+      result += `  Capacity Used: ${cap.capacityused || 'N/A'}\n`;
+      result += `  Capacity Total: ${cap.capacitytotal || 'N/A'}\n`;
+      result += `  Percent Used: ${cap.percentused || 'N/A'}%\n`;
+      result += `  Pod: ${cap.podname || cap.podid || 'N/A'}\n`;
+      result += `  Cluster: ${cap.clustername || cap.clusterid || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  private formatAsyncJobListResponse(response: any): string {
+    const jobs = response.asyncjobs || [];
+    
+    if (jobs.length === 0) {
+      return 'No async jobs found.';
+    }
+
+    let result = `Found ${jobs.length} async job(s):\n\n`;
+    
+    for (const job of jobs) {
+      result += `Job: ${job.cmd || 'N/A'} (${job.jobid})\n`;
+      result += `  Status: ${this.getJobStatusName(job.jobstatus)}\n`;
+      result += `  Progress: ${job.jobprocstatus || 'N/A'}\n`;
+      result += `  Account: ${job.account || 'N/A'}\n`;
+      result += `  Created: ${job.created || 'N/A'}\n\n`;
+    }
+
+    return result.trim();
+  }
+
+  private formatAsyncJobResultResponse(response: any): string {
+    if (response.asyncjobs && response.asyncjobs.length > 0) {
+      const job = response.asyncjobs[0];
+      let result = `Job Result: ${job.cmd || 'N/A'} (${job.jobid})\n`;
+      result += `Status: ${this.getJobStatusName(job.jobstatus)}\n`;
+      result += `Progress: ${job.jobprocstatus || 'N/A'}\n`;
+      result += `Account: ${job.account || 'N/A'}\n`;
+      result += `Created: ${job.created || 'N/A'}\n`;
+      
+      if (job.jobresult) {
+        result += `\nResult:\n${JSON.stringify(job.jobresult, null, 2)}`;
+      }
+      
+      return result;
+    }
+    
+    return 'No job result found.';
+  }
+
   // Helper Methods
   private getAccountTypeName(type: number): string {
     switch (type) {
@@ -8367,6 +10861,33 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
       case 10: return 'Primary storage';
       case 11: return 'Secondary storage';
       default: return `Unknown resource type (${type})`;
+    }
+  }
+
+  private getCapacityTypeName(type: number): string {
+    switch (type) {
+      case 0: return 'Memory';
+      case 1: return 'CPU';
+      case 2: return 'Storage';
+      case 3: return 'Storage Allocated';
+      case 4: return 'Virtual Network Public IP';
+      case 5: return 'Private IP';
+      case 6: return 'Secondary Storage';
+      case 7: return 'VLAN';
+      case 8: return 'Direct Attached Public IP';
+      case 9: return 'Local Storage';
+      case 19: return 'GPU';
+      default: return `Unknown Capacity Type (${type})`;
+    }
+  }
+
+  private getJobStatusName(status: number): string {
+    switch (status) {
+      case 0: return 'Pending';
+      case 1: return 'In Progress'; 
+      case 2: return 'Completed';
+      case 3: return 'Failed';
+      default: return `Unknown Status (${status})`;
     }
   }
 
