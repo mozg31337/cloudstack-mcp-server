@@ -22,7 +22,7 @@ class CloudStackMCPServer {
     this.server = new Server(
       {
         name: 'cloudstack-mcp-server',
-        version: '1.2.0',
+        version: '1.3.0',
       },
       {
         capabilities: {
@@ -5228,6 +5228,666 @@ class CloudStackMCPServer {
             },
             required: ['jobid']
           }
+        },
+        // Advanced Router Management
+        {
+          name: 'start_router',
+          description: 'Start a virtual router',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Router ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'stop_router',
+          description: 'Stop a virtual router',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Router ID' },
+              forced: { type: 'boolean', description: 'Force stop the router' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'reboot_router',
+          description: 'Reboot a virtual router',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Router ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'destroy_router',
+          description: 'Destroy a virtual router',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Router ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'change_service_for_router',
+          description: 'Change service offering for a router',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Router ID' },
+              serviceofferingid: { type: 'string', description: 'New service offering ID' }
+            },
+            required: ['id', 'serviceofferingid']
+          }
+        },
+        {
+          name: 'list_router_health',
+          description: 'List router health status',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              routerid: { type: 'string', description: 'Router ID' }
+            }
+          }
+        },
+        // VPC Static Routes
+        {
+          name: 'create_static_route',
+          description: 'Create a static route for VPC',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              cidr: { type: 'string', description: 'CIDR for the static route' },
+              gatewayid: { type: 'string', description: 'Gateway ID' }
+            },
+            required: ['cidr', 'gatewayid']
+          }
+        },
+        {
+          name: 'delete_static_route',
+          description: 'Delete a static route',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Static route ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_static_routes',
+          description: 'List static routes',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              gatewayid: { type: 'string', description: 'Gateway ID' },
+              vpcid: { type: 'string', description: 'VPC ID' }
+            }
+          }
+        },
+        // Private Gateways
+        {
+          name: 'create_private_gateway',
+          description: 'Create a private gateway for VPC',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              gateway: { type: 'string', description: 'Gateway IP address' },
+              ipaddress: { type: 'string', description: 'IP address for the gateway' },
+              netmask: { type: 'string', description: 'Netmask for the gateway' },
+              vlan: { type: 'string', description: 'VLAN for the gateway' },
+              vpcid: { type: 'string', description: 'VPC ID' }
+            },
+            required: ['gateway', 'ipaddress', 'netmask', 'vlan', 'vpcid']
+          }
+        },
+        {
+          name: 'delete_private_gateway',
+          description: 'Delete a private gateway',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Private gateway ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_private_gateways',
+          description: 'List private gateways',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Private gateway ID' },
+              ipaddress: { type: 'string', description: 'IP address' },
+              vpcid: { type: 'string', description: 'VPC ID' }
+            }
+          }
+        },
+        // Remote Access VPN
+        {
+          name: 'create_remote_access_vpn',
+          description: 'Create a remote access VPN',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              publicipid: { type: 'string', description: 'Public IP address ID' },
+              openfirewall: { type: 'boolean', description: 'Open firewall rule' }
+            },
+            required: ['publicipid']
+          }
+        },
+        {
+          name: 'delete_remote_access_vpn',
+          description: 'Delete a remote access VPN',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              publicipid: { type: 'string', description: 'Public IP address ID' }
+            },
+            required: ['publicipid']
+          }
+        },
+        {
+          name: 'list_remote_access_vpns',
+          description: 'List remote access VPNs',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              publicipid: { type: 'string', description: 'Public IP address ID' },
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' }
+            }
+          }
+        },
+        {
+          name: 'add_vpn_user',
+          description: 'Add a VPN user',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              username: { type: 'string', description: 'Username' },
+              password: { type: 'string', description: 'Password' },
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' }
+            },
+            required: ['username', 'password']
+          }
+        },
+        {
+          name: 'remove_vpn_user',
+          description: 'Remove a VPN user',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              username: { type: 'string', description: 'Username' },
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' }
+            },
+            required: ['username']
+          }
+        },
+        {
+          name: 'list_vpn_users',
+          description: 'List VPN users',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' },
+              username: { type: 'string', description: 'Username' }
+            }
+          }
+        },
+        // Network Service Providers
+        {
+          name: 'list_network_service_providers',
+          description: 'List network service providers',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: { type: 'string', description: 'Provider name' },
+              physicalnetworkid: { type: 'string', description: 'Physical network ID' },
+              state: { type: 'string', description: 'Provider state' }
+            }
+          }
+        },
+        {
+          name: 'add_network_service_provider',
+          description: 'Add a network service provider',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: { type: 'string', description: 'Provider name' },
+              physicalnetworkid: { type: 'string', description: 'Physical network ID' },
+              destinationphysicalnetworkid: { type: 'string', description: 'Destination physical network ID' },
+              servicelist: { type: 'array', items: { type: 'string' }, description: 'List of services' }
+            },
+            required: ['name', 'physicalnetworkid']
+          }
+        },
+        {
+          name: 'delete_network_service_provider',
+          description: 'Delete a network service provider',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Provider ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'update_network_service_provider',
+          description: 'Update a network service provider',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Provider ID' },
+              state: { type: 'string', description: 'Provider state (Enabled/Disabled)' },
+              servicelist: { type: 'array', items: { type: 'string' }, description: 'List of services' }
+            },
+            required: ['id']
+          }
+        },
+        // Egress Firewall Rules
+        {
+          name: 'create_egress_firewall_rule',
+          description: 'Create an egress firewall rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              networkid: { type: 'string', description: 'Network ID' },
+              protocol: { type: 'string', description: 'Protocol (TCP, UDP, ICMP, ALL)' },
+              startport: { type: 'number', description: 'Start port' },
+              endport: { type: 'number', description: 'End port' },
+              cidrlist: { type: 'string', description: 'CIDR list' },
+              destcidrlist: { type: 'string', description: 'Destination CIDR list' },
+              type: { type: 'string', description: 'Type (User or System)' }
+            },
+            required: ['networkid', 'protocol']
+          }
+        },
+        {
+          name: 'delete_egress_firewall_rule',
+          description: 'Delete an egress firewall rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Egress firewall rule ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_egress_firewall_rules',
+          description: 'List egress firewall rules',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              networkid: { type: 'string', description: 'Network ID' },
+              id: { type: 'string', description: 'Firewall rule ID' },
+              ipaddressid: { type: 'string', description: 'IP address ID' }
+            }
+          }
+        },
+        // NIC Management
+        {
+          name: 'add_nic_to_virtual_machine',
+          description: 'Add a NIC to a virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: { type: 'string', description: 'Virtual machine ID' },
+              networkid: { type: 'string', description: 'Network ID' },
+              ipaddress: { type: 'string', description: 'IP address for the NIC' },
+              macaddress: { type: 'string', description: 'MAC address for the NIC' }
+            },
+            required: ['virtualmachineid', 'networkid']
+          }
+        },
+        {
+          name: 'remove_nic_from_virtual_machine',
+          description: 'Remove a NIC from a virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: { type: 'string', description: 'Virtual machine ID' },
+              nicid: { type: 'string', description: 'NIC ID' }
+            },
+            required: ['virtualmachineid', 'nicid']
+          }
+        },
+        {
+          name: 'update_default_nic_for_virtual_machine',
+          description: 'Update the default NIC for a virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: { type: 'string', description: 'Virtual machine ID' },
+              nicid: { type: 'string', description: 'NIC ID to set as default' }
+            },
+            required: ['virtualmachineid', 'nicid']
+          }
+        },
+        {
+          name: 'list_nics',
+          description: 'List NICs',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: { type: 'string', description: 'Virtual machine ID' },
+              nicid: { type: 'string', description: 'NIC ID' },
+              networkid: { type: 'string', description: 'Network ID' }
+            }
+          }
+        },
+        // Network Device Management
+        {
+          name: 'list_network_device',
+          description: 'List network devices',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              networkdeviceparametertype: { type: 'string', description: 'Network device parameter type' },
+              networkdevicetype: { type: 'string', description: 'Network device type' }
+            }
+          }
+        },
+        {
+          name: 'add_network_device',
+          description: 'Add a network device',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              networkdeviceparameterlist: { type: 'object', description: 'Network device parameters' },
+              networkdevicetype: { type: 'string', description: 'Network device type' }
+            },
+            required: ['networkdevicetype']
+          }
+        },
+        {
+          name: 'delete_network_device',
+          description: 'Delete a network device',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Network device ID' }
+            },
+            required: ['id']
+          }
+        },
+        // DHCP Management
+        {
+          name: 'list_dhcp_options',
+          description: 'List DHCP options for a network',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              networkid: { type: 'string', description: 'Network ID' },
+              nicid: { type: 'string', description: 'NIC ID' }
+            }
+          }
+        },
+        {
+          name: 'create_dhcp_option',
+          description: 'Create a DHCP option',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              dhcpoptionsnetworklist: { type: 'array', items: { type: 'object' }, description: 'DHCP options network list' },
+              dhcpoptionsniclist: { type: 'array', items: { type: 'object' }, description: 'DHCP options NIC list' }
+            }
+          }
+        },
+        {
+          name: 'delete_dhcp_option',
+          description: 'Delete a DHCP option',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              networkid: { type: 'string', description: 'Network ID' },
+              nicid: { type: 'string', description: 'NIC ID' },
+              dhcpoptionsnetworklist: { type: 'array', items: { type: 'object' }, description: 'DHCP options to remove' }
+            }
+          }
+        },
+        // Network Permissions
+        {
+          name: 'list_network_permissions',
+          description: 'List network permissions',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              networkid: { type: 'string', description: 'Network ID' }
+            },
+            required: ['networkid']
+          }
+        },
+        {
+          name: 'reset_network_permissions',
+          description: 'Reset network permissions',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              networkid: { type: 'string', description: 'Network ID' },
+              accounts: { type: 'string', description: 'Comma-separated list of accounts' },
+              op: { type: 'string', description: 'Operation (add or remove)' }
+            },
+            required: ['networkid']
+          }
+        },
+        // Advanced VPC Functions
+        {
+          name: 'replace_network_acl_list',
+          description: 'Replace network ACL list on a private gateway',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              aclid: { type: 'string', description: 'ACL ID' },
+              gatewayid: { type: 'string', description: 'Private gateway ID' }
+            },
+            required: ['aclid', 'gatewayid']
+          }
+        },
+        {
+          name: 'move_network_acl_item',
+          description: 'Move a network ACL item to a different position',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              networkid: { type: 'string', description: 'Network ID' },
+              previousaclruleid: { type: 'string', description: 'Previous ACL rule ID' },
+              ruleorder: { type: 'string', description: 'Rule order' }
+            },
+            required: ['networkid']
+          }
+        },
+        // Network Tags
+        {
+          name: 'create_tags',
+          description: 'Create tags for resources',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              resourceids: { type: 'string', description: 'Comma-separated resource IDs' },
+              resourcetype: { type: 'string', description: 'Resource type (Network, VirtualMachine, etc.)' },
+              tags: { type: 'object', description: 'Key-value pairs for tags' }
+            },
+            required: ['resourceids', 'resourcetype', 'tags']
+          }
+        },
+        {
+          name: 'delete_tags',
+          description: 'Delete tags from resources',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              resourceids: { type: 'string', description: 'Comma-separated resource IDs' },
+              resourcetype: { type: 'string', description: 'Resource type' },
+              tags: { type: 'object', description: 'Key-value pairs for tags to delete' }
+            },
+            required: ['resourceids', 'resourcetype']
+          }
+        },
+        {
+          name: 'list_tags',
+          description: 'List tags',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              resourceid: { type: 'string', description: 'Resource ID' },
+              resourcetype: { type: 'string', description: 'Resource type' },
+              account: { type: 'string', description: 'Account name' },
+              key: { type: 'string', description: 'Tag key' },
+              value: { type: 'string', description: 'Tag value' }
+            }
+          }
+        },
+        // Site-to-Site VPN for VPC
+        {
+          name: 'create_vpn_gateway',
+          description: 'Create a VPN gateway for VPC',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              vpcid: { type: 'string', description: 'VPC ID' }
+            },
+            required: ['vpcid']
+          }
+        },
+        {
+          name: 'delete_vpn_gateway',
+          description: 'Delete a VPN gateway',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'VPN gateway ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_vpn_gateways',
+          description: 'List VPN gateways',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'VPN gateway ID' },
+              vpcid: { type: 'string', description: 'VPC ID' },
+              account: { type: 'string', description: 'Account name' }
+            }
+          }
+        },
+        {
+          name: 'create_vpn_customer_gateway',
+          description: 'Create a VPN customer gateway',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              cidrlist: { type: 'string', description: 'CIDR list' },
+              esppolicy: { type: 'string', description: 'ESP policy' },
+              gateway: { type: 'string', description: 'Gateway IP address' },
+              ikepolicy: { type: 'string', description: 'IKE policy' },
+              ipsecpsk: { type: 'string', description: 'IPsec pre-shared key' },
+              name: { type: 'string', description: 'Customer gateway name' }
+            },
+            required: ['cidrlist', 'esppolicy', 'gateway', 'ikepolicy', 'ipsecpsk', 'name']
+          }
+        },
+        {
+          name: 'delete_vpn_customer_gateway',
+          description: 'Delete a VPN customer gateway',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Customer gateway ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_vpn_customer_gateways',
+          description: 'List VPN customer gateways',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Customer gateway ID' },
+              account: { type: 'string', description: 'Account name' },
+              keyword: { type: 'string', description: 'Keyword for searching' }
+            }
+          }
+        },
+        {
+          name: 'update_vpn_customer_gateway',
+          description: 'Update a VPN customer gateway',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Customer gateway ID' },
+              cidrlist: { type: 'string', description: 'CIDR list' },
+              esppolicy: { type: 'string', description: 'ESP policy' },
+              gateway: { type: 'string', description: 'Gateway IP address' },
+              ikepolicy: { type: 'string', description: 'IKE policy' },
+              ipsecpsk: { type: 'string', description: 'IPsec pre-shared key' },
+              name: { type: 'string', description: 'Customer gateway name' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'create_vpn_connection',
+          description: 'Create a VPN connection',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              customergatewayid: { type: 'string', description: 'Customer gateway ID' },
+              vpngatewayid: { type: 'string', description: 'VPN gateway ID' },
+              passive: { type: 'boolean', description: 'Passive mode' }
+            },
+            required: ['customergatewayid', 'vpngatewayid']
+          }
+        },
+        {
+          name: 'delete_vpn_connection',
+          description: 'Delete a VPN connection',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'VPN connection ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_vpn_connections',
+          description: 'List VPN connections',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'VPN connection ID' },
+              vpcid: { type: 'string', description: 'VPC ID' },
+              account: { type: 'string', description: 'Account name' }
+            }
+          }
+        },
+        {
+          name: 'reset_vpn_connection',
+          description: 'Reset a VPN connection',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'VPN connection ID' }
+            },
+            required: ['id']
+          }
         }
       ];
 
@@ -5861,6 +6521,158 @@ class CloudStackMCPServer {
           case 'update_port_forwarding_rule':
             return await this.handleUpdatePortForwardingRule(args);
           
+          // Advanced Router Management
+          case 'start_router':
+            return await this.handleStartRouter(args);
+          
+          case 'stop_router':
+            return await this.handleStopRouter(args);
+          
+          case 'reboot_router':
+            return await this.handleRebootRouter(args);
+          
+          case 'destroy_router':
+            return await this.handleDestroyRouter(args);
+          
+          case 'change_service_for_router':
+            return await this.handleChangeServiceForRouter(args);
+          
+          case 'list_router_health_checks':
+            return await this.handleListRouterHealthChecks(args);
+          
+          case 'get_router_health_check_results':
+            return await this.handleGetRouterHealthCheckResults(args);
+          
+          case 'configure_virtual_router_element':
+            return await this.handleConfigureVirtualRouterElement(args);
+          
+          // VPC Static Routes
+          case 'create_static_route':
+            return await this.handleCreateStaticRoute(args);
+          
+          case 'delete_static_route':
+            return await this.handleDeleteStaticRoute(args);
+          
+          case 'list_static_routes':
+            return await this.handleListStaticRoutes(args);
+          
+          // VPC Private Gateways
+          case 'create_private_gateway':
+            return await this.handleCreatePrivateGateway(args);
+          
+          case 'delete_private_gateway':
+            return await this.handleDeletePrivateGateway(args);
+          
+          case 'list_private_gateways':
+            return await this.handleListPrivateGateways(args);
+          
+          // Remote Access VPN for VPC
+          case 'create_remote_access_vpn':
+            return await this.handleCreateRemoteAccessVpn(args);
+          
+          case 'delete_remote_access_vpn':
+            return await this.handleDeleteRemoteAccessVpn(args);
+          
+          case 'list_remote_access_vpns':
+            return await this.handleListRemoteAccessVpns(args);
+          
+          case 'add_vpn_user':
+            return await this.handleAddVpnUser(args);
+          
+          case 'remove_vpn_user':
+            return await this.handleRemoveVpnUser(args);
+          
+          case 'list_vpn_users':
+            return await this.handleListVpnUsers(args);
+          
+          // Network Service Providers
+          case 'list_network_service_providers':
+            return await this.handleListNetworkServiceProviders(args);
+          
+          case 'add_network_service_provider':
+            return await this.handleAddNetworkServiceProvider(args);
+          
+          case 'delete_network_service_provider':
+            return await this.handleDeleteNetworkServiceProvider(args);
+          
+          case 'update_network_service_provider':
+            return await this.handleUpdateNetworkServiceProvider(args);
+          
+          // DHCP Management
+          case 'list_dhcp_options':
+            return await this.handleListDhcpOptions(args);
+          
+          case 'create_dhcp_options':
+            return await this.handleCreateDhcpOptions(args);
+          
+          case 'delete_dhcp_options':
+            return await this.handleDeleteDhcpOptions(args);
+          
+          // Egress Firewall Rules
+          case 'create_egress_firewall_rule':
+            return await this.handleCreateEgressFirewallRule(args);
+          
+          case 'delete_egress_firewall_rule':
+            return await this.handleDeleteEgressFirewallRule(args);
+          
+          case 'list_egress_firewall_rules':
+            return await this.handleListEgressFirewallRules(args);
+          
+          case 'update_egress_firewall_rule':
+            return await this.handleUpdateEgressFirewallRule(args);
+          
+          // NIC Management
+          case 'add_nic_to_virtual_machine':
+            return await this.handleAddNicToVirtualMachine(args);
+          
+          case 'remove_nic_from_virtual_machine':
+            return await this.handleRemoveNicFromVirtualMachine(args);
+          
+          case 'update_default_nic_for_virtual_machine':
+            return await this.handleUpdateDefaultNicForVirtualMachine(args);
+          
+          case 'list_nics':
+            return await this.handleListNics(args);
+          
+          // Network Device Management
+          case 'list_network_device':
+            return await this.handleListNetworkDevice(args);
+          
+          case 'add_network_device':
+            return await this.handleAddNetworkDevice(args);
+          
+          case 'delete_network_device':
+            return await this.handleDeleteNetworkDevice(args);
+          
+          // Network Permissions
+          case 'create_network_permissions':
+            return await this.handleCreateNetworkPermissions(args);
+          
+          case 'remove_network_permissions':
+            return await this.handleRemoveNetworkPermissions(args);
+          
+          case 'list_network_permissions':
+            return await this.handleListNetworkPermissions(args);
+          
+          case 'reset_network_permissions':
+            return await this.handleResetNetworkPermissions(args);
+          
+          // Site-to-Site VPN for VPC
+          case 'create_site2site_vpn_connection':
+            return await this.handleCreateSite2SiteVpnConnection(args);
+          
+          case 'delete_site2site_vpn_connection':
+            return await this.handleDeleteSite2SiteVpnConnection(args);
+          
+          case 'list_site2site_vpn_connections':
+            return await this.handleListSite2SiteVpnConnections(args);
+          
+          case 'reset_site2site_vpn_connection':
+            return await this.handleResetSite2SiteVpnConnection(args);
+          
+          case 'update_site2site_vpn_connection':
+            return await this.handleUpdateSite2SiteVpnConnection(args);
+          
           default:
             throw new Error(`Unknown tool: ${name}`);
         }
@@ -6306,95 +7118,7 @@ class CloudStackMCPServer {
     };
   }
 
-  private async handleCreatePrivateGateway(args: any): Promise<any> {
-    const params = this.buildParams(args, [
-      'gateway', 'ipaddress', 'netmask', 'vlan', 'vpcid', 'aclid'
-    ]);
-    const response = await this.client.createPrivateGateway(params);
-    
-    return {
-      content: [
-        {
-          type: 'text',
-          text: this.formatPrivateGatewayResponse('Private gateway created', response)
-        }
-      ]
-    };
-  }
 
-  private async handleListPrivateGateways(args: any): Promise<any> {
-    const params = this.buildParams(args, [
-      'account', 'domainid', 'id', 'ipaddress', 'state', 'vpcid'
-    ]);
-    const response = await this.client.listPrivateGateways(params);
-    
-    return {
-      content: [
-        {
-          type: 'text',
-          text: this.formatPrivateGatewaysResponse(response)
-        }
-      ]
-    };
-  }
-
-  private async handleDeletePrivateGateway(args: any): Promise<any> {
-    const params = this.buildParams(args, ['id']);
-    const response = await this.client.deletePrivateGateway(params);
-    
-    return {
-      content: [
-        {
-          type: 'text',
-          text: this.formatPrivateGatewayResponse('Private gateway deletion initiated', response)
-        }
-      ]
-    };
-  }
-
-  private async handleCreateStaticRoute(args: any): Promise<any> {
-    const params = this.buildParams(args, ['cidr', 'gatewayid']);
-    const response = await this.client.createStaticRoute(params);
-    
-    return {
-      content: [
-        {
-          type: 'text',
-          text: this.formatStaticRouteResponse('Static route created', response)
-        }
-      ]
-    };
-  }
-
-  private async handleListStaticRoutes(args: any): Promise<any> {
-    const params = this.buildParams(args, [
-      'account', 'domainid', 'gatewayid', 'id', 'vpcid'
-    ]);
-    const response = await this.client.listStaticRoutes(params);
-    
-    return {
-      content: [
-        {
-          type: 'text',
-          text: this.formatStaticRoutesResponse(response)
-        }
-      ]
-    };
-  }
-
-  private async handleDeleteStaticRoute(args: any): Promise<any> {
-    const params = this.buildParams(args, ['id']);
-    const response = await this.client.deleteStaticRoute(params);
-    
-    return {
-      content: [
-        {
-          type: 'text',
-          text: this.formatStaticRouteResponse('Static route deletion initiated', response)
-        }
-      ]
-    };
-  }
 
   private async handleGetCloudStackInfo(args: any): Promise<any> {
     const environmentInfo = this.client.getEnvironmentInfo();
@@ -6725,28 +7449,6 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     return `${operation}.`;
   }
 
-  private formatPrivateGatewaysResponse(response: any): string {
-    const gateways = response.privategateway || [];
-    
-    if (gateways.length === 0) {
-      return 'No private gateways found.';
-    }
-
-    let result = `Found ${gateways.length} private gateway(s):\n\n`;
-    
-    for (const gateway of gateways) {
-      result += `Gateway: ${gateway.gateway}\n`;
-      result += `  ID: ${gateway.id}\n`;
-      result += `  IP Address: ${gateway.ipaddress}\n`;
-      result += `  Netmask: ${gateway.netmask}\n`;
-      result += `  VLAN: ${gateway.vlan}\n`;
-      result += `  VPC: ${gateway.vpcname || gateway.vpcid || 'N/A'}\n`;
-      result += `  State: ${gateway.state || 'N/A'}\n`;
-      result += `  Created: ${gateway.created || 'N/A'}\n\n`;
-    }
-
-    return result;
-  }
 
   private formatStaticRouteResponse(operation: string, response: any): string {
     if (response.staticroute) {
@@ -6761,26 +7463,6 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     return `${operation}.`;
   }
 
-  private formatStaticRoutesResponse(response: any): string {
-    const routes = response.staticroute || [];
-    
-    if (routes.length === 0) {
-      return 'No static routes found.';
-    }
-
-    let result = `Found ${routes.length} static route(s):\n\n`;
-    
-    for (const route of routes) {
-      result += `CIDR: ${route.cidr}\n`;
-      result += `  ID: ${route.id}\n`;
-      result += `  Gateway ID: ${route.gatewayid}\n`;
-      result += `  VPC: ${route.vpcname || route.vpcid || 'N/A'}\n`;
-      result += `  State: ${route.state || 'N/A'}\n`;
-      result += `  Created: ${route.created || 'N/A'}\n\n`;
-    }
-
-    return result;
-  }
 
   private setupErrorHandling(): void {
     this.server.onerror = (error) => {
@@ -10082,6 +10764,725 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     };
   }
 
+  // Advanced Router Management Handlers
+  private async handleStartRouter(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Router ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.startRouter(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Router start', response)
+      }]
+    };
+  }
+
+  private async handleStopRouter(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Router ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id', 'forced']);
+    const response = await this.client.stopRouter(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Router stop', response)
+      }]
+    };
+  }
+
+  private async handleRebootRouter(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Router ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.rebootRouter(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Router reboot', response)
+      }]
+    };
+  }
+
+  private async handleDestroyRouter(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Router ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.destroyRouter(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Router destruction', response)
+      }]
+    };
+  }
+
+  private async handleChangeServiceForRouter(args: any): Promise<any> {
+    if (!args.id || !args.serviceofferingid) {
+      throw new Error('Router ID and service offering ID are required');
+    }
+    
+    const params = this.buildParams(args, ['id', 'serviceofferingid']);
+    const response = await this.client.changeServiceForRouter(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Router service change', response)
+      }]
+    };
+  }
+
+  private async handleListRouterHealthChecks(args: any): Promise<any> {
+    const params = this.buildParams(args, ['routerid']);
+    const response = await this.client.listRouterHealth(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatRouterHealthChecksResponse(response)
+      }]
+    };
+  }
+
+  private async handleGetRouterHealthCheckResults(args: any): Promise<any> {
+    if (!args.routerid) {
+      throw new Error('Router ID is required');
+    }
+    
+    const params = this.buildParams(args, ['routerid']);
+    const response = await this.client.listRouterHealth(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatRouterHealthCheckResultsResponse(response)
+      }]
+    };
+  }
+
+  private async handleConfigureVirtualRouterElement(args: any): Promise<any> {
+    if (!args.id || !args.enabled) {
+      throw new Error('Element ID and enabled status are required');
+    }
+    
+    const params = this.buildParams(args, ['id', 'enabled']);
+    const response = await this.client.updateNetworkServiceProvider(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatVirtualRouterElementResponse(response)
+      }]
+    };
+  }
+
+  // VPC Static Routes Handlers
+  private async handleCreateStaticRoute(args: any): Promise<any> {
+    if (!args.cidr || !args.gatewayid) {
+      throw new Error('CIDR and Gateway ID are required');
+    }
+    
+    const params = this.buildParams(args, ['cidr', 'gatewayid']);
+    const response = await this.client.createStaticRoute(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Static route creation', response)
+      }]
+    };
+  }
+
+  private async handleDeleteStaticRoute(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Static route ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteStaticRoute(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Static route deletion', response)
+      }]
+    };
+  }
+
+  private async handleListStaticRoutes(args: any): Promise<any> {
+    const params = this.buildParams(args, ['gatewayid', 'id', 'vpcid']);
+    const response = await this.client.listStaticRoutes(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatStaticRoutesResponse(response)
+      }]
+    };
+  }
+
+  // VPC Private Gateways Handlers
+  private async handleCreatePrivateGateway(args: any): Promise<any> {
+    if (!args.gateway || !args.ipaddress || !args.netmask || !args.vlan) {
+      throw new Error('Gateway, IP address, netmask, and VLAN are required');
+    }
+    
+    const params = this.buildParams(args, ['gateway', 'ipaddress', 'netmask', 'vlan', 'vpcid', 'physicalnetworkid', 'aclid']);
+    const response = await this.client.createPrivateGateway(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Private gateway creation', response)
+      }]
+    };
+  }
+
+  private async handleDeletePrivateGateway(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Private gateway ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deletePrivateGateway(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Private gateway deletion', response)
+      }]
+    };
+  }
+
+  private async handleListPrivateGateways(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'ipaddress', 'state', 'vpcid']);
+    const response = await this.client.listPrivateGateways(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatPrivateGatewaysResponse(response)
+      }]
+    };
+  }
+
+  // Remote Access VPN Handlers
+  private async handleCreateRemoteAccessVpn(args: any): Promise<any> {
+    if (!args.publicipid) {
+      throw new Error('Public IP ID is required');
+    }
+    
+    const params = this.buildParams(args, ['publicipid', 'account', 'domainid', 'iprange', 'openfirewall']);
+    const response = await this.client.createRemoteAccessVpn(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Remote access VPN creation', response)
+      }]
+    };
+  }
+
+  private async handleDeleteRemoteAccessVpn(args: any): Promise<any> {
+    if (!args.publicipid) {
+      throw new Error('Public IP ID is required');
+    }
+    
+    const params = this.buildParams(args, ['publicipid']);
+    const response = await this.client.deleteRemoteAccessVpn(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Remote access VPN deletion', response)
+      }]
+    };
+  }
+
+  private async handleListRemoteAccessVpns(args: any): Promise<any> {
+    const params = this.buildParams(args, ['publicipid', 'account', 'domainid', 'listall']);
+    const response = await this.client.listRemoteAccessVpns(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatRemoteAccessVpnsResponse(response)
+      }]
+    };
+  }
+
+  private async handleAddVpnUser(args: any): Promise<any> {
+    if (!args.password || !args.username) {
+      throw new Error('Username and password are required');
+    }
+    
+    const params = this.buildParams(args, ['password', 'username', 'account', 'domainid']);
+    const response = await this.client.addVpnUser(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('VPN user addition', response)
+      }]
+    };
+  }
+
+  private async handleRemoveVpnUser(args: any): Promise<any> {
+    if (!args.username) {
+      throw new Error('Username is required');
+    }
+    
+    const params = this.buildParams(args, ['username', 'account', 'domainid']);
+    const response = await this.client.removeVpnUser(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('VPN user removal', response)
+      }]
+    };
+  }
+
+  private async handleListVpnUsers(args: any): Promise<any> {
+    const params = this.buildParams(args, ['account', 'domainid', 'id', 'listall', 'username']);
+    const response = await this.client.listVpnUsers(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatVpnUsersResponse(response)
+      }]
+    };
+  }
+
+  // Network Service Providers Handlers
+  private async handleListNetworkServiceProviders(args: any): Promise<any> {
+    const params = this.buildParams(args, ['name', 'physicalnetworkid', 'state']);
+    const response = await this.client.listNetworkServiceProviders(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatNetworkServiceProvidersResponse(response)
+      }]
+    };
+  }
+
+  private async handleAddNetworkServiceProvider(args: any): Promise<any> {
+    if (!args.name || !args.physicalnetworkid) {
+      throw new Error('Provider name and physical network ID are required');
+    }
+    
+    const params = this.buildParams(args, ['name', 'physicalnetworkid', 'destinationphysicalnetworkid', 'servicelist']);
+    const response = await this.client.addNetworkServiceProvider(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatNetworkServiceProviderResponse(response)
+      }]
+    };
+  }
+
+  private async handleDeleteNetworkServiceProvider(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Network service provider ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteNetworkServiceProvider(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Network service provider deletion', response)
+      }]
+    };
+  }
+
+  private async handleUpdateNetworkServiceProvider(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Network service provider ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id', 'servicelist', 'state']);
+    const response = await this.client.updateNetworkServiceProvider(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatNetworkServiceProviderResponse(response)
+      }]
+    };
+  }
+
+  // DHCP Options Handlers
+  private async handleListDhcpOptions(args: any): Promise<any> {
+    const params = this.buildParams(args, ['networkid', 'nicid']);
+    const response = await this.client.listDhcpOptions(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatDhcpOptionsResponse(response)
+      }]
+    };
+  }
+
+  private async handleCreateDhcpOptions(args: any): Promise<any> {
+    if (!args.dhcpoptions) {
+      throw new Error('DHCP options are required');
+    }
+    
+    const params = this.buildParams(args, ['dhcpoptions', 'networkid', 'nicid']);
+    const response = await this.client.createDhcpOption(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('DHCP options creation', response)
+      }]
+    };
+  }
+
+  private async handleDeleteDhcpOptions(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('DHCP options ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteDhcpOption(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('DHCP options deletion', response)
+      }]
+    };
+  }
+
+  // Egress Firewall Rules Handlers
+  private async handleCreateEgressFirewallRule(args: any): Promise<any> {
+    if (!args.networkid || !args.protocol) {
+      throw new Error('Network ID and protocol are required');
+    }
+    
+    const params = this.buildParams(args, ['networkid', 'protocol', 'cidrlist', 'startport', 'endport', 'icmptype', 'icmpcode', 'type']);
+    const response = await this.client.createEgressFirewallRule(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Egress firewall rule creation', response)
+      }]
+    };
+  }
+
+  private async handleDeleteEgressFirewallRule(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Egress firewall rule ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteEgressFirewallRule(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Egress firewall rule deletion', response)
+      }]
+    };
+  }
+
+  private async handleListEgressFirewallRules(args: any): Promise<any> {
+    const params = this.buildParams(args, ['networkid', 'id', 'ipaddressid', 'listall']);
+    const response = await this.client.listEgressFirewallRules(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatEgressFirewallRulesResponse(response)
+      }]
+    };
+  }
+
+  private async handleUpdateEgressFirewallRule(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Egress firewall rule ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id', 'customid', 'fordisplay']);
+    const response = await this.client.updateFirewallRule(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Egress firewall rule update', response)
+      }]
+    };
+  }
+
+  // NIC Management Handlers
+  private async handleAddNicToVirtualMachine(args: any): Promise<any> {
+    if (!args.networkid || !args.virtualmachineid) {
+      throw new Error('Network ID and virtual machine ID are required');
+    }
+    
+    const params = this.buildParams(args, ['networkid', 'virtualmachineid', 'ipaddress', 'dhcpoptions']);
+    const response = await this.client.addNicToVirtualMachine(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('NIC addition to VM', response)
+      }]
+    };
+  }
+
+  private async handleRemoveNicFromVirtualMachine(args: any): Promise<any> {
+    if (!args.nicid || !args.virtualmachineid) {
+      throw new Error('NIC ID and virtual machine ID are required');
+    }
+    
+    const params = this.buildParams(args, ['nicid', 'virtualmachineid']);
+    const response = await this.client.removeNicFromVirtualMachine(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('NIC removal from VM', response)
+      }]
+    };
+  }
+
+  private async handleUpdateDefaultNicForVirtualMachine(args: any): Promise<any> {
+    if (!args.nicid || !args.virtualmachineid) {
+      throw new Error('NIC ID and virtual machine ID are required');
+    }
+    
+    const params = this.buildParams(args, ['nicid', 'virtualmachineid']);
+    const response = await this.client.updateDefaultNicForVirtualMachine(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Default NIC update', response)
+      }]
+    };
+  }
+
+  private async handleListNics(args: any): Promise<any> {
+    const params = this.buildParams(args, ['virtualmachineid', 'networkid', 'nicid', 'keyword']);
+    const response = await this.client.listNics(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatNicsResponse(response)
+      }]
+    };
+  }
+
+  // Network Device Management Handlers
+  private async handleListNetworkDevice(args: any): Promise<any> {
+    const params = this.buildParams(args, ['networkdeviceparameterlist', 'networkdevicetype']);
+    const response = await this.client.listNetworkDevice(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatNetworkDevicesResponse(response)
+      }]
+    };
+  }
+
+  private async handleAddNetworkDevice(args: any): Promise<any> {
+    if (!args.networkdeviceparameterlist || !args.networkdevicetype) {
+      throw new Error('Network device parameter list and device type are required');
+    }
+    
+    const params = this.buildParams(args, ['networkdeviceparameterlist', 'networkdevicetype']);
+    const response = await this.client.addNetworkDevice(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatNetworkDeviceResponse(response)
+      }]
+    };
+  }
+
+  private async handleDeleteNetworkDevice(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Network device ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteNetworkDevice(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Network device deletion', response)
+      }]
+    };
+  }
+
+  // Network Permissions Handlers
+  private async handleCreateNetworkPermissions(args: any): Promise<any> {
+    if (!args.networkid) {
+      throw new Error('Network ID is required');
+    }
+    
+    const params = this.buildParams(args, ['networkid', 'accounts', 'projectids']);
+    const response = await this.client.resetNetworkPermissions(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Network permissions creation', response)
+      }]
+    };
+  }
+
+  private async handleRemoveNetworkPermissions(args: any): Promise<any> {
+    if (!args.networkid) {
+      throw new Error('Network ID is required');
+    }
+    
+    const params = this.buildParams(args, ['networkid', 'accounts', 'projectids']);
+    const response = await this.client.resetNetworkPermissions(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Network permissions removal', response)
+      }]
+    };
+  }
+
+  private async handleListNetworkPermissions(args: any): Promise<any> {
+    if (!args.networkid) {
+      throw new Error('Network ID is required');
+    }
+    
+    const params = this.buildParams(args, ['networkid']);
+    const response = await this.client.listNetworkPermissions(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatNetworkPermissionsResponse(response)
+      }]
+    };
+  }
+
+  private async handleResetNetworkPermissions(args: any): Promise<any> {
+    if (!args.networkid) {
+      throw new Error('Network ID is required');
+    }
+    
+    const params = this.buildParams(args, ['networkid']);
+    const response = await this.client.resetNetworkPermissions(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Network permissions reset', response)
+      }]
+    };
+  }
+
+  // Site-to-Site VPN Handlers
+  private async handleCreateSite2SiteVpnConnection(args: any): Promise<any> {
+    if (!args.s2scustomergatewayid || !args.s2svpngatewayid) {
+      throw new Error('Customer gateway ID and VPN gateway ID are required');
+    }
+    
+    const params = this.buildParams(args, ['s2scustomergatewayid', 's2svpngatewayid', 'passive']);
+    const response = await this.client.createVpnConnection(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Site-to-site VPN connection creation', response)
+      }]
+    };
+  }
+
+  private async handleDeleteSite2SiteVpnConnection(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Site-to-site VPN connection ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteVpnConnection(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Site-to-site VPN connection deletion', response)
+      }]
+    };
+  }
+
+  private async handleListSite2SiteVpnConnections(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 's2scustomergatewayid', 's2svpngatewayid', 'vpcid']);
+    const response = await this.client.listVpnConnections(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatSite2SiteVpnConnectionsResponse(response)
+      }]
+    };
+  }
+
+  private async handleResetSite2SiteVpnConnection(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Site-to-site VPN connection ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.resetVpnConnection(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Site-to-site VPN connection reset', response)
+      }]
+    };
+  }
+
+  private async handleUpdateSite2SiteVpnConnection(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Site-to-site VPN connection ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id', 'customid', 'fordisplay']);
+    const response = await this.client.deleteVpnConnection(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Site-to-site VPN connection update', response)
+      }]
+    };
+  }
+
   // Response Formatting Methods for Account Management
   private formatAccountResponse(operation: string, response: any): string {
     if (response.account) {
@@ -10889,6 +12290,302 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
       case 3: return 'Failed';
       default: return `Unknown Status (${status})`;
     }
+  }
+
+  // Response Formatting Methods for Advanced Network Management
+  private formatRouterHealthChecksResponse(response: any): string {
+    if (response.routerhealthcheck && response.routerhealthcheck.length > 0) {
+      let result = `Router Health Checks (${response.routerhealthcheck.length} checks):\n\n`;
+      
+      response.routerhealthcheck.forEach((check: any, index: number) => {
+        result += `${index + 1}. Check: ${check.checkname || 'N/A'}\n`;
+        result += `   Router: ${check.routerid || 'N/A'}\n`;
+        result += `   Status: ${check.checkresult || 'N/A'}\n`;
+        result += `   Last Update: ${check.lastupdated || 'N/A'}\n\n`;
+      });
+      
+      return result.trim();
+    }
+    
+    return 'No router health checks found.';
+  }
+
+  private formatRouterHealthCheckResultsResponse(response: any): string {
+    if (response.routerhealthcheckresults) {
+      const results = response.routerhealthcheckresults;
+      let result = `Router Health Check Results:\n\n`;
+      result += `Router ID: ${results.routerid || 'N/A'}\n`;
+      result += `Overall Status: ${results.status || 'N/A'}\n`;
+      result += `Check Time: ${results.checktime || 'N/A'}\n\n`;
+      
+      if (results.checks && results.checks.length > 0) {
+        result += `Individual Checks (${results.checks.length}):\n`;
+        results.checks.forEach((check: any, index: number) => {
+          result += `${index + 1}. ${check.name || 'N/A'}: ${check.result || 'N/A'}\n`;
+          if (check.details) {
+            result += `   Details: ${check.details}\n`;
+          }
+        });
+      }
+      
+      return result.trim();
+    }
+    
+    return 'No router health check results found.';
+  }
+
+  private formatVirtualRouterElementResponse(response: any): string {
+    if (response.virtualrouterelement) {
+      const element = response.virtualrouterelement;
+      let result = `Virtual Router Element Configuration:\n\n`;
+      result += `ID: ${element.id || 'N/A'}\n`;
+      result += `NSP ID: ${element.nspid || 'N/A'}\n`;
+      result += `Enabled: ${element.enabled || 'N/A'}\n`;
+      result += `Provider Name: ${element.providername || 'N/A'}\n`;
+      
+      return result;
+    }
+    
+    return 'Virtual router element configuration not found.';
+  }
+
+  private formatStaticRoutesResponse(response: any): string {
+    if (response.staticroute && response.staticroute.length > 0) {
+      let result = `Static Routes (${response.staticroute.length} routes):\n\n`;
+      
+      response.staticroute.forEach((route: any, index: number) => {
+        result += `${index + 1}. Route ID: ${route.id || 'N/A'}\n`;
+        result += `   CIDR: ${route.cidr || 'N/A'}\n`;
+        result += `   Gateway ID: ${route.gatewayid || 'N/A'}\n`;
+        result += `   VPC ID: ${route.vpcid || 'N/A'}\n`;
+        result += `   State: ${route.state || 'N/A'}\n\n`;
+      });
+      
+      return result.trim();
+    }
+    
+    return 'No static routes found.';
+  }
+
+  private formatPrivateGatewaysResponse(response: any): string {
+    if (response.privategateway && response.privategateway.length > 0) {
+      let result = `Private Gateways (${response.privategateway.length} gateways):\n\n`;
+      
+      response.privategateway.forEach((gateway: any, index: number) => {
+        result += `${index + 1}. Gateway ID: ${gateway.id || 'N/A'}\n`;
+        result += `   IP Address: ${gateway.ipaddress || 'N/A'}\n`;
+        result += `   Gateway: ${gateway.gateway || 'N/A'}\n`;
+        result += `   Netmask: ${gateway.netmask || 'N/A'}\n`;
+        result += `   VLAN: ${gateway.vlan || 'N/A'}\n`;
+        result += `   VPC ID: ${gateway.vpcid || 'N/A'}\n`;
+        result += `   State: ${gateway.state || 'N/A'}\n\n`;
+      });
+      
+      return result.trim();
+    }
+    
+    return 'No private gateways found.';
+  }
+
+  private formatRemoteAccessVpnsResponse(response: any): string {
+    if (response.remoteaccessvpn && response.remoteaccessvpn.length > 0) {
+      let result = `Remote Access VPNs (${response.remoteaccessvpn.length} VPNs):\n\n`;
+      
+      response.remoteaccessvpn.forEach((vpn: any, index: number) => {
+        result += `${index + 1}. VPN ID: ${vpn.id || 'N/A'}\n`;
+        result += `   Public IP: ${vpn.publicip || 'N/A'}\n`;
+        result += `   Public IP ID: ${vpn.publicipid || 'N/A'}\n`;
+        result += `   IP Range: ${vpn.iprange || 'N/A'}\n`;
+        result += `   Pre-shared Key: ${vpn.presharedkey || 'N/A'}\n`;
+        result += `   State: ${vpn.state || 'N/A'}\n`;
+        result += `   Account: ${vpn.account || 'N/A'}\n\n`;
+      });
+      
+      return result.trim();
+    }
+    
+    return 'No remote access VPNs found.';
+  }
+
+  private formatVpnUsersResponse(response: any): string {
+    if (response.vpnuser && response.vpnuser.length > 0) {
+      let result = `VPN Users (${response.vpnuser.length} users):\n\n`;
+      
+      response.vpnuser.forEach((user: any, index: number) => {
+        result += `${index + 1}. User ID: ${user.id || 'N/A'}\n`;
+        result += `   Username: ${user.username || 'N/A'}\n`;
+        result += `   Account: ${user.account || 'N/A'}\n`;
+        result += `   Domain: ${user.domain || 'N/A'}\n`;
+        result += `   State: ${user.state || 'N/A'}\n\n`;
+      });
+      
+      return result.trim();
+    }
+    
+    return 'No VPN users found.';
+  }
+
+  private formatNetworkServiceProvidersResponse(response: any): string {
+    if (response.networkserviceprovider && response.networkserviceprovider.length > 0) {
+      let result = `Network Service Providers (${response.networkserviceprovider.length} providers):\n\n`;
+      
+      response.networkserviceprovider.forEach((provider: any, index: number) => {
+        result += `${index + 1}. Provider ID: ${provider.id || 'N/A'}\n`;
+        result += `   Name: ${provider.name || 'N/A'}\n`;
+        result += `   Physical Network ID: ${provider.physicalnetworkid || 'N/A'}\n`;
+        result += `   State: ${provider.state || 'N/A'}\n`;
+        result += `   Service List: ${provider.servicelist ? provider.servicelist.join(', ') : 'N/A'}\n\n`;
+      });
+      
+      return result.trim();
+    }
+    
+    return 'No network service providers found.';
+  }
+
+  private formatNetworkServiceProviderResponse(response: any): string {
+    if (response.networkserviceprovider) {
+      const provider = response.networkserviceprovider;
+      let result = `Network Service Provider:\n\n`;
+      result += `ID: ${provider.id || 'N/A'}\n`;
+      result += `Name: ${provider.name || 'N/A'}\n`;
+      result += `Physical Network ID: ${provider.physicalnetworkid || 'N/A'}\n`;
+      result += `State: ${provider.state || 'N/A'}\n`;
+      result += `Service List: ${provider.servicelist ? provider.servicelist.join(', ') : 'N/A'}\n`;
+      
+      return result;
+    }
+    
+    return 'Network service provider information not found.';
+  }
+
+  private formatDhcpOptionsResponse(response: any): string {
+    if (response.dhcpoption && response.dhcpoption.length > 0) {
+      let result = `DHCP Options (${response.dhcpoption.length} options):\n\n`;
+      
+      response.dhcpoption.forEach((option: any, index: number) => {
+        result += `${index + 1}. Option ID: ${option.id || 'N/A'}\n`;
+        result += `   Network ID: ${option.networkid || 'N/A'}\n`;
+        result += `   NIC ID: ${option.nicid || 'N/A'}\n`;
+        result += `   Options: ${option.dhcpoptions || 'N/A'}\n\n`;
+      });
+      
+      return result.trim();
+    }
+    
+    return 'No DHCP options found.';
+  }
+
+  private formatEgressFirewallRulesResponse(response: any): string {
+    if (response.firewallrule && response.firewallrule.length > 0) {
+      let result = `Egress Firewall Rules (${response.firewallrule.length} rules):\n\n`;
+      
+      response.firewallrule.forEach((rule: any, index: number) => {
+        result += `${index + 1}. Rule ID: ${rule.id || 'N/A'}\n`;
+        result += `   Protocol: ${rule.protocol || 'N/A'}\n`;
+        result += `   Start Port: ${rule.startport || 'N/A'}\n`;
+        result += `   End Port: ${rule.endport || 'N/A'}\n`;
+        result += `   CIDR List: ${rule.cidrlist || 'N/A'}\n`;
+        result += `   Network ID: ${rule.networkid || 'N/A'}\n`;
+        result += `   State: ${rule.state || 'N/A'}\n\n`;
+      });
+      
+      return result.trim();
+    }
+    
+    return 'No egress firewall rules found.';
+  }
+
+  private formatNicsResponse(response: any): string {
+    if (response.nic && response.nic.length > 0) {
+      let result = `NICs (${response.nic.length} interfaces):\n\n`;
+      
+      response.nic.forEach((nic: any, index: number) => {
+        result += `${index + 1}. NIC ID: ${nic.id || 'N/A'}\n`;
+        result += `   IP Address: ${nic.ipaddress || 'N/A'}\n`;
+        result += `   MAC Address: ${nic.macaddress || 'N/A'}\n`;
+        result += `   Network ID: ${nic.networkid || 'N/A'}\n`;
+        result += `   Network Name: ${nic.networkname || 'N/A'}\n`;
+        result += `   Is Default: ${nic.isdefault || 'N/A'}\n`;
+        result += `   VM ID: ${nic.virtualmachineid || 'N/A'}\n\n`;
+      });
+      
+      return result.trim();
+    }
+    
+    return 'No NICs found.';
+  }
+
+  private formatNetworkDevicesResponse(response: any): string {
+    if (response.networkdevice && response.networkdevice.length > 0) {
+      let result = `Network Devices (${response.networkdevice.length} devices):\n\n`;
+      
+      response.networkdevice.forEach((device: any, index: number) => {
+        result += `${index + 1}. Device ID: ${device.id || 'N/A'}\n`;
+        result += `   Name: ${device.name || 'N/A'}\n`;
+        result += `   Type: ${device.networkdevicetype || 'N/A'}\n`;
+        result += `   Management IP: ${device.managementip || 'N/A'}\n`;
+        result += `   Physical Network ID: ${device.physicalnetworkid || 'N/A'}\n\n`;
+      });
+      
+      return result.trim();
+    }
+    
+    return 'No network devices found.';
+  }
+
+  private formatNetworkDeviceResponse(response: any): string {
+    if (response.networkdevice) {
+      const device = response.networkdevice;
+      let result = `Network Device:\n\n`;
+      result += `ID: ${device.id || 'N/A'}\n`;
+      result += `Name: ${device.name || 'N/A'}\n`;
+      result += `Type: ${device.networkdevicetype || 'N/A'}\n`;
+      result += `Management IP: ${device.managementip || 'N/A'}\n`;
+      result += `Physical Network ID: ${device.physicalnetworkid || 'N/A'}\n`;
+      
+      return result;
+    }
+    
+    return 'Network device information not found.';
+  }
+
+  private formatNetworkPermissionsResponse(response: any): string {
+    if (response.networkpermission && response.networkpermission.length > 0) {
+      let result = `Network Permissions (${response.networkpermission.length} permissions):\n\n`;
+      
+      response.networkpermission.forEach((permission: any, index: number) => {
+        result += `${index + 1}. Permission ID: ${permission.id || 'N/A'}\n`;
+        result += `   Network ID: ${permission.networkid || 'N/A'}\n`;
+        result += `   Account: ${permission.account || 'N/A'}\n`;
+        result += `   Project ID: ${permission.projectid || 'N/A'}\n`;
+        result += `   Permission Type: ${permission.permissiontype || 'N/A'}\n\n`;
+      });
+      
+      return result.trim();
+    }
+    
+    return 'No network permissions found.';
+  }
+
+  private formatSite2SiteVpnConnectionsResponse(response: any): string {
+    if (response.site2sitevpnconnection && response.site2sitevpnconnection.length > 0) {
+      let result = `Site-to-Site VPN Connections (${response.site2sitevpnconnection.length} connections):\n\n`;
+      
+      response.site2sitevpnconnection.forEach((connection: any, index: number) => {
+        result += `${index + 1}. Connection ID: ${connection.id || 'N/A'}\n`;
+        result += `   Customer Gateway ID: ${connection.s2scustomergatewayid || 'N/A'}\n`;
+        result += `   VPN Gateway ID: ${connection.s2svpngatewayid || 'N/A'}\n`;
+        result += `   VPC ID: ${connection.vpcid || 'N/A'}\n`;
+        result += `   State: ${connection.state || 'N/A'}\n`;
+        result += `   Passive: ${connection.passive || 'N/A'}\n`;
+        result += `   Created: ${connection.created || 'N/A'}\n\n`;
+      });
+      
+      return result.trim();
+    }
+    
+    return 'No site-to-site VPN connections found.';
   }
 
   public async run(): Promise<void> {

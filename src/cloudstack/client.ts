@@ -814,6 +814,10 @@ export class CloudStackClient {
     return this.makeRequest('destroyRouter', params);
   }
 
+  public async listRouterHealth(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listRouterHealth', params);
+  }
+
   public async listRouters(params: Record<string, any> = {}): Promise<any> {
     return this.makeRequest('listRouters', params);
   }
@@ -1245,4 +1249,99 @@ export class CloudStackClient {
   public async updateDiskOffering(params: Record<string, any>): Promise<any> {
     return this.makeRequest('updateDiskOffering', params);
   }
+
+
+  // Network Service Providers
+  public async listNetworkServiceProviders(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listNetworkServiceProviders', params);
+  }
+
+  public async addNetworkServiceProvider(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addNetworkServiceProvider', params);
+  }
+
+  public async deleteNetworkServiceProvider(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteNetworkServiceProvider', params);
+  }
+
+  public async updateNetworkServiceProvider(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateNetworkServiceProvider', params);
+  }
+
+  // Egress Firewall Rules
+  public async createEgressFirewallRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createEgressFirewallRule', params);
+  }
+
+  public async deleteEgressFirewallRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteEgressFirewallRule', params);
+  }
+
+  public async listEgressFirewallRules(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listEgressFirewallRules', params);
+  }
+
+
+  // DHCP Management
+  public async listDhcpOptions(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listDhcpOptions', params);
+  }
+
+  public async createDhcpOption(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createDhcpOption', params);
+  }
+
+  public async deleteDhcpOption(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteDhcpOption', params);
+  }
+
+  // Virtual Network Functions
+  public async listNetworkPermissions(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('listNetworkPermissions', params);
+  }
+
+  public async resetNetworkPermissions(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('resetNetworkPermissions', params);
+  }
+
+  // NIC Management (re-added essential methods)
+  public async listNics(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listNics', params);
+  }
+
+  // Network Device Management (re-added essential methods)
+  public async listNetworkDevice(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listNetworkDevice', params);
+  }
+
+  public async addNetworkDevice(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addNetworkDevice', params);
+  }
+
+  public async deleteNetworkDevice(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteNetworkDevice', params);
+  }
+
+  // Advanced VPC Functions  
+  public async replaceNetworkACLList(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('replaceNetworkACLList', params);
+  }
+
+  public async moveNetworkAclItem(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('moveNetworkAclItem', params);
+  }
+
+  // Network Tags
+  public async createTags(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createTags', params);
+  }
+
+  public async deleteTags(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteTags', params);
+  }
+
+  public async listTags(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listTags', params);
+  }
+
 }
