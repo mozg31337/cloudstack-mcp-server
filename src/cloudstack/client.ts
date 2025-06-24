@@ -1032,21 +1032,8 @@ export class CloudStackClient {
     return this.makeRequest('listProjectAccounts', params);
   }
 
-  // LDAP Integration APIs
-  public async addLdapConfiguration(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('addLdapConfiguration', params);
-  }
-
-  public async listLdapUsers(params: Record<string, any> = {}): Promise<any> {
-    return this.makeRequest('listLdapUsers', params);
-  }
-
   public async ldapCreateAccount(params: Record<string, any>): Promise<any> {
     return this.makeRequest('ldapCreateAccount', params);
-  }
-
-  public async importLdapUsers(params: Record<string, any> = {}): Promise<any> {
-    return this.makeRequest('importLdapUsers', params);
   }
 
   // System Administration & Configuration
@@ -1072,10 +1059,6 @@ export class CloudStackClient {
 
   public async deleteAlerts(params: Record<string, any>): Promise<any> {
     return this.makeRequest('deleteAlerts', params);
-  }
-
-  public async listEvents(params: Record<string, any> = {}): Promise<any> {
-    return this.makeRequest('listEvents', params);
   }
 
   public async archiveEvents(params: Record<string, any>): Promise<any> {
@@ -1150,10 +1133,6 @@ export class CloudStackClient {
 
   public async listUsageTypes(params: Record<string, any> = {}): Promise<any> {
     return this.makeRequest('listUsageTypes', params);
-  }
-
-  public async listCapacity(params: Record<string, any> = {}): Promise<any> {
-    return this.makeRequest('listCapacity', params);
   }
 
   public async listAsyncJobs(params: Record<string, any> = {}): Promise<any> {
@@ -1532,29 +1511,8 @@ export class CloudStackClient {
     return this.makeRequest('listStorageProviders', params);
   }
 
-  public async syncStoragePool(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('syncStoragePool', params);
-  }
-
   public async updateStorageCapabilities(params: Record<string, any>): Promise<any> {
     return this.makeRequest('updateStorageCapabilities', params);
-  }
-
-  // Secondary Storage Management
-  public async addSecondaryStorage(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('addSecondaryStorage', params);
-  }
-
-  public async createSecondaryStagingStore(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('createSecondaryStagingStore', params);
-  }
-
-  public async deleteSecondaryStagingStore(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('deleteSecondaryStagingStore', params);
-  }
-
-  public async listSecondaryStagingStores(params: Record<string, any> = {}): Promise<any> {
-    return this.makeRequest('listSecondaryStagingStores', params);
   }
 
   public async migrateSecondaryStorageData(params: Record<string, any>): Promise<any> {
@@ -2542,6 +2500,625 @@ export class CloudStackClient {
 
   public async validateGuestOsCompatibility(params: Record<string, any>): Promise<any> {
     return this.makeRequest('validateGuestOsCompatibility', params);
+  }
+
+  // Advanced Features - AutoScale Management APIs
+  public async createAutoScalePolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createAutoScalePolicy', params);
+  }
+
+  public async updateAutoScalePolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateAutoScalePolicy', params);
+  }
+
+  public async deleteAutoScalePolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteAutoScalePolicy', params);
+  }
+
+  public async listAutoScalePolicies(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listAutoScalePolicies', params);
+  }
+
+  public async createAutoScaleVmGroup(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createAutoScaleVmGroup', params);
+  }
+
+  public async updateAutoScaleVmGroup(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateAutoScaleVmGroup', params);
+  }
+
+  public async deleteAutoScaleVmGroup(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteAutoScaleVmGroup', params);
+  }
+
+  public async listAutoScaleVmGroups(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listAutoScaleVmGroups', params);
+  }
+
+  public async enableAutoScaleVmGroup(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('enableAutoScaleVmGroup', params);
+  }
+
+  public async disableAutoScaleVmGroup(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('disableAutoScaleVmGroup', params);
+  }
+
+  public async createAutoScaleVmProfile(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createAutoScaleVmProfile', params);
+  }
+
+  public async updateAutoScaleVmProfile(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateAutoScaleVmProfile', params);
+  }
+
+  public async deleteAutoScaleVmProfile(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteAutoScaleVmProfile', params);
+  }
+
+  public async listAutoScaleVmProfiles(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listAutoScaleVmProfiles', params);
+  }
+
+  public async createCondition(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createCondition', params);
+  }
+
+  public async updateCondition(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateCondition', params);
+  }
+
+  public async deleteCondition(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteCondition', params);
+  }
+
+  public async listConditions(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listConditions', params);
+  }
+
+  public async createCounter(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createCounter', params);
+  }
+
+  public async deleteCounter(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteCounter', params);
+  }
+
+  public async listCounters(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listCounters', params);
+  }
+
+  // Certificate Management Enhancement APIs
+  public async issueCertificate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('issueCertificate', params);
+  }
+
+  public async listCAProviders(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listCAProviders', params);
+  }
+
+  public async listCaCertificate(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listCaCertificate', params);
+  }
+
+  public async listTemplateDirectDownloadCertificates(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listTemplateDirectDownloadCertificates', params);
+  }
+
+  public async provisionCertificate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('provisionCertificate', params);
+  }
+
+  public async provisionTemplateDirectDownloadCertificate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('provisionTemplateDirectDownloadCertificate', params);
+  }
+
+  public async revokeCertificate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('revokeCertificate', params);
+  }
+
+  public async revokeTemplateDirectDownloadCertificate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('revokeTemplateDirectDownloadCertificate', params);
+  }
+
+  public async uploadCustomCertificate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('uploadCustomCertificate', params);
+  }
+
+  public async uploadTemplateDirectDownloadCertificate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('uploadTemplateDirectDownloadCertificate', params);
+  }
+
+  // Quota Management Enhancement APIs
+  public async quotaConfigureEmail(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('quotaConfigureEmail', params);
+  }
+
+  public async quotaPresetVariablesList(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('quotaPresetVariablesList', params);
+  }
+
+  public async quotaTariffCreate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('quotaTariffCreate', params);
+  }
+
+  public async quotaTariffDelete(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('quotaTariffDelete', params);
+  }
+
+  public async quotaTariffList(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('quotaTariffList', params);
+  }
+
+  public async quotaTariffUpdate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('quotaTariffUpdate', params);
+  }
+
+  public async quotaIsEnabled(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('quotaIsEnabled', params);
+  }
+
+  // Metrics & Monitoring Enhancement APIs
+  public async listDbMetrics(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listDbMetrics', params);
+  }
+
+  public async listInfrastructure(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listInfrastructure', params);
+  }
+
+  public async listUsageServerMetrics(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listUsageServerMetrics', params);
+  }
+
+  public async listZonesMetrics(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listZonesMetrics', params);
+  }
+
+  public async listClustersMetrics(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listClustersMetrics', params);
+  }
+
+  public async listManagementServersMetrics(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listManagementServersMetrics', params);
+  }
+
+  public async listSystemVmsMetrics(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listSystemVmsMetrics', params);
+  }
+
+  public async listStoragePoolsMetrics(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listStoragePoolsMetrics', params);
+  }
+
+  public async listCapacity(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listCapacity', params);
+  }
+
+  public async listEvents(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listEvents', params);
+  }
+
+  // Object Store Enhancement APIs
+  public async uploadObject(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('uploadObject', params);
+  }
+
+  public async downloadObject(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('downloadObject', params);
+  }
+
+  public async createObjectStorage(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createObjectStorage', params);
+  }
+
+  public async deleteObjectStorage(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteObjectStorage', params);
+  }
+
+  public async listObjectStorage(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listObjectStorage', params);
+  }
+
+  public async updateObjectStorage(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateObjectStorage', params);
+  }
+
+  public async deleteStoragePoolObjects(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteStoragePoolObjects', params);
+  }
+
+  // Enterprise Integration - LDAP Enhancement APIs
+  public async addLdapConfiguration(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addLdapConfiguration', params);
+  }
+
+  public async deleteLdapConfiguration(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteLdapConfiguration', params);
+  }
+
+  public async listLdapConfigurations(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listLdapConfigurations', params);
+  }
+
+  public async listLdapUsers(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listLdapUsers', params);
+  }
+
+  public async importLdapUsers(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('importLdapUsers', params);
+  }
+
+  public async linkDomainToLdap(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('linkDomainToLdap', params);
+  }
+
+  public async linkAccountToLdap(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('linkAccountToLdap', params);
+  }
+
+  // Webhook Management APIs
+  public async createWebhook(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createWebhook', params);
+  }
+
+  public async updateWebhook(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateWebhook', params);
+  }
+
+  public async deleteWebhook(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteWebhook', params);
+  }
+
+  public async listWebhooks(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listWebhooks', params);
+  }
+
+  public async executeWebhook(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('executeWebhook', params);
+  }
+
+  // Compliance Management APIs
+  public async generateComplianceReport(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('generateComplianceReport', params);
+  }
+
+  public async listComplianceReports(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listComplianceReports', params);
+  }
+
+  public async downloadComplianceReport(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('downloadComplianceReport', params);
+  }
+
+  // Image Store Management APIs
+  public async addImageStore(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addImageStore', params);
+  }
+
+  public async addImageStoreS3(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addImageStoreS3', params);
+  }
+
+  public async addSecondaryStorage(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addSecondaryStorage', params);
+  }
+
+  public async addSwift(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addSwift', params);
+  }
+
+  public async createSecondaryStagingStore(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createSecondaryStagingStore', params);
+  }
+
+  public async createSecondaryStorageSelector(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createSecondaryStorageSelector', params);
+  }
+
+  public async deleteImageStore(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteImageStore', params);
+  }
+
+  public async deleteSecondaryStagingStore(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteSecondaryStagingStore', params);
+  }
+
+  public async downloadImageStoreObject(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('downloadImageStoreObject', params);
+  }
+
+  public async listImageStoreObjects(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listImageStoreObjects', params);
+  }
+
+  public async listImageStores(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listImageStores', params);
+  }
+
+  public async listSecondaryStagingStores(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listSecondaryStagingStores', params);
+  }
+
+  public async syncStoragePool(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('syncStoragePool', params);
+  }
+
+  // Tungsten Fabric SDN APIs
+  public async addTungstenFabricNetworkGatewayToLogicalRouter(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addTungstenFabricNetworkGatewayToLogicalRouter', params);
+  }
+
+  public async addTungstenFabricNetworkSubnetCommand(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addTungstenFabricNetworkSubnetCommand', params);
+  }
+
+  public async addTungstenFabricPolicyRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addTungstenFabricPolicyRule', params);
+  }
+
+  public async applyTungstenFabricPolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('applyTungstenFabricPolicy', params);
+  }
+
+  public async applyTungstenFabricTag(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('applyTungstenFabricTag', params);
+  }
+
+  public async createTungstenFabricAddressGroup(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createTungstenFabricAddressGroup', params);
+  }
+
+  public async createTungstenFabricApplicationPolicySet(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createTungstenFabricApplicationPolicySet', params);
+  }
+
+  public async createTungstenFabricFirewallPolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createTungstenFabricFirewallPolicy', params);
+  }
+
+  public async createTungstenFabricFirewallRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createTungstenFabricFirewallRule', params);
+  }
+
+  public async createTungstenFabricLogicalRouter(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createTungstenFabricLogicalRouter', params);
+  }
+
+  public async createTungstenFabricManagementNetwork(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createTungstenFabricManagementNetwork', params);
+  }
+
+  public async createTungstenFabricNetwork(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createTungstenFabricNetwork', params);
+  }
+
+  public async createTungstenFabricPolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createTungstenFabricPolicy', params);
+  }
+
+  public async createTungstenFabricPublicNetwork(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createTungstenFabricPublicNetwork', params);
+  }
+
+  public async createTungstenFabricServiceGroup(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createTungstenFabricServiceGroup', params);
+  }
+
+  public async createTungstenFabricTag(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createTungstenFabricTag', params);
+  }
+
+  public async createTungstenFabricTagType(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createTungstenFabricTagType', params);
+  }
+
+  public async deleteTungstenFabricAddressGroup(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteTungstenFabricAddressGroup', params);
+  }
+
+  public async deleteTungstenFabricApplicationPolicySet(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteTungstenFabricApplicationPolicySet', params);
+  }
+
+  public async deleteTungstenFabricFirewallPolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteTungstenFabricFirewallPolicy', params);
+  }
+
+  public async deleteTungstenFabricFirewallRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteTungstenFabricFirewallRule', params);
+  }
+
+  public async deleteTungstenFabricLogicalRouter(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteTungstenFabricLogicalRouter', params);
+  }
+
+  public async deleteTungstenFabricManagementNetwork(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteTungstenFabricManagementNetwork', params);
+  }
+
+  public async deleteTungstenFabricNetwork(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteTungstenFabricNetwork', params);
+  }
+
+  public async deleteTungstenFabricPolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteTungstenFabricPolicy', params);
+  }
+
+  public async deleteTungstenFabricServiceGroup(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteTungstenFabricServiceGroup', params);
+  }
+
+  public async deleteTungstenFabricTag(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteTungstenFabricTag', params);
+  }
+
+  public async deleteTungstenFabricTagType(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteTungstenFabricTagType', params);
+  }
+
+  public async listTungstenFabricAddressGroup(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listTungstenFabricAddressGroup', params);
+  }
+
+  public async listTungstenFabricApplicationPolicySet(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listTungstenFabricApplicationPolicySet', params);
+  }
+
+  public async listTungstenFabricFirewallPolicy(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listTungstenFabricFirewallPolicy', params);
+  }
+
+  public async listTungstenFabricFirewallRule(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listTungstenFabricFirewallRule', params);
+  }
+
+  public async listTungstenFabricLogicalRouter(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listTungstenFabricLogicalRouter', params);
+  }
+
+  public async listTungstenFabricNetwork(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listTungstenFabricNetwork', params);
+  }
+
+  public async listTungstenFabricPolicy(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listTungstenFabricPolicy', params);
+  }
+
+  public async listTungstenFabricPolicyRule(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listTungstenFabricPolicyRule', params);
+  }
+
+  public async listTungstenFabricProviders(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listTungstenFabricProviders', params);
+  }
+
+  public async listTungstenFabricServiceGroup(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listTungstenFabricServiceGroup', params);
+  }
+
+  public async listTungstenFabricTag(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listTungstenFabricTag', params);
+  }
+
+  public async listTungstenFabricTagType(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listTungstenFabricTagType', params);
+  }
+
+  public async removeTungstenFabricNetworkGatewayFromLogicalRouter(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('removeTungstenFabricNetworkGatewayFromLogicalRouter', params);
+  }
+
+  public async removeTungstenFabricNetworkSubnetCommand(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('removeTungstenFabricNetworkSubnetCommand', params);
+  }
+
+  public async removeTungstenFabricPolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('removeTungstenFabricPolicy', params);
+  }
+
+  public async removeTungstenFabricPolicyRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('removeTungstenFabricPolicyRule', params);
+  }
+
+  public async removeTungstenFabricTag(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('removeTungstenFabricTag', params);
+  }
+
+  public async updateTungstenFabricLogicalRouter(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateTungstenFabricLogicalRouter', params);
+  }
+
+  public async updateTungstenFabricPolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateTungstenFabricPolicy', params);
+  }
+
+  // Hardware Integration APIs
+  // NetScaler APIs
+  public async addNetscalerLoadBalancer(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addNetscalerLoadBalancer', params);
+  }
+
+  public async configureNetscalerLoadBalancer(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('configureNetscalerLoadBalancer', params);
+  }
+
+  public async deleteNetscalerLoadBalancer(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteNetscalerLoadBalancer', params);
+  }
+
+  public async listNetscalerLoadBalancers(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listNetscalerLoadBalancers', params);
+  }
+
+  public async listNetscalerLoadBalancerNetworks(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listNetscalerLoadBalancerNetworks', params);
+  }
+
+  // UCS APIs
+  public async addUcsManager(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addUcsManager', params);
+  }
+
+  public async listUcsManagers(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listUcsManagers', params);
+  }
+
+  public async deleteUcsManager(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteUcsManager', params);
+  }
+
+  public async associateUcsProfileToBlade(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('associateUcsProfileToBlade', params);
+  }
+
+  // Out-of-band Management APIs
+  public async configureOutOfBandManagement(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('configureOutOfBandManagement', params);
+  }
+
+  public async enableOutOfBandManagementForHost(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('enableOutOfBandManagementForHost', params);
+  }
+
+  public async disableOutOfBandManagementForHost(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('disableOutOfBandManagementForHost', params);
+  }
+
+  public async issueOutOfBandManagementPowerAction(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('issueOutOfBandManagementPowerAction', params);
+  }
+
+  // Baremetal Management APIs
+  public async addBaremetalHost(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addBaremetalHost', params);
+  }
+
+  public async deleteBaremetalHost(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteBaremetalHost', params);
+  }
+
+  public async listBaremetalHosts(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listBaremetalHosts', params);
+  }
+
+  public async prepareBaremetalHost(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('prepareBaremetalHost', params);
+  }
+
+  public async destroyBaremetalHost(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('destroyBaremetalHost', params);
+  }
+
+  public async startBaremetalHost(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('startBaremetalHost', params);
+  }
+
+  public async stopBaremetalHost(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('stopBaremetalHost', params);
+  }
+
+  public async rebootBaremetalHost(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('rebootBaremetalHost', params);
   }
 
 }
