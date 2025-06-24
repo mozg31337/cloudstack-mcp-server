@@ -5,6 +5,50 @@ All notable changes to the CloudStack MCP Server project will be documented in t
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2025-06-23
+
+### Added
+- **Complete System VM Management (9 tools)**: Achieved 100% CloudStack System VM API coverage
+- **System VM Lifecycle Operations (5 tools)**: Start, stop, reboot, destroy, and scale system VMs with comprehensive control
+- **System VM Advanced Operations (4 tools)**: Migration, patching, service offering changes, and usage history tracking
+- **Complete Zone Management (18 tools)**: Achieved 100% CloudStack Zone API coverage  
+- **Zone Infrastructure Management (4 tools)**: Create, delete, update, and configure zones with full datacenter lifecycle
+- **Zone High Availability (2 tools)**: Enable and disable HA for zones with comprehensive availability management
+- **IPv4 Subnet Management (4 tools)**: Create, delete, update, and list IPv4 subnets for zone networking
+- **Zone Dedication Management (3 tools)**: Dedicate, list, and release zone dedications for multi-tenancy
+- **VMware Integration (5 tools)**: Complete VMware datacenter management including add, remove, update, list DCs and VMs
+- **Complete Host Management (19 tools)**: Achieved 100% CloudStack Host API coverage
+- **Host Lifecycle Management (4 tools)**: Add, delete, update, and configure hypervisor hosts
+- **Host Maintenance Operations (2 tools)**: Prepare for maintenance and cancel maintenance with proper VM migration
+- **Host High Availability (5 tools)**: Configure, enable, disable HA and manage HA providers and resources
+- **Host Monitoring & Metrics (3 tools)**: List host metrics, reconnect hosts, and find migration targets
+- **Host Degradation Management (2 tools)**: Declare and cancel host degraded status for maintenance workflows
+- **Host Management Operations (3 tools)**: Manage host tags, reservations, and password updates
+- **46 New MCP Tools**: Expanded from 333 to 379 total tools for complete enterprise infrastructure management
+- **46 New API Methods**: Extended CloudStack client with 410+ total API method implementations
+- **100% Infrastructure Coverage**: Achieved complete CloudStack System VM, Zone, and Host API surface coverage
+
+### Changed
+- **Major Infrastructure Milestone**: Complete System VM, Zone, and Host Management with 100% API coverage
+- **System VM Enhancement**: From 10% to 100% coverage with full lifecycle, migration, patching, and monitoring capabilities
+- **Zone Management Transformation**: From 5% to 100% coverage with complete datacenter operations, HA, networking, and VMware integration
+- **Host Management Evolution**: From 5% to 100% coverage with comprehensive lifecycle, maintenance, HA, monitoring, and degradation management
+- **Tool Count Growth**: 13.8% increase in available tools (333 → 379)
+- **API Method Expansion**: 12.6% increase in API methods (364+ → 410+)
+- **Infrastructure Completeness**: 100% coverage of all core CloudStack infrastructure management operations
+
+### Technical
+- **Comprehensive Infrastructure Implementation**: Added 46 new infrastructure management client methods including system VM lifecycle, zone operations, and host management
+- **Enhanced Error Handling**: Complete validation for all new infrastructure management tools with comprehensive async job support
+- **Response Formatting**: Added 8 new response formatting methods for user-friendly infrastructure operation output
+- **Performance Optimization**: Streamlined infrastructure operation handling with proper async job management and status tracking
+- **Code Quality**: Resolved duplicate function implementations and ensured clean TypeScript compilation
+
+### Documentation
+- **Updated Comprehensive Capabilities Matrix**: Complete analysis reflecting 100% System VM, Zone, and Host API coverage achievement
+- **Enhanced Coverage Metrics**: Detailed breakdown of 379 tools with complete infrastructure management capabilities
+- **Complete Implementation Documentation**: Full documentation of infrastructure management features and enterprise readiness
+
 ## [1.5.0] - 2025-06-23
 
 ### Added

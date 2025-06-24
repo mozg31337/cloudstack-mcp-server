@@ -1795,4 +1795,171 @@ export class CloudStackClient {
     return this.makeRequest('upgradeKubernetesCluster', params);
   }
 
+  // System VM Management
+  public async changeServiceForSystemVm(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('changeServiceForSystemVm', params);
+  }
+
+  public async listSystemVmsUsageHistory(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listSystemVmsUsageHistory', params);
+  }
+
+  public async patchSystemVm(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('patchSystemVm', params);
+  }
+
+  public async scaleSystemVm(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('scaleSystemVm', params);
+  }
+
+  // Zone Management
+  public async createZone(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createZone', params);
+  }
+
+  public async deleteZone(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteZone', params);
+  }
+
+  public async updateZone(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateZone', params);
+  }
+
+  public async enableHAForZone(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('enableHAForZone', params);
+  }
+
+  public async disableHAForZone(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('disableHAForZone', params);
+  }
+
+  public async createIpv4SubnetForZone(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createIpv4SubnetForZone', params);
+  }
+
+  public async deleteIpv4SubnetForZone(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteIpv4SubnetForZone', params);
+  }
+
+  public async updateIpv4SubnetForZone(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateIpv4SubnetForZone', params);
+  }
+
+  public async listIpv4SubnetsForZone(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listIpv4SubnetsForZone', params);
+  }
+
+  public async dedicateZone(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('dedicateZone', params);
+  }
+
+  public async listDedicatedZones(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listDedicatedZones', params);
+  }
+
+  public async releaseDedicatedZone(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('releaseDedicatedZone', params);
+  }
+
+  public async addVmwareDc(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addVmwareDc', params);
+  }
+
+  public async removeVmwareDc(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('removeVmwareDc', params);
+  }
+
+  public async updateVmwareDc(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateVmwareDc', params);
+  }
+
+  public async listVmwareDcs(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listVmwareDcs', params);
+  }
+
+  public async listVmwareDcVms(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listVmwareDcVms', params);
+  }
+
+  // Host Management
+  public async addHost(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addHost', params);
+  }
+
+  public async deleteHost(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteHost', params);
+  }
+
+  public async updateHost(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateHost', params);
+  }
+
+  public async prepareHostForMaintenance(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('prepareHostForMaintenance', params);
+  }
+
+  public async cancelHostMaintenance(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('cancelHostMaintenance', params);
+  }
+
+  public async configureHAForHost(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('configureHAForHost', params);
+  }
+
+  public async enableHAForHost(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('enableHAForHost', params);
+  }
+
+  public async disableHAForHost(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('disableHAForHost', params);
+  }
+
+  public async listHostHAProviders(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listHostHAProviders', params);
+  }
+
+  public async listHostHAResources(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listHostHAResources', params);
+  }
+
+  public async listHostsMetrics(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listHostsMetrics', params);
+  }
+
+  public async reconnectHost(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('reconnectHost', params);
+  }
+
+  public async declareHostAsDegraded(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('declareHostAsDegraded', params);
+  }
+
+  public async cancelHostAsDegraded(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('cancelHostAsDegraded', params);
+  }
+
+  public async listHostTags(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listHostTags', params);
+  }
+
+  public async releaseHostReservation(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('releaseHostReservation', params);
+  }
+
+  public async updateHostPassword(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateHostPassword', params);
+  }
+
+  public async listDedicatedHosts(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listDedicatedHosts', params);
+  }
+
+  public async dedicateHost(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('dedicateHost', params);
+  }
+
+  public async releaseDedicatedHost(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('releaseDedicatedHost', params);
+  }
+
 }

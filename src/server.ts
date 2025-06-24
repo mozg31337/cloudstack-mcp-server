@@ -22,7 +22,7 @@ class CloudStackMCPServer {
     this.server = new Server(
       {
         name: 'cloudstack-mcp-server',
-        version: '1.5.0',
+        version: '1.6.0',
       },
       {
         capabilities: {
@@ -6515,6 +6515,555 @@ class CloudStackMCPServer {
             },
             required: ['id', 'kubernetesversionid']
           }
+        },
+        {
+          name: 'change_service_for_system_vm',
+          description: 'Change service offering for system VM',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'System VM ID' },
+              serviceofferingid: { type: 'string', description: 'New service offering ID' }
+            },
+            required: ['id', 'serviceofferingid']
+          }
+        },
+        {
+          name: 'destroy_system_vm',
+          description: 'Destroy system virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'System VM ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_system_vms_usage_history',
+          description: 'List system VMs usage history',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'System VM ID' },
+              startdate: { type: 'string', description: 'Start date (YYYY-MM-DD)' },
+              enddate: { type: 'string', description: 'End date (YYYY-MM-DD)' }
+            }
+          }
+        },
+        {
+          name: 'migrate_system_vm',
+          description: 'Migrate system VM to another host',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: { type: 'string', description: 'System VM ID' },
+              hostid: { type: 'string', description: 'Target host ID' }
+            },
+            required: ['virtualmachineid', 'hostid']
+          }
+        },
+        {
+          name: 'patch_system_vm',
+          description: 'Patch system virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'System VM ID' },
+              forced: { type: 'boolean', description: 'Force patch installation' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'reboot_system_vm',
+          description: 'Reboot system virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'System VM ID' },
+              forced: { type: 'boolean', description: 'Force reboot' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'scale_system_vm',
+          description: 'Scale system VM resources',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'System VM ID' },
+              serviceofferingid: { type: 'string', description: 'New service offering ID' }
+            },
+            required: ['id', 'serviceofferingid']
+          }
+        },
+        {
+          name: 'start_system_vm',
+          description: 'Start system virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'System VM ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'stop_system_vm',
+          description: 'Stop system virtual machine',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'System VM ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'create_zone',
+          description: 'Create a new zone/data center',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: { type: 'string', description: 'Zone name' },
+              dns1: { type: 'string', description: 'Primary DNS server' },
+              internaldns1: { type: 'string', description: 'Internal DNS server' },
+              networktype: { type: 'string', description: 'Network type (Basic/Advanced)' },
+              domain: { type: 'string', description: 'Network domain' },
+              dns2: { type: 'string', description: 'Secondary DNS server' },
+              internaldns2: { type: 'string', description: 'Secondary internal DNS' },
+              securitygroupenabled: { type: 'boolean', description: 'Enable security groups' }
+            },
+            required: ['name', 'dns1', 'internaldns1', 'networktype']
+          }
+        },
+        {
+          name: 'delete_zone',
+          description: 'Delete a zone/data center',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Zone ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'update_zone',
+          description: 'Update zone configuration',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Zone ID' },
+              name: { type: 'string', description: 'Zone name' },
+              dns1: { type: 'string', description: 'Primary DNS server' },
+              dns2: { type: 'string', description: 'Secondary DNS server' },
+              internaldns1: { type: 'string', description: 'Internal DNS server' },
+              internaldns2: { type: 'string', description: 'Secondary internal DNS' },
+              domain: { type: 'string', description: 'Network domain' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'enable_ha_for_zone',
+          description: 'Enable high availability for zone',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              zoneid: { type: 'string', description: 'Zone ID' }
+            },
+            required: ['zoneid']
+          }
+        },
+        {
+          name: 'disable_ha_for_zone',
+          description: 'Disable high availability for zone',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              zoneid: { type: 'string', description: 'Zone ID' }
+            },
+            required: ['zoneid']
+          }
+        },
+        {
+          name: 'create_ipv4_subnet_for_zone',
+          description: 'Create IPv4 subnet for zone',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              zoneid: { type: 'string', description: 'Zone ID' },
+              subnet: { type: 'string', description: 'IPv4 subnet (CIDR)' },
+              netmask: { type: 'string', description: 'Subnet netmask' }
+            },
+            required: ['zoneid', 'subnet', 'netmask']
+          }
+        },
+        {
+          name: 'delete_ipv4_subnet_for_zone',
+          description: 'Delete IPv4 subnet for zone',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Subnet ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'update_ipv4_subnet_for_zone',
+          description: 'Update IPv4 subnet for zone',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Subnet ID' },
+              subnet: { type: 'string', description: 'IPv4 subnet (CIDR)' },
+              netmask: { type: 'string', description: 'Subnet netmask' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_ipv4_subnets_for_zone',
+          description: 'List IPv4 subnets for zone',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              zoneid: { type: 'string', description: 'Zone ID' }
+            }
+          }
+        },
+        {
+          name: 'dedicate_zone',
+          description: 'Dedicate zone to specific account',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              zoneid: { type: 'string', description: 'Zone ID' },
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' }
+            },
+            required: ['zoneid', 'account', 'domainid']
+          }
+        },
+        {
+          name: 'list_dedicated_zones',
+          description: 'List dedicated zones',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' },
+              zoneid: { type: 'string', description: 'Zone ID' }
+            }
+          }
+        },
+        {
+          name: 'release_dedicated_zone',
+          description: 'Release zone dedication',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              zoneid: { type: 'string', description: 'Zone ID' }
+            },
+            required: ['zoneid']
+          }
+        },
+        {
+          name: 'add_vmware_dc',
+          description: 'Add VMware datacenter',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: { type: 'string', description: 'VMware DC name' },
+              vcenter: { type: 'string', description: 'vCenter server' },
+              username: { type: 'string', description: 'vCenter username' },
+              password: { type: 'string', description: 'vCenter password' },
+              zoneid: { type: 'string', description: 'Zone ID' }
+            },
+            required: ['name', 'vcenter', 'username', 'password', 'zoneid']
+          }
+        },
+        {
+          name: 'remove_vmware_dc',
+          description: 'Remove VMware datacenter',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'VMware DC ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'update_vmware_dc',
+          description: 'Update VMware datacenter',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'VMware DC ID' },
+              name: { type: 'string', description: 'VMware DC name' },
+              username: { type: 'string', description: 'vCenter username' },
+              password: { type: 'string', description: 'vCenter password' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_vmware_dcs',
+          description: 'List VMware datacenters',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              zoneid: { type: 'string', description: 'Zone ID' },
+              keyword: { type: 'string', description: 'Search keyword' }
+            }
+          }
+        },
+        {
+          name: 'list_vmware_dc_vms',
+          description: 'List VMs in VMware datacenter',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'VMware DC ID' },
+              keyword: { type: 'string', description: 'Search keyword' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'add_host',
+          description: 'Add hypervisor host to cluster',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              url: { type: 'string', description: 'Host URL (e.g., http://host:port)' },
+              username: { type: 'string', description: 'Host username' },
+              password: { type: 'string', description: 'Host password' },
+              hypervisor: { type: 'string', description: 'Hypervisor type' },
+              zoneid: { type: 'string', description: 'Zone ID' },
+              podid: { type: 'string', description: 'Pod ID' },
+              clusterid: { type: 'string', description: 'Cluster ID' },
+              clustername: { type: 'string', description: 'Cluster name' },
+              hosttags: { type: 'string', description: 'Host tags (comma-separated)' }
+            },
+            required: ['url', 'username', 'password', 'hypervisor', 'zoneid']
+          }
+        },
+        {
+          name: 'delete_host',
+          description: 'Delete hypervisor host',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Host ID' },
+              forced: { type: 'boolean', description: 'Force deletion' },
+              forcedestroylocalstorage: { type: 'boolean', description: 'Force destroy local storage' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'update_host',
+          description: 'Update host configuration',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Host ID' },
+              url: { type: 'string', description: 'Host URL' },
+              osenabled: { type: 'boolean', description: 'Enable over-subscription' },
+              allocationstate: { type: 'string', description: 'Allocation state' },
+              hosttags: { type: 'string', description: 'Host tags (comma-separated)' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'prepare_host_for_maintenance',
+          description: 'Put host in maintenance mode',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Host ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'cancel_host_maintenance',
+          description: 'Cancel host maintenance mode',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Host ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'configure_ha_for_host',
+          description: 'Configure HA for host',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              hostid: { type: 'string', description: 'Host ID' },
+              provider: { type: 'string', description: 'HA provider' }
+            },
+            required: ['hostid', 'provider']
+          }
+        },
+        {
+          name: 'enable_ha_for_host',
+          description: 'Enable HA for host',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              hostid: { type: 'string', description: 'Host ID' }
+            },
+            required: ['hostid']
+          }
+        },
+        {
+          name: 'disable_ha_for_host',
+          description: 'Disable HA for host',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              hostid: { type: 'string', description: 'Host ID' }
+            },
+            required: ['hostid']
+          }
+        },
+        {
+          name: 'list_host_ha_providers',
+          description: 'List host HA providers',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              hypervisor: { type: 'string', description: 'Hypervisor type' }
+            }
+          }
+        },
+        {
+          name: 'list_host_ha_resources',
+          description: 'List host HA resources',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              hostid: { type: 'string', description: 'Host ID' }
+            }
+          }
+        },
+        {
+          name: 'list_hosts_metrics',
+          description: 'List host performance metrics',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              clusterid: { type: 'string', description: 'Cluster ID' },
+              id: { type: 'string', description: 'Host ID' },
+              name: { type: 'string', description: 'Host name' },
+              podid: { type: 'string', description: 'Pod ID' },
+              state: { type: 'string', description: 'Host state' },
+              type: { type: 'string', description: 'Host type' },
+              zoneid: { type: 'string', description: 'Zone ID' }
+            }
+          }
+        },
+        {
+          name: 'reconnect_host',
+          description: 'Reconnect disconnected host',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Host ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'find_hosts_for_migration',
+          description: 'Find suitable hosts for VM migration',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              virtualmachineid: { type: 'string', description: 'VM ID to migrate' },
+              keyword: { type: 'string', description: 'Search keyword' }
+            },
+            required: ['virtualmachineid']
+          }
+        },
+        {
+          name: 'declare_host_as_degraded',
+          description: 'Declare host as degraded',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Host ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'cancel_host_as_degraded',
+          description: 'Cancel host degraded status',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Host ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_host_tags',
+          description: 'List host tags',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              keyword: { type: 'string', description: 'Search keyword' }
+            }
+          }
+        },
+        {
+          name: 'release_host_reservation',
+          description: 'Release host reservation',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Host ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'update_host_password',
+          description: 'Update host password',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              hostid: { type: 'string', description: 'Host ID' },
+              username: { type: 'string', description: 'Username' },
+              password: { type: 'string', description: 'New password' }
+            },
+            required: ['hostid', 'username', 'password']
+          }
+        },
+        {
+          name: 'list_dedicated_hosts',
+          description: 'List dedicated hosts',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' },
+              hostid: { type: 'string', description: 'Host ID' }
+            }
+          }
         }
       ];
 
@@ -7342,6 +7891,150 @@ class CloudStackMCPServer {
           
           case 'upgrade_kubernetes_cluster':
             return await this.handleUpgradeKubernetesCluster(args);
+          
+          // System VM Management Handlers
+          case 'change_service_for_system_vm':
+            return await this.handleChangeServiceForSystemVm(args);
+          
+          case 'destroy_system_vm':
+            return await this.handleDestroySystemVm(args);
+          
+          case 'list_system_vms_usage_history':
+            return await this.handleListSystemVmsUsageHistory(args);
+          
+          case 'migrate_system_vm':
+            return await this.handleMigrateSystemVm(args);
+          
+          case 'patch_system_vm':
+            return await this.handlePatchSystemVm(args);
+          
+          case 'reboot_system_vm':
+            return await this.handleRebootSystemVm(args);
+          
+          case 'scale_system_vm':
+            return await this.handleScaleSystemVm(args);
+          
+          case 'start_system_vm':
+            return await this.handleStartSystemVm(args);
+          
+          case 'stop_system_vm':
+            return await this.handleStopSystemVm(args);
+          
+          // Zone Management Handlers
+          case 'create_zone':
+            return await this.handleCreateZone(args);
+          
+          case 'delete_zone':
+            return await this.handleDeleteZone(args);
+          
+          case 'update_zone':
+            return await this.handleUpdateZone(args);
+          
+          case 'enable_ha_for_zone':
+            return await this.handleEnableHAForZone(args);
+          
+          case 'disable_ha_for_zone':
+            return await this.handleDisableHAForZone(args);
+          
+          case 'create_ipv4_subnet_for_zone':
+            return await this.handleCreateIpv4SubnetForZone(args);
+          
+          case 'delete_ipv4_subnet_for_zone':
+            return await this.handleDeleteIpv4SubnetForZone(args);
+          
+          case 'update_ipv4_subnet_for_zone':
+            return await this.handleUpdateIpv4SubnetForZone(args);
+          
+          case 'list_ipv4_subnets_for_zone':
+            return await this.handleListIpv4SubnetsForZone(args);
+          
+          case 'dedicate_zone':
+            return await this.handleDedicateZone(args);
+          
+          case 'list_dedicated_zones':
+            return await this.handleListDedicatedZones(args);
+          
+          case 'release_dedicated_zone':
+            return await this.handleReleaseDedicatedZone(args);
+          
+          case 'add_vmware_dc':
+            return await this.handleAddVmwareDc(args);
+          
+          case 'remove_vmware_dc':
+            return await this.handleRemoveVmwareDc(args);
+          
+          case 'update_vmware_dc':
+            return await this.handleUpdateVmwareDc(args);
+          
+          case 'list_vmware_dcs':
+            return await this.handleListVmwareDcs(args);
+          
+          case 'list_vmware_dc_vms':
+            return await this.handleListVmwareDcVms(args);
+          
+          // Host Management Handlers
+          case 'add_host':
+            return await this.handleAddHost(args);
+          
+          case 'delete_host':
+            return await this.handleDeleteHost(args);
+          
+          case 'update_host':
+            return await this.handleUpdateHost(args);
+          
+          case 'prepare_host_for_maintenance':
+            return await this.handlePrepareHostForMaintenance(args);
+          
+          case 'cancel_host_maintenance':
+            return await this.handleCancelHostMaintenance(args);
+          
+          case 'configure_ha_for_host':
+            return await this.handleConfigureHaForHost(args);
+          
+          case 'enable_ha_for_host':
+            return await this.handleEnableHaForHost(args);
+          
+          case 'disable_ha_for_host':
+            return await this.handleDisableHaForHost(args);
+          
+          case 'list_host_ha_providers':
+            return await this.handleListHostHaProviders(args);
+          
+          case 'list_host_ha_resources':
+            return await this.handleListHostHaResources(args);
+          
+          case 'list_hosts_metrics':
+            return await this.handleListHostsMetrics(args);
+          
+          case 'reconnect_host':
+            return await this.handleReconnectHost(args);
+          
+          case 'find_hosts_for_migration':
+            return await this.handleFindHostsForMigration(args);
+          
+          case 'declare_host_as_degraded':
+            return await this.handleDeclareHostAsDegraded(args);
+          
+          case 'cancel_host_as_degraded':
+            return await this.handleCancelHostAsDegraded(args);
+          
+          case 'list_host_tags':
+            return await this.handleListHostTags(args);
+          
+          case 'release_host_reservation':
+            return await this.handleReleaseHostReservation(args);
+          
+          case 'update_host_password':
+            return await this.handleUpdateHostPassword(args);
+          
+          case 'list_dedicated_hosts':
+            return await this.handleListDedicatedHosts(args);
+          
+          case 'dedicate_host':
+            return await this.handleDedicateHost(args);
+          
+          case 'release_dedicated_host':
+            return await this.handleReleaseDedicatedHost(args);
           
           default:
             throw new Error(`Unknown tool: ${name}`);
@@ -13345,6 +14038,195 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     return 'No site-to-site VPN connections found.';
   }
 
+  // System VM Management Handlers
+  private async handleChangeServiceForSystemVm(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'serviceofferingid']);
+    const response = await this.client.changeServiceForSystemVm(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('System VM service offering change', response)
+      }]
+    };
+  }
+
+  private async handleDestroySystemVm(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.destroySystemVm(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('System VM destruction', response)
+      }]
+    };
+  }
+
+  private async handleListSystemVmsUsageHistory(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'startdate', 'enddate']);
+    const response = await this.client.listSystemVmsUsageHistory(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatSystemVmUsageHistoryResponse(response)
+      }]
+    };
+  }
+
+  private async handleMigrateSystemVm(args: any): Promise<any> {
+    const params = this.buildParams(args, ['virtualmachineid', 'hostid']);
+    const response = await this.client.migrateSystemVm(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('System VM migration', response)
+      }]
+    };
+  }
+
+  private async handlePatchSystemVm(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'forced']);
+    const response = await this.client.patchSystemVm(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('System VM patching', response)
+      }]
+    };
+  }
+
+  private async handleScaleSystemVm(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'serviceofferingid']);
+    const response = await this.client.scaleSystemVm(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('System VM scaling', response)
+      }]
+    };
+  }
+
+  // Zone Management Response Formatting Methods
+  private formatZoneResponse(operation: string, response: any): string {
+    if (response.zone) {
+      const zone = response.zone;
+      return `${operation} completed successfully.\nZone: ${zone.name || 'N/A'} (${zone.id})\nNetworktype: ${zone.networktype || 'N/A'}\nAllocation State: ${zone.allocationstate || 'N/A'}\nStatus: ${zone.status || 'N/A'}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatSubnetResponse(operation: string, response: any): string {
+    if (response.ipv4subnet) {
+      const subnet = response.ipv4subnet;
+      return `${operation} completed successfully.\nSubnet: ${subnet.subnet || 'N/A'} (${subnet.id})\nGateway: ${subnet.gateway || 'N/A'}\nNetmask: ${subnet.netmask || 'N/A'}\nVLAN: ${subnet.vlan || 'N/A'}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatSubnetListResponse(response: any): string {
+    const subnets = response.ipv4subnet || [];
+    
+    if (subnets.length === 0) {
+      return 'No IPv4 subnets found.';
+    }
+
+    let result = `Found ${subnets.length} IPv4 subnet(s):\n\n`;
+    
+    for (const subnet of subnets) {
+      result += `Subnet: ${subnet.subnet}\n`;
+      result += `  ID: ${subnet.id}\n`;
+      result += `  Gateway: ${subnet.gateway || 'N/A'}\n`;
+      result += `  Netmask: ${subnet.netmask || 'N/A'}\n`;
+      result += `  VLAN: ${subnet.vlan || 'N/A'}\n`;
+      result += `  Zone: ${subnet.zoneid || 'N/A'}\n\n`;
+    }
+    
+    return result.trim();
+  }
+
+  private formatDedicatedZoneResponse(operation: string, response: any): string {
+    if (response.dedicatedzone) {
+      const dedicatedzone = response.dedicatedzone;
+      return `${operation} completed successfully.\nZone: ${dedicatedzone.zonename || 'N/A'} (${dedicatedzone.zoneid})\nAccount: ${dedicatedzone.account || 'N/A'}\nDomain: ${dedicatedzone.domainid || 'N/A'}\nAffinity Group: ${dedicatedzone.affinitygroup || 'N/A'}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatDedicatedZoneListResponse(response: any): string {
+    const dedicatedzones = response.dedicatedzone || [];
+    
+    if (dedicatedzones.length === 0) {
+      return 'No dedicated zones found.';
+    }
+
+    let result = `Found ${dedicatedzones.length} dedicated zone(s):\n\n`;
+    
+    for (const zone of dedicatedzones) {
+      result += `Zone: ${zone.zonename}\n`;
+      result += `  ID: ${zone.zoneid}\n`;
+      result += `  Account: ${zone.account || 'N/A'}\n`;
+      result += `  Domain: ${zone.domainid || 'N/A'}\n`;
+      result += `  Affinity Group: ${zone.affinitygroup || 'N/A'}\n\n`;
+    }
+    
+    return result.trim();
+  }
+
+  private formatVmwareDcResponse(operation: string, response: any): string {
+    if (response.vmwaredc) {
+      const vmwaredc = response.vmwaredc;
+      return `${operation} completed successfully.\nVMware DC: ${vmwaredc.name || 'N/A'} (${vmwaredc.id})\nVcenter: ${vmwaredc.vcenter || 'N/A'}\nZone: ${vmwaredc.zoneid || 'N/A'}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatVmwareDcListResponse(response: any): string {
+    const vmwaredcs = response.vmwaredc || [];
+    
+    if (vmwaredcs.length === 0) {
+      return 'No VMware datacenters found.';
+    }
+
+    let result = `Found ${vmwaredcs.length} VMware datacenter(s):\n\n`;
+    
+    for (const dc of vmwaredcs) {
+      result += `VMware DC: ${dc.name}\n`;
+      result += `  ID: ${dc.id}\n`;
+      result += `  vCenter: ${dc.vcenter || 'N/A'}\n`;
+      result += `  Zone: ${dc.zoneid || 'N/A'}\n\n`;
+    }
+    
+    return result.trim();
+  }
+
+  private formatVmwareDcVmsResponse(response: any): string {
+    const vms = response.vmwaredc || [];
+    
+    if (vms.length === 0) {
+      return 'No VMware datacenter VMs found.';
+    }
+
+    let result = `Found ${vms.length} VMware datacenter VM(s):\n\n`;
+    
+    for (const vm of vms) {
+      result += `VM: ${vm.name}\n`;
+      result += `  ID: ${vm.id}\n`;
+      result += `  State: ${vm.state || 'N/A'}\n`;
+      result += `  VMware DC: ${vm.vmwaredc || 'N/A'}\n\n`;
+    }
+    
+    return result.trim();
+  }
+
   // Kubernetes Service Response Formatting Methods
   private formatKubernetesVersionResponse(operation: string, response: any): string {
     if (response.kubernetessupportedversion) {
@@ -13413,6 +14295,666 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
       result += `  Checksum: ${version.checksum || 'N/A'}\n`;
       result += `  Zone: ${version.zonename || 'N/A'}\n`;
       result += `  Created: ${version.created || 'N/A'}\n\n`;
+    }
+
+    return result;
+  }
+
+  // Zone Management Handlers
+  private async handleCreateZone(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'name', 'dns1', 'internaldns1', 'networktype', 'domain', 
+      'dns2', 'internaldns2', 'securitygroupenabled'
+    ]);
+    const response = await this.client.createZone(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatZoneResponse('Zone creation', response)
+      }]
+    };
+  }
+
+  private async handleDeleteZone(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteZone(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatZoneResponse('Zone deletion', response)
+      }]
+    };
+  }
+
+  private async handleUpdateZone(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'id', 'name', 'dns1', 'dns2', 'internaldns1', 'internaldns2', 'domain'
+    ]);
+    const response = await this.client.updateZone(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatZoneResponse('Zone update', response)
+      }]
+    };
+  }
+
+  private async handleEnableHAForZone(args: any): Promise<any> {
+    const params = this.buildParams(args, ['zoneid']);
+    const response = await this.client.enableHAForZone(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Zone HA enablement', response)
+      }]
+    };
+  }
+
+  private async handleDisableHAForZone(args: any): Promise<any> {
+    const params = this.buildParams(args, ['zoneid']);
+    const response = await this.client.disableHAForZone(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Zone HA disablement', response)
+      }]
+    };
+  }
+
+  private async handleCreateIpv4SubnetForZone(args: any): Promise<any> {
+    const params = this.buildParams(args, ['zoneid', 'subnet', 'netmask']);
+    const response = await this.client.createIpv4SubnetForZone(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatSubnetResponse('IPv4 subnet creation', response)
+      }]
+    };
+  }
+
+  private async handleDeleteIpv4SubnetForZone(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteIpv4SubnetForZone(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatSubnetResponse('IPv4 subnet deletion', response)
+      }]
+    };
+  }
+
+  private async handleUpdateIpv4SubnetForZone(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'subnet', 'netmask']);
+    const response = await this.client.updateIpv4SubnetForZone(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatSubnetResponse('IPv4 subnet update', response)
+      }]
+    };
+  }
+
+  private async handleListIpv4SubnetsForZone(args: any): Promise<any> {
+    const params = this.buildParams(args, ['zoneid']);
+    const response = await this.client.listIpv4SubnetsForZone(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatSubnetListResponse(response)
+      }]
+    };
+  }
+
+  private async handleDedicateZone(args: any): Promise<any> {
+    const params = this.buildParams(args, ['zoneid', 'account', 'domainid']);
+    const response = await this.client.dedicateZone(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatDedicatedZoneResponse('Zone dedication', response)
+      }]
+    };
+  }
+
+  private async handleListDedicatedZones(args: any): Promise<any> {
+    const params = this.buildParams(args, ['account', 'domainid', 'zoneid']);
+    const response = await this.client.listDedicatedZones(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatDedicatedZoneListResponse(response)
+      }]
+    };
+  }
+
+  private async handleReleaseDedicatedZone(args: any): Promise<any> {
+    const params = this.buildParams(args, ['zoneid']);
+    const response = await this.client.releaseDedicatedZone(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Zone dedication release', response)
+      }]
+    };
+  }
+
+  private async handleAddVmwareDc(args: any): Promise<any> {
+    const params = this.buildParams(args, ['name', 'vcenter', 'username', 'password', 'zoneid']);
+    const response = await this.client.addVmwareDc(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatVmwareDcResponse('VMware datacenter addition', response)
+      }]
+    };
+  }
+
+  private async handleRemoveVmwareDc(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.removeVmwareDc(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatVmwareDcResponse('VMware datacenter removal', response)
+      }]
+    };
+  }
+
+  private async handleUpdateVmwareDc(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'name', 'username', 'password']);
+    const response = await this.client.updateVmwareDc(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatVmwareDcResponse('VMware datacenter update', response)
+      }]
+    };
+  }
+
+  private async handleListVmwareDcs(args: any): Promise<any> {
+    const params = this.buildParams(args, ['zoneid', 'keyword']);
+    const response = await this.client.listVmwareDcs(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatVmwareDcListResponse(response)
+      }]
+    };
+  }
+
+  private async handleListVmwareDcVms(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'keyword']);
+    const response = await this.client.listVmwareDcVms(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatVmwareDcVmsResponse(response)
+      }]
+    };
+  }
+
+  // Host Management Handler Methods
+  private async handleAddHost(args: any): Promise<any> {
+    if (!args.url || !args.username || !args.password || !args.hypervisor || !args.zoneid) {
+      throw new Error('URL, username, password, hypervisor, and zone ID are required');
+    }
+    
+    const params = this.buildParams(args, ['url', 'username', 'password', 'hypervisor', 'zoneid', 'podid', 'clusterid', 'clustername', 'hosttags']);
+    const response = await this.client.addHost(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Host addition', response)
+      }]
+    };
+  }
+
+  private async handleDeleteHost(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Host ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id', 'forced', 'forcedestroylocalstorage']);
+    const response = await this.client.deleteHost(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Host deletion', response)
+      }]
+    };
+  }
+
+  private async handleUpdateHost(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Host ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id', 'url', 'osenabled', 'allocationstate', 'hosttags']);
+    const response = await this.client.updateHost(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatHostResponse('Host update', response)
+      }]
+    };
+  }
+
+  private async handlePrepareHostForMaintenance(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Host ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.prepareHostForMaintenance(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Host maintenance preparation', response)
+      }]
+    };
+  }
+
+  private async handleCancelHostMaintenance(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Host ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.cancelHostMaintenance(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Host maintenance cancellation', response)
+      }]
+    };
+  }
+
+  private async handleConfigureHaForHost(args: any): Promise<any> {
+    if (!args.hostid || !args.provider) {
+      throw new Error('Host ID and provider are required');
+    }
+    
+    const params = this.buildParams(args, ['hostid', 'provider']);
+    const response = await this.client.configureHAForHost(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Host HA configuration', response)
+      }]
+    };
+  }
+
+  private async handleEnableHaForHost(args: any): Promise<any> {
+    if (!args.hostid) {
+      throw new Error('Host ID is required');
+    }
+    
+    const params = this.buildParams(args, ['hostid']);
+    const response = await this.client.enableHAForHost(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Host HA enablement', response)
+      }]
+    };
+  }
+
+  private async handleDisableHaForHost(args: any): Promise<any> {
+    if (!args.hostid) {
+      throw new Error('Host ID is required');
+    }
+    
+    const params = this.buildParams(args, ['hostid']);
+    const response = await this.client.disableHAForHost(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Host HA disablement', response)
+      }]
+    };
+  }
+
+  private async handleListHostHaProviders(args: any): Promise<any> {
+    const params = this.buildParams(args, ['hypervisor']);
+    const response = await this.client.listHostHAProviders(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatHostHaProvidersResponse(response)
+      }]
+    };
+  }
+
+  private async handleListHostHaResources(args: any): Promise<any> {
+    const params = this.buildParams(args, ['hostid']);
+    const response = await this.client.listHostHAResources(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatHostHaResourcesResponse(response)
+      }]
+    };
+  }
+
+  private async handleListHostsMetrics(args: any): Promise<any> {
+    const params = this.buildParams(args, ['clusterid', 'id', 'name', 'podid', 'state', 'type', 'zoneid']);
+    const response = await this.client.listHostsMetrics(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatHostsMetricsResponse(response)
+      }]
+    };
+  }
+
+  private async handleReconnectHost(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Host ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.reconnectHost(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Host reconnection', response)
+      }]
+    };
+  }
+
+  private async handleFindHostsForMigration(args: any): Promise<any> {
+    if (!args.virtualmachineid) {
+      throw new Error('Virtual machine ID is required');
+    }
+    
+    const params = this.buildParams(args, ['virtualmachineid', 'keyword']);
+    const response = await this.client.findHostsForMigration(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatHostsResponse(response)
+      }]
+    };
+  }
+
+  private async handleDeclareHostAsDegraded(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Host ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.declareHostAsDegraded(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Host degraded declaration', response)
+      }]
+    };
+  }
+
+  private async handleCancelHostAsDegraded(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Host ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.cancelHostAsDegraded(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Host degraded status cancellation', response)
+      }]
+    };
+  }
+
+  private async handleListHostTags(args: any): Promise<any> {
+    const params = this.buildParams(args, ['keyword']);
+    const response = await this.client.listHostTags(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatHostTagsResponse(response)
+      }]
+    };
+  }
+
+  private async handleReleaseHostReservation(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Host ID is required');
+    }
+    
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.releaseHostReservation(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Host reservation release', response)
+      }]
+    };
+  }
+
+  private async handleUpdateHostPassword(args: any): Promise<any> {
+    if (!args.hostid || !args.username || !args.password) {
+      throw new Error('Host ID, username, and password are required');
+    }
+    
+    const params = this.buildParams(args, ['hostid', 'username', 'password']);
+    const response = await this.client.updateHostPassword(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Host password update', response)
+      }]
+    };
+  }
+
+  private async handleListDedicatedHosts(args: any): Promise<any> {
+    const params = this.buildParams(args, ['account', 'affinitygroup', 'domainid', 'hostid', 'keyword']);
+    const response = await this.client.listDedicatedHosts(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatDedicatedHostsResponse(response)
+      }]
+    };
+  }
+
+  private async handleDedicateHost(args: any): Promise<any> {
+    if (!args.hostid) {
+      throw new Error('Host ID is required');
+    }
+    
+    const params = this.buildParams(args, ['hostid', 'account', 'domainid']);
+    const response = await this.client.dedicateHost(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Host dedication', response)
+      }]
+    };
+  }
+
+  private async handleReleaseDedicatedHost(args: any): Promise<any> {
+    if (!args.hostid) {
+      throw new Error('Host ID is required');
+    }
+    
+    const params = this.buildParams(args, ['hostid']);
+    const response = await this.client.releaseDedicatedHost(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Dedicated host release', response)
+      }]
+    };
+  }
+
+  // Host Management Response Formatting Methods
+  private formatHostResponse(operation: string, response: any): string {
+    if (response.host) {
+      const host = response.host;
+      return `${operation} completed successfully.\nHost: ${host.name || 'N/A'} (${host.id})\nType: ${host.type || 'N/A'}\nState: ${host.state || 'N/A'}\nCluster: ${host.clustername || 'N/A'}\nZone: ${host.zonename || 'N/A'}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatHostHaProvidersResponse(response: any): string {
+    const providers = response.hosthaprovidersresponse || [];
+    
+    if (providers.length === 0) {
+      return 'No host HA providers found.';
+    }
+
+    let result = `Found ${providers.length} host HA provider(s):\n\n`;
+    
+    for (const provider of providers) {
+      result += `Provider: ${provider.name}\n`;
+      result += `  Type: ${provider.type || 'N/A'}\n`;
+      result += `  Hypervisor: ${provider.hypervisor || 'N/A'}\n\n`;
+    }
+    
+    return result.trim();
+  }
+
+  private formatHostHaResourcesResponse(response: any): string {
+    const resources = response.hostharesourcesresponse || [];
+    
+    if (resources.length === 0) {
+      return 'No host HA resources found.';
+    }
+
+    let result = `Found ${resources.length} host HA resource(s):\n\n`;
+    
+    for (const resource of resources) {
+      result += `Resource: ${resource.name}\n`;
+      result += `  ID: ${resource.id}\n`;
+      result += `  Host: ${resource.hostid || 'N/A'}\n`;
+      result += `  Provider: ${resource.provider || 'N/A'}\n\n`;
+    }
+    
+    return result.trim();
+  }
+
+  private formatHostsMetricsResponse(response: any): string {
+    const hosts = response.host || [];
+    
+    if (hosts.length === 0) {
+      return 'No host metrics found.';
+    }
+
+    let result = `Found ${hosts.length} host(s) with metrics:\n\n`;
+    
+    for (const host of hosts) {
+      result += `Host: ${host.name}\n`;
+      result += `  ID: ${host.id}\n`;
+      result += `  State: ${host.state || 'N/A'}\n`;
+      result += `  CPU Used: ${host.cpuused || 'N/A'}%\n`;
+      result += `  Memory Used: ${host.memoryused || 'N/A'}MB\n`;
+      result += `  Network KB/s Read: ${host.networkkbsread || 'N/A'}\n`;
+      result += `  Network KB/s Write: ${host.networkkbswrite || 'N/A'}\n\n`;
+    }
+    
+    return result.trim();
+  }
+
+  private formatHostTagsResponse(response: any): string {
+    const tags = response.hosttag || [];
+    
+    if (tags.length === 0) {
+      return 'No host tags found.';
+    }
+
+    let result = `Found ${tags.length} host tag(s):\n\n`;
+    
+    for (const tag of tags) {
+      result += `Tag: ${tag.name}\n`;
+      result += `  ID: ${tag.id}\n`;
+      result += `  Hosts Count: ${tag.hostcount || 'N/A'}\n\n`;
+    }
+    
+    return result.trim();
+  }
+
+  private formatDedicatedHostsResponse(response: any): string {
+    const hosts = response.dedicatedhost || [];
+    
+    if (hosts.length === 0) {
+      return 'No dedicated hosts found.';
+    }
+
+    let result = `Found ${hosts.length} dedicated host(s):\n\n`;
+    
+    for (const host of hosts) {
+      result += `Host: ${host.hostname}\n`;
+      result += `  ID: ${host.hostid}\n`;
+      result += `  Account: ${host.account || 'N/A'}\n`;
+      result += `  Domain: ${host.domainid || 'N/A'}\n`;
+      result += `  Affinity Group: ${host.affinitygroup || 'N/A'}\n\n`;
+    }
+    
+    return result.trim();
+  }
+
+  // System VM Response Formatting Methods
+  private formatSystemVmUsageHistoryResponse(response: any): string {
+    const usage = response.systemvmusage || [];
+    
+    if (usage.length === 0) {
+      return 'No system VM usage history found.';
+    }
+
+    let result = `Found ${usage.length} system VM usage record(s):\n\n`;
+    
+    for (const record of usage) {
+      result += `System VM: ${record.name || 'N/A'}\n`;
+      result += `  ID: ${record.id || 'N/A'}\n`;
+      result += `  Type: ${record.systemvmtype || 'N/A'}\n`;
+      result += `  State: ${record.state || 'N/A'}\n`;
+      result += `  Usage Start: ${record.startdate || 'N/A'}\n`;
+      result += `  Usage End: ${record.enddate || 'N/A'}\n`;
+      result += `  Running Hours: ${record.runninghours || 'N/A'}\n`;
+      result += `  Allocated Hours: ${record.allocatedhours || 'N/A'}\n`;
+      result += `  Zone: ${record.zonename || 'N/A'}\n`;
+      result += `  Account: ${record.account || 'N/A'}\n\n`;
     }
 
     return result;
