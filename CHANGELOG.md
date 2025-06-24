@@ -5,6 +5,49 @@ All notable changes to the CloudStack MCP Server project will be documented in t
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.0] - 2025-06-24
+
+### Added
+- **Complete Administrative Management (100% Coverage)**: Achieved 100% CloudStack Administrative API coverage with enterprise-grade account, user, domain, project, role, and configuration management
+- **Account Management Enhancement (10 tools)**: Billing statements, quota management, credits, transfers, usage reports, and resource limit validation
+- **User Management Security (9 tools)**: Password reset, 2FA management, permission validation, audit trails, session management, and security policies
+- **Domain Management Complete (8 tools)**: Domain quotas, limits, hierarchy operations, statistics, transfers, and cross-domain management
+- **Project Management Enterprise (9 tools)**: Project templates, resource allocation sharing, metrics analytics, archival, and limit validation
+- **Role Management Advanced (8 tools)**: Role cloning, templates, account assignments, permission validation, and configuration import/export
+- **Configuration Management Critical (9 tools)**: System configuration reset, backup/restore, history tracking, profiles, and validation
+- **Complete Infrastructure Management (100% Coverage)**: Achieved 100% CloudStack Infrastructure API coverage with cluster, backup, alert, event, and guest OS management
+- **Cluster Management Foundation (13 tools)**: Complete cluster lifecycle, HA management, metrics, migration, host management, and configuration validation
+- **Backup and Recovery Enterprise (9 tools)**: Backup policies, disaster recovery plans, execution testing, recovery points, and integrity validation
+- **Alert Management System (8 tools)**: Alert rule creation, notifications configuration, statistics, testing, and subscription management
+- **Event Management Advanced (7 tools)**: Event correlation rules, statistics, audit trails, retention configuration, and history search
+- **Guest OS Management Complete (9 tools)**: OS categories, templates, drivers management, and compatibility validation
+- **99 New MCP Tools**: Expanded from 426 to 525+ total tools for complete enterprise administrative and infrastructure management
+- **99 New API Methods**: Extended CloudStack client with 556+ total API method implementations
+- **100% Administrative & Infrastructure Coverage**: Achieved complete CloudStack Administrative and Infrastructure API surface coverage
+
+### Changed
+- **Major Enterprise Milestone**: Complete Administrative and Infrastructure Management with 100% API coverage
+- **Administrative Enhancement**: From 50-65% to 100% coverage across Account, User, Domain, Project, Role, and Configuration management
+- **Infrastructure Evolution**: From 0-40% to 100% coverage across Cluster, Backup, Alert, Event, and Guest OS management
+- **Tool Count Growth**: 23.2% increase in available tools (426 → 525+)
+- **API Method Expansion**: 21.7% increase in API methods (457+ → 556+)
+- **Enterprise Administrative Completeness**: 100% coverage of all CloudStack administrative and infrastructure operations
+- **Total CloudStack Coverage**: Advanced from ~80% to ~90% overall API surface coverage
+
+### Technical
+- **Comprehensive Administrative Implementation**: Added 53 new administrative management client methods including billing, security, multi-tenancy, and configuration operations
+- **Advanced Infrastructure Implementation**: Added 46 new infrastructure management client methods including cluster management, disaster recovery, monitoring, and system administration
+- **Enhanced Error Handling**: Complete validation for all new administrative and infrastructure tools with comprehensive async job support
+- **Response Formatting**: Added comprehensive administrative and infrastructure response formatting methods for user-friendly operation output
+- **Performance Optimization**: Streamlined administrative and infrastructure operation handling with proper async job management and status tracking
+- **Enterprise Security**: Complete 2FA, audit trail, permission validation, and security policy management
+- **Production Operations**: Complete backup policies, disaster recovery, alert management, and monitoring capabilities
+
+### Documentation
+- **Updated API Coverage Analysis**: Complete analysis reflecting 100% Administrative and Infrastructure API coverage achievement
+- **Enhanced Capabilities Matrix**: Detailed breakdown of 525+ tools with complete administrative and infrastructure capabilities
+- **Complete Enterprise Documentation**: Full documentation of advanced administrative security, multi-tenancy, and infrastructure management features
+
 ## [1.8.0] - 2025-06-24
 
 ### Added

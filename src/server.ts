@@ -22,7 +22,7 @@ class CloudStackMCPServer {
     this.server = new Server(
       {
         name: 'cloudstack-mcp-server',
-        version: '1.8.0',
+        version: '1.9.0',
       },
       {
         capabilities: {
@@ -3422,6 +3422,252 @@ class CloudStackMCPServer {
               id: { type: 'string', description: 'Load balancer rule ID' }
             },
             required: ['id']
+          }
+        },
+        // Administrative Enhancement - Account Management Tools
+        {
+          name: 'quota_statement',
+          description: 'Generate detailed billing statements for account',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' },
+              startdate: { type: 'string', description: 'Start date for statement' },
+              enddate: { type: 'string', description: 'End date for statement' }
+            },
+            required: ['account']
+          }
+        },
+        {
+          name: 'quota_credits',
+          description: 'Manage account credit allocations',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' },
+              credits: { type: 'number', description: 'Credit amount' },
+              operation: { type: 'string', description: 'Operation: add, subtract, set' }
+            },
+            required: ['account', 'credits', 'operation']
+          }
+        },
+        {
+          name: 'quota_update',
+          description: 'Update account quota settings',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' },
+              quota: { type: 'number', description: 'New quota amount' },
+              quotatype: { type: 'string', description: 'Type of quota' }
+            },
+            required: ['account', 'quota']
+          }
+        },
+        {
+          name: 'quota_summary',
+          description: 'Get account resource usage summary',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' },
+              startdate: { type: 'string', description: 'Start date' },
+              enddate: { type: 'string', description: 'End date' }
+            }
+          }
+        },
+        {
+          name: 'quota_balance',
+          description: 'Check current quota balance for account',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' }
+            },
+            required: ['account']
+          }
+        },
+        {
+          name: 'transfer_account',
+          description: 'Transfer account ownership to different domain',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Source domain ID' },
+              newdomainid: { type: 'string', description: 'Target domain ID' }
+            },
+            required: ['account', 'domainid', 'newdomainid']
+          }
+        },
+        {
+          name: 'list_account_types',
+          description: 'List available account types',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              listall: { type: 'boolean', description: 'List all account types' }
+            }
+          }
+        },
+        {
+          name: 'get_account_billing',
+          description: 'Retrieve detailed billing data for account',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' },
+              startdate: { type: 'string', description: 'Start date' },
+              enddate: { type: 'string', description: 'End date' }
+            },
+            required: ['account']
+          }
+        },
+        {
+          name: 'generate_account_usage_report',
+          description: 'Generate usage analytics report for account',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' },
+              reporttype: { type: 'string', description: 'Type of report' },
+              startdate: { type: 'string', description: 'Start date' },
+              enddate: { type: 'string', description: 'End date' }
+            },
+            required: ['account', 'reporttype']
+          }
+        },
+        {
+          name: 'validate_account_limits',
+          description: 'Validate resource limit compliance for account',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' },
+              resourcetype: { type: 'string', description: 'Resource type to validate' }
+            },
+            required: ['account']
+          }
+        },
+        // User Management Enhancement Tools
+        {
+          name: 'reset_user_password',
+          description: 'Admin password reset capability for users',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'User ID' },
+              password: { type: 'string', description: 'New password' }
+            },
+            required: ['id', 'password']
+          }
+        },
+        {
+          name: 'get_user_login_history',
+          description: 'Track user login activities and history',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              userid: { type: 'string', description: 'User ID' },
+              account: { type: 'string', description: 'Account name' },
+              startdate: { type: 'string', description: 'Start date' },
+              enddate: { type: 'string', description: 'End date' }
+            },
+            required: ['userid']
+          }
+        },
+        {
+          name: 'enable_2fa',
+          description: 'Enable two-factor authentication for user',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              userid: { type: 'string', description: 'User ID' },
+              provider: { type: 'string', description: '2FA provider (totp, sms)' }
+            },
+            required: ['userid', 'provider']
+          }
+        },
+        {
+          name: 'disable_2fa',
+          description: 'Disable two-factor authentication for user',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              userid: { type: 'string', description: 'User ID' }
+            },
+            required: ['userid']
+          }
+        },
+        {
+          name: 'validate_user_permissions',
+          description: 'Check user permission status and validate access',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              userid: { type: 'string', description: 'User ID' },
+              resource: { type: 'string', description: 'Resource to check access for' },
+              operation: { type: 'string', description: 'Operation to validate' }
+            },
+            required: ['userid', 'resource']
+          }
+        },
+        {
+          name: 'get_user_audit_trail',
+          description: 'Get user activity audit logs and history',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              userid: { type: 'string', description: 'User ID' },
+              account: { type: 'string', description: 'Account name' },
+              startdate: { type: 'string', description: 'Start date' },
+              enddate: { type: 'string', description: 'End date' }
+            },
+            required: ['userid']
+          }
+        },
+        {
+          name: 'list_user_sessions',
+          description: 'List active user sessions',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              userid: { type: 'string', description: 'User ID' },
+              account: { type: 'string', description: 'Account name' }
+            }
+          }
+        },
+        {
+          name: 'invalidate_user_session',
+          description: 'Terminate user sessions',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              sessionid: { type: 'string', description: 'Session ID to terminate' },
+              userid: { type: 'string', description: 'User ID' }
+            },
+            required: ['sessionid']
+          }
+        },
+        {
+          name: 'set_user_security_policy',
+          description: 'Configure user security settings and policies',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              userid: { type: 'string', description: 'User ID' },
+              policy: { type: 'string', description: 'Security policy configuration' },
+              value: { type: 'string', description: 'Policy value' }
+            },
+            required: ['userid', 'policy']
           }
         },
         {

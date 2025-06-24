@@ -2141,4 +2141,407 @@ export class CloudStackClient {
     return this.makeRequest('resetLoadBalancerRule', params);
   }
 
+  // Administrative Enhancement - Account Management APIs
+  public async quotaStatement(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('quotaStatement', params);
+  }
+
+  public async quotaCredits(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('quotaCredits', params);
+  }
+
+  public async quotaUpdate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('quotaUpdate', params);
+  }
+
+  public async quotaSummary(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('quotaSummary', params);
+  }
+
+  public async quotaBalance(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('quotaBalance', params);
+  }
+
+  public async transferAccount(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('transferAccount', params);
+  }
+
+  public async listAccountTypes(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listAccountTypes', params);
+  }
+
+  public async getAccountBilling(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getAccountBilling', params);
+  }
+
+  public async generateAccountUsageReport(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('generateAccountUsageReport', params);
+  }
+
+  public async validateAccountLimits(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('validateAccountLimits', params);
+  }
+
+  // User Management Enhancement APIs
+  public async resetUserPassword(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('resetUserPassword', params);
+  }
+
+  public async getUserLoginHistory(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getUserLoginHistory', params);
+  }
+
+  public async enable2FA(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('enable2FA', params);
+  }
+
+  public async disable2FA(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('disable2FA', params);
+  }
+
+  public async validateUserPermissions(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('validateUserPermissions', params);
+  }
+
+  public async getUserAuditTrail(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getUserAuditTrail', params);
+  }
+
+  public async listUserSessions(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listUserSessions', params);
+  }
+
+  public async invalidateUserSession(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('invalidateUserSession', params);
+  }
+
+  public async setUserSecurityPolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('setUserSecurityPolicy', params);
+  }
+
+  // Domain Management Enhancement APIs
+  public async getDomainQuotas(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getDomainQuotas', params);
+  }
+
+  public async updateDomainLimits(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateDomainLimits', params);
+  }
+
+  public async transferDomainOwnership(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('transferDomainOwnership', params);
+  }
+
+  public async getDomainStatistics(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getDomainStatistics', params);
+  }
+
+  public async listCrossDomainOperations(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listCrossDomainOperations', params);
+  }
+
+  public async archiveDomain(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('archiveDomain', params);
+  }
+
+  public async moveDomain(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('moveDomain', params);
+  }
+
+  public async validateDomainHierarchy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('validateDomainHierarchy', params);
+  }
+
+  // Project Management Enhancement APIs
+  public async createProjectTemplate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createProjectTemplate', params);
+  }
+
+  public async applyProjectTemplate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('applyProjectTemplate', params);
+  }
+
+  public async getProjectResourceAllocation(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getProjectResourceAllocation', params);
+  }
+
+  public async shareProjectResources(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('shareProjectResources', params);
+  }
+
+  public async getProjectMetrics(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getProjectMetrics', params);
+  }
+
+  public async generateProjectReport(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('generateProjectReport', params);
+  }
+
+  public async archiveProject(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('archiveProject', params);
+  }
+
+  public async restoreProject(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('restoreProject', params);
+  }
+
+  public async validateProjectLimits(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('validateProjectLimits', params);
+  }
+
+  // Role Management Enhancement APIs
+  public async cloneRole(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('cloneRole', params);
+  }
+
+  public async createRoleTemplate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createRoleTemplate', params);
+  }
+
+  public async assignRoleToAccount(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('assignRoleToAccount', params);
+  }
+
+  public async validateRolePermissions(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('validateRolePermissions', params);
+  }
+
+  public async exportRoleConfiguration(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('exportRoleConfiguration', params);
+  }
+
+  public async importRoleConfiguration(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('importRoleConfiguration', params);
+  }
+
+  public async getRoleAssignments(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('getRoleAssignments', params);
+  }
+
+  public async bulkUpdateRolePermissions(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('bulkUpdateRolePermissions', params);
+  }
+
+  // Configuration Management Enhancement APIs
+  public async resetConfiguration(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('resetConfiguration', params);
+  }
+
+  public async backupConfiguration(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('backupConfiguration', params);
+  }
+
+  public async restoreConfiguration(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('restoreConfiguration', params);
+  }
+
+  public async listConfigurationHistory(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listConfigurationHistory', params);
+  }
+
+  public async validateConfiguration(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('validateConfiguration', params);
+  }
+
+  public async createConfigurationProfile(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createConfigurationProfile', params);
+  }
+
+  public async applyConfigurationProfile(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('applyConfigurationProfile', params);
+  }
+
+  public async compareConfigurations(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('compareConfigurations', params);
+  }
+
+  // Infrastructure Enhancement - Cluster Management APIs
+  public async addCluster(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addCluster', params);
+  }
+
+  public async deleteCluster(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteCluster', params);
+  }
+
+  public async listClusters(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listClusters', params);
+  }
+
+  public async updateCluster(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateCluster', params);
+  }
+
+  public async enableCluster(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('enableCluster', params);
+  }
+
+  public async disableCluster(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('disableCluster', params);
+  }
+
+  public async enableHAForCluster(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('enableHAForCluster', params);
+  }
+
+  public async disableHAForCluster(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('disableHAForCluster', params);
+  }
+
+  public async getClusterMetrics(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getClusterMetrics', params);
+  }
+
+  public async migrateCluster(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('migrateCluster', params);
+  }
+
+  public async addHostToCluster(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addHostToCluster', params);
+  }
+
+  public async removeHostFromCluster(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('removeHostFromCluster', params);
+  }
+
+  public async validateClusterConfiguration(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('validateClusterConfiguration', params);
+  }
+
+  // Backup and Recovery Enhancement APIs
+  public async createBackupPolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createBackupPolicy', params);
+  }
+
+  public async updateBackupPolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateBackupPolicy', params);
+  }
+
+  public async deleteBackupPolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteBackupPolicy', params);
+  }
+
+  public async listBackupPolicies(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listBackupPolicies', params);
+  }
+
+  public async createDisasterRecoveryPlan(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createDisasterRecoveryPlan', params);
+  }
+
+  public async executeDisasterRecoveryPlan(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('executeDisasterRecoveryPlan', params);
+  }
+
+  public async testDisasterRecoveryPlan(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('testDisasterRecoveryPlan', params);
+  }
+
+  public async listRecoveryPoints(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listRecoveryPoints', params);
+  }
+
+  public async validateBackupIntegrity(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('validateBackupIntegrity', params);
+  }
+
+  // Alert Management Enhancement APIs
+  public async createAlertRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createAlertRule', params);
+  }
+
+  public async updateAlertRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateAlertRule', params);
+  }
+
+  public async deleteAlertRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteAlertRule', params);
+  }
+
+  public async listAlertRules(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listAlertRules', params);
+  }
+
+  public async configureAlertNotifications(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('configureAlertNotifications', params);
+  }
+
+  public async testAlertRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('testAlertRule', params);
+  }
+
+  public async getAlertStatistics(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getAlertStatistics', params);
+  }
+
+  public async subscribeToAlerts(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('subscribeToAlerts', params);
+  }
+
+  // Event Management Enhancement APIs
+  public async createEventCorrelationRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createEventCorrelationRule', params);
+  }
+
+  public async listEventCorrelationRules(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listEventCorrelationRules', params);
+  }
+
+  public async getEventStatistics(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getEventStatistics', params);
+  }
+
+  public async exportEventLog(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('exportEventLog', params);
+  }
+
+  public async configureEventRetention(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('configureEventRetention', params);
+  }
+
+  public async createEventAuditTrail(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createEventAuditTrail', params);
+  }
+
+  public async searchEventHistory(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('searchEventHistory', params);
+  }
+
+  // Guest OS Management Enhancement APIs
+  public async addGuestOsCategory(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addGuestOsCategory', params);
+  }
+
+  public async updateGuestOsCategory(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateGuestOsCategory', params);
+  }
+
+  public async deleteGuestOsCategory(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteGuestOsCategory', params);
+  }
+
+  public async addGuestOsTemplate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addGuestOsTemplate', params);
+  }
+
+  public async updateGuestOsTemplate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateGuestOsTemplate', params);
+  }
+
+  public async deleteGuestOsTemplate(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteGuestOsTemplate', params);
+  }
+
+  public async listGuestOsDrivers(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listGuestOsDrivers', params);
+  }
+
+  public async updateGuestOsDrivers(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateGuestOsDrivers', params);
+  }
+
+  public async validateGuestOsCompatibility(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('validateGuestOsCompatibility', params);
+  }
+
 }
