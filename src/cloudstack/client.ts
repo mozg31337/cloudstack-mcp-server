@@ -2052,4 +2052,93 @@ export class CloudStackClient {
     return this.makeRequest('updateNetworkACL', params);
   }
 
+  // VPN Services Enhancement - Missing APIs
+  public async updateVpnGateway(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateVpnGateway', params);
+  }
+
+  public async enableVpnGateway(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('enableVpnGateway', params);
+  }
+
+  public async disableVpnGateway(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('disableVpnGateway', params);
+  }
+
+  public async restartVpnGateway(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('restartVpnGateway', params);
+  }
+
+  public async updateVpnConnection(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateVpnConnection', params);
+  }
+
+  public async listVpnInstances(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listVpnInstances', params);
+  }
+
+  public async updateVpnCustomerGateway(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateVpnCustomerGateway', params);
+  }
+
+  public async updateRemoteAccessVpn(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateRemoteAccessVpn', params);
+  }
+
+  // Load Balancer Enhancement - Additional APIs
+  // Policy Management Updates
+  public async updateLBHealthCheckPolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateLBHealthCheckPolicy', params);
+  }
+
+  public async updateLBStickinessPolicy(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateLBStickinessPolicy', params);
+  }
+
+  public async updateApplicationLoadBalancer(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateApplicationLoadBalancer', params);
+  }
+
+  // Global Load Balancer
+  public async createGlobalLoadBalancer(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createGlobalLoadBalancer', params);
+  }
+
+  public async deleteGlobalLoadBalancer(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteGlobalLoadBalancer', params);
+  }
+
+  public async listGlobalLoadBalancers(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listGlobalLoadBalancers', params);
+  }
+
+  public async updateGlobalLoadBalancer(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateGlobalLoadBalancer', params);
+  }
+
+  // Advanced SSL & Monitoring
+  public async updateSslCert(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateSslCert', params);
+  }
+
+  public async assignSslCertToApplicationLoadBalancer(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('assignSslCertToApplicationLoadBalancer', params);
+  }
+
+  public async listLoadBalancerCertificates(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listLoadBalancerCertificates', params);
+  }
+
+  public async listLoadBalancerMetrics(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listLoadBalancerMetrics', params);
+  }
+
+  public async getLoadBalancerHealth(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getLoadBalancerHealth', params);
+  }
+
+  public async resetLoadBalancerRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('resetLoadBalancerRule', params);
+  }
+
 }

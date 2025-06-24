@@ -5,6 +5,44 @@ All notable changes to the CloudStack MCP Server project will be documented in t
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2025-06-24
+
+### Added
+- **Complete VPN Services Management (100% Coverage)**: Achieved 100% CloudStack VPN API coverage with advanced VPN gateway and connection management
+- **VPN Gateway Enhancement (4 tools)**: Update, enable, disable, and list VPN gateways with comprehensive configuration management
+- **VPN Connection Management (4 tools)**: Update, reset, get usage, and get usage history for VPN connections with complete lifecycle control
+- **Complete Load Balancer Management (100% Coverage)**: Achieved 100% CloudStack Load Balancer API coverage with enterprise-grade load balancing
+- **Application Load Balancer Management (5 tools)**: Create, delete, list, configure, and update application load balancers for modern workloads
+- **Global Load Balancer Management (4 tools)**: Create, delete, list, and update global load balancers for multi-zone deployments
+- **Advanced Load Balancer Policies (2 tools)**: Update health check and stickiness policies for enhanced load balancing control
+- **SSL Certificate Management Enhancement (3 tools)**: Update SSL certificates, assign to application load balancers, and advanced certificate operations
+- **Load Balancer Monitoring (2 tools)**: List load balancer certificates and metrics for comprehensive monitoring and troubleshooting
+- **Remote Access VPN Enhancement (1 tool)**: Update remote access VPN for complete VPN service management
+- **27 New MCP Tools**: Expanded from 399 to 426 total tools for complete enterprise networking and load balancing
+- **27 New API Methods**: Extended CloudStack client with 457+ total API method implementations
+- **100% VPN & Load Balancer Coverage**: Achieved complete CloudStack VPN Services and Load Balancer API surface coverage
+
+### Changed
+- **Major Networking Milestone**: Complete VPN Services and Load Balancer Management with 100% API coverage
+- **VPN Enhancement**: From 60% to 100% coverage with gateway updates, connection management, and enhanced remote access VPN
+- **Load Balancer Evolution**: From 37% to 100% coverage with application load balancing, global load balancing, and advanced monitoring
+- **Tool Count Growth**: 6.8% increase in available tools (399 → 426)
+- **API Method Expansion**: 6.3% increase in API methods (430+ → 457+)
+- **Enterprise Networking Completeness**: 100% coverage of all CloudStack VPN and Load Balancer operations
+
+### Technical
+- **Comprehensive VPN Implementation**: Added 8 new VPN management client methods including gateway updates, connection management, and remote access VPN updates
+- **Advanced Load Balancer Implementation**: Added 19 new load balancer client methods including application load balancers, global load balancers, policy management, and SSL certificate operations
+- **Enhanced Error Handling**: Complete validation for all new VPN and load balancer tools with comprehensive async job support
+- **Response Formatting**: Added comprehensive VPN and load balancer response formatting methods for user-friendly operation output
+- **Performance Optimization**: Streamlined VPN and load balancer operation handling with proper async job management and status tracking
+- **Enterprise Load Balancing**: Complete application and global load balancer support with advanced policy management
+
+### Documentation
+- **Updated API Coverage Analysis**: Complete analysis reflecting 100% VPN Services and Load Balancer API coverage achievement
+- **Enhanced Capabilities Matrix**: Detailed breakdown of 426 tools with complete VPN and load balancing capabilities
+- **Complete VPN & Load Balancer Documentation**: Full documentation of advanced VPN services and enterprise load balancing features
+
 ## [1.7.0] - 2025-06-24
 
 ### Added

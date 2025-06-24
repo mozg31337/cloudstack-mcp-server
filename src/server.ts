@@ -22,7 +22,7 @@ class CloudStackMCPServer {
     this.server = new Server(
       {
         name: 'cloudstack-mcp-server',
-        version: '1.7.0',
+        version: '1.8.0',
       },
       {
         capabilities: {
@@ -1321,6 +1321,107 @@ class CloudStackMCPServer {
               }
             },
             required: ['username']
+          }
+        },
+        // VPN Services Enhancement - Missing APIs
+        {
+          name: 'update_vpn_gateway',
+          description: 'Update VPN gateway configuration',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'VPN gateway ID' },
+              name: { type: 'string', description: 'Gateway name' },
+              displaytext: { type: 'string', description: 'Display text' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'enable_vpn_gateway',
+          description: 'Enable VPN gateway',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'VPN gateway ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'disable_vpn_gateway',
+          description: 'Disable VPN gateway',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'VPN gateway ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'restart_vpn_gateway',
+          description: 'Restart VPN gateway service',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'VPN gateway ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'update_vpn_connection',
+          description: 'Update VPN connection parameters',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'VPN connection ID' },
+              fordisplay: { type: 'boolean', description: 'Display for users' },
+              customid: { type: 'string', description: 'Custom ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_vpn_instances',
+          description: 'List VPN instances with detailed configuration',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' },
+              keyword: { type: 'string', description: 'Keyword search' }
+            }
+          }
+        },
+        {
+          name: 'update_vpn_customer_gateway',
+          description: 'Update VPN customer gateway settings',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Customer gateway ID' },
+              name: { type: 'string', description: 'Gateway name' },
+              cidrlist: { type: 'string', description: 'CIDR list' },
+              esppolicy: { type: 'string', description: 'ESP policy' },
+              ikepolicy: { type: 'string', description: 'IKE policy' },
+              ipsecpsk: { type: 'string', description: 'IPsec pre-shared key' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'update_remote_access_vpn',
+          description: 'Update Remote Access VPN settings',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Remote Access VPN ID' },
+              customid: { type: 'string', description: 'Custom ID' },
+              fordisplay: { type: 'boolean', description: 'Display for users' }
+            },
+            required: ['id']
           }
         },
         // Advanced Networking Tools (exposing existing client methods)
@@ -3074,6 +3175,253 @@ class CloudStackMCPServer {
                 description: 'Account name to filter certificates'
               }
             }
+          }
+        },
+        // Load Balancer Enhancement - Missing APIs
+        {
+          name: 'list_lb_health_check_policies',
+          description: 'List load balancer health check policies',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              lbruleid: { type: 'string', description: 'Load balancer rule ID' },
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' }
+            }
+          }
+        },
+        {
+          name: 'update_lb_health_check_policy',
+          description: 'Update load balancer health check policy',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Health check policy ID' },
+              pingpath: { type: 'string', description: 'Health check ping path' },
+              healthythreshold: { type: 'number', description: 'Healthy threshold' },
+              intervaltime: { type: 'number', description: 'Interval time' },
+              responsetimeout: { type: 'number', description: 'Response timeout' },
+              unhealthythreshold: { type: 'number', description: 'Unhealthy threshold' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_lb_stickiness_policies',
+          description: 'List load balancer stickiness policies',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              lbruleid: { type: 'string', description: 'Load balancer rule ID' },
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' }
+            }
+          }
+        },
+        {
+          name: 'update_lb_stickiness_policy',
+          description: 'Update load balancer stickiness policy',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Stickiness policy ID' },
+              name: { type: 'string', description: 'Policy name' },
+              methodname: { type: 'string', description: 'Stickiness method' },
+              params: { type: 'string', description: 'Policy parameters' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'create_application_load_balancer',
+          description: 'Create application load balancer',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: { type: 'string', description: 'Load balancer name' },
+              sourceipaddressnetworkid: { type: 'string', description: 'Source IP address network ID' },
+              scheme: { type: 'string', description: 'Load balancer scheme (Internal/Internet-facing)' },
+              sourceipaddress: { type: 'string', description: 'Source IP address' },
+              description: { type: 'string', description: 'Load balancer description' }
+            },
+            required: ['name', 'sourceipaddressnetworkid']
+          }
+        },
+        {
+          name: 'delete_application_load_balancer',
+          description: 'Delete application load balancer',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Application load balancer ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_application_load_balancers',
+          description: 'List application load balancers',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' },
+              name: { type: 'string', description: 'Load balancer name' },
+              networkid: { type: 'string', description: 'Network ID' }
+            }
+          }
+        },
+        {
+          name: 'configure_application_load_balancer',
+          description: 'Configure application load balancer',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Application load balancer ID' },
+              algorithm: { type: 'string', description: 'Load balancing algorithm' },
+              description: { type: 'string', description: 'Load balancer description' },
+              name: { type: 'string', description: 'Load balancer name' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'update_application_load_balancer',
+          description: 'Update application load balancer',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Application load balancer ID' },
+              algorithm: { type: 'string', description: 'Load balancing algorithm' },
+              description: { type: 'string', description: 'Load balancer description' },
+              name: { type: 'string', description: 'Load balancer name' },
+              customid: { type: 'string', description: 'Custom ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'create_global_load_balancer',
+          description: 'Create global load balancer rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: { type: 'string', description: 'Global load balancer name' },
+              gslbdomainname: { type: 'string', description: 'GSLB domain name' },
+              gslbservicetype: { type: 'string', description: 'GSLB service type (TCP/UDP/HTTP)' },
+              regionid: { type: 'string', description: 'Region ID' },
+              description: { type: 'string', description: 'Description' }
+            },
+            required: ['name', 'gslbdomainname', 'gslbservicetype', 'regionid']
+          }
+        },
+        {
+          name: 'delete_global_load_balancer',
+          description: 'Delete global load balancer rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Global load balancer ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_global_load_balancers',
+          description: 'List global load balancer rules',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' },
+              regionid: { type: 'string', description: 'Region ID' }
+            }
+          }
+        },
+        {
+          name: 'update_global_load_balancer',
+          description: 'Update global load balancer rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Global load balancer ID' },
+              description: { type: 'string', description: 'Description' },
+              gslbdomainname: { type: 'string', description: 'GSLB domain name' },
+              gslbservicetype: { type: 'string', description: 'GSLB service type' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'update_ssl_cert',
+          description: 'Update SSL certificate',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'SSL certificate ID' },
+              certificate: { type: 'string', description: 'Updated certificate content' },
+              privatekey: { type: 'string', description: 'Updated private key' },
+              certchain: { type: 'string', description: 'Updated certificate chain' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'assign_ssl_cert_to_application_load_balancer',
+          description: 'Assign SSL certificate to application load balancer',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              lbruleid: { type: 'string', description: 'Load balancer rule ID' },
+              certid: { type: 'string', description: 'SSL certificate ID' }
+            },
+            required: ['lbruleid', 'certid']
+          }
+        },
+        {
+          name: 'list_load_balancer_certificates',
+          description: 'List load balancer SSL certificates',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              lbruleid: { type: 'string', description: 'Load balancer rule ID' },
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' }
+            }
+          }
+        },
+        {
+          name: 'list_load_balancer_metrics',
+          description: 'List load balancer performance metrics',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              lbruleid: { type: 'string', description: 'Load balancer rule ID' },
+              startdate: { type: 'string', description: 'Start date for metrics' },
+              enddate: { type: 'string', description: 'End date for metrics' }
+            }
+          }
+        },
+        {
+          name: 'get_load_balancer_health',
+          description: 'Get load balancer health status',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              lbruleid: { type: 'string', description: 'Load balancer rule ID' }
+            },
+            required: ['lbruleid']
+          }
+        },
+        {
+          name: 'reset_load_balancer_rule',
+          description: 'Reset load balancer rule statistics',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Load balancer rule ID' }
+            },
+            required: ['id']
           }
         },
         {
@@ -7510,6 +7858,31 @@ class CloudStackMCPServer {
           case 'remove_vpn_user':
             return await this.handleRemoveVpnUser(args);
 
+          // VPN Services Enhancement Cases
+          case 'update_vpn_gateway':
+            return await this.handleUpdateVpnGateway(args);
+          
+          case 'enable_vpn_gateway':
+            return await this.handleEnableVpnGateway(args);
+          
+          case 'disable_vpn_gateway':
+            return await this.handleDisableVpnGateway(args);
+          
+          case 'restart_vpn_gateway':
+            return await this.handleRestartVpnGateway(args);
+          
+          case 'update_vpn_connection':
+            return await this.handleUpdateVpnConnection(args);
+          
+          case 'list_vpn_instances':
+            return await this.handleListVpnInstances(args);
+          
+          case 'update_vpn_customer_gateway':
+            return await this.handleUpdateVpnCustomerGateway(args);
+          
+          case 'update_remote_access_vpn':
+            return await this.handleUpdateRemoteAccessVpn(args);
+
           // VPC Offerings Handlers
           case 'create_vpc_offering':
             return await this.handleCreateVpcOffering(args);
@@ -7709,6 +8082,64 @@ class CloudStackMCPServer {
           
           case 'list_ssl_certs':
             return await this.handleListSslCerts(args);
+
+          // Load Balancer Enhancement Cases
+          case 'list_lb_health_check_policies':
+            return await this.handleListLBHealthCheckPolicies(args);
+          
+          case 'update_lb_health_check_policy':
+            return await this.handleUpdateLBHealthCheckPolicy(args);
+          
+          case 'list_lb_stickiness_policies':
+            return await this.handleListLBStickinessPolicies(args);
+          
+          case 'update_lb_stickiness_policy':
+            return await this.handleUpdateLBStickinessPolicy(args);
+          
+          case 'create_application_load_balancer':
+            return await this.handleCreateApplicationLoadBalancer(args);
+          
+          case 'delete_application_load_balancer':
+            return await this.handleDeleteApplicationLoadBalancer(args);
+          
+          case 'list_application_load_balancers':
+            return await this.handleListApplicationLoadBalancers(args);
+          
+          case 'configure_application_load_balancer':
+            return await this.handleConfigureApplicationLoadBalancer(args);
+          
+          case 'update_application_load_balancer':
+            return await this.handleUpdateApplicationLoadBalancer(args);
+          
+          case 'create_global_load_balancer':
+            return await this.handleCreateGlobalLoadBalancer(args);
+          
+          case 'delete_global_load_balancer':
+            return await this.handleDeleteGlobalLoadBalancer(args);
+          
+          case 'list_global_load_balancers':
+            return await this.handleListGlobalLoadBalancers(args);
+          
+          case 'update_global_load_balancer':
+            return await this.handleUpdateGlobalLoadBalancer(args);
+          
+          case 'update_ssl_cert':
+            return await this.handleUpdateSslCert(args);
+          
+          case 'assign_ssl_cert_to_application_load_balancer':
+            return await this.handleAssignSslCertToApplicationLoadBalancer(args);
+          
+          case 'list_load_balancer_certificates':
+            return await this.handleListLoadBalancerCertificates(args);
+          
+          case 'list_load_balancer_metrics':
+            return await this.handleListLoadBalancerMetrics(args);
+          
+          case 'get_load_balancer_health':
+            return await this.handleGetLoadBalancerHealth(args);
+          
+          case 'reset_load_balancer_rule':
+            return await this.handleResetLoadBalancerRule(args);
 
           // Firewall Rules
           case 'create_firewall_rule':
@@ -10577,6 +11008,241 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     };
   }
 
+  // Load Balancer Enhancement Handlers
+  private async handleListLBHealthCheckPolicies(args: any): Promise<any> {
+    const params = this.buildParams(args, ['lbruleid', 'account', 'domainid', 'listall']);
+    const response = await this.client.listLBHealthCheckPolicies(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatHealthCheckPolicyResponse(response)
+      }]
+    };
+  }
+
+  private async handleUpdateLBHealthCheckPolicy(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'id', 'pingpath', 'healthythreshold', 'intervaltime', 'responsetimeout', 'unhealthythreshold'
+    ]);
+    const response = await this.client.updateLBHealthCheckPolicy(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatHealthCheckPolicyResponse(response)
+      }]
+    };
+  }
+
+  private async handleListLBStickinessPolicies(args: any): Promise<any> {
+    const params = this.buildParams(args, ['lbruleid', 'account', 'domainid', 'listall']);
+    const response = await this.client.listLBStickinessPolicies(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatStickinessPolicyResponse(response)
+      }]
+    };
+  }
+
+  private async handleUpdateLBStickinessPolicy(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'name', 'methodname', 'params']);
+    const response = await this.client.updateLBStickinessPolicy(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatStickinessPolicyResponse(response)
+      }]
+    };
+  }
+
+  private async handleCreateApplicationLoadBalancer(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'name', 'sourceipaddressnetworkid', 'scheme', 'sourceipaddress', 'description'
+    ]);
+    const response = await this.client.createApplicationLoadBalancer(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatApplicationLoadBalancerResponse('Application load balancer creation', response)
+      }]
+    };
+  }
+
+  private async handleDeleteApplicationLoadBalancer(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteApplicationLoadBalancer(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Application load balancer deletion', response)
+      }]
+    };
+  }
+
+  private async handleListApplicationLoadBalancers(args: any): Promise<any> {
+    const params = this.buildParams(args, ['account', 'domainid', 'name', 'networkid', 'listall']);
+    const response = await this.client.listApplicationLoadBalancers(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatApplicationLoadBalancerResponse('Application load balancers', response)
+      }]
+    };
+  }
+
+  private async handleConfigureApplicationLoadBalancer(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'algorithm', 'description', 'name']);
+    const response = await this.client.configureApplicationLoadBalancer(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatApplicationLoadBalancerResponse('Application load balancer configuration', response)
+      }]
+    };
+  }
+
+  private async handleUpdateApplicationLoadBalancer(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'algorithm', 'description', 'name', 'customid']);
+    const response = await this.client.updateApplicationLoadBalancer(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatApplicationLoadBalancerResponse('Application load balancer update', response)
+      }]
+    };
+  }
+
+  private async handleCreateGlobalLoadBalancer(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'name', 'gslbdomainname', 'gslbservicetype', 'regionid', 'description'
+    ]);
+    const response = await this.client.createGlobalLoadBalancer(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatGlobalLoadBalancerResponse('Global load balancer creation', response)
+      }]
+    };
+  }
+
+  private async handleDeleteGlobalLoadBalancer(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteGlobalLoadBalancer(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Global load balancer deletion', response)
+      }]
+    };
+  }
+
+  private async handleListGlobalLoadBalancers(args: any): Promise<any> {
+    const params = this.buildParams(args, ['account', 'domainid', 'regionid', 'listall']);
+    const response = await this.client.listGlobalLoadBalancers(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatGlobalLoadBalancerResponse('Global load balancers', response)
+      }]
+    };
+  }
+
+  private async handleUpdateGlobalLoadBalancer(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'description', 'gslbdomainname', 'gslbservicetype']);
+    const response = await this.client.updateGlobalLoadBalancer(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatGlobalLoadBalancerResponse('Global load balancer update', response)
+      }]
+    };
+  }
+
+  private async handleUpdateSslCert(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'certificate', 'privatekey', 'certchain']);
+    const response = await this.client.updateSslCert(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatSslCertResponse('SSL certificate update', response)
+      }]
+    };
+  }
+
+  private async handleAssignSslCertToApplicationLoadBalancer(args: any): Promise<any> {
+    const params = this.buildParams(args, ['lbruleid', 'certid']);
+    const response = await this.client.assignSslCertToApplicationLoadBalancer(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('SSL certificate assignment', response)
+      }]
+    };
+  }
+
+  private async handleListLoadBalancerCertificates(args: any): Promise<any> {
+    const params = this.buildParams(args, ['lbruleid', 'account', 'domainid', 'listall']);
+    const response = await this.client.listLoadBalancerCertificates(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatLoadBalancerCertificatesResponse(response)
+      }]
+    };
+  }
+
+  private async handleListLoadBalancerMetrics(args: any): Promise<any> {
+    const params = this.buildParams(args, ['lbruleid', 'startdate', 'enddate', 'listall']);
+    const response = await this.client.listLoadBalancerMetrics(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatLoadBalancerMetricsResponse(response)
+      }]
+    };
+  }
+
+  private async handleGetLoadBalancerHealth(args: any): Promise<any> {
+    const params = this.buildParams(args, ['lbruleid']);
+    const response = await this.client.getLoadBalancerHealth(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatLoadBalancerHealthResponse(response)
+      }]
+    };
+  }
+
+  private async handleResetLoadBalancerRule(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.resetLoadBalancerRule(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Load balancer rule reset', response)
+      }]
+    };
+  }
+
   // Firewall Rule Handlers
   private async handleCreateFirewallRule(args: any): Promise<any> {
     if (!args.ipaddressid || !args.protocol) {
@@ -12688,6 +13354,105 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     };
   }
 
+  // VPN Services Enhancement Handlers
+  private async handleUpdateVpnGateway(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'name', 'displaytext']);
+    const response = await this.client.updateVpnGateway(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatVpnGatewayResponse('VPN gateway update', response)
+      }]
+    };
+  }
+
+  private async handleEnableVpnGateway(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.enableVpnGateway(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('VPN gateway enable', response)
+      }]
+    };
+  }
+
+  private async handleDisableVpnGateway(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.disableVpnGateway(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('VPN gateway disable', response)
+      }]
+    };
+  }
+
+  private async handleRestartVpnGateway(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.restartVpnGateway(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('VPN gateway restart', response)
+      }]
+    };
+  }
+
+  private async handleUpdateVpnConnection(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'fordisplay', 'customid']);
+    const response = await this.client.updateVpnConnection(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatVpnConnectionResponse('VPN connection update', response)
+      }]
+    };
+  }
+
+  private async handleListVpnInstances(args: any): Promise<any> {
+    const params = this.buildParams(args, ['account', 'domainid', 'keyword', 'listall']);
+    const response = await this.client.listVpnInstances(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatVpnInstancesResponse(response)
+      }]
+    };
+  }
+
+  private async handleUpdateVpnCustomerGateway(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'id', 'name', 'cidrlist', 'esppolicy', 'ikepolicy', 'ipsecpsk'
+    ]);
+    const response = await this.client.updateVpnCustomerGateway(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatVpnCustomerGatewayResponse('VPN customer gateway update', response)
+      }]
+    };
+  }
+
+  private async handleUpdateRemoteAccessVpn(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'customid', 'fordisplay']);
+    const response = await this.client.updateRemoteAccessVpn(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatRemoteAccessVpnResponse('Remote Access VPN update', response)
+      }]
+    };
+  }
+
   // Network Service Providers Handlers
   private async handleListNetworkServiceProviders(args: any): Promise<any> {
     const params = this.buildParams(args, ['name', 'physicalnetworkid', 'state']);
@@ -14221,6 +14986,251 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     }
     
     return 'No VPN users found.';
+  }
+
+  // VPN Services Enhancement Response Formatters
+  private formatVpnGatewayResponse(operation: string, response: any): string {
+    if (response.vpngateway) {
+      const gateway = response.vpngateway;
+      let result = `${operation} successful:\n\n`;
+      result += `VPN Gateway ID: ${gateway.id || 'N/A'}\n`;
+      result += `Public IP: ${gateway.publicip || 'N/A'}\n`;
+      result += `VPC ID: ${gateway.vpcid || 'N/A'}\n`;
+      result += `Account: ${gateway.account || 'N/A'}\n`;
+      result += `Domain: ${gateway.domain || 'N/A'}\n`;
+      result += `State: ${gateway.removed ? 'Removed' : 'Active'}\n`;
+      return result;
+    }
+    return `${operation} completed successfully.`;
+  }
+
+  private formatVpnConnectionResponse(operation: string, response: any): string {
+    if (response.vpnconnection) {
+      const connection = response.vpnconnection;
+      let result = `${operation} successful:\n\n`;
+      result += `VPN Connection ID: ${connection.id || 'N/A'}\n`;
+      result += `Customer Gateway ID: ${connection.customergatewayid || 'N/A'}\n`;
+      result += `VPN Gateway ID: ${connection.vpngatewayid || 'N/A'}\n`;
+      result += `State: ${connection.state || 'N/A'}\n`;
+      result += `Account: ${connection.account || 'N/A'}\n`;
+      result += `Domain: ${connection.domain || 'N/A'}\n`;
+      return result;
+    }
+    return `${operation} completed successfully.`;
+  }
+
+  private formatVpnInstancesResponse(response: any): string {
+    if (response.vpninstance && response.vpninstance.length > 0) {
+      let result = `VPN Instances (${response.vpninstance.length} instances):\n\n`;
+      
+      response.vpninstance.forEach((instance: any, index: number) => {
+        result += `${index + 1}. Instance ID: ${instance.id || 'N/A'}\n`;
+        result += `   Type: ${instance.type || 'N/A'}\n`;
+        result += `   Public IP: ${instance.publicip || 'N/A'}\n`;
+        result += `   Private IP: ${instance.privateip || 'N/A'}\n`;
+        result += `   State: ${instance.state || 'N/A'}\n`;
+        result += `   Account: ${instance.account || 'N/A'}\n\n`;
+      });
+      
+      return result.trim();
+    }
+    
+    return 'No VPN instances found.';
+  }
+
+  private formatVpnCustomerGatewayResponse(operation: string, response: any): string {
+    if (response.vpncustomergateway) {
+      const gateway = response.vpncustomergateway;
+      let result = `${operation} successful:\n\n`;
+      result += `Customer Gateway ID: ${gateway.id || 'N/A'}\n`;
+      result += `Name: ${gateway.name || 'N/A'}\n`;
+      result += `Gateway: ${gateway.gateway || 'N/A'}\n`;
+      result += `CIDR List: ${gateway.cidrlist || 'N/A'}\n`;
+      result += `IKE Policy: ${gateway.ikepolicy || 'N/A'}\n`;
+      result += `ESP Policy: ${gateway.esppolicy || 'N/A'}\n`;
+      result += `Account: ${gateway.account || 'N/A'}\n`;
+      result += `Domain: ${gateway.domain || 'N/A'}\n`;
+      return result;
+    }
+    return `${operation} completed successfully.`;
+  }
+
+  private formatRemoteAccessVpnResponse(operation: string, response: any): string {
+    if (response.remoteaccessvpn) {
+      const vpn = response.remoteaccessvpn;
+      let result = `${operation} successful:\n\n`;
+      result += `Remote Access VPN ID: ${vpn.id || 'N/A'}\n`;
+      result += `Public IP: ${vpn.publicip || 'N/A'}\n`;
+      result += `Public IP ID: ${vpn.publicipid || 'N/A'}\n`;
+      result += `IP Range: ${vpn.iprange || 'N/A'}\n`;
+      result += `Pre-shared Key: ${vpn.presharedkey || 'N/A'}\n`;
+      result += `State: ${vpn.state || 'N/A'}\n`;
+      result += `Account: ${vpn.account || 'N/A'}\n`;
+      result += `Domain: ${vpn.domain || 'N/A'}\n`;
+      return result;
+    }
+    return `${operation} completed successfully.`;
+  }
+
+  // Load Balancer Enhancement Response Formatters
+  private formatHealthCheckPolicyResponse(response: any): string {
+    if (response.healthcheckpolicy && response.healthcheckpolicy.length > 0) {
+      let result = `Health Check Policies (${response.healthcheckpolicy.length} policies):\n\n`;
+      
+      response.healthcheckpolicy.forEach((policy: any, index: number) => {
+        result += `${index + 1}. Policy ID: ${policy.id || 'N/A'}\n`;
+        result += `   Ping Path: ${policy.pingpath || 'N/A'}\n`;
+        result += `   Response Timeout: ${policy.responsetimeout || 'N/A'}s\n`;
+        result += `   Healthy Threshold: ${policy.healthythreshold || 'N/A'}\n`;
+        result += `   Unhealthy Threshold: ${policy.unhealthythreshold || 'N/A'}\n`;
+        result += `   Interval Time: ${policy.intervaltime || 'N/A'}s\n`;
+        result += `   Load Balancer Rule ID: ${policy.lbruleid || 'N/A'}\n\n`;
+      });
+      
+      return result.trim();
+    }
+    
+    if (response.healthcheckpolicy) {
+      const policy = response.healthcheckpolicy;
+      return `Health Check Policy updated:\n\nPolicy ID: ${policy.id || 'N/A'}\nPing Path: ${policy.pingpath || 'N/A'}\nResponse Timeout: ${policy.responsetimeout || 'N/A'}s`;
+    }
+    
+    return 'No health check policies found.';
+  }
+
+  private formatStickinessPolicyResponse(response: any): string {
+    if (response.stickinesspolicy && response.stickinesspolicy.length > 0) {
+      let result = `Stickiness Policies (${response.stickinesspolicy.length} policies):\n\n`;
+      
+      response.stickinesspolicy.forEach((policy: any, index: number) => {
+        result += `${index + 1}. Policy ID: ${policy.id || 'N/A'}\n`;
+        result += `   Name: ${policy.name || 'N/A'}\n`;
+        result += `   Method: ${policy.methodname || 'N/A'}\n`;
+        result += `   Parameters: ${policy.params || 'N/A'}\n`;
+        result += `   Load Balancer Rule ID: ${policy.lbruleid || 'N/A'}\n\n`;
+      });
+      
+      return result.trim();
+    }
+    
+    if (response.stickinesspolicy) {
+      const policy = response.stickinesspolicy;
+      return `Stickiness Policy updated:\n\nPolicy ID: ${policy.id || 'N/A'}\nName: ${policy.name || 'N/A'}\nMethod: ${policy.methodname || 'N/A'}`;
+    }
+    
+    return 'No stickiness policies found.';
+  }
+
+  private formatApplicationLoadBalancerResponse(operation: string, response: any): string {
+    if (response.applicationloadbalancer && response.applicationloadbalancer.length > 0) {
+      let result = `Application Load Balancers (${response.applicationloadbalancer.length} load balancers):\n\n`;
+      
+      response.applicationloadbalancer.forEach((lb: any, index: number) => {
+        result += `${index + 1}. Load Balancer ID: ${lb.id || 'N/A'}\n`;
+        result += `   Name: ${lb.name || 'N/A'}\n`;
+        result += `   Description: ${lb.description || 'N/A'}\n`;
+        result += `   Algorithm: ${lb.algorithm || 'N/A'}\n`;
+        result += `   Source IP: ${lb.sourceipaddress || 'N/A'}\n`;
+        result += `   Network ID: ${lb.sourceipaddressnetworkid || 'N/A'}\n`;
+        result += `   Scheme: ${lb.scheme || 'N/A'}\n`;
+        result += `   State: ${lb.state || 'N/A'}\n\n`;
+      });
+      
+      return result.trim();
+    }
+    
+    if (response.applicationloadbalancer) {
+      const lb = response.applicationloadbalancer;
+      return `${operation} successful:\n\nLoad Balancer ID: ${lb.id || 'N/A'}\nName: ${lb.name || 'N/A'}\nAlgorithm: ${lb.algorithm || 'N/A'}\nState: ${lb.state || 'N/A'}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+  private formatGlobalLoadBalancerResponse(operation: string, response: any): string {
+    if (response.globalloadbalancerrule && response.globalloadbalancerrule.length > 0) {
+      let result = `Global Load Balancer Rules (${response.globalloadbalancerrule.length} rules):\n\n`;
+      
+      response.globalloadbalancerrule.forEach((lb: any, index: number) => {
+        result += `${index + 1}. Rule ID: ${lb.id || 'N/A'}\n`;
+        result += `   Name: ${lb.name || 'N/A'}\n`;
+        result += `   Description: ${lb.description || 'N/A'}\n`;
+        result += `   GSLB Domain: ${lb.gslbdomainname || 'N/A'}\n`;
+        result += `   Service Type: ${lb.gslbservicetype || 'N/A'}\n`;
+        result += `   Region ID: ${lb.regionid || 'N/A'}\n`;
+        result += `   State: ${lb.state || 'N/A'}\n\n`;
+      });
+      
+      return result.trim();
+    }
+    
+    if (response.globalloadbalancerrule) {
+      const lb = response.globalloadbalancerrule;
+      return `${operation} successful:\n\nRule ID: ${lb.id || 'N/A'}\nName: ${lb.name || 'N/A'}\nGSLB Domain: ${lb.gslbdomainname || 'N/A'}\nService Type: ${lb.gslbservicetype || 'N/A'}`;
+    }
+    
+    return `${operation} completed successfully.`;
+  }
+
+
+  private formatLoadBalancerCertificatesResponse(response: any): string {
+    if (response.lbcertificate && response.lbcertificate.length > 0) {
+      let result = `Load Balancer Certificates (${response.lbcertificate.length} certificates):\n\n`;
+      
+      response.lbcertificate.forEach((cert: any, index: number) => {
+        result += `${index + 1}. Certificate ID: ${cert.id || 'N/A'}\n`;
+        result += `   Name: ${cert.name || 'N/A'}\n`;
+        result += `   Load Balancer Rule ID: ${cert.lbruleid || 'N/A'}\n`;
+        result += `   Certificate Chain: ${cert.certchain ? 'Present' : 'Not provided'}\n`;
+        result += `   Account: ${cert.account || 'N/A'}\n\n`;
+      });
+      
+      return result.trim();
+    }
+    
+    return 'No load balancer certificates found.';
+  }
+
+  private formatLoadBalancerMetricsResponse(response: any): string {
+    if (response.loadbalancermetrics && response.loadbalancermetrics.length > 0) {
+      let result = `Load Balancer Metrics (${response.loadbalancermetrics.length} metrics):\n\n`;
+      
+      response.loadbalancermetrics.forEach((metric: any, index: number) => {
+        result += `${index + 1}. Metric Period: ${metric.startdate || 'N/A'} - ${metric.enddate || 'N/A'}\n`;
+        result += `   Load Balancer Rule ID: ${metric.lbruleid || 'N/A'}\n`;
+        result += `   Requests: ${metric.requests || 'N/A'}\n`;
+        result += `   Bytes Transferred: ${metric.bytes || 'N/A'}\n`;
+        result += `   Active Connections: ${metric.activeconnections || 'N/A'}\n`;
+        result += `   Response Time: ${metric.responsetime || 'N/A'}ms\n\n`;
+      });
+      
+      return result.trim();
+    }
+    
+    return 'No load balancer metrics found.';
+  }
+
+  private formatLoadBalancerHealthResponse(response: any): string {
+    if (response.loadbalancerhealth) {
+      const health = response.loadbalancerhealth;
+      let result = `Load Balancer Health Status:\n\n`;
+      result += `Load Balancer Rule ID: ${health.lbruleid || 'N/A'}\n`;
+      result += `Overall Status: ${health.status || 'N/A'}\n`;
+      result += `Active Instances: ${health.activeinstances || 'N/A'}\n`;
+      result += `Total Instances: ${health.totalinstances || 'N/A'}\n`;
+      result += `Last Check: ${health.lastcheck || 'N/A'}\n`;
+      
+      if (health.instances && health.instances.length > 0) {
+        result += `\nInstance Health Details:\n`;
+        health.instances.forEach((instance: any, index: number) => {
+          result += `  ${index + 1}. Instance ${instance.id || 'N/A'}: ${instance.status || 'N/A'}\n`;
+        });
+      }
+      
+      return result;
+    }
+    
+    return 'Load balancer health information not found.';
   }
 
   private formatNetworkServiceProvidersResponse(response: any): string {
