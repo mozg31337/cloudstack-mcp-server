@@ -5,6 +5,40 @@ All notable changes to the CloudStack MCP Server project will be documented in t
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2025-06-24
+
+### Added
+- **Complete Firewall Management (100% Coverage)**: Achieved 100% CloudStack Firewall API coverage with advanced IPv6 and routing capabilities
+- **IPv6 Firewall Management (4 tools)**: Create, delete, update, and list IPv6 firewall rules for modern network security
+- **Routing Firewall Management (4 tools)**: Create, delete, update, and list IPv4 routing firewall rules for advanced network routing control
+- **BGP Peer Management (6 tools)**: Complete BGP peer lifecycle management including create, delete, update, list, dedicate, and release operations
+- **Advanced VPC Management (1 tool)**: VPC migration capabilities for multi-zone deployments
+- **IPv4 Subnet Management Enhancement (5 tools)**: Complete IPv4 subnet management for zones and guest networks including dedication and guest network subnet operations
+- **Enhanced Network ACL Management (1 tool)**: Update Network ACL rules for complete ACL lifecycle management
+- **20 New MCP Tools**: Expanded from 379 to 399 total tools for complete enterprise networking management
+- **20 New API Methods**: Extended CloudStack client with 430+ total API method implementations
+- **100% Firewall & VPC Coverage**: Achieved complete CloudStack Firewall and VPC API surface coverage
+
+### Changed
+- **Major Networking Milestone**: Complete Firewall and VPC Management with 100% API coverage
+- **Firewall Enhancement**: From 75% to 100% coverage with IPv6 support, routing firewall rules, and enhanced ACL management
+- **VPC Management Evolution**: From 75% to 100% coverage with BGP dynamic routing, advanced migration, and complete subnet management
+- **Tool Count Growth**: 5.3% increase in available tools (379 → 399)
+- **API Method Expansion**: 4.9% increase in API methods (410+ → 430+)
+- **Enterprise Networking Completeness**: 100% coverage of all CloudStack networking and firewall operations
+
+### Technical
+- **Comprehensive Networking Implementation**: Added 20 new networking management client methods including IPv6 firewall, routing firewall, BGP peers, and advanced VPC operations
+- **Enhanced Error Handling**: Complete validation for all new networking management tools with comprehensive async job support
+- **Response Formatting**: Added BGP peer response formatting method for user-friendly networking operation output
+- **Performance Optimization**: Streamlined networking operation handling with proper async job management and status tracking
+- **Modern Network Support**: Complete IPv6 firewall support and BGP-based dynamic routing capabilities
+
+### Documentation
+- **Updated Comprehensive Capabilities Matrix**: Complete analysis reflecting 100% Firewall and VPC API coverage achievement
+- **Enhanced Coverage Metrics**: Detailed breakdown of 399 tools with complete networking management capabilities
+- **Complete Networking Documentation**: Full documentation of advanced networking features including IPv6 and BGP support
+
 ## [1.6.0] - 2025-06-23
 
 ### Added

@@ -1962,4 +1962,94 @@ export class CloudStackClient {
     return this.makeRequest('releaseDedicatedHost', params);
   }
 
+  // IPv6 Firewall Management
+  public async createIpv6FirewallRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createIpv6FirewallRule', params);
+  }
+
+  public async deleteIpv6FirewallRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteIpv6FirewallRule', params);
+  }
+
+  public async updateIpv6FirewallRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateIpv6FirewallRule', params);
+  }
+
+  public async listIpv6FirewallRules(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listIpv6FirewallRules', params);
+  }
+
+  // Routing Firewall Management
+  public async createRoutingFirewallRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createRoutingFirewallRule', params);
+  }
+
+  public async deleteRoutingFirewallRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteRoutingFirewallRule', params);
+  }
+
+  public async updateRoutingFirewallRule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateRoutingFirewallRule', params);
+  }
+
+  public async listRoutingFirewallRules(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listRoutingFirewallRules', params);
+  }
+
+  // BGP Peer Management
+  public async createBgpPeer(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createBgpPeer', params);
+  }
+
+  public async deleteBgpPeer(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteBgpPeer', params);
+  }
+
+  public async updateBgpPeer(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateBgpPeer', params);
+  }
+
+  public async listBgpPeers(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listBgpPeers', params);
+  }
+
+  public async dedicateBgpPeer(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('dedicateBgpPeer', params);
+  }
+
+  public async releaseBgpPeer(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('releaseBgpPeer', params);
+  }
+
+  // Advanced VPC Management
+  public async migrateVpc(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('migrateVpc', params);
+  }
+
+  // IPv4 Subnet Management
+  public async dedicateIpv4SubnetForZone(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('dedicateIpv4SubnetForZone', params);
+  }
+
+  public async releaseIpv4SubnetForZone(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('releaseIpv4SubnetForZone', params);
+  }
+
+  public async createIpv4SubnetForGuestNetwork(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createIpv4SubnetForGuestNetwork', params);
+  }
+
+  public async deleteIpv4SubnetForGuestNetwork(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteIpv4SubnetForGuestNetwork', params);
+  }
+
+  public async listIpv4SubnetsForGuestNetwork(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listIpv4SubnetsForGuestNetwork', params);
+  }
+
+  // Enhanced Network ACL Management
+  public async updateNetworkACL(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateNetworkACL', params);
+  }
+
 }

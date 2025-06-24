@@ -22,7 +22,7 @@ class CloudStackMCPServer {
     this.server = new Server(
       {
         name: 'cloudstack-mcp-server',
-        version: '1.6.0',
+        version: '1.7.0',
       },
       {
         capabilities: {
@@ -5710,6 +5710,285 @@ class CloudStackMCPServer {
             required: ['networkid']
           }
         },
+        // IPv6 Firewall Management
+        {
+          name: 'create_ipv6_firewall_rule',
+          description: 'Create IPv6 firewall rule for network',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              networkid: { type: 'string', description: 'Network ID' },
+              protocol: { type: 'string', description: 'Protocol (tcp/udp/icmp)' },
+              startport: { type: 'number', description: 'Start port' },
+              endport: { type: 'number', description: 'End port' },
+              cidrlist: { type: 'string', description: 'IPv6 CIDR list' },
+              traffictype: { type: 'string', description: 'Traffic type (ingress/egress)' }
+            },
+            required: ['networkid', 'protocol']
+          }
+        },
+        {
+          name: 'delete_ipv6_firewall_rule',
+          description: 'Delete IPv6 firewall rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Firewall rule ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'update_ipv6_firewall_rule',
+          description: 'Update IPv6 firewall rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Firewall rule ID' },
+              protocol: { type: 'string', description: 'Protocol (tcp/udp/icmp)' },
+              startport: { type: 'number', description: 'Start port' },
+              endport: { type: 'number', description: 'End port' },
+              cidrlist: { type: 'string', description: 'IPv6 CIDR list' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_ipv6_firewall_rules',
+          description: 'List IPv6 firewall rules',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              networkid: { type: 'string', description: 'Network ID' },
+              ipaddressid: { type: 'string', description: 'IP address ID' },
+              traffictype: { type: 'string', description: 'Traffic type filter' }
+            }
+          }
+        },
+        // Routing Firewall Management
+        {
+          name: 'create_routing_firewall_rule',
+          description: 'Create IPv4 routing firewall rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              networkid: { type: 'string', description: 'Network ID' },
+              protocol: { type: 'string', description: 'Protocol (tcp/udp/icmp)' },
+              startport: { type: 'number', description: 'Start port' },
+              endport: { type: 'number', description: 'End port' },
+              destinationcidrlist: { type: 'string', description: 'Destination CIDR list' },
+              action: { type: 'string', description: 'Action (allow/deny)' }
+            },
+            required: ['networkid', 'protocol', 'action']
+          }
+        },
+        {
+          name: 'delete_routing_firewall_rule',
+          description: 'Delete IPv4 routing firewall rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Routing firewall rule ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'update_routing_firewall_rule',
+          description: 'Update IPv4 routing firewall rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Routing firewall rule ID' },
+              protocol: { type: 'string', description: 'Protocol (tcp/udp/icmp)' },
+              startport: { type: 'number', description: 'Start port' },
+              endport: { type: 'number', description: 'End port' },
+              destinationcidrlist: { type: 'string', description: 'Destination CIDR list' },
+              action: { type: 'string', description: 'Action (allow/deny)' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_routing_firewall_rules',
+          description: 'List IPv4 routing firewall rules',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              networkid: { type: 'string', description: 'Network ID' },
+              action: { type: 'string', description: 'Action filter (allow/deny)' }
+            }
+          }
+        },
+        // BGP Peer Management
+        {
+          name: 'create_bgp_peer',
+          description: 'Create BGP peer for dynamic routing',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              zoneid: { type: 'string', description: 'Zone ID' },
+              ip4address: { type: 'string', description: 'IPv4 address of BGP peer' },
+              ip6address: { type: 'string', description: 'IPv6 address of BGP peer' },
+              asnumber: { type: 'number', description: 'AS number' },
+              password: { type: 'string', description: 'BGP password' }
+            },
+            required: ['zoneid', 'asnumber']
+          }
+        },
+        {
+          name: 'delete_bgp_peer',
+          description: 'Delete BGP peer',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'BGP peer ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'update_bgp_peer',
+          description: 'Update BGP peer configuration',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'BGP peer ID' },
+              ip4address: { type: 'string', description: 'IPv4 address of BGP peer' },
+              ip6address: { type: 'string', description: 'IPv6 address of BGP peer' },
+              asnumber: { type: 'number', description: 'AS number' },
+              password: { type: 'string', description: 'BGP password' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_bgp_peers',
+          description: 'List BGP peers',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              zoneid: { type: 'string', description: 'Zone ID' },
+              account: { type: 'string', description: 'Account name' },
+              domainid: { type: 'string', description: 'Domain ID' }
+            }
+          }
+        },
+        {
+          name: 'dedicate_bgp_peer',
+          description: 'Dedicate BGP peer to domain/account',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'BGP peer ID' },
+              domainid: { type: 'string', description: 'Domain ID' },
+              account: { type: 'string', description: 'Account name' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'release_bgp_peer',
+          description: 'Release dedicated BGP peer',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'BGP peer ID' }
+            },
+            required: ['id']
+          }
+        },
+        // Advanced VPC Management
+        {
+          name: 'migrate_vpc',
+          description: 'Migrate VPC to different zone',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'VPC ID' },
+              zoneid: { type: 'string', description: 'Target zone ID' }
+            },
+            required: ['id', 'zoneid']
+          }
+        },
+        // IPv4 Subnet Management
+        {
+          name: 'dedicate_ipv4_subnet_for_zone',
+          description: 'Dedicate IPv4 subnet for zone to domain/account',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              subnetid: { type: 'string', description: 'IPv4 subnet ID' },
+              domainid: { type: 'string', description: 'Domain ID' },
+              account: { type: 'string', description: 'Account name' }
+            },
+            required: ['subnetid']
+          }
+        },
+        {
+          name: 'release_ipv4_subnet_for_zone',
+          description: 'Release dedicated IPv4 subnet for zone',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              subnetid: { type: 'string', description: 'IPv4 subnet ID' }
+            },
+            required: ['subnetid']
+          }
+        },
+        {
+          name: 'create_ipv4_subnet_for_guest_network',
+          description: 'Create IPv4 subnet for guest network',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              networkid: { type: 'string', description: 'Guest network ID' },
+              subnet: { type: 'string', description: 'IPv4 subnet CIDR' },
+              gateway: { type: 'string', description: 'Gateway IP address' },
+              netmask: { type: 'string', description: 'Subnet netmask' }
+            },
+            required: ['networkid', 'subnet']
+          }
+        },
+        {
+          name: 'delete_ipv4_subnet_for_guest_network',
+          description: 'Delete IPv4 subnet for guest network',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'IPv4 subnet ID' }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_ipv4_subnets_for_guest_network',
+          description: 'List IPv4 subnets for guest networks',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              networkid: { type: 'string', description: 'Guest network ID' },
+              zoneid: { type: 'string', description: 'Zone ID' }
+            }
+          }
+        },
+        // Enhanced Network ACL Management
+        {
+          name: 'update_network_acl',
+          description: 'Update network ACL rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Network ACL rule ID' },
+              protocol: { type: 'string', description: 'Protocol (tcp/udp/icmp)' },
+              startport: { type: 'number', description: 'Start port' },
+              endport: { type: 'number', description: 'End port' },
+              cidrlist: { type: 'string', description: 'CIDR list' },
+              action: { type: 'string', description: 'Action (allow/deny)' }
+            },
+            required: ['id']
+          }
+        },
         // Network Tags
         {
           name: 'create_tags',
@@ -7534,6 +7813,75 @@ class CloudStackMCPServer {
           
           case 'list_port_forwarding_rules':
             return await this.handleListPortForwardingRules(args);
+
+          // IPv6 Firewall Management Cases
+          case 'create_ipv6_firewall_rule':
+            return await this.handleCreateIpv6FirewallRule(args);
+          
+          case 'delete_ipv6_firewall_rule':
+            return await this.handleDeleteIpv6FirewallRule(args);
+          
+          case 'update_ipv6_firewall_rule':
+            return await this.handleUpdateIpv6FirewallRule(args);
+          
+          case 'list_ipv6_firewall_rules':
+            return await this.handleListIpv6FirewallRules(args);
+
+          // Routing Firewall Management Cases
+          case 'create_routing_firewall_rule':
+            return await this.handleCreateRoutingFirewallRule(args);
+          
+          case 'delete_routing_firewall_rule':
+            return await this.handleDeleteRoutingFirewallRule(args);
+          
+          case 'update_routing_firewall_rule':
+            return await this.handleUpdateRoutingFirewallRule(args);
+          
+          case 'list_routing_firewall_rules':
+            return await this.handleListRoutingFirewallRules(args);
+
+          // BGP Peer Management Cases
+          case 'create_bgp_peer':
+            return await this.handleCreateBgpPeer(args);
+          
+          case 'delete_bgp_peer':
+            return await this.handleDeleteBgpPeer(args);
+          
+          case 'update_bgp_peer':
+            return await this.handleUpdateBgpPeer(args);
+          
+          case 'list_bgp_peers':
+            return await this.handleListBgpPeers(args);
+          
+          case 'dedicate_bgp_peer':
+            return await this.handleDedicateBgpPeer(args);
+          
+          case 'release_bgp_peer':
+            return await this.handleReleaseBgpPeer(args);
+
+          // Advanced VPC Management Cases
+          case 'migrate_vpc':
+            return await this.handleMigrateVpc(args);
+
+          // IPv4 Subnet Management Cases
+          case 'dedicate_ipv4_subnet_for_zone':
+            return await this.handleDedicateIpv4SubnetForZone(args);
+          
+          case 'release_ipv4_subnet_for_zone':
+            return await this.handleReleaseIpv4SubnetForZone(args);
+          
+          case 'create_ipv4_subnet_for_guest_network':
+            return await this.handleCreateIpv4SubnetForGuestNetwork(args);
+          
+          case 'delete_ipv4_subnet_for_guest_network':
+            return await this.handleDeleteIpv4SubnetForGuestNetwork(args);
+          
+          case 'list_ipv4_subnets_for_guest_network':
+            return await this.handleListIpv4SubnetsForGuestNetwork(args);
+
+          // Enhanced Network ACL Management Cases
+          case 'update_network_acl':
+            return await this.handleUpdateNetworkACL(args);
 
           // Account Management Cases
           case 'create_account':
@@ -14932,6 +15280,316 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     }
     
     return result.trim();
+  }
+
+  // IPv6 Firewall Management Handlers
+  private async handleCreateIpv6FirewallRule(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'networkid', 'protocol', 'startport', 'endport', 'cidrlist', 'traffictype', 'icmptype', 'icmpcode'
+    ]);
+    const response = await this.client.createIpv6FirewallRule(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatFirewallRulesResponse(response)
+      }]
+    };
+  }
+
+  private async handleDeleteIpv6FirewallRule(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteIpv6FirewallRule(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('IPv6 firewall rule deletion', response)
+      }]
+    };
+  }
+
+  private async handleUpdateIpv6FirewallRule(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'id', 'protocol', 'startport', 'endport', 'cidrlist', 'icmptype', 'icmpcode'
+    ]);
+    const response = await this.client.updateIpv6FirewallRule(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatFirewallRulesResponse(response)
+      }]
+    };
+  }
+
+  private async handleListIpv6FirewallRules(args: any): Promise<any> {
+    const params = this.buildParams(args, ['networkid', 'ipaddressid', 'traffictype', 'listall']);
+    const response = await this.client.listIpv6FirewallRules(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatFirewallRulesResponse(response)
+      }]
+    };
+  }
+
+  // Routing Firewall Management Handlers
+  private async handleCreateRoutingFirewallRule(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'networkid', 'protocol', 'startport', 'endport', 'destinationcidrlist', 'action', 'icmptype', 'icmpcode'
+    ]);
+    const response = await this.client.createRoutingFirewallRule(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatFirewallRulesResponse(response)
+      }]
+    };
+  }
+
+  private async handleDeleteRoutingFirewallRule(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteRoutingFirewallRule(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Routing firewall rule deletion', response)
+      }]
+    };
+  }
+
+  private async handleUpdateRoutingFirewallRule(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'id', 'protocol', 'startport', 'endport', 'destinationcidrlist', 'action', 'icmptype', 'icmpcode'
+    ]);
+    const response = await this.client.updateRoutingFirewallRule(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatFirewallRulesResponse(response)
+      }]
+    };
+  }
+
+  private async handleListRoutingFirewallRules(args: any): Promise<any> {
+    const params = this.buildParams(args, ['networkid', 'action', 'listall']);
+    const response = await this.client.listRoutingFirewallRules(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatFirewallRulesResponse(response)
+      }]
+    };
+  }
+
+  // BGP Peer Management Handlers
+  private async handleCreateBgpPeer(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'zoneid', 'ip4address', 'ip6address', 'asnumber', 'password'
+    ]);
+    const response = await this.client.createBgpPeer(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatBgpPeerResponse('BGP peer creation', response)
+      }]
+    };
+  }
+
+  private async handleDeleteBgpPeer(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteBgpPeer(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('BGP peer deletion', response)
+      }]
+    };
+  }
+
+  private async handleUpdateBgpPeer(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'id', 'ip4address', 'ip6address', 'asnumber', 'password'
+    ]);
+    const response = await this.client.updateBgpPeer(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatBgpPeerResponse('BGP peer update', response)
+      }]
+    };
+  }
+
+  private async handleListBgpPeers(args: any): Promise<any> {
+    const params = this.buildParams(args, ['zoneid', 'account', 'domainid', 'listall']);
+    const response = await this.client.listBgpPeers(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatBgpPeerResponse('BGP peers', response)
+      }]
+    };
+  }
+
+  private async handleDedicateBgpPeer(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'domainid', 'account']);
+    const response = await this.client.dedicateBgpPeer(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatBgpPeerResponse('BGP peer dedication', response)
+      }]
+    };
+  }
+
+  private async handleReleaseBgpPeer(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.releaseBgpPeer(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('BGP peer release', response)
+      }]
+    };
+  }
+
+  // Advanced VPC Management Handlers
+  private async handleMigrateVpc(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'zoneid']);
+    const response = await this.client.migrateVpc(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('VPC migration', response)
+      }]
+    };
+  }
+
+  // IPv4 Subnet Management Handlers
+  private async handleDedicateIpv4SubnetForZone(args: any): Promise<any> {
+    const params = this.buildParams(args, ['subnetid', 'domainid', 'account']);
+    const response = await this.client.dedicateIpv4SubnetForZone(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatSubnetResponse('IPv4 subnet dedication', response)
+      }]
+    };
+  }
+
+  private async handleReleaseIpv4SubnetForZone(args: any): Promise<any> {
+    const params = this.buildParams(args, ['subnetid']);
+    const response = await this.client.releaseIpv4SubnetForZone(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('IPv4 subnet release', response)
+      }]
+    };
+  }
+
+  private async handleCreateIpv4SubnetForGuestNetwork(args: any): Promise<any> {
+    const params = this.buildParams(args, ['networkid', 'subnet', 'gateway', 'netmask']);
+    const response = await this.client.createIpv4SubnetForGuestNetwork(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatSubnetResponse('IPv4 subnet for guest network creation', response)
+      }]
+    };
+  }
+
+  private async handleDeleteIpv4SubnetForGuestNetwork(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteIpv4SubnetForGuestNetwork(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('IPv4 subnet for guest network deletion', response)
+      }]
+    };
+  }
+
+  private async handleListIpv4SubnetsForGuestNetwork(args: any): Promise<any> {
+    const params = this.buildParams(args, ['networkid', 'zoneid', 'listall']);
+    const response = await this.client.listIpv4SubnetsForGuestNetwork(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatSubnetResponse('IPv4 subnets for guest networks', response)
+      }]
+    };
+  }
+
+  // Enhanced Network ACL Management Handlers
+  private async handleUpdateNetworkACL(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'id', 'protocol', 'startport', 'endport', 'cidrlist', 'action', 'traffictype', 'icmptype', 'icmpcode'
+    ]);
+    const response = await this.client.updateNetworkACL(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatNetworkACLResponse(response)
+      }]
+    };
+  }
+
+  // BGP Peer Response Formatting Methods
+  private formatBgpPeerResponse(operation: string, response: any): string {
+    if (response.bgppeer) {
+      const peer = response.bgppeer;
+      let result = `${operation} successful:\n\n`;
+      result += `BGP Peer ID: ${peer.id || 'N/A'}\n`;
+      result += `IPv4 Address: ${peer.ip4address || 'N/A'}\n`;
+      result += `IPv6 Address: ${peer.ip6address || 'N/A'}\n`;
+      result += `AS Number: ${peer.asnumber || 'N/A'}\n`;
+      result += `Zone: ${peer.zonename || 'N/A'}\n`;
+      result += `State: ${peer.state || 'N/A'}\n`;
+      result += `Account: ${peer.account || 'N/A'}\n`;
+      result += `Domain: ${peer.domain || 'N/A'}\n`;
+      return result;
+    }
+    
+    if (response.bgppeers) {
+      const peers = response.bgppeers;
+      if (peers.length === 0) {
+        return 'No BGP peers found.';
+      }
+      
+      let result = `Found ${peers.length} BGP peer(s):\n\n`;
+      for (const peer of peers) {
+        result += `BGP Peer: ${peer.id || 'N/A'}\n`;
+        result += `  IPv4: ${peer.ip4address || 'N/A'}\n`;
+        result += `  IPv6: ${peer.ip6address || 'N/A'}\n`;
+        result += `  AS Number: ${peer.asnumber || 'N/A'}\n`;
+        result += `  Zone: ${peer.zonename || 'N/A'}\n`;
+        result += `  State: ${peer.state || 'N/A'}\n`;
+        result += `  Account: ${peer.account || 'N/A'}\n\n`;
+      }
+      return result;
+    }
+    
+    return `${operation} completed successfully.`;
   }
 
   // System VM Response Formatting Methods
