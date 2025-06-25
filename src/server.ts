@@ -11,18 +11,27 @@ import {
 import { CloudStackClient } from './cloudstack/client.js';
 import { ConfigManager } from './utils/config.js';
 import { Logger } from './utils/logger.js';
+import { ConfirmationMiddleware } from './security/ConfirmationMiddleware.js';
+import { DangerousActionConfirmation } from './security/DangerousActionConfirmation.js';
+import { SecurityAuditLogger } from './security/SecurityAuditLogger.js';
+import { 
+  createConfirmationRequiredError,
+  formatConfirmationForDisplay,
+  MCP_CONFIRMATION_ERROR_CODES 
+} from './security/ConfirmationProtocol.js';
 import { z } from 'zod';
 
 class CloudStackMCPServer {
   private server: Server;
   private client: CloudStackClient;
   private configManager: ConfigManager;
+  private confirmationMiddleware: ConfirmationMiddleware;
 
   constructor() {
     this.server = new Server(
       {
         name: 'cloudstack-mcp-server',
-        version: '2.0.0',
+        version: '2.1.0',
       },
       {
         capabilities: {
@@ -40,6 +49,20 @@ class CloudStackMCPServer {
       
       const environment = this.configManager.getDefaultEnvironment();
       this.client = new CloudStackClient(environment);
+
+      // Initialize security components
+      const securityAuditLogger = new SecurityAuditLogger();
+      const dangerousActionConfirmation = new DangerousActionConfirmation(securityAuditLogger);
+      this.confirmationMiddleware = new ConfirmationMiddleware(
+        dangerousActionConfirmation,
+        securityAuditLogger,
+        {
+          confirmationTimeoutMs: 300000, // 5 minutes
+          maxPendingConfirmations: 50,
+          enableBypass: false, // Enable for development environments
+          bypassEnvironments: ['development', 'test']
+        }
+      );
 
       this.setupToolHandlers();
       this.setupErrorHandling();
@@ -7937,6 +7960,28 @@ class CloudStackMCPServer {
               hostid: { type: 'string', description: 'Host ID' }
             }
           }
+        },
+        {
+          name: 'confirm_dangerous_action',
+          description: 'Confirm a dangerous action that requires explicit user approval',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              correlationId: {
+                type: 'string',
+                description: 'Correlation ID from the confirmation request'
+              },
+              confirmed: {
+                type: 'boolean',
+                description: 'Whether the user confirms the dangerous action'
+              },
+              confirmationText: {
+                type: 'string',
+                description: 'The exact confirmation text required for the action'
+              }
+            },
+            required: ['correlationId', 'confirmed']
+          }
         }
       ];
 
@@ -7948,6 +7993,33 @@ class CloudStackMCPServer {
 
       try {
         Logger.info(`Executing tool: ${name}`, args);
+
+        // Check if this operation requires confirmation
+        const environment = this.configManager.getDefaultEnvironment();
+        if (this.confirmationMiddleware.requiresConfirmation(name, environment.name)) {
+          // Create confirmation request
+          const confirmationRequest = this.confirmationMiddleware.createConfirmationRequest(
+            name,
+            args || {},
+            'claude-user', // MCP doesn't provide user context, using default
+            environment.name
+          );
+
+          if (confirmationRequest) {
+            // Format the confirmation request for display
+            const formattedRequest = this.confirmationMiddleware.formatConfirmationRequest(confirmationRequest);
+            const expiresAt = Date.now() + 300000; // 5 minutes from now
+
+            // Throw an MCP error that Claude Desktop can handle
+            const confirmationError = createConfirmationRequiredError(formattedRequest, expiresAt);
+            
+            // MCP protocol requires throwing an error for tool failures
+            const error = new Error(confirmationError.message);
+            (error as any).code = confirmationError.code;
+            (error as any).data = confirmationError.data;
+            throw error;
+          }
+        }
 
         switch (name) {
           case 'list_virtual_machines':
@@ -9060,6 +9132,9 @@ class CloudStackMCPServer {
           
           case 'release_dedicated_host':
             return await this.handleReleaseDedicatedHost(args);
+          
+          case 'confirm_dangerous_action':
+            return await this.handleConfirmDangerousAction(args);
           
           default:
             throw new Error(`Unknown tool: ${name}`);
@@ -16429,6 +16504,164 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
         text: this.formatAsyncJobResponse('Dedicated host release', response)
       }]
     };
+  }
+
+  private async handleConfirmDangerousAction(args: any): Promise<any> {
+    const { correlationId, confirmed, confirmationText } = args;
+
+    try {
+      // Validate required parameters
+      if (!correlationId) {
+        throw new Error('correlationId is required');
+      }
+
+      if (typeof confirmed !== 'boolean') {
+        throw new Error('confirmed must be a boolean value');
+      }
+
+      // Process the confirmation response
+      const result = this.confirmationMiddleware.processConfirmationResponse(
+        correlationId,
+        confirmed,
+        confirmationText,
+        'claude-user'
+      );
+
+      if (!result.success) {
+        return {
+          content: [{
+            type: 'text',
+            text: `❌ Confirmation failed: ${result.error}`
+          }]
+        };
+      }
+
+      if (result.allowOperation) {
+        // Get the pending confirmation details to re-execute the original operation
+        const pendingConfirmation = this.confirmationMiddleware.getPendingConfirmation(correlationId);
+        if (pendingConfirmation) {
+          const originalTool = pendingConfirmation.request.toolName;
+          const originalArgs = pendingConfirmation.request.parameters;
+
+          Logger.info(`Re-executing confirmed dangerous operation: ${originalTool}`, originalArgs);
+
+          // Re-execute the original tool with confirmed parameters
+          // NOTE: This is a simplified approach. In production, you might want to use
+          // a more sophisticated queue system for re-execution
+          try {
+            // Clear the confirmation state to avoid infinite recursion
+            this.confirmationMiddleware.cancelConfirmation(correlationId, 'claude-user', 'operation_confirmed');
+
+            // Call the original tool handler
+            return await this.executeToolByName(originalTool, originalArgs);
+          } catch (executeError) {
+            return {
+              content: [{
+                type: 'text',
+                text: `❌ Failed to execute confirmed operation: ${executeError instanceof Error ? executeError.message : 'Unknown error'}`
+              }]
+            };
+          }
+        } else {
+          return {
+            content: [{
+              type: 'text',
+              text: `❌ Confirmation processed successfully, but the original operation context was not found. The operation may have expired.`
+            }]
+          };
+        }
+      } else {
+        return {
+          content: [{
+            type: 'text',
+            text: `✅ Operation cancelled successfully. The dangerous action was not performed.`
+          }]
+        };
+      }
+    } catch (error) {
+      Logger.error('Confirmation processing failed', error);
+      return {
+        content: [{
+          type: 'text',
+          text: `❌ Confirmation processing error: ${error instanceof Error ? error.message : 'Unknown error'}`
+        }]
+      };
+    }
+  }
+
+  // Helper method to execute tools by name (used for re-execution after confirmation)
+  private async executeToolByName(toolName: string, args: any): Promise<any> {
+    switch (toolName) {
+      case 'destroy_virtual_machine':
+        return await this.handleDestroyVirtualMachine(args);
+      case 'expunge_virtual_machine':
+        return await this.handleExpungeVirtualMachine(args);
+      case 'stop_virtual_machine':
+        return await this.handleStopVirtualMachine(args);
+      case 'reboot_virtual_machine':
+        return await this.handleRebootVirtualMachine(args);
+      case 'migrate_virtual_machine':
+        return await this.handleMigrateVirtualMachine(args);
+      case 'scale_virtual_machine':
+        return await this.handleScaleVirtualMachine(args);
+      case 'delete_volume':
+        return await this.handleDeleteVolume(args);
+      case 'delete_snapshot':
+        return await this.handleDeleteSnapshot(args);
+      case 'migrate_volume':
+        return await this.handleMigrateVolume(args);
+      case 'delete_network':
+        return await this.handleDeleteNetwork(args);
+      case 'restart_network':
+        return await this.handleRestartNetwork(args);
+      case 'delete_security_group':
+        return await this.handleDeleteSecurityGroup(args);
+      case 'delete_vpc':
+        return await this.handleDeleteVpc(args);
+      case 'restart_vpc':
+        return await this.handleRestartVpc(args);
+      case 'delete_load_balancer_rule':
+        return await this.handleDeleteLoadBalancerRule(args);
+      case 'delete_vpn_connection':
+        return await this.handleDeleteVpnConnection(args);
+      case 'delete_vpn_gateway':
+        return await this.handleDeleteVpnGateway(args);
+      case 'delete_account':
+        return await this.handleDeleteAccount(args);
+      case 'delete_domain':
+        return await this.handleDeleteDomain(args);
+      case 'delete_user':
+        return await this.handleDeleteUser(args);
+      case 'destroy_system_vm':
+        return await this.handleDestroySystemVm(args);
+      case 'stop_system_vm':
+        return await this.handleStopSystemVm(args);
+      case 'reboot_system_vm':
+        return await this.handleRebootSystemVm(args);
+      case 'delete_kubernetes_cluster':
+        return await this.handleDeleteKubernetesCluster(args);
+      case 'scale_kubernetes_cluster':
+        return await this.handleScaleKubernetesCluster(args);
+      case 'stop_kubernetes_cluster':
+        return await this.handleStopKubernetesCluster(args);
+      case 'delete_zone':
+        return await this.handleDeleteZone(args);
+      case 'delete_host':
+        return await this.handleDeleteHost(args);
+      case 'delete_template':
+        return await this.handleDeleteTemplate(args);
+      case 'delete_iso':
+        return await this.handleDeleteIso(args);
+      case 'destroy_router':
+        return await this.handleDestroyRouter(args);
+      case 'stop_router':
+        return await this.handleStopRouter(args);
+      case 'reboot_router':
+        return await this.handleRebootRouter(args);
+      // Add more dangerous operations as needed
+      default:
+        throw new Error(`Confirmed tool execution not implemented for: ${toolName}`);
+    }
   }
 
   // Host Management Response Formatting Methods

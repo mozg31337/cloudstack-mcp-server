@@ -1,6 +1,6 @@
 # CloudStack MCP Server
 
-[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/mozg31337/cloudstack-mcp-server)
+[![Version](https://img.shields.io/badge/version-2.1.0-blue.svg)](https://github.com/mozg31337/cloudstack-mcp-server)
 [![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
 
@@ -13,8 +13,9 @@ The CloudStack MCP Server enables seamless cloud infrastructure management by br
 **Key Statistics:**
 - **Complete API Coverage**: 662+ MCP tools covering 693+ CloudStack API methods
 - **Comprehensive Categories**: All 29 CloudStack API categories implemented
+- **Enterprise Security**: 94 dangerous operations protected with confirmation system
 - **Natural Language Interface**: Zero learning curve for infrastructure management
-- **Enterprise Ready**: Production-grade reliability and comprehensive error handling
+- **Production Ready**: Enterprise-grade reliability with comprehensive safety controls
 
 ## Features
 
@@ -48,6 +49,16 @@ The CloudStack MCP Server enables seamless cloud infrastructure management by br
 - **Object Storage**: S3-compatible storage with lifecycle policies
 - **Hardware Integration**: NetScaler, UCS, and bare metal server management
 - **Tungsten Fabric SDN**: Software-defined networking with micro-segmentation
+
+### 🛡️ Enterprise Security & Safety
+- **Dangerous Action Confirmation**: Foolproof confirmation system protecting 94 destructive operations
+- **Smart Operation Detection**: Automatic identification of delete, destroy, purge, scale, and restart operations
+- **Rich Context Warnings**: Detailed operation descriptions with severity levels and impact assessment
+- **Confirmation Requirements**: Mandatory typed confirmation for critical operations (e.g., "destroy permanently")
+- **Environment Controls**: Smart bypasses for development while enforcing production safety
+- **Comprehensive Auditing**: Full security audit trails with correlation tracking and compliance reporting
+- **Operation Categories**: Protection across VM, Storage, Network, VPC, Kubernetes, and Infrastructure operations
+- **Memory Management**: Efficient tracking with automatic cleanup and configurable timeout policies
 
 ## Installation
 

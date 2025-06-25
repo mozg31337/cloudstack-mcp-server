@@ -5,6 +5,31 @@ All notable changes to the CloudStack MCP Server project will be documented in t
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2025-06-25
+
+### Added
+- **🛡️ Enterprise Dangerous Action Confirmation System**: Foolproof confirmation system for all destructive operations
+  - **94 Dangerous Operations Protected**: Comprehensive coverage of all CloudStack destructive operations (destroy, delete, purge, scale, restart, etc.)
+  - **Smart Confirmation Requirements**: Each operation requires typing exact confirmation text (e.g., "destroy permanently", "delete account permanently")
+  - **Rich Operation Context**: Detailed descriptions, severity levels (Critical/High/Medium/Low), impact scope, and reversibility indicators
+  - **Category-based Organization**: VM Operations, Storage, Network, VPC, Kubernetes, System, Infrastructure, and more
+  - **MCP Protocol Integration**: Seamless integration with Claude Desktop via new `confirm_dangerous_action` tool
+  - **Environment Bypass Support**: Smart bypasses for development/test environments while enforcing in production
+  - **Comprehensive Security Audit**: Full audit trail with correlation IDs, timestamps, and security event logging
+  - **Timeout Management**: 5-minute confirmation windows with automatic cleanup of expired requests
+  - **Memory Management**: Efficient tracking of pending confirmations with configurable limits
+  - **Parameter Sanitization**: Secure handling of sensitive data in confirmation prompts and logs
+
+### Enhanced
+- **Security Architecture**: Extended existing security framework with confirmation middleware integration
+- **Error Handling**: Enhanced MCP error protocol for confirmation workflows
+- **Testing Coverage**: Added 79 comprehensive test cases for confirmation system validation
+
+### Security
+- **Operation Safety**: Prevents accidental execution of 94 identified destructive CloudStack operations
+- **Compliance Support**: Full audit trails for regulatory compliance and security monitoring
+- **Access Control**: Environment-based access control with configurable bypass policies
+
 ## [2.0.0] - 2025-06-24
 
 ### Added

@@ -108,9 +108,11 @@ export class ConfigManager {
     
     if (result.success && result.newApiKey && result.newSecretKey) {
       // Update the configuration
-      this.config.environments[envName].apiKey = result.newApiKey;
-      this.config.environments[envName].secretKey = result.newSecretKey;
-      return true;
+      if (this.config.environments && this.config.environments[envName]) {
+        this.config.environments[envName].apiKey = result.newApiKey;
+        this.config.environments[envName].secretKey = result.newSecretKey;
+        return true;
+      }
     }
     
     return false;
