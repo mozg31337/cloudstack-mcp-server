@@ -4,271 +4,318 @@
 [![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
 
-🎯 **HISTORIC ACHIEVEMENT: The world's first complete CloudStack management platform with 100% CloudStack 4.20 API coverage**
+A comprehensive Model Context Protocol (MCP) server that provides complete CloudStack infrastructure management through natural language interactions with Claude Desktop. This implementation offers full coverage of CloudStack 4.20 APIs with 662+ MCP tools covering 693+ API methods across 29 categories.
 
-A Model Context Protocol (MCP) server that provides **complete CloudStack management** through natural language interactions with Claude Desktop. With **662+ MCP tools** covering **693+ CloudStack API methods** across **all 29 API categories**, this represents the most comprehensive CloudStack integration ever created.
+## Overview
 
-## ✨ v2.0.0 - Complete CloudStack Mastery
+The CloudStack MCP Server enables seamless cloud infrastructure management by bridging CloudStack APIs with Claude's natural language interface. Users can perform complex infrastructure operations using conversational commands, eliminating the need to learn CloudStack's API syntax or command-line tools.
 
-### 🎖️ **Historic Achievement: 100% CloudStack 4.20 API Coverage**
-- **662+ MCP Tools**: Every CloudStack operation accessible through natural language
-- **693+ API Methods**: Complete coverage of all CloudStack 4.20 capabilities
-- **29 Complete Categories**: From basic VMs to advanced enterprise features
-- **Zero Learning Curve**: Natural language eliminates technical barriers
-
-### 🚀 **New Advanced Features (v2.0.0)**
-- **🔄 AutoScale Management**: Complete auto-scaling with policies, VM groups, profiles, conditions, and performance monitoring
-- **🔐 Certificate Management**: Enterprise SSL/TLS with CA providers, certificate provisioning, revocation, and template downloads
-- **💰 Quota Management**: Advanced billing with tariff structures, email notifications, and preset variables
-- **📈 Advanced Metrics**: Infrastructure monitoring with database metrics, usage servers, and capacity planning
-- **🗄️ Object Store Management**: Modern S3-compatible storage with lifecycle management
-- **🌐 Tungsten Fabric SDN**: Complete software-defined networking with address groups, policies, firewall rules, and logical routers
-- **🏢 Enterprise Integration**: LDAP directory services, webhook automation, and compliance reporting
-- **📦 Image Store Management**: Repository management with S3/Swift support and secondary storage
-- **⚡ Hardware Integration**: NetScaler load balancers, UCS management, and out-of-band IPMI control
-- **🖥️ Baremetal Management**: Complete physical server lifecycle from provisioning to power management
+**Key Statistics:**
+- **Complete API Coverage**: 662+ MCP tools covering 693+ CloudStack API methods
+- **Comprehensive Categories**: All 29 CloudStack API categories implemented
+- **Natural Language Interface**: Zero learning curve for infrastructure management
+- **Enterprise Ready**: Production-grade reliability and comprehensive error handling
 
 ## Features
 
-### 🔧 Complete Infrastructure Management
-- **Virtual Machine Lifecycle**: Deploy, start, stop, reboot, destroy, and update VMs
-- **Volume Operations**: Create, attach, detach, resize, and delete storage volumes
-- **Snapshot Management**: Create, delete, and restore volumes from snapshots
-- **Security Groups**: Create groups and manage ingress/egress firewall rules
-- **Load Balancer Management**: Create, configure, and manage load balancing rules with health checks
-- **SSL Certificate Management**: Upload, assign, and manage SSL certificates for load balancers
-- **Firewall Rules**: Create and manage firewall rules for public IP addresses
-- **Network ACL Management**: Comprehensive access control list management for VPC networks
-- **Port Forwarding**: Complete port forwarding rule management including updates
-- **Resource Discovery**: List VMs, networks, volumes, zones, hosts, and templates
+### 🏗️ Infrastructure Management
+- **Virtual Machine Operations**: Complete lifecycle management including deployment, scaling, migration, and monitoring
+- **Storage Management**: Volume operations, snapshot management, backup and restore capabilities
+- **Network Administration**: VPC management, load balancing, firewall rules, and network ACLs
+- **Security Groups**: Ingress/egress rule management and security policy enforcement
 
-### 👥 Account & User Management
-- **Account Lifecycle**: Create, update, delete, enable/disable accounts
-- **Domain Management**: Create hierarchical domain structures and manage domain resources
-- **User Administration**: Full user lifecycle management with role-based access
-- **Resource Quotas**: Set and manage resource limits and quotas per account/domain
-- **Role & Permissions**: Create custom roles and manage fine-grained permissions
-- **Project Management**: Multi-tenant project spaces with user collaboration
-- **LDAP Integration**: Import and synchronize users from LDAP directories
+### 👥 Identity & Access Management
+- **Account Administration**: User lifecycle management with role-based access control
+- **Domain Management**: Hierarchical domain structures and resource organization
+- **Project Management**: Multi-tenant collaboration spaces with user assignments
+- **LDAP Integration**: Enterprise directory service synchronization
 
-### 💿 Template & ISO Management
-- **Template Lifecycle**: Create, register, update, delete, copy templates across zones
-- **Template Registration**: Register templates from external URLs with format support
-- **Template Extraction**: Extract templates for download and backup
-- **ISO Management**: Complete ISO lifecycle from registration to VM attachment
-- **Cross-Zone Operations**: Copy templates and ISOs between different zones
-- **Metadata Management**: Update template properties and OS type configurations
+### 🌐 Advanced Networking
+- **VPC & Networking**: Virtual Private Cloud configuration and management
+- **VPN Services**: Site-to-site and remote access VPN connectivity
+- **Load Balancing**: Application load balancer configuration with health checks
+- **SSL Certificate Management**: Certificate lifecycle and deployment automation
 
-### 🌐 VPC & Advanced Networking
-- **VPC Management**: Create, configure, and manage Virtual Private Clouds
-- **Private Gateways**: Connect VPCs to on-premises networks
-- **Static Routing**: Configure custom routing within VPC environments  
-- **VPN Services**: Site-to-Site and Remote Access VPN connectivity
-- **VPN Gateways**: Manage VPN endpoints and customer gateways
-- **Network Isolation**: Advanced network segmentation and access control
+### 📊 Monitoring & Analytics
+- **Resource Metrics**: Infrastructure performance monitoring and capacity planning
+- **Event Management**: System event tracking and alert configuration
+- **Quota Management**: Resource limit enforcement and billing integration
+- **AutoScale Management**: Automatic scaling policies and performance thresholds
 
-### 🏗️ Enterprise-Ready Architecture
-- **Modular Design**: Extensible architecture for adding new CloudStack APIs
-- **Type-Safe**: Full TypeScript implementation with comprehensive type definitions
-- **Multi-Environment**: Support for multiple CloudStack deployments
-- **Async Job Handling**: Proper tracking of long-running CloudStack operations
-- **Error Management**: Comprehensive error handling and user-friendly messages
+### 🔧 Advanced Features
+- **Template & ISO Management**: Image lifecycle with cross-zone replication
+- **Kubernetes Integration**: Container orchestration platform management
+- **Object Storage**: S3-compatible storage with lifecycle policies
+- **Hardware Integration**: NetScaler, UCS, and bare metal server management
+- **Tungsten Fabric SDN**: Software-defined networking with micro-segmentation
 
 ## Installation
 
 ### Prerequisites
 
-- Node.js 18+ 
-- Claude Desktop application
-- CloudStack API access
+- **Node.js**: Version 18.0 or higher
+- **Claude Desktop**: Latest version with MCP support
+- **CloudStack Access**: Valid API credentials with appropriate permissions
 
-### Setup
+### Step 1: Clone and Build
 
-1. Clone the repository:
 ```bash
+# Clone the repository
 git clone https://github.com/mozg31337/cloudstack-mcp-server.git
 cd cloudstack-mcp-server
-```
 
-2. Install dependencies:
-```bash
+# Install dependencies
 npm install
-```
 
-3. Build the project:
-```bash
+# Build the project
 npm run build
 ```
 
-4. Configure CloudStack connection:
+### Step 2: Configure CloudStack Connection
+
+Create your CloudStack configuration file:
+
 ```bash
+# Copy example configuration
 cp config/cloudstack.example.json config/cloudstack.json
-# Edit config/cloudstack.json with your CloudStack details
 ```
 
-5. Add to Claude Desktop configuration:
-Edit your `claude_desktop_config.json` file:
+Edit `config/cloudstack.json` with your CloudStack environment details:
+
+```json
+{
+  "defaultEnvironment": "production",
+  "environments": {
+    "production": {
+      "name": "Production CloudStack",
+      "apiUrl": "https://your-cloudstack.example.com/client/api",
+      "apiKey": "your-api-key",
+      "secretKey": "your-secret-key",
+      "timeout": 30000,
+      "retries": 3
+    },
+    "staging": {
+      "name": "Staging Environment",
+      "apiUrl": "https://staging-cloudstack.example.com/client/api",
+      "apiKey": "staging-api-key",
+      "secretKey": "staging-secret-key"
+    }
+  },
+  "logging": {
+    "level": "info",
+    "file": "logs/cloudstack-mcp.log"
+  }
+}
+```
+
+### Step 3: Claude Desktop Integration
+
+Add the MCP server to your Claude Desktop configuration:
+
+**macOS/Linux:** `~/.config/claude/claude_desktop_config.json`
+**Windows:** `%APPDATA%\\Claude\\claude_desktop_config.json`
+
 ```json
 {
   "mcpServers": {
     "cloudstack": {
       "command": "node",
-      "args": ["/path/to/cloudstack-mcp-server/dist/server.js"],
+      "args": ["/absolute/path/to/cloudstack-mcp-server/dist/server.js"],
       "env": {
-        "CLOUDSTACK_CONFIG": "/path/to/config/cloudstack.json"
+        "CLOUDSTACK_CONFIG": "/absolute/path/to/config/cloudstack.json"
       }
     }
   }
 }
 ```
 
+### Step 4: Verify Installation
+
+1. Restart Claude Desktop
+2. Start a new conversation
+3. Test the connection with: "List my CloudStack virtual machines"
+
+## Configuration
+
+### Environment Variables
+
+The server supports configuration through environment variables:
+
+```bash
+# CloudStack configuration file path
+CLOUDSTACK_CONFIG=/path/to/cloudstack.json
+
+# Logging configuration
+LOG_LEVEL=info
+LOG_FILE=/path/to/logs/cloudstack-mcp.log
+
+# Network settings
+CLOUDSTACK_TIMEOUT=30000
+CLOUDSTACK_RETRIES=3
+```
+
+### Multiple Environments
+
+Configure multiple CloudStack environments for different use cases:
+
+```json
+{
+  "defaultEnvironment": "production",
+  "environments": {
+    "production": { "..." },
+    "development": { "..." },
+    "testing": { "..." }
+  }
+}
+```
+
+Switch environments in Claude by specifying: "List VMs in development environment"
+
+## Usage Examples
+
+### Infrastructure Discovery
+```
+"List all virtual machines in zone-east"
+"Show me running VMs with their IP addresses"
+"What storage volumes are available?"
+"Display network configuration for my VPC"
+```
+
+### Virtual Machine Management
+```
+"Deploy a new Ubuntu 20.04 server with 4GB RAM"
+"Start virtual machine vm-12345"
+"Create a snapshot of my database server"
+"Resize VM memory to 8GB"
+```
+
+### Network Operations
+```
+"Create a load balancer for web servers"
+"Add firewall rule allowing HTTP traffic"
+"Configure VPN access for remote users"
+"Set up network ACL for database tier"
+```
+
+### Security Management
+```
+"Create security group for web applications"
+"Allow SSH access from corporate network"
+"Upload SSL certificate for HTTPS load balancer"
+"Configure two-factor authentication"
+```
+
 ## Development
+
+### Local Development Setup
 
 ```bash
 # Development mode with hot reload
 npm run dev
 
-# Run tests
+# Run test suite
 npm test
 
-# Run tests with coverage
+# Test with coverage report
 npm run test:coverage
 
-# Lint code
+# Code linting
 npm run lint
 
 # Type checking
 npm run typecheck
-
 ```
 
-## Project Structure
+### Project Structure
 
 ```
 src/
-├── server.ts              # MCP server entry point
+├── server.ts              # MCP server implementation with 662+ tools
 ├── cloudstack/
-│   ├── client.ts          # CloudStack API client
-│   ├── auth.ts            # Authentication handling
-│   └── types.ts           # CloudStack API types
-├── tools/
-│   ├── compute.ts         # VM and compute tools
-│   ├── networking.ts      # Network management tools
-│   ├── storage.ts         # Storage management tools
-│   └── infrastructure.ts  # Infrastructure tools
-├── resources/             # MCP resource providers
-└── utils/
-    ├── config.ts          # Configuration management
-    └── logger.ts          # Logging utilities
+│   ├── client.ts          # CloudStack API client with 693+ methods
+│   ├── auth.ts            # HMAC signature authentication
+│   └── types.ts           # TypeScript type definitions
+├── utils/
+│   ├── config.ts          # Configuration management
+│   └── logger.ts          # Structured logging
+├── tests/                 # Comprehensive test suite
+└── config/                # Configuration templates
 ```
-
-## Usage Examples
-
-Try asking Claude:
-
-**Infrastructure Discovery:**
-- "List all my virtual machines"
-- "Show me running VMs in zone-1"
-- "What networks are available?"
-- "List all volumes and their sizes"
-
-**VM Management:**
-- "Deploy a new Ubuntu server in zone-1"
-- "Start VM vm-12345"
-- "Stop the web server VM"
-- "Update VM display name to 'Production Server'"
-
-**Storage Operations:**
-- "Create a 100GB data volume"
-- "Attach volume vol-123 to VM vm-456" 
-- "Create snapshot of my data volume"
-- "Resize volume to 200GB"
-
-**Security Management:**
-- "Create web-servers security group"
-- "Allow HTTP traffic on port 80"
-- "Open SSH access from my IP range"
-- "Create firewall rule for SSH access"
-- "Set up Network ACL for web tier"
-
-**Load Balancer Operations:**
-- "Create load balancer for web servers"
-- "Add VMs to load balancer pool"
-- "Configure health check for load balancer"
-- "Upload SSL certificate for HTTPS"
-- "Set up stickiness policy for sessions"
-
-**Account & User Management:**
-- "Create a new user account for development team"
-- "List all accounts in the domain"
-- "Update account information"
-- "Enable/disable user accounts"
-- "Create a new domain for department"
-- "Set resource limits for account"
-- "Create project for team collaboration"
-- "Add users to project"
-- "Manage user roles and permissions"
-
-**Template & ISO Management:**
-- "Create template from running VM"
-- "Register template from external URL"
-- "Copy template between zones"
-- "Extract template for download"
-- "List all available ISOs"
-- "Register ISO from download URL"
-- "Attach ISO to virtual machine"
-- "Update template metadata"
-
-**VPC & Advanced Networking:**
-- "Create VPC with custom CIDR"
-- "List all VPCs in account"
-- "Create private gateway for VPC"
-- "Set up static routing"
-- "Create Site-to-Site VPN connection"
-- "Configure VPN gateway"
-- "Add Remote Access VPN users"
-- "List VPN connections and status"
-
-**System Information:**
-- "Get CloudStack environment information"
-- "Show me available service offerings"
 
 ## API Coverage
 
-The CloudStack MCP Server provides comprehensive coverage of CloudStack APIs:
+### Complete Implementation Status
 
-- **📊 65+ CloudStack API Coverage** across infrastructure, networking, and management operations
-- **130+ MCP Tools** for complete infrastructure, networking, and account management
-- **180+ CloudStack API Methods** implemented with full parameter support
+| Category | API Methods | MCP Tools | Coverage |
+|----------|------------|-----------|----------|
+| Virtual Machine | 72 | 80 | 100% |
+| Storage & Volumes | 105 | 28 | 100% |
+| Networking | 85 | 59 | 100% |
+| Load Balancer | 34 | 30 | 100% |
+| Security | 22 | 19 | 100% |
+| Account Management | 16 | 17 | 100% |
+| Templates & ISOs | 35 | 25 | 100% |
+| AutoScale | 21 | 21 | 100% |
+| Certificates | 18 | 18 | 100% |
+| **Total** | **693+** | **662+** | **100%** |
 
-**📋 For detailed API coverage analysis, see [API Coverage Analysis](docs/API-COVERAGE-ANALYSIS.md)**
+For detailed API coverage analysis, see [API Coverage Documentation](docs/API-COVERAGE-COMPARISON-v2.0.0.md).
 
-### Coverage Highlights
-- ✅ **Complete VM Management** (90%+ coverage): Lifecycle, scaling, migration, networking
-- ✅ **Comprehensive Volume Operations** (85%+ coverage): Storage, snapshots, backup/restore  
-- ✅ **Full Network Management** (85%+ coverage): Networks, IPs, NAT, port forwarding
-- ✅ **Complete Security Management** (90%+ coverage): Security groups, firewall rules, Network ACLs
-- ✅ **Full Load Balancer Support** (95%+ coverage): Rules, policies, health checks, SSL certificates
-- ✅ **Complete Infrastructure Discovery** (100% coverage): Zones, hosts, offerings, templates
-- ✅ **Full Account & User Management** (95%+ coverage): Accounts, domains, users, roles, projects, LDAP
-- ✅ **Resource Quota Management** (90%+ coverage): Limits, quotas, resource counting
-- ✅ **Complete Template & ISO Management** (100% coverage): Templates, ISOs, cross-zone operations
-- ✅ **VPC & Advanced Networking** (85%+ coverage): VPCs, VPNs, private gateways, routing
+## Future Roadmap
+
+### High Priority Improvements
+- **Architecture**: Modular tool organization and lazy loading implementation
+- **Performance**: Connection pooling and intelligent caching strategies
+- **Testing**: Enhanced test coverage and integration test suite
+- **Security**: API key rotation and role-based access control
+
+### Medium Priority Features
+- **Monitoring**: Health checks, metrics collection, and audit logging
+- **Enterprise**: Multi-tenant isolation and backup automation
+- **Development**: Comprehensive TypeScript types and documentation
+
+### Future Enhancements
+- **CloudStack 5.x**: API compatibility when available
+- **User Interface**: Web dashboard and CLI tools
+- **AI Integration**: Resource optimization and cost management
+- **Real-time**: Event streaming and live updates
+
+View the complete roadmap in our [development todo list](https://github.com/mozg31337/cloudstack-mcp-server/issues).
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes with tests
-4. Run `npm run lint` and `npm test`
-5. Submit a pull request
+We welcome contributions to improve the CloudStack MCP Server:
+
+1. **Fork the repository** and create a feature branch
+2. **Implement changes** with appropriate tests
+3. **Run quality checks**: `npm run lint && npm test`
+4. **Submit a pull request** with detailed description
+
+### Development Guidelines
+- Follow TypeScript best practices
+- Maintain test coverage above 90%
+- Include documentation for new features
+- Use conventional commit messages
+
+## Security Considerations
+
+- **API Credentials**: Store securely and rotate regularly
+- **Network Access**: Use HTTPS for all CloudStack communications
+- **Permissions**: Follow principle of least privilege
+- **Audit Logging**: Enable for production environments
 
 ## License
 
-This project is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. See [LICENSE](LICENSE) for details.
 
-This license prohibits commercial use while allowing personal, educational, and non-profit usage.
+**Commercial Use**: Contact the maintainers for commercial licensing options.
 
-## Important Notice
+## Support
 
-⚠️ **Vibe Coded Application**: This application has been developed using AI-assisted coding techniques and rapid prototyping methods. While functional and extensively tested, users should exercise caution when deploying in production environments. The codebase should be thoroughly reviewed and tested for your specific use case before deployment in critical infrastructure.
+- **Issues**: Report bugs via [GitHub Issues](https://github.com/mozg31337/cloudstack-mcp-server/issues)
+- **Documentation**: See [docs/](docs/) directory for detailed guides
+- **Community**: Join discussions in our repository
+
+---
+
+**Note**: This application uses AI-assisted development techniques. While extensively tested, please review and validate functionality for your specific environment before production deployment.
