@@ -1,19 +1,25 @@
 import { readFileSync } from 'fs';
 import { CloudStackConfig, CloudStackEnvironment } from '../cloudstack/types.js';
+import { SecretManager } from '../security/SecretManager.js';
 
 export class ConfigManager {
   private config: CloudStackConfig;
   private configPath: string;
+  private secretManager: SecretManager;
 
   constructor(configPath?: string) {
     this.configPath = configPath || process.env.CLOUDSTACK_CONFIG || 'config/cloudstack.json';
+    this.secretManager = new SecretManager();
     this.config = this.loadConfig();
   }
 
   private loadConfig(): CloudStackConfig {
     try {
-      const configData = readFileSync(this.configPath, 'utf-8');
-      const config = JSON.parse(configData) as CloudStackConfig;
+      // Try to load secure config first (supports both encrypted and plain text)
+      const config = this.secretManager.loadSecureConfig(this.configPath);
+      
+      // Merge with environment variables (environment variables take precedence)
+      this.mergeEnvironmentVariables(config);
       
       this.validateConfig(config);
       return config;
@@ -65,7 +71,9 @@ export class ConfigManager {
       throw new Error(`Environment '${targetEnv}' not found`);
     }
 
-    return environment;
+    // Apply environment-specific overrides
+    const envConfig = this.secretManager.getEnvironmentConfig();
+    return { ...environment, ...envConfig };
   }
 
   public getDefaultEnvironment(): CloudStackEnvironment {
@@ -82,5 +90,65 @@ export class ConfigManager {
 
   public reload(): void {
     this.config = this.loadConfig();
+  }
+
+  /**
+   * Save configuration with encryption
+   */
+  public saveEncryptedConfig(password: string): void {
+    this.secretManager.saveEncryptedConfig(this.config, this.configPath, password);
+  }
+
+  /**
+   * Rotate credentials for an environment
+   */
+  public async rotateEnvironmentCredentials(envName: string): Promise<boolean> {
+    const environment = this.getEnvironment(envName);
+    const result = await this.secretManager.rotateCredentials(environment);
+    
+    if (result.success && result.newApiKey && result.newSecretKey) {
+      // Update the configuration
+      this.config.environments[envName].apiKey = result.newApiKey;
+      this.config.environments[envName].secretKey = result.newSecretKey;
+      return true;
+    }
+    
+    return false;
+  }
+
+  /**
+   * Validate credentials for an environment
+   */
+  public async validateEnvironmentCredentials(envName?: string): Promise<boolean> {
+    const environment = this.getEnvironment(envName);
+    return this.secretManager.validateCredentials(environment);
+  }
+
+  /**
+   * Merge environment variables into configuration
+   */
+  private mergeEnvironmentVariables(config: CloudStackConfig): void {
+    // Support environment-specific variables
+    const currentEnv = config.defaultEnvironment;
+    if (config.environments[currentEnv]) {
+      const envConfig = this.secretManager.getEnvironmentConfig();
+      Object.assign(config.environments[currentEnv], envConfig);
+    }
+
+    // Support default environment override
+    if (process.env.CLOUDSTACK_DEFAULT_ENVIRONMENT) {
+      config.defaultEnvironment = process.env.CLOUDSTACK_DEFAULT_ENVIRONMENT;
+    }
+
+    // Support logging configuration
+    if (process.env.LOG_LEVEL) {
+      config.logging = config.logging || {};
+      config.logging.level = process.env.LOG_LEVEL;
+    }
+
+    if (process.env.LOG_FILE) {
+      config.logging = config.logging || {};
+      config.logging.file = process.env.LOG_FILE;
+    }
   }
 }
