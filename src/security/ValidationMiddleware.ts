@@ -278,7 +278,30 @@ export class ValidationMiddleware {
       /\$\(/g, // Potential command injection
       /`.*`/g, // Potential command injection
       /\|\|/g, // Potential command chaining
-      /&&/g // Potential command chaining
+      /&&/g, // Potential command chaining
+      // Enhanced patterns for additional security
+      /(\$\{.*\})/g, // Template injection
+      /#\{.*\}/g, // Expression language injection
+      /<%.*%>/g, // Template injection (JSP/ASP)
+      /\{\{.*\}\}/g, // Template injection (Handlebars/Angular)
+      /(\bunion\b|\bselect\b|\binsert\b|\bupdate\b|\bdelete\b|\bdrop\b).*(\bfrom\b|\binto\b|\bwhere\b)/gi, // SQL injection keywords
+      /(sleep|benchmark|waitfor)\s*\(/gi, // SQL time-based injection
+      /(\beval\b|\bexec\b|\bexecute\b|\bsystem\b)\s*\(/gi, // Code execution
+      /(\.\.|\/\.\.|\\\.\.)/g, // Path traversal
+      /%2e%2e|%252e%252e|%c0%ae%c0%ae/gi, // Encoded path traversal
+      /(\bldap:\/\/|\bfile:\/\/|\bjar:\/\/|\bnetdoc:\/\/)/gi, // Protocol injection
+      /(\${jndi:|{jndi:)/gi, // JNDI injection (Log4Shell style)
+      /\[\[.*\]\]/g, // MediaWiki template injection
+      /(script|iframe|object|embed|applet|form|input|img|link|meta|style|base|body|html)(\s|>|\/)/gi, // HTML tag injection
+      /(document\.|window\.|location\.|eval\(|alert\(|prompt\(|confirm\()/gi, // JavaScript injection
+      /(\bdata:|\bblob:|\bfilesystem:)/gi, // Data URI schemes
+      /(\.\.\/|\.\.\\|%2e%2e%2f|%2e%2e%5c)/gi, // Directory traversal variations
+      /(\bor\b|\band\b)(\s+)?\d+(\s+)?=(\s+)?\d+/gi, // Boolean SQL injection
+      /(union|select|insert|update|delete|drop|create|alter|truncate|exec|execute|sp_|xp_)/gi, // SQL keywords
+      /(\x00|\%00|\0)/g, // Null byte injection
+      /(\\r|\\n|%0d|%0a|%0D|%0A)/gi, // CRLF injection
+      /(response\.redirect|location\.href|document\.location)/gi, // Redirect injection
+      /(\bwget\b|\bcurl\b|\bping\b|\btracert\b|\bnslookup\b|\bdig\b)/gi // Command injection tools
     ];
 
     const checkValue = (value: any, path: string = ''): void => {
@@ -340,6 +363,14 @@ export class ValidationMiddleware {
         return entities[match] || match;
       })
       .replace(/\0/g, '') // Remove null bytes
+      .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '') // Remove other control characters
+      .replace(/(\${|#{|\{\{|<%|%>|\}\})/g, '') // Remove template injection patterns
+      .replace(/(javascript:|vbscript:|data:|blob:)/gi, '') // Remove dangerous URI schemes
+      .replace(/(\.\.|%2e%2e|%252e)/gi, '') // Remove path traversal patterns
+      .replace(/(union|select|insert|update|delete|drop|exec|execute)\s/gi, (match) => {
+        // Replace SQL keywords with harmless alternatives
+        return match.replace(/[a-zA-Z]/g, 'X') + ' ';
+      })
       .trim();
   }
 

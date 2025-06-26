@@ -30,9 +30,27 @@ export class Logger {
       fileTransports.push(new winston.transports.File({
         filename: logFile,
         maxsize: 10 * 1024 * 1024, // 10MB
-        maxFiles: 5,
-        tailable: true
+        maxFiles: 10, // Increased for better audit trail retention
+        tailable: true,
+        zippedArchive: true // Compress old log files to save space
       }));
+      
+      // Add separate transport for security events
+      if (logFile.includes('cloudstack-mcp.log')) {
+        const securityLogFile = logFile.replace('.log', '-security.log');
+        fileTransports.push(new winston.transports.File({
+          filename: securityLogFile,
+          level: 'warn', // Security events are typically warn/error level
+          maxsize: 5 * 1024 * 1024, // 5MB for security logs
+          maxFiles: 20, // Keep more security logs for compliance
+          tailable: true,
+          zippedArchive: true,
+          format: winston.format.combine(
+            winston.format.timestamp(),
+            winston.format.json() // JSON format for security log parsing
+          )
+        }));
+      }
     } catch (error) {
       console.warn(`Failed to create file transport for ${logFile}:`, error);
       // If file logging fails, don't add any transports to avoid stdout pollution
@@ -43,13 +61,23 @@ export class Logger {
     const rejectionHandlers: winston.transport[] = [];
 
     try {
-      exceptionHandlers.push(new winston.transports.File({ filename: `${logDir}/exceptions.log` }));
+      exceptionHandlers.push(new winston.transports.File({ 
+        filename: `${logDir}/exceptions.log`,
+        maxsize: 5 * 1024 * 1024, // 5MB
+        maxFiles: 5,
+        zippedArchive: true
+      }));
     } catch (error) {
       console.warn(`Failed to create exception handler:`, error);
     }
 
     try {
-      rejectionHandlers.push(new winston.transports.File({ filename: `${logDir}/rejections.log` }));
+      rejectionHandlers.push(new winston.transports.File({ 
+        filename: `${logDir}/rejections.log`,
+        maxsize: 5 * 1024 * 1024, // 5MB
+        maxFiles: 5,
+        zippedArchive: true
+      }));
     } catch (error) {
       console.warn(`Failed to create rejection handler:`, error);
     }

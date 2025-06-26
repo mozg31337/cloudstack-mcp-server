@@ -31,7 +31,7 @@ class CloudStackMCPServer {
     this.server = new Server(
       {
         name: 'cloudstack-mcp-server',
-        version: '2.1.0',
+        version: '2.3.1',
       },
       {
         capabilities: {
@@ -49,6 +49,11 @@ class CloudStackMCPServer {
       
       const environment = this.configManager.getDefaultEnvironment();
       this.client = new CloudStackClient(environment);
+
+      // Validate CloudStack credentials at startup (async validation in background)
+      this.validateCredentials().catch(error => {
+        Logger.warn('CloudStack credential validation failed at startup', error);
+      });
 
       // Initialize security components
       const securityAuditLogger = new SecurityAuditLogger();
@@ -17105,6 +17110,33 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     }
 
     return result;
+  }
+
+  /**
+   * Validate CloudStack credentials by making a simple API call
+   */
+  private async validateCredentials(): Promise<void> {
+    try {
+      Logger.info('Validating CloudStack credentials...');
+      
+      // Make a simple API call to validate credentials
+      // Use listCapabilities as it's a lightweight call that requires valid credentials
+      await this.client.makeRequest('listCapabilities');
+      
+      Logger.info('CloudStack credentials validated successfully');
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      Logger.error('CloudStack credential validation failed', { error: errorMessage });
+      
+      // Don't throw error to allow server to start, but log the issue
+      if (errorMessage.includes('Authentication failed') || errorMessage.includes('401')) {
+        Logger.error('CRITICAL: Invalid CloudStack API credentials detected');
+      } else if (errorMessage.includes('timeout') || errorMessage.includes('ECONNABORTED')) {
+        Logger.warn('CloudStack API timeout during credential validation - server may be unavailable');
+      } else {
+        Logger.warn('CloudStack credential validation inconclusive', { error: errorMessage });
+      }
+    }
   }
 
   public async run(): Promise<void> {
