@@ -132,7 +132,62 @@ export class TestFramework {
       updateIso: jest.fn(),
       deleteIso: jest.fn(),
       attachIso: jest.fn(),
-      detachIso: jest.fn()
+      detachIso: jest.fn(),
+
+      // Phase 3: System Administration Operations
+      listSystemVms: jest.fn(),
+      startSystemVm: jest.fn(),
+      stopSystemVm: jest.fn(),
+      rebootSystemVm: jest.fn(),
+      destroySystemVm: jest.fn(),
+      scaleSystemVm: jest.fn(),
+      migrateSystemVm: jest.fn(),
+      patchSystemVm: jest.fn(),
+      changeServiceForSystemVm: jest.fn(),
+      listSystemVmsUsageHistory: jest.fn(),
+
+      // Configuration Management
+      listConfigurations: jest.fn(),
+      updateConfiguration: jest.fn(),
+      listCapabilities: jest.fn(),
+
+      // Phase 3: Security & Compliance Operations
+      listAlerts: jest.fn(),
+      archiveAlerts: jest.fn(),
+      deleteAlerts: jest.fn(),
+      listEvents: jest.fn(),
+      confirmDangerousAction: jest.fn(),
+
+      // Phase 3: Monitoring & Analytics Operations
+      listUsageRecords: jest.fn(),
+      listCapacity: jest.fn(),
+      listAsyncJobs: jest.fn(),
+      queryAsyncJobResult: jest.fn(),
+      listVmMetrics: jest.fn(),
+      listVolumeMetrics: jest.fn(),
+      listLoadBalancerMetrics: jest.fn(),
+      listHostsMetrics: jest.fn(),
+      listVmUsageHistory: jest.fn(),
+
+      // Phase 3: Enterprise Integration Operations
+      listStoragePools: jest.fn(),
+      createStoragePool: jest.fn(),
+      updateStoragePool: jest.fn(),
+      deleteStoragePool: jest.fn(),
+      listRouters: jest.fn(),
+      startRouter: jest.fn(),
+      stopRouter: jest.fn(),
+      rebootRouter: jest.fn(),
+      destroyRouter: jest.fn(),
+      changeServiceForRouter: jest.fn(),
+      listRouterHealth: jest.fn(),
+
+      // Quota Management Operations
+      quotaStatement: jest.fn(),
+      quotaCredits: jest.fn(),
+      quotaUpdate: jest.fn(),
+      quotaSummary: jest.fn(),
+      quotaBalance: jest.fn()
     } as any;
 
     // Mock Config Manager
@@ -211,6 +266,122 @@ export class TestFramework {
           accounttype: 2,
           state: 'enabled',
           domain: 'ROOT'
+        }
+      ]
+    });
+
+    // Phase 3: Default responses for System Administration
+    this.mockClient.listSystemVms.mockResolvedValue({
+      systemvm: [
+        {
+          id: 'svm-123',
+          name: 'v-123-VM',
+          systemvmtype: 'secondarystoragevm',
+          state: 'Running',
+          zonename: 'zone1',
+          publicip: '192.168.1.10'
+        }
+      ]
+    });
+
+    this.mockClient.listConfigurations.mockResolvedValue({
+      configuration: [
+        {
+          name: 'vm.instance.name',
+          value: 'true',
+          description: 'Indicates whether to use the instance name for hostname',
+          category: 'VM'
+        }
+      ]
+    });
+
+    // Phase 3: Default responses for Security & Compliance
+    this.mockClient.listAlerts.mockResolvedValue({
+      alert: [
+        {
+          id: 'alert-123',
+          type: 'MANAGEMENT_NODE_DOWN',
+          subject: 'Management Node Alert',
+          description: 'Test alert description',
+          sent: '2025-06-25T10:00:00Z'
+        }
+      ]
+    });
+
+    this.mockClient.listEvents.mockResolvedValue({
+      event: [
+        {
+          id: 'event-123',
+          type: 'VM.CREATE',
+          level: 'INFO',
+          description: 'Created VM test-vm',
+          created: '2025-06-25T10:00:00Z',
+          account: 'test-account'
+        }
+      ]
+    });
+
+    // Phase 3: Default responses for Monitoring & Analytics
+    this.mockClient.listUsageRecords.mockResolvedValue({
+      usagerecord: [
+        {
+          account: 'test-account',
+          vminstanceid: 'vm-123',
+          vmname: 'test-vm',
+          startdate: '2025-06-25T00:00:00Z',
+          enddate: '2025-06-25T23:59:59Z',
+          rawusage: 24
+        }
+      ]
+    });
+
+    this.mockClient.listCapacity.mockResolvedValue({
+      capacity: [
+        {
+          type: 1,
+          zonename: 'zone1',
+          capacitytotal: 1000000000000,
+          capacityused: 500000000000,
+          percentused: '50.00'
+        }
+      ]
+    });
+
+    this.mockClient.listAsyncJobs.mockResolvedValue({
+      asyncjobs: [
+        {
+          jobid: 'job-123',
+          cmd: 'org.apache.cloudstack.api.command.user.vm.DeployVMCmd',
+          jobstatus: 1,
+          jobresult: { success: true }
+        }
+      ]
+    });
+
+    // Phase 3: Default responses for Enterprise Integration
+    this.mockClient.listStoragePools.mockResolvedValue({
+      storagepool: [
+        {
+          id: 'pool-123',
+          name: 'test-storage-pool',
+          state: 'Up',
+          type: 'NetworkFilesystem',
+          zonename: 'zone1',
+          disksizetotal: 1000000000000,
+          disksizeused: 200000000000
+        }
+      ]
+    });
+
+    this.mockClient.listRouters.mockResolvedValue({
+      router: [
+        {
+          id: 'router-123',
+          name: 'r-123-VM',
+          state: 'Running',
+          publicip: '192.168.1.1',
+          guestnetworkid: 'net-123',
+          zonename: 'zone1'
         }
       ]
     });
