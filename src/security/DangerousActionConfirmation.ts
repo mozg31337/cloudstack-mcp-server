@@ -1,4 +1,4 @@
-import { SecurityAuditLogger, SecurityEventType, SecuritySeverity, SecurityResult } from './SecurityAuditLogger';
+import { SecurityAuditLogger, SecurityEventType, SecuritySeverity, SecurityResult } from './SecurityAuditLogger.js';
 
 export interface DangerousActionConfig {
   severity: 'critical' | 'high' | 'medium' | 'low';

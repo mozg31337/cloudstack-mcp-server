@@ -40,7 +40,7 @@ export class SecretManager {
       
       const key = crypto.pbkdf2Sync(password, salt, SecretManager.ITERATIONS, 32, 'sha256');
       
-      const cipher = crypto.createCipherGCM(SecretManager.ALGORITHM, key, iv);
+      const cipher = crypto.createCipheriv(SecretManager.ALGORITHM, key, iv);
       cipher.setAAD(Buffer.from('cloudstack-mcp-server'));
       
       const configString = JSON.stringify(config);
@@ -79,7 +79,7 @@ export class SecretManager {
       const encrypted = encryptedData.slice(0, -SecretManager.TAG_LENGTH * 2);
       const authTag = Buffer.from(encryptedData.slice(-SecretManager.TAG_LENGTH * 2), 'hex');
       
-      const decipher = crypto.createDecipherGCM(SecretManager.ALGORITHM, key, iv);
+      const decipher = crypto.createDecipheriv(SecretManager.ALGORITHM, key, iv);
       decipher.setAAD(Buffer.from('cloudstack-mcp-server'));
       decipher.setAuthTag(authTag);
       

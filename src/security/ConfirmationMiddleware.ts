@@ -1,5 +1,5 @@
-import { DangerousActionConfirmation, ConfirmationRequest, ConfirmationResponse } from './DangerousActionConfirmation';
-import { SecurityAuditLogger, SecurityEventType, SecuritySeverity, SecurityResult } from './SecurityAuditLogger';
+import { DangerousActionConfirmation, ConfirmationRequest, ConfirmationResponse } from './DangerousActionConfirmation.js';
+import { SecurityAuditLogger, SecurityEventType, SecuritySeverity, SecurityResult } from './SecurityAuditLogger.js';
 
 export interface PendingConfirmation {
   request: ConfirmationRequest;

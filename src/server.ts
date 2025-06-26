@@ -31,7 +31,7 @@ class CloudStackMCPServer {
     this.server = new Server(
       {
         name: 'cloudstack-mcp-server',
-        version: '2.3.1',
+        version: '2.3.2',
       },
       {
         capabilities: {
