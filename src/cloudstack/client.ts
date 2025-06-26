@@ -110,29 +110,19 @@ export class CloudStackClient {
   }
 
   private shouldUsePostRequest(command: string, params: Record<string, any>): boolean {
-    // Commands that commonly have large parameter sets or multiple filters
-    const postCommands = [
+    // Use POST only when URL would likely be too long (5+ parameters) or for specific problematic commands
+    const paramCount = Object.keys(params).length;
+    
+    // Commands that are known to cause 431 errors with multiple filters
+    const problematicCommands = [
       'listVirtualMachines',
       'listNetworks', 
       'listVpcs',
-      'listPublicIpAddresses',
-      'listLoadBalancers',
-      'listFirewallRules',
-      'listNetworkACLs',
-      'listVolumes',
-      'listSnapshots',
-      'listTemplates',
-      'listIsos',
-      'listUsers',
-      'listAccounts',
-      'listDomains',
-      'listEvents',
-      'listAlerts',
-      'listUsageRecords'
+      'listPublicIpAddresses'
     ];
 
-    // Use POST if command is in the list or if we have many parameters
-    return postCommands.includes(command) || Object.keys(params).length > 10;
+    // Use POST if we have many parameters OR if it's a problematic command with any filters
+    return paramCount >= 5 || (problematicCommands.includes(command) && paramCount > 0);
   }
 
   private async makePostRequest<T>(params: Record<string, any>): Promise<AxiosResponse<CloudStackResponse<T>>> {
@@ -142,15 +132,16 @@ export class CloudStackClient {
       response: 'json'
     };
 
-    // Generate signature for POST request
+    // Generate signature for POST request using the auth module's encoding
     const signature = this.auth.signRequest(requestParams);
-    const formData = new URLSearchParams();
     
-    // Add all parameters to form data
-    Object.entries(requestParams).forEach(([key, value]) => {
-      if (value !== null && value !== undefined) {
-        formData.append(key, String(value));
-      }
+    // Get properly encoded parameters using the same logic as auth module
+    const encodedParams = this.auth.getEncodedParameters(requestParams);
+    
+    // Build form data with consistently encoded parameters
+    const formData = new URLSearchParams();
+    Object.entries(encodedParams).forEach(([key, value]) => {
+      formData.append(key, value);
     });
     
     // Add signature

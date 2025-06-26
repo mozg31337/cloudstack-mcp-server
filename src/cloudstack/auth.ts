@@ -91,6 +91,10 @@ export class CloudStackAuth {
     return this.apiKey;
   }
 
+  public getEncodedParameters(params: Record<string, any>): Record<string, string> {
+    return this.sortParameters(params);
+  }
+
   public maskApiKey(): string {
     if (!this.apiKey || this.apiKey.length < 8) {
       return 'INVALID';
