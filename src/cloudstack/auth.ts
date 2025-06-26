@@ -87,6 +87,10 @@ export class CloudStackAuth {
     return !!(this.apiKey && this.secretKey);
   }
 
+  public getApiKey(): string {
+    return this.apiKey;
+  }
+
   public maskApiKey(): string {
     if (!this.apiKey || this.apiKey.length < 8) {
       return 'INVALID';

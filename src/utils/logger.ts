@@ -1,6 +1,7 @@
 import winston from 'winston';
 import { mkdirSync } from 'fs';
-import { dirname } from 'path';
+import { dirname, resolve } from 'path';
+import { fileURLToPath } from 'url';
 
 export class Logger {
   private static instance: winston.Logger;
@@ -13,7 +14,12 @@ export class Logger {
   }
 
   private static createLogger(level: string, logFile: string): winston.Logger {
-    const logDir = dirname(logFile);
+    // Get project root directory from this file's location (src/utils/logger.ts -> project root)
+    const currentFileUrl = import.meta.url;
+    const currentFilePath = fileURLToPath(currentFileUrl);
+    const projectRoot = resolve(dirname(currentFilePath), '..', '..');
+    const absoluteLogFile = resolve(projectRoot, logFile);
+    const logDir = dirname(absoluteLogFile);
     
     // Ensure log directory exists
     try {
@@ -28,7 +34,7 @@ export class Logger {
     // Only add file transport if we can create the directory
     try {
       fileTransports.push(new winston.transports.File({
-        filename: logFile,
+        filename: absoluteLogFile,
         maxsize: 10 * 1024 * 1024, // 10MB
         maxFiles: 10, // Increased for better audit trail retention
         tailable: true,
@@ -37,7 +43,7 @@ export class Logger {
       
       // Add separate transport for security events
       if (logFile.includes('cloudstack-mcp.log')) {
-        const securityLogFile = logFile.replace('.log', '-security.log');
+        const securityLogFile = absoluteLogFile.replace('.log', '-security.log');
         fileTransports.push(new winston.transports.File({
           filename: securityLogFile,
           level: 'warn', // Security events are typically warn/error level

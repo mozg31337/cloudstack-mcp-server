@@ -1,5 +1,6 @@
 import { writeFileSync, appendFileSync, existsSync, mkdirSync } from 'fs';
-import { dirname } from 'path';
+import { dirname, resolve } from 'path';
+import { fileURLToPath } from 'url';
 import { Logger } from '../utils/logger.js';
 import crypto from 'crypto';
 
@@ -63,10 +64,16 @@ export class SecurityAuditLogger {
   private maxEventsInMemory = 10000;
 
   constructor(logDirectory: string = 'logs/security') {
-    this.auditLogPath = `${logDirectory}/audit.log`;
-    this.securityLogPath = `${logDirectory}/security.log`;
+    // Get project root directory from this file's location (src/security/SecurityAuditLogger.ts -> project root)
+    const currentFileUrl = import.meta.url;
+    const currentFilePath = fileURLToPath(currentFileUrl);
+    const projectRoot = resolve(dirname(currentFilePath), '..', '..');
+    const absoluteLogDirectory = resolve(projectRoot, logDirectory);
     
-    this.ensureLogDirectory(logDirectory);
+    this.auditLogPath = `${absoluteLogDirectory}/audit.log`;
+    this.securityLogPath = `${absoluteLogDirectory}/security.log`;
+    
+    this.ensureLogDirectory(absoluteLogDirectory);
     Logger.info('SecurityAuditLogger initialized', { auditLogPath: this.auditLogPath });
   }
 

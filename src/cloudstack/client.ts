@@ -62,10 +62,18 @@ export class CloudStackClient {
       ...params
     };
 
-    const url = this.auth.buildAuthenticatedUrl(this.environment.apiUrl, requestParams);
+    // Use POST for potentially large requests to avoid 431 errors
+    const shouldUsePost = this.shouldUsePostRequest(command, requestParams);
     
     try {
-      const response: AxiosResponse<CloudStackResponse<T>> = await this.httpClient.get(url);
+      let response: AxiosResponse<CloudStackResponse<T>>;
+      
+      if (shouldUsePost) {
+        response = await this.makePostRequest<T>(requestParams);
+      } else {
+        const url = this.auth.buildAuthenticatedUrl(this.environment.apiUrl, requestParams);
+        response = await this.httpClient.get(url);
+      }
       
       if (response.data && this.isErrorResponse(response.data)) {
         const error = response.data as unknown as CloudStackError;
@@ -84,6 +92,9 @@ export class CloudStackClient {
         if (error.response?.status === 403) {
           throw new Error('Access denied - insufficient permissions');
         }
+        if (error.response?.status === 431) {
+          throw new Error('Request headers too large - try using fewer parameters or shorter values');
+        }
         if (error.response?.data) {
           const errorData = error.response.data as CloudStackError;
           throw new Error(`CloudStack API Error: ${errorData.errortext || error.message}`);
@@ -96,6 +107,60 @@ export class CloudStackClient {
       
       throw new Error('Unknown error occurred during CloudStack API request');
     }
+  }
+
+  private shouldUsePostRequest(command: string, params: Record<string, any>): boolean {
+    // Commands that commonly have large parameter sets or multiple filters
+    const postCommands = [
+      'listVirtualMachines',
+      'listNetworks', 
+      'listVpcs',
+      'listPublicIpAddresses',
+      'listLoadBalancers',
+      'listFirewallRules',
+      'listNetworkACLs',
+      'listVolumes',
+      'listSnapshots',
+      'listTemplates',
+      'listIsos',
+      'listUsers',
+      'listAccounts',
+      'listDomains',
+      'listEvents',
+      'listAlerts',
+      'listUsageRecords'
+    ];
+
+    // Use POST if command is in the list or if we have many parameters
+    return postCommands.includes(command) || Object.keys(params).length > 10;
+  }
+
+  private async makePostRequest<T>(params: Record<string, any>): Promise<AxiosResponse<CloudStackResponse<T>>> {
+    const requestParams = {
+      ...params,
+      apikey: this.auth.getApiKey(),
+      response: 'json'
+    };
+
+    // Generate signature for POST request
+    const signature = this.auth.signRequest(requestParams);
+    const formData = new URLSearchParams();
+    
+    // Add all parameters to form data
+    Object.entries(requestParams).forEach(([key, value]) => {
+      if (value !== null && value !== undefined) {
+        formData.append(key, String(value));
+      }
+    });
+    
+    // Add signature
+    formData.append('signature', signature);
+
+    return await this.httpClient.post(this.environment.apiUrl, formData, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    });
   }
 
   private isErrorResponse(data: any): boolean {
