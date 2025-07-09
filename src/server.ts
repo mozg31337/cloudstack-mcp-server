@@ -31,7 +31,7 @@ class CloudStackMCPServer {
     this.server = new Server(
       {
         name: 'cloudstack-mcp-server',
-        version: '2.3.4',
+        version: '2.5.0',
       },
       {
         capabilities: {
@@ -2821,6 +2821,298 @@ class CloudStackMCPServer {
               }
             },
             required: ['name', 'displaytext', 'networkofferingid', 'zoneid']
+          }
+        },
+        // Physical Network Management
+        {
+          name: 'create_physical_network',
+          description: 'Create a new physical network',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'Name for the physical network'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID for the physical network'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID (optional)'
+              },
+              tags: {
+                type: 'string',
+                description: 'Tags for the physical network (optional)'
+              },
+              isolationmethods: {
+                type: 'string',
+                description: 'Isolation methods (e.g., VLAN, GRE) (optional)'
+              },
+              broadcastdomainrange: {
+                type: 'string',
+                description: 'Broadcast domain range (optional)'
+              },
+              vlan: {
+                type: 'string',
+                description: 'VLAN range (optional)'
+              }
+            },
+            required: ['name', 'zoneid']
+          }
+        },
+        {
+          name: 'list_physical_networks',
+          description: 'List physical networks',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Physical network ID'
+              },
+              name: {
+                type: 'string',
+                description: 'Physical network name'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              keyword: {
+                type: 'string',
+                description: 'Search keyword'
+              },
+              page: {
+                type: 'number',
+                description: 'Page number for pagination'
+              },
+              pagesize: {
+                type: 'number',
+                description: 'Number of items per page'
+              }
+            }
+          }
+        },
+        {
+          name: 'update_physical_network',
+          description: 'Update a physical network',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Physical network ID'
+              },
+              name: {
+                type: 'string',
+                description: 'New name for the physical network'
+              },
+              tags: {
+                type: 'string',
+                description: 'Tags for the physical network'
+              },
+              vlan: {
+                type: 'string',
+                description: 'VLAN range'
+              },
+              state: {
+                type: 'string',
+                description: 'State of the physical network'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'delete_physical_network',
+          description: 'Delete a physical network',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Physical network ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        // Traffic Management
+        {
+          name: 'add_traffic_type',
+          description: 'Add a traffic type to a physical network',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              physicalnetworkid: {
+                type: 'string',
+                description: 'Physical network ID'
+              },
+              traffictype: {
+                type: 'string',
+                description: 'Traffic type (Guest, Management, Public, Storage)'
+              },
+              kvmnetworklabel: {
+                type: 'string',
+                description: 'KVM network label (optional)'
+              },
+              vmwarenetworklabel: {
+                type: 'string',
+                description: 'VMware network label (optional)'
+              },
+              xennetworklabel: {
+                type: 'string',
+                description: 'XenServer network label (optional)'
+              },
+              hypervnetworklabel: {
+                type: 'string',
+                description: 'Hyper-V network label (optional)'
+              },
+              vlan: {
+                type: 'string',
+                description: 'VLAN ID (optional)'
+              }
+            },
+            required: ['physicalnetworkid', 'traffictype']
+          }
+        },
+        {
+          name: 'delete_traffic_type',
+          description: 'Delete a traffic type from a physical network',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Traffic type ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'update_traffic_type',
+          description: 'Update a traffic type',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Traffic type ID'
+              },
+              kvmnetworklabel: {
+                type: 'string',
+                description: 'KVM network label'
+              },
+              vmwarenetworklabel: {
+                type: 'string',
+                description: 'VMware network label'
+              },
+              xennetworklabel: {
+                type: 'string',
+                description: 'XenServer network label'
+              },
+              hypervnetworklabel: {
+                type: 'string',
+                description: 'Hyper-V network label'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_traffic_types',
+          description: 'List traffic types',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              physicalnetworkid: {
+                type: 'string',
+                description: 'Physical network ID'
+              },
+              keyword: {
+                type: 'string',
+                description: 'Search keyword'
+              },
+              page: {
+                type: 'number',
+                description: 'Page number for pagination'
+              },
+              pagesize: {
+                type: 'number',
+                description: 'Number of items per page'
+              }
+            }
+          }
+        },
+        {
+          name: 'generate_usage_records',
+          description: 'Generate usage records for billing',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              startdate: {
+                type: 'string',
+                description: 'Start date (YYYY-MM-DD)'
+              },
+              enddate: {
+                type: 'string',
+                description: 'End date (YYYY-MM-DD)'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID (optional)'
+              }
+            },
+            required: ['startdate', 'enddate']
+          }
+        },
+        {
+          name: 'list_usage_records',
+          description: 'List usage records',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              startdate: {
+                type: 'string',
+                description: 'Start date (YYYY-MM-DD)'
+              },
+              enddate: {
+                type: 'string',
+                description: 'End date (YYYY-MM-DD)'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              projectid: {
+                type: 'string',
+                description: 'Project ID'
+              },
+              type: {
+                type: 'string',
+                description: 'Usage type'
+              },
+              page: {
+                type: 'number',
+                description: 'Page number for pagination'
+              },
+              pagesize: {
+                type: 'number',
+                description: 'Number of items per page'
+              }
+            },
+            required: ['startdate', 'enddate']
           }
         },
         {
@@ -8810,6 +9102,38 @@ class CloudStackMCPServer {
           
           case 'restart_network':
             return await this.handleRestartNetwork(args);
+
+          // Physical Network Management
+          case 'create_physical_network':
+            return await this.handleCreatePhysicalNetwork(args);
+          
+          case 'list_physical_networks':
+            return await this.handleListPhysicalNetworks(args);
+          
+          case 'update_physical_network':
+            return await this.handleUpdatePhysicalNetwork(args);
+          
+          case 'delete_physical_network':
+            return await this.handleDeletePhysicalNetwork(args);
+
+          // Traffic Management
+          case 'add_traffic_type':
+            return await this.handleAddTrafficType(args);
+          
+          case 'delete_traffic_type':
+            return await this.handleDeleteTrafficType(args);
+          
+          case 'update_traffic_type':
+            return await this.handleUpdateTrafficType(args);
+          
+          case 'list_traffic_types':
+            return await this.handleListTrafficTypes(args);
+          
+          case 'generate_usage_records':
+            return await this.handleGenerateUsageRecords(args);
+          
+          case 'list_usage_records':
+            return await this.handleListUsageRecords(args);
           
           case 'list_network_offerings':
             return await this.handleListNetworkOfferings(args);
@@ -9497,7 +9821,112 @@ class CloudStackMCPServer {
   }
 
   private async handleListNetworks(args: any): Promise<any> {
-    const params = this.buildParams(args, ['zone', 'type', 'account']);
+    const allowedParams = [
+      // Basic filters
+      'id', 'name', 'displaytext', 'zoneid', 'type', 'account', 'domainid', 'projectid',
+      
+      // Advanced filters
+      'state', 'traffictype', 'physicalnetworkid', 'networkofferingid', 'vpcid',
+      'acltype', 'subdomainaccess', 'forvpc', 'canusefordeploy', 'supportedservices',
+      'restartreq', 'specifyipranges', 'ispersistent', 'networkdomain',
+      
+      // Search and pagination
+      'keyword', 'isrecursive', 'listall', 'page', 'pagesize',
+      
+      // Advanced options
+      'details', 'tags', 'retrieveonlyresourcecount', 'fordisplay',
+      
+      // Network-specific filters
+      'broadcastdomaintype', 'broadcasturi', 'gateway', 'netmask',
+      'startip', 'endip', 'dns1', 'dns2', 'ip6dns1', 'ip6dns2',
+      
+      // Security and access
+      'securitygroupenabled', 'related'
+    ];
+
+    // Enhanced parameter validation
+    if (args.page) {
+      const page = parseInt(args.page);
+      if (isNaN(page) || page < 1) {
+        throw new Error('Invalid page number. Must be a positive integer');
+      }
+    }
+
+    if (args.pagesize) {
+      const pagesize = parseInt(args.pagesize);
+      if (isNaN(pagesize) || pagesize < 1 || pagesize > 500) {
+        throw new Error('Invalid page size. Must be between 1 and 500');
+      }
+    }
+
+    if (args.state) {
+      const validStates = ['Allocated', 'Setup', 'Implemented', 'Shutdown', 'Destroy', 'Destroyed'];
+      if (!validStates.includes(args.state)) {
+        throw new Error(`Invalid state. Must be one of: ${validStates.join(', ')}`);
+      }
+    }
+
+    if (args.traffictype) {
+      const validTrafficTypes = ['Public', 'Guest', 'Management', 'Control', 'Storage', 'Vlan'];
+      if (!validTrafficTypes.includes(args.traffictype)) {
+        throw new Error(`Invalid traffic type. Must be one of: ${validTrafficTypes.join(', ')}`);
+      }
+    }
+
+    if (args.type) {
+      const validTypes = ['Isolated', 'Shared', 'L2'];
+      if (!validTypes.includes(args.type)) {
+        throw new Error(`Invalid network type. Must be one of: ${validTypes.join(', ')}`);
+      }
+    }
+
+    if (args.acltype) {
+      const validAclTypes = ['Account', 'Domain'];
+      if (!validAclTypes.includes(args.acltype)) {
+        throw new Error(`Invalid ACL type. Must be one of: ${validAclTypes.join(', ')}`);
+      }
+    }
+
+    if (args.gateway && !this.isValidIPAddress(args.gateway)) {
+      throw new Error('Invalid gateway IP address format');
+    }
+
+    if (args.startip && !this.isValidIPAddress(args.startip)) {
+      throw new Error('Invalid start IP address format');
+    }
+
+    if (args.endip && !this.isValidIPAddress(args.endip)) {
+      throw new Error('Invalid end IP address format');
+    }
+
+    if (args.dns1 && !this.isValidIPAddress(args.dns1)) {
+      throw new Error('Invalid DNS1 IP address format');
+    }
+
+    if (args.dns2 && !this.isValidIPAddress(args.dns2)) {
+      throw new Error('Invalid DNS2 IP address format');
+    }
+
+    if (args.ip6dns1 && !this.isValidIPAddress(args.ip6dns1)) {
+      throw new Error('Invalid IPv6 DNS1 address format');
+    }
+
+    if (args.ip6dns2 && !this.isValidIPAddress(args.ip6dns2)) {
+      throw new Error('Invalid IPv6 DNS2 address format');
+    }
+
+    // Boolean parameter validation
+    ['isrecursive', 'listall', 'restartreq', 'specifyipranges', 'ispersistent',
+     'canusefordeploy', 'forvpc', 'subdomainaccess', 'securitygroupenabled',
+     'retrieveonlyresourcecount', 'fordisplay'].forEach(param => {
+      if (args[param] !== undefined) {
+        if (typeof args[param] === 'string') {
+          args[param] = args[param].toLowerCase() === 'true';
+        }
+      }
+    });
+
+    const params = this.buildParams(args, allowedParams);
     const response = await this.client.listNetworks(params);
     
     return {
@@ -9836,10 +10265,93 @@ class CloudStackMCPServer {
 
   // VPC Management Handlers
   private async handleCreateVpc(args: any): Promise<any> {
-    const params = this.buildParams(args, [
-      'cidr', 'displaytext', 'name', 'vpcofferingid', 'zoneid',
-      'account', 'domainid', 'networkdomain'
-    ]);
+    const requiredParams = ['cidr', 'name', 'vpcofferingid', 'zoneid'];
+    const optionalParams = [
+      'displaytext', 'account', 'domainid', 'projectid',
+      'networkdomain', 'publicmtu', 'sourcenatipaddress',
+      'fordisplay', 'start', 'asnumber', 'bgppeerids',
+      'cidrsize', 'dns1', 'dns2', 'ip6dns1', 'ip6dns2',
+      'customid', 'tags', 'routerprivateipaddress',
+      'routerpublicipaddress', 'vpcdomainid'
+    ];
+
+    // Validate required parameters
+    for (const param of requiredParams) {
+      if (!args[param]) {
+        throw new Error(`Required parameter missing: ${param}`);
+      }
+    }
+
+    // Enhanced parameter validation
+    if (args.cidr) {
+      const cidrRegex = /^(\d{1,3}\.){3}\d{1,3}\/\d{1,2}$/;
+      if (!cidrRegex.test(args.cidr)) {
+        throw new Error('Invalid CIDR format. Expected format: x.x.x.x/xx');
+      }
+    }
+
+    if (args.cidrsize) {
+      const size = parseInt(args.cidrsize);
+      if (isNaN(size) || size < 16 || size > 28) {
+        throw new Error('Invalid CIDR size. Must be between 16 and 28');
+      }
+    }
+
+    if (args.dns1 && !this.isValidIPAddress(args.dns1)) {
+      throw new Error('Invalid DNS1 IP address format');
+    }
+
+    if (args.dns2 && !this.isValidIPAddress(args.dns2)) {
+      throw new Error('Invalid DNS2 IP address format');
+    }
+
+    if (args.ip6dns1 && !this.isValidIPAddress(args.ip6dns1)) {
+      throw new Error('Invalid IPv6 DNS1 address format');
+    }
+
+    if (args.ip6dns2 && !this.isValidIPAddress(args.ip6dns2)) {
+      throw new Error('Invalid IPv6 DNS2 address format');
+    }
+
+    if (args.sourcenatipaddress && !this.isValidIPAddress(args.sourcenatipaddress)) {
+      throw new Error('Invalid source NAT IP address format');
+    }
+
+    if (args.routerprivateipaddress && !this.isValidIPAddress(args.routerprivateipaddress)) {
+      throw new Error('Invalid router private IP address format');
+    }
+
+    if (args.routerpublicipaddress && !this.isValidIPAddress(args.routerpublicipaddress)) {
+      throw new Error('Invalid router public IP address format');
+    }
+
+    if (args.publicmtu) {
+      const mtu = parseInt(args.publicmtu);
+      if (isNaN(mtu) || mtu < 68 || mtu > 65536) {
+        throw new Error('Invalid MTU value. Must be between 68 and 65536');
+      }
+    }
+
+    if (args.asnumber) {
+      const asn = parseInt(args.asnumber);
+      if (isNaN(asn) || asn < 1 || asn > 4294967295) {
+        throw new Error('Invalid AS number. Must be between 1 and 4294967295');
+      }
+    }
+
+    if (args.fordisplay !== undefined) {
+      if (typeof args.fordisplay === 'string') {
+        args.fordisplay = args.fordisplay.toLowerCase() === 'true';
+      }
+    }
+
+    if (args.start !== undefined) {
+      if (typeof args.start === 'string') {
+        args.start = args.start.toLowerCase() === 'true';
+      }
+    }
+
+    const params = this.buildParams(args, [...requiredParams, ...optionalParams]);
     const response = await this.client.createVPC(params);
     
     return {
@@ -9853,9 +10365,113 @@ class CloudStackMCPServer {
   }
 
   private async handleListVpcs(args: any): Promise<any> {
-    const params = this.buildParams(args, [
-      'account', 'domainid', 'id', 'keyword', 'name', 'state', 'zoneid', 'isrecursive'
-    ]);
+    const allowedParams = [
+      // Basic filters
+      'id', 'name', 'displaytext', 'account', 'domainid', 'projectid', 'zoneid',
+      
+      // VPC-specific filters
+      'state', 'vpcofferingid', 'supportedservices', 'restartreq', 'networkdomain',
+      'cidr', 'distributedvpcrouter', 'redundantvpcrouter', 'sourcenatsupported',
+      
+      // Search and pagination
+      'keyword', 'isrecursive', 'listall', 'page', 'pagesize',
+      
+      // Advanced options
+      'details', 'tags', 'retrieveonlyresourcecount', 'fordisplay',
+      
+      // Network and routing
+      'publicmtu', 'sourcenatipaddress', 'routerprivateipaddress',
+      'routerpublicipaddress', 'dns1', 'dns2', 'ip6dns1', 'ip6dns2',
+      
+      // BGP and routing
+      'asnumber', 'bgppeerids', 'routertype', 'userdatadetails',
+      
+      // Access and security
+      'related', 'ispersistent', 'fordisplay'
+    ];
+
+    // Enhanced parameter validation
+    if (args.page) {
+      const page = parseInt(args.page);
+      if (isNaN(page) || page < 1) {
+        throw new Error('Invalid page number. Must be a positive integer');
+      }
+    }
+
+    if (args.pagesize) {
+      const pagesize = parseInt(args.pagesize);
+      if (isNaN(pagesize) || pagesize < 1 || pagesize > 500) {
+        throw new Error('Invalid page size. Must be between 1 and 500');
+      }
+    }
+
+    if (args.state) {
+      const validStates = ['Enabled', 'Disabled', 'Inactive'];
+      if (!validStates.includes(args.state)) {
+        throw new Error(`Invalid state. Must be one of: ${validStates.join(', ')}`);
+      }
+    }
+
+    if (args.cidr) {
+      const cidrRegex = /^(\d{1,3}\.){3}\d{1,3}\/\d{1,2}$/;
+      if (!cidrRegex.test(args.cidr)) {
+        throw new Error('Invalid CIDR format. Expected format: x.x.x.x/xx');
+      }
+    }
+
+    if (args.dns1 && !this.isValidIPAddress(args.dns1)) {
+      throw new Error('Invalid DNS1 IP address format');
+    }
+
+    if (args.dns2 && !this.isValidIPAddress(args.dns2)) {
+      throw new Error('Invalid DNS2 IP address format');
+    }
+
+    if (args.ip6dns1 && !this.isValidIPAddress(args.ip6dns1)) {
+      throw new Error('Invalid IPv6 DNS1 address format');
+    }
+
+    if (args.ip6dns2 && !this.isValidIPAddress(args.ip6dns2)) {
+      throw new Error('Invalid IPv6 DNS2 address format');
+    }
+
+    if (args.sourcenatipaddress && !this.isValidIPAddress(args.sourcenatipaddress)) {
+      throw new Error('Invalid source NAT IP address format');
+    }
+
+    if (args.routerprivateipaddress && !this.isValidIPAddress(args.routerprivateipaddress)) {
+      throw new Error('Invalid router private IP address format');
+    }
+
+    if (args.routerpublicipaddress && !this.isValidIPAddress(args.routerpublicipaddress)) {
+      throw new Error('Invalid router public IP address format');
+    }
+
+    if (args.publicmtu) {
+      const mtu = parseInt(args.publicmtu);
+      if (isNaN(mtu) || mtu < 68 || mtu > 65536) {
+        throw new Error('Invalid MTU value. Must be between 68 and 65536');
+      }
+    }
+
+    if (args.asnumber) {
+      const asn = parseInt(args.asnumber);
+      if (isNaN(asn) || asn < 1 || asn > 4294967295) {
+        throw new Error('Invalid AS number. Must be between 1 and 4294967295');
+      }
+    }
+
+    // Boolean parameter validation
+    ['isrecursive', 'listall', 'restartreq', 'distributedvpcrouter', 'redundantvpcrouter',
+     'sourcenatsupported', 'retrieveonlyresourcecount', 'fordisplay', 'ispersistent'].forEach(param => {
+      if (args[param] !== undefined) {
+        if (typeof args[param] === 'string') {
+          args[param] = args[param].toLowerCase() === 'true';
+        }
+      }
+    });
+
+    const params = this.buildParams(args, allowedParams);
     const response = await this.client.listVPCs(params);
     
     return {
@@ -9952,6 +10568,12 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     return params;
   }
 
+  private isValidIPAddress(ip: string): boolean {
+    const ipv4Regex = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+    const ipv6Regex = /^(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$|^::1$|^::$/;
+    return ipv4Regex.test(ip) || ipv6Regex.test(ip);
+  }
+
   private formatVirtualMachinesResponse(response: any): string {
     const vms = response.virtualmachine || [];
     
@@ -10000,6 +10622,119 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
       result += `  Netmask: ${network.netmask || 'N/A'}\n`;
       result += `  Traffic Type: ${network.traffictype || 'N/A'}\n`;
       result += `  Account: ${network.account || 'N/A'}\n\n`;
+    }
+
+    return result;
+  }
+
+  private formatPhysicalNetworkResponse(action: string, response: any): string {
+    const physicalNetwork = response.physicalnetwork || response;
+    
+    if (!physicalNetwork) {
+      return `${action} - No physical network data returned`;
+    }
+
+    let result = `${action} successfully:\n\n`;
+    result += `Name: ${physicalNetwork.name}\n`;
+    result += `ID: ${physicalNetwork.id}\n`;
+    result += `Zone: ${physicalNetwork.zonename || physicalNetwork.zoneid || 'N/A'}\n`;
+    result += `State: ${physicalNetwork.state || 'N/A'}\n`;
+    result += `Broadcast Domain Range: ${physicalNetwork.broadcastdomainrange || 'N/A'}\n`;
+    result += `Isolation Methods: ${physicalNetwork.isolationmethods || 'N/A'}\n`;
+    result += `VLAN: ${physicalNetwork.vlan || 'N/A'}\n`;
+    result += `Tags: ${physicalNetwork.tags || 'N/A'}\n`;
+    result += `Domain: ${physicalNetwork.domainname || physicalNetwork.domainid || 'N/A'}\n`;
+
+    return result;
+  }
+
+  private formatPhysicalNetworksResponse(response: any): string {
+    const physicalNetworks = response.physicalnetwork || [];
+    
+    if (physicalNetworks.length === 0) {
+      return 'No physical networks found.';
+    }
+
+    let result = `Found ${physicalNetworks.length} physical network(s):\n\n`;
+    
+    for (const physicalNetwork of physicalNetworks) {
+      result += `Name: ${physicalNetwork.name}\n`;
+      result += `  ID: ${physicalNetwork.id}\n`;
+      result += `  Zone: ${physicalNetwork.zonename || physicalNetwork.zoneid || 'N/A'}\n`;
+      result += `  State: ${physicalNetwork.state || 'N/A'}\n`;
+      result += `  Broadcast Domain Range: ${physicalNetwork.broadcastdomainrange || 'N/A'}\n`;
+      result += `  Isolation Methods: ${physicalNetwork.isolationmethods || 'N/A'}\n`;
+      result += `  VLAN: ${physicalNetwork.vlan || 'N/A'}\n`;
+      result += `  Tags: ${physicalNetwork.tags || 'N/A'}\n`;
+      result += `  Domain: ${physicalNetwork.domainname || physicalNetwork.domainid || 'N/A'}\n\n`;
+    }
+
+    return result;
+  }
+
+  private formatTrafficTypeResponse(action: string, response: any): string {
+    const trafficType = response.traffictype || response;
+    
+    if (!trafficType) {
+      return `${action} - No traffic type data returned`;
+    }
+
+    let result = `${action} successfully:\n\n`;
+    result += `ID: ${trafficType.id}\n`;
+    result += `Traffic Type: ${trafficType.traffictype}\n`;
+    result += `Physical Network: ${trafficType.physicalnetworkid}\n`;
+    result += `KVM Network Label: ${trafficType.kvmnetworklabel || 'N/A'}\n`;
+    result += `VMware Network Label: ${trafficType.vmwarenetworklabel || 'N/A'}\n`;
+    result += `XenServer Network Label: ${trafficType.xennetworklabel || 'N/A'}\n`;
+    result += `Hyper-V Network Label: ${trafficType.hypervnetworklabel || 'N/A'}\n`;
+
+    return result;
+  }
+
+  private formatTrafficTypesResponse(response: any): string {
+    const trafficTypes = response.traffictype || [];
+    
+    if (trafficTypes.length === 0) {
+      return 'No traffic types found.';
+    }
+
+    let result = `Found ${trafficTypes.length} traffic type(s):\n\n`;
+    
+    for (const trafficType of trafficTypes) {
+      result += `Traffic Type: ${trafficType.traffictype}\n`;
+      result += `  ID: ${trafficType.id}\n`;
+      result += `  Physical Network: ${trafficType.physicalnetworkid}\n`;
+      result += `  KVM Network Label: ${trafficType.kvmnetworklabel || 'N/A'}\n`;
+      result += `  VMware Network Label: ${trafficType.vmwarenetworklabel || 'N/A'}\n`;
+      result += `  XenServer Network Label: ${trafficType.xennetworklabel || 'N/A'}\n`;
+      result += `  Hyper-V Network Label: ${trafficType.hypervnetworklabel || 'N/A'}\n\n`;
+    }
+
+    return result;
+  }
+
+  private formatUsageRecordsResponse(response: any): string {
+    const usageRecords = response.usagerecord || [];
+    
+    if (usageRecords.length === 0) {
+      return 'No usage records found.';
+    }
+
+    let result = `Found ${usageRecords.length} usage record(s):\n\n`;
+    
+    for (const record of usageRecords) {
+      result += `Usage Type: ${record.usagetype || 'N/A'}\n`;
+      result += `  Description: ${record.description || 'N/A'}\n`;
+      result += `  Account: ${record.account || 'N/A'}\n`;
+      result += `  Domain: ${record.domain || 'N/A'}\n`;
+      result += `  Zone: ${record.zone || 'N/A'}\n`;
+      result += `  Raw Usage: ${record.rawusage || 'N/A'}\n`;
+      result += `  Usage: ${record.usage || 'N/A'}\n`;
+      result += `  Start Date: ${record.startdate || 'N/A'}\n`;
+      result += `  End Date: ${record.enddate || 'N/A'}\n`;
+      result += `  Virtual Machine: ${record.virtualmachinename || 'N/A'}\n`;
+      result += `  Template: ${record.templatename || 'N/A'}\n`;
+      result += `  Service Offering: ${record.serviceofferingname || 'N/A'}\n\n`;
     }
 
     return result;
@@ -11392,15 +12127,79 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
 
   // Network Management Handlers
   private async handleCreateNetwork(args: any): Promise<any> {
-    const requiredParams = ['name', 'displaytext', 'networkofferingid', 'zoneid'];
-    for (const param of requiredParams) {
-      if (!args[param]) {
-        throw new Error(`Missing required parameter: ${param}`);
-      }
+    const requiredParams = ['name', 'networkofferingid', 'zoneid'];
+    const optionalParams = [
+      // Basic network configuration
+      'displaytext', 'account', 'domainid', 'projectid',
+      
+      // Network ACL configuration
+      'aclid', 'acltype',
+      
+      // BGP configuration
+      'asnumber', 'bgppeerids',
+      
+      // IP and CIDR configuration
+      'gateway', 'netmask', 'startip', 'endip', 'cidrsize',
+      
+      // DNS configuration
+      'dns1', 'dns2',
+      
+      // VLAN and physical network
+      'vlan', 'physicalnetworkid', 'bypassvlanoverlapcheck',
+      
+      // Network domain and display
+      'networkdomain', 'displaynetwork',
+      
+      // VPC association
+      'vpcid', 'associatednetworkid'
+    ];
+    
+    const params = this.buildParams(args, [...requiredParams, ...optionalParams], requiredParams);
+    
+    // Enhanced parameter validation
+    if (params.dns1 && !this.isValidIPAddress(params.dns1)) {
+      throw new Error('Invalid DNS1 IP address format');
     }
     
-    const allowedParams = [...requiredParams, 'gateway', 'netmask', 'startip', 'endip', 'vlan', 'account'];
-    const params = this.buildParams(args, allowedParams);
+    if (params.dns2 && !this.isValidIPAddress(params.dns2)) {
+      throw new Error('Invalid DNS2 IP address format');
+    }
+    
+    if (params.gateway && !this.isValidIPAddress(params.gateway)) {
+      throw new Error('Invalid gateway IP address format');
+    }
+    
+    if (params.startip && !this.isValidIPAddress(params.startip)) {
+      throw new Error('Invalid start IP address format');
+    }
+    
+    if (params.endip && !this.isValidIPAddress(params.endip)) {
+      throw new Error('Invalid end IP address format');
+    }
+    
+    // Validate CIDR size
+    if (params.cidrsize && (params.cidrsize < 16 || params.cidrsize > 28)) {
+      throw new Error('CIDR size must be between 16 and 28');
+    }
+    
+    // Validate ACL type
+    if (params.acltype && !['account', 'domain'].includes(params.acltype)) {
+      throw new Error('ACL type must be either account or domain');
+    }
+    
+    // Validate boolean parameters
+    if (params.bypassvlanoverlapcheck !== undefined && typeof params.bypassvlanoverlapcheck !== 'boolean') {
+      throw new Error('bypassvlanoverlapcheck must be a boolean value');
+    }
+    
+    if (params.displaynetwork !== undefined && typeof params.displaynetwork !== 'boolean') {
+      throw new Error('displaynetwork must be a boolean value');
+    }
+    
+    // Validate AS number format
+    if (params.asnumber && (!/^\d+$/.test(params.asnumber) || parseInt(params.asnumber) <= 0)) {
+      throw new Error('AS number must be a positive integer');
+    }
     
     const response = await this.client.createNetwork(params);
     
@@ -11469,6 +12268,332 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
         {
           type: 'text',
           text: this.formatAsyncJobResponse('Network restart', response)
+        }
+      ]
+    };
+  }
+
+  // Physical Network Management Handlers
+  private async handleCreatePhysicalNetwork(args: any): Promise<any> {
+    const requiredParams = ['name', 'zoneid'];
+    const optionalParams = [
+      'domainid', 'tags', 'isolationmethods', 'broadcastdomainrange', 'vlan'
+    ];
+
+    // Validate required parameters
+    for (const param of requiredParams) {
+      if (!args[param]) {
+        throw new Error(`Required parameter missing: ${param}`);
+      }
+    }
+
+    // Enhanced parameter validation
+    if (args.isolationmethods) {
+      const validMethods = ['VLAN', 'GRE', 'L3', 'VXLAN', 'STT'];
+      const methods = args.isolationmethods.split(',').map((m: string) => m.trim());
+      for (const method of methods) {
+        if (!validMethods.includes(method)) {
+          throw new Error(`Invalid isolation method: ${method}. Must be one of: ${validMethods.join(', ')}`);
+        }
+      }
+    }
+
+    if (args.broadcastdomainrange) {
+      const validRanges = ['Zone', 'Pod', 'Cluster'];
+      if (!validRanges.includes(args.broadcastdomainrange)) {
+        throw new Error(`Invalid broadcast domain range. Must be one of: ${validRanges.join(', ')}`);
+      }
+    }
+
+    const params = this.buildParams(args, [...requiredParams, ...optionalParams]);
+    const response = await this.client.createPhysicalNetwork(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatPhysicalNetworkResponse('Physical network created', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListPhysicalNetworks(args: any): Promise<any> {
+    const allowedParams = [
+      'id', 'name', 'zoneid', 'domainid', 'keyword', 'page', 'pagesize'
+    ];
+
+    // Enhanced parameter validation
+    if (args.page) {
+      const page = parseInt(args.page);
+      if (isNaN(page) || page < 1) {
+        throw new Error('Invalid page number. Must be a positive integer');
+      }
+    }
+
+    if (args.pagesize) {
+      const pagesize = parseInt(args.pagesize);
+      if (isNaN(pagesize) || pagesize < 1 || pagesize > 500) {
+        throw new Error('Invalid page size. Must be between 1 and 500');
+      }
+    }
+
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.listPhysicalNetworks(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatPhysicalNetworksResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleUpdatePhysicalNetwork(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Physical network ID is required');
+    }
+
+    const allowedParams = ['id', 'name', 'tags', 'vlan', 'state'];
+
+    // Enhanced parameter validation
+    if (args.state) {
+      const validStates = ['Enabled', 'Disabled'];
+      if (!validStates.includes(args.state)) {
+        throw new Error(`Invalid state. Must be one of: ${validStates.join(', ')}`);
+      }
+    }
+
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.updatePhysicalNetwork(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatPhysicalNetworkResponse('Physical network updated', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeletePhysicalNetwork(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Physical network ID is required');
+    }
+
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deletePhysicalNetwork(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Physical network deletion', response)
+        }
+      ]
+    };
+  }
+
+  // Traffic Management Handlers
+  private async handleAddTrafficType(args: any): Promise<any> {
+    const requiredParams = ['physicalnetworkid', 'traffictype'];
+    const optionalParams = [
+      'kvmnetworklabel', 'vmwarenetworklabel', 'xennetworklabel', 'hypervnetworklabel', 'vlan'
+    ];
+
+    // Validate required parameters
+    for (const param of requiredParams) {
+      if (!args[param]) {
+        throw new Error(`Required parameter missing: ${param}`);
+      }
+    }
+
+    // Enhanced parameter validation
+    if (args.traffictype) {
+      const validTrafficTypes = ['Guest', 'Management', 'Public', 'Storage'];
+      if (!validTrafficTypes.includes(args.traffictype)) {
+        throw new Error(`Invalid traffic type. Must be one of: ${validTrafficTypes.join(', ')}`);
+      }
+    }
+
+    if (args.vlan) {
+      const vlanId = parseInt(args.vlan);
+      if (isNaN(vlanId) || vlanId < 1 || vlanId > 4094) {
+        throw new Error('Invalid VLAN ID. Must be between 1 and 4094');
+      }
+    }
+
+    const params = this.buildParams(args, [...requiredParams, ...optionalParams]);
+    const response = await this.client.addTrafficType(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatTrafficTypeResponse('Traffic type added', response)
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteTrafficType(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Traffic type ID is required');
+    }
+
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteTrafficType(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Traffic type deletion', response)
+        }
+      ]
+    };
+  }
+
+  private async handleUpdateTrafficType(args: any): Promise<any> {
+    if (!args.id) {
+      throw new Error('Traffic type ID is required');
+    }
+
+    const allowedParams = ['id', 'kvmnetworklabel', 'vmwarenetworklabel', 'xennetworklabel', 'hypervnetworklabel'];
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.updateTrafficType(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatTrafficTypeResponse('Traffic type updated', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListTrafficTypes(args: any): Promise<any> {
+    const allowedParams = ['physicalnetworkid', 'keyword', 'page', 'pagesize'];
+
+    // Enhanced parameter validation
+    if (args.page) {
+      const page = parseInt(args.page);
+      if (isNaN(page) || page < 1) {
+        throw new Error('Invalid page number. Must be a positive integer');
+      }
+    }
+
+    if (args.pagesize) {
+      const pagesize = parseInt(args.pagesize);
+      if (isNaN(pagesize) || pagesize < 1 || pagesize > 500) {
+        throw new Error('Invalid page size. Must be between 1 and 500');
+      }
+    }
+
+    const params = this.buildParams(args, allowedParams);
+    const response = await this.client.listTrafficTypes(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatTrafficTypesResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleGenerateUsageRecords(args: any): Promise<any> {
+    const requiredParams = ['startdate', 'enddate'];
+    const optionalParams = ['domainid'];
+
+    // Validate required parameters
+    for (const param of requiredParams) {
+      if (!args[param]) {
+        throw new Error(`Required parameter missing: ${param}`);
+      }
+    }
+
+    // Enhanced parameter validation
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateRegex.test(args.startdate)) {
+      throw new Error('Invalid start date format. Expected YYYY-MM-DD');
+    }
+    if (!dateRegex.test(args.enddate)) {
+      throw new Error('Invalid end date format. Expected YYYY-MM-DD');
+    }
+
+    const startDate = new Date(args.startdate);
+    const endDate = new Date(args.enddate);
+    if (startDate >= endDate) {
+      throw new Error('Start date must be before end date');
+    }
+
+    const params = this.buildParams(args, [...requiredParams, ...optionalParams]);
+    const response = await this.client.generateUsageRecords(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Usage records generation', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListUsageRecords(args: any): Promise<any> {
+    const requiredParams = ['startdate', 'enddate'];
+    const optionalParams = ['account', 'domainid', 'projectid', 'type', 'page', 'pagesize'];
+
+    // Validate required parameters
+    for (const param of requiredParams) {
+      if (!args[param]) {
+        throw new Error(`Required parameter missing: ${param}`);
+      }
+    }
+
+    // Enhanced parameter validation
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateRegex.test(args.startdate)) {
+      throw new Error('Invalid start date format. Expected YYYY-MM-DD');
+    }
+    if (!dateRegex.test(args.enddate)) {
+      throw new Error('Invalid end date format. Expected YYYY-MM-DD');
+    }
+
+    const startDate = new Date(args.startdate);
+    const endDate = new Date(args.enddate);
+    if (startDate >= endDate) {
+      throw new Error('Start date must be before end date');
+    }
+
+    if (args.page) {
+      const page = parseInt(args.page);
+      if (isNaN(page) || page < 1) {
+        throw new Error('Invalid page number. Must be a positive integer');
+      }
+    }
+
+    if (args.pagesize) {
+      const pagesize = parseInt(args.pagesize);
+      if (isNaN(pagesize) || pagesize < 1 || pagesize > 500) {
+        throw new Error('Invalid page size. Must be between 1 and 500');
+      }
+    }
+
+    const params = this.buildParams(args, [...requiredParams, ...optionalParams]);
+    const response = await this.client.listUsageRecords(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatUsageRecordsResponse(response)
         }
       ]
     };
@@ -13940,22 +15065,6 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
   }
 
   // Monitoring & Usage Handler Methods
-  private async handleListUsageRecords(args: any): Promise<any> {
-    if (!args.enddate || !args.startdate) {
-      throw new Error('Start date and end date are required');
-    }
-    
-    const allowedParams = ['enddate', 'startdate', 'account', 'domainid', 'keyword', 'page', 'pagesize', 'projectid', 'type', 'usageid'];
-    const params = this.buildParams(args, allowedParams);
-    const response = await this.client.listUsageRecords(params);
-    
-    return {
-      content: [{
-        type: 'text',
-        text: this.formatUsageRecordListResponse(response)
-      }]
-    };
-  }
 
   private async handleListCapacity(args: any): Promise<any> {
     const allowedParams = ['clusterid', 'fetchlatest', 'hostid', 'keyword', 'page', 'pagesize', 'podid', 'sortby', 'type', 'zoneid'];

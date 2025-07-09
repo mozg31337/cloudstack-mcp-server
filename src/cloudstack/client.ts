@@ -467,6 +467,48 @@ export class CloudStackClient {
     return this.makeRequest('restartNetwork', params);
   }
 
+  // Physical Network Management
+  public async createPhysicalNetwork(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createPhysicalNetwork', params);
+  }
+
+  public async listPhysicalNetworks(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listPhysicalNetworks', params);
+  }
+
+  public async deletePhysicalNetwork(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deletePhysicalNetwork', params);
+  }
+
+  public async updatePhysicalNetwork(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updatePhysicalNetwork', params);
+  }
+
+  // Traffic Management
+  public async addTrafficType(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('addTrafficType', params);
+  }
+
+  public async deleteTrafficType(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteTrafficType', params);
+  }
+
+  public async updateTrafficType(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateTrafficType', params);
+  }
+
+  public async listTrafficTypes(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listTrafficTypes', params);
+  }
+
+  public async generateUsageRecords(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('generateUsageRecords', params);
+  }
+
+  public async listUsageRecords(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listUsageRecords', params);
+  }
+
   // Security Group Management
   public async createSecurityGroup(params: Record<string, any>): Promise<any> {
     return this.makeRequest('createSecurityGroup', params);
@@ -1195,13 +1237,6 @@ export class CloudStackClient {
   }
 
   // Monitoring & Metrics
-  public async listUsageRecords(params: Record<string, any> = {}): Promise<any> {
-    return this.makeRequest('listUsageRecords', params);
-  }
-
-  public async generateUsageRecords(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('generateUsageRecords', params);
-  }
 
   public async listUsageTypes(params: Record<string, any> = {}): Promise<any> {
     return this.makeRequest('listUsageTypes', params);
