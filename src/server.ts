@@ -31,7 +31,7 @@ class CloudStackMCPServer {
     this.server = new Server(
       {
         name: 'cloudstack-mcp-server',
-        version: '2.5.0',
+        version: '2.6.0',
       },
       {
         capabilities: {
@@ -359,6 +359,92 @@ class CloudStackMCPServer {
                 description: 'VM ID to show compatible offerings'
               }
             }
+          }
+        },
+        {
+          name: 'create_service_offering',
+          description: 'Create a new service offering in CloudStack',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'Name of the service offering'
+              },
+              displaytext: {
+                type: 'string',
+                description: 'Display text for the service offering'
+              },
+              cpunumber: {
+                type: 'number',
+                description: 'Number of CPU cores'
+              },
+              memory: {
+                type: 'number',
+                description: 'Memory in MB'
+              },
+              cpuspeed: {
+                type: 'number',
+                description: 'CPU speed in MHz'
+              },
+              storagetype: {
+                type: 'string',
+                description: 'Storage type (shared or local)'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID to scope the offering'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID to scope the offering'
+              }
+            },
+            required: ['name', 'displaytext']
+          }
+        },
+        {
+          name: 'update_service_offering',
+          description: 'Update an existing service offering in CloudStack',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Service offering ID'
+              },
+              name: {
+                type: 'string',
+                description: 'Updated name of the service offering'
+              },
+              displaytext: {
+                type: 'string',
+                description: 'Updated display text'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID to scope the offering'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID to scope the offering'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'delete_service_offering',
+          description: 'Delete a service offering in CloudStack',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Service offering ID to delete'
+              }
+            },
+            required: ['id']
           }
         },
         {
@@ -1842,6 +1928,28 @@ class CloudStackMCPServer {
               }
             },
             required: ['aclid', 'networkid']
+          }
+        },
+        {
+          name: 'update_network_acl_list',
+          description: 'Update a Network ACL list',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Network ACL list ID'
+              },
+              name: {
+                type: 'string',
+                description: 'New name for the ACL list'
+              },
+              description: {
+                type: 'string',
+                description: 'New description for the ACL list'
+              }
+            },
+            required: ['id']
           }
         },
         {
@@ -4405,6 +4513,48 @@ class CloudStackMCPServer {
           }
         },
         {
+          name: 'update_network_acl_item',
+          description: 'Update a Network ACL rule',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'ACL rule ID'
+              },
+              action: {
+                type: 'string',
+                description: 'Action (allow/deny)'
+              },
+              cidrlist: {
+                type: 'string',
+                description: 'CIDR list for the rule'
+              },
+              endport: {
+                type: 'number',
+                description: 'End port for the rule'
+              },
+              startport: {
+                type: 'number',
+                description: 'Start port for the rule'
+              },
+              protocol: {
+                type: 'string',
+                description: 'Protocol (TCP/UDP/ICMP)'
+              },
+              number: {
+                type: 'number',
+                description: 'Rule number for ordering'
+              },
+              reason: {
+                type: 'string',
+                description: 'Reason for the rule'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
           name: 'restore_virtual_machine',
           description: 'Restore a virtual machine',
           inputSchema: {
@@ -5491,6 +5641,56 @@ class CloudStackMCPServer {
               }
             },
             required: ['id']
+          }
+        },
+        {
+          name: 'get_user',
+          description: 'Get detailed information about a specific user',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'User ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'get_user_keys',
+          description: 'Get API keys for a specific user',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'User ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'move_user',
+          description: 'Move a user to a different account',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'User ID'
+              },
+              account: {
+                type: 'string',
+                description: 'Target account name'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID of the target account'
+              }
+            },
+            required: ['id', 'account', 'domainid']
           }
         },
         // Resource Limits and Quotas Tools
@@ -8571,6 +8771,15 @@ class CloudStackMCPServer {
           case 'list_service_offerings':
             return await this.handleListServiceOfferings(args);
           
+          case 'create_service_offering':
+            return await this.handleCreateServiceOffering(args);
+          
+          case 'update_service_offering':
+            return await this.handleUpdateServiceOffering(args);
+          
+          case 'delete_service_offering':
+            return await this.handleDeleteServiceOffering(args);
+          
           case 'list_templates':
             return await this.handleListTemplates(args);
           
@@ -9006,6 +9215,12 @@ class CloudStackMCPServer {
           case 'list_network_acl_lists':
             return await this.handleListNetworkACLLists(args);
           
+          case 'update_network_acl_item':
+            return await this.handleUpdateNetworkACLItem(args);
+          
+          case 'update_network_acl_list':
+            return await this.handleUpdateNetworkACLList(args);
+          
           case 'migrate_virtual_machine':
             return await this.handleMigrateVirtualMachine(args);
           
@@ -9293,6 +9508,15 @@ class CloudStackMCPServer {
           
           case 'register_user_keys':
             return await this.handleRegisterUserKeys(args);
+          
+          case 'get_user':
+            return await this.handleGetUser(args);
+          
+          case 'get_user_keys':
+            return await this.handleGetUserKeys(args);
+          
+          case 'move_user':
+            return await this.handleMoveUser(args);
 
           // Resource Limits and Quotas Cases
           case 'list_resource_limits':
@@ -10004,6 +10228,48 @@ class CloudStackMCPServer {
         {
           type: 'text',
           text: this.formatServiceOfferingsResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleCreateServiceOffering(args: any): Promise<any> {
+    const params = this.buildParams(args, ['name', 'displaytext', 'cpunumber', 'memory', 'cpuspeed', 'storagetype', 'domainid', 'zoneid']);
+    const response = await this.client.createServiceOffering(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatServiceOfferingResponse(response, 'created')
+        }
+      ]
+    };
+  }
+
+  private async handleUpdateServiceOffering(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id', 'name', 'displaytext', 'domainid', 'zoneid']);
+    const response = await this.client.updateServiceOffering(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatServiceOfferingResponse(response, 'updated')
+        }
+      ]
+    };
+  }
+
+  private async handleDeleteServiceOffering(args: any): Promise<any> {
+    const params = this.buildParams(args, ['id']);
+    const response = await this.client.deleteServiceOffering(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: `Service offering deleted successfully.\n\nResponse: ${JSON.stringify(response, null, 2)}`
         }
       ]
     };
@@ -10852,6 +11118,25 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
       result += `  Storage Type: ${offering.storagetype || 'N/A'}\n`;
       result += `  Created: ${offering.created || 'N/A'}\n\n`;
     }
+
+    return result;
+  }
+
+  private formatServiceOfferingResponse(response: any, action: string): string {
+    const offering = response.serviceoffering;
+    
+    if (!offering) {
+      return `Service offering ${action} successfully.\n\nResponse: ${JSON.stringify(response, null, 2)}`;
+    }
+
+    let result = `Service offering ${action} successfully:\n\n`;
+    result += `Name: ${offering.name}\n`;
+    result += `ID: ${offering.id}\n`;
+    result += `Display Text: ${offering.displaytext || 'N/A'}\n`;
+    result += `CPU: ${offering.cpunumber || 'N/A'} cores @ ${offering.cpuspeed || 'N/A'} MHz\n`;
+    result += `Memory: ${offering.memory || 'N/A'} MB\n`;
+    result += `Storage Type: ${offering.storagetype || 'N/A'}\n`;
+    result += `Created: ${offering.created || 'N/A'}\n`;
 
     return result;
   }
@@ -13544,6 +13829,40 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     };
   }
 
+  private async handleUpdateNetworkACLItem(args: any): Promise<any> {
+    const allowedParams = ['id', 'protocol', 'startport', 'endport', 'cidrlist', 'action', 'traffictype', 'icmptype', 'icmpcode', 'number'];
+    const requiredParams = ['id'];
+    const params = this.buildParams(args, allowedParams, requiredParams);
+    
+    const response = await this.client.updateNetworkACL(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Network ACL item update', response)
+        }
+      ]
+    };
+  }
+
+  private async handleUpdateNetworkACLList(args: any): Promise<any> {
+    const allowedParams = ['id', 'name', 'description'];
+    const requiredParams = ['id'];
+    const params = this.buildParams(args, allowedParams, requiredParams);
+    
+    const response = await this.client.updateNetworkACLList(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatNetworkACLListResponse('Network ACL list update', response)
+        }
+      ]
+    };
+  }
+
   // Response Formatting Methods
   private formatLoadBalancerRulesResponse(response: any): string {
     const rules = response.loadbalancerrule || [];
@@ -14053,6 +14372,66 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
         {
           type: 'text',
           text: this.formatUserKeysResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleGetUser(args: any): Promise<any> {
+    const allowedParams = ['id'];
+    const params = this.buildParams(args, allowedParams);
+
+    if (!params.id) {
+      throw new Error('User ID is required');
+    }
+
+    const response = await this.client.getUser(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatUserResponse('User retrieval', response)
+        }
+      ]
+    };
+  }
+
+  private async handleGetUserKeys(args: any): Promise<any> {
+    const allowedParams = ['id'];
+    const params = this.buildParams(args, allowedParams);
+
+    if (!params.id) {
+      throw new Error('User ID is required');
+    }
+
+    const response = await this.client.getUserKeys(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatUserKeysResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleMoveUser(args: any): Promise<any> {
+    const allowedParams = ['id', 'account', 'domainid'];
+    const params = this.buildParams(args, allowedParams);
+
+    if (!params.id || !params.account || !params.domainid) {
+      throw new Error('User ID, account, and domain ID are required');
+    }
+
+    const response = await this.client.moveUser(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatUserResponse('User move', response)
         }
       ]
     };

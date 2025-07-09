@@ -225,6 +225,18 @@ export class CloudStackClient {
     return this.makeRequest('listServiceOfferings', params);
   }
 
+  public async createServiceOffering(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createServiceOffering', params);
+  }
+
+  public async deleteServiceOffering(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deleteServiceOffering', params);
+  }
+
+  public async updateServiceOffering(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateServiceOffering', params);
+  }
+
   public async listDiskOfferings(params: Record<string, any> = {}): Promise<any> {
     return this.makeRequest('listDiskOfferings', params);
   }
@@ -369,6 +381,10 @@ export class CloudStackClient {
 
   public async deleteNetworkACLList(params: Record<string, any>): Promise<any> {
     return this.makeRequest('deleteNetworkACLList', params);
+  }
+
+  public async updateNetworkACLList(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateNetworkACLList', params);
   }
 
   public async listSecurityGroups(params: Record<string, any> = {}): Promise<any> {
@@ -1061,6 +1077,18 @@ export class CloudStackClient {
 
   public async registerUserKeys(params: Record<string, any>): Promise<any> {
     return this.makeRequest('registerUserKeys', params);
+  }
+
+  public async getUser(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getUser', params);
+  }
+
+  public async getUserKeys(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('getUserKeys', params);
+  }
+
+  public async moveUser(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('moveUser', params);
   }
 
   // Resource Limits and Quotas APIs

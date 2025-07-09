@@ -437,6 +437,17 @@ export class DangerousActionConfirmation {
       reversible: true,
       impactScope: 'service-disruption'
     });
+
+    // Service Offering Operations
+    this.addDangerousAction('delete_service_offering', {
+      severity: 'high',
+      category: 'Service Offering Operations',
+      description: 'Delete a service offering',
+      warningMessage: 'This will permanently delete the service offering. Virtual machines using this offering will be affected and new VMs cannot be created with this offering.',
+      requiredConfirmation: 'delete service offering',
+      reversible: false,
+      impactScope: 'multiple-resources'
+    });
   }
 
   /**
