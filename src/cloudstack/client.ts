@@ -360,15 +360,15 @@ export class CloudStackClient {
 
   // Network ACL Lists Management
   public async createNetworkACLList(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('createNetworkAclList', params);
+    return this.makeRequest('createNetworkACLList', params);
   }
 
   public async listNetworkACLLists(params: Record<string, any> = {}): Promise<any> {
-    return this.makeRequest('listNetworkAclLists', params);
+    return this.makeRequest('listNetworkACLLists', params);
   }
 
   public async deleteNetworkACLList(params: Record<string, any>): Promise<any> {
-    return this.makeRequest('deleteNetworkAclList', params);
+    return this.makeRequest('deleteNetworkACLList', params);
   }
 
   public async listSecurityGroups(params: Record<string, any> = {}): Promise<any> {
@@ -884,6 +884,22 @@ export class CloudStackClient {
 
   public async updateVMSnapshot(params: Record<string, any>): Promise<any> {
     return this.makeRequest('updateVMSnapshot', params);
+  }
+
+  public async removeVirtualMachineFromBackupOffering(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('removeVirtualMachineFromBackupOffering', params);
+  }
+
+  public async listUnmanagedInstances(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listUnmanagedInstances', params);
+  }
+
+  public async listVmsForImport(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listVmsForImport', params);
+  }
+
+  public async updateVMSchedule(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateVMSchedule', params);
   }
 
   public async createVirtualMachineSnapshot(params: Record<string, any>): Promise<any> {

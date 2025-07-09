@@ -82,25 +82,171 @@ class CloudStackMCPServer {
       const tools: Tool[] = [
         {
           name: 'list_virtual_machines',
-          description: 'List virtual machines in CloudStack',
+          description: 'List virtual machines in CloudStack with comprehensive filtering options',
           inputSchema: {
             type: 'object',
             properties: {
-              zone: {
-                type: 'string',
-                description: 'Zone ID or name to filter VMs'
-              },
-              state: {
-                type: 'string',
-                description: 'VM state (Running, Stopped, etc.)'
-              },
+              // Basic filters
               account: {
                 type: 'string',
-                description: 'Account name to filter VMs'
+                description: 'Account name to filter VMs (must be used with domainid)'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID (required when account is specified)'
+              },
+              projectid: {
+                type: 'string',
+                description: 'Project ID to filter VMs'
               },
               keyword: {
                 type: 'string',
                 description: 'Keyword to search in VM names'
+              },
+              name: {
+                type: 'string',
+                description: 'VM name to filter'
+              },
+              id: {
+                type: 'string',
+                description: 'Specific VM ID'
+              },
+              ids: {
+                type: 'string',
+                description: 'Comma-separated list of VM IDs'
+              },
+              // Location filters
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID to filter VMs'
+              },
+              clusterid: {
+                type: 'string',
+                description: 'Cluster ID to filter VMs'
+              },
+              hostid: {
+                type: 'string',
+                description: 'Host ID to filter VMs'
+              },
+              podid: {
+                type: 'string',
+                description: 'Pod ID to filter VMs'
+              },
+              storageid: {
+                type: 'string',
+                description: 'Storage ID to filter VMs'
+              },
+              // Resource filters
+              templateid: {
+                type: 'string',
+                description: 'Template ID to filter VMs'
+              },
+              serviceofferingid: {
+                type: 'string',
+                description: 'Service offering ID to filter VMs'
+              },
+              diskofferingid: {
+                type: 'string',
+                description: 'Disk offering ID to filter VMs'
+              },
+              networkid: {
+                type: 'string',
+                description: 'Network ID to filter VMs'
+              },
+              vpcid: {
+                type: 'string',
+                description: 'VPC ID to filter VMs'
+              },
+              isoid: {
+                type: 'string',
+                description: 'ISO ID to filter VMs'
+              },
+              securitygroupid: {
+                type: 'string',
+                description: 'Security group ID to filter VMs'
+              },
+              affinitygroupid: {
+                type: 'string',
+                description: 'Affinity group ID to filter VMs'
+              },
+              backupofferingid: {
+                type: 'string',
+                description: 'Backup offering ID to filter VMs'
+              },
+              // State and configuration filters
+              state: {
+                type: 'string',
+                description: 'VM state (Running, Stopped, Starting, Stopping, Migrating, Error, Unknown, Shutdowned, Destroyed, Expunging)'
+              },
+              haenable: {
+                type: 'boolean',
+                description: 'Filter VMs with High Availability enabled'
+              },
+              hypervisor: {
+                type: 'string',
+                description: 'Hypervisor type (KVM, XenServer, VMware, etc.)'
+              },
+              displayvm: {
+                type: 'boolean',
+                description: 'Filter by display flag (admin only)'
+              },
+              forvirtualnetwork: {
+                type: 'boolean',
+                description: 'Filter by virtual network type'
+              },
+              keypair: {
+                type: 'string',
+                description: 'SSH keypair name to filter VMs'
+              },
+              groupid: {
+                type: 'string',
+                description: 'Group ID to filter VMs'
+              },
+              userid: {
+                type: 'string',
+                description: 'User ID to filter VMs'
+              },
+              autoscalevmgroupid: {
+                type: 'string',
+                description: 'Auto-scaling VM group ID to filter VMs'
+              },
+              // Advanced filters
+              details: {
+                type: 'string',
+                description: 'Comma-separated list of VM details to include'
+              },
+              userdata: {
+                type: 'boolean',
+                description: 'Include user data in response'
+              },
+              accumulate: {
+                type: 'boolean',
+                description: 'Accumulate VM metrics data'
+              },
+              isrecursive: {
+                type: 'boolean',
+                description: 'Recursively list resources'
+              },
+              listall: {
+                type: 'boolean',
+                description: 'List all authorized resources'
+              },
+              isvnf: {
+                type: 'boolean',
+                description: 'Filter VNF appliance VMs'
+              },
+              tags: {
+                type: 'string',
+                description: 'Resource tags to filter VMs'
+              },
+              // Pagination
+              page: {
+                type: 'number',
+                description: 'Page number for pagination'
+              },
+              pagesize: {
+                type: 'number',
+                description: 'Number of items per page (1-500)'
               }
             }
           }
@@ -1946,10 +2092,11 @@ class CloudStackMCPServer {
         },
         {
           name: 'deploy_virtual_machine',
-          description: 'Deploy a new virtual machine in CloudStack',
+          description: 'Deploy a new virtual machine in CloudStack with comprehensive configuration options',
           inputSchema: {
             type: 'object',
             properties: {
+              // Required parameters
               serviceofferingid: {
                 type: 'string',
                 description: 'Service offering ID for the VM'
@@ -1962,6 +2109,7 @@ class CloudStackMCPServer {
                 type: 'string',
                 description: 'Zone ID where to deploy the VM'
               },
+              // Basic VM configuration
               name: {
                 type: 'string',
                 description: 'Name for the new VM'
@@ -1970,17 +2118,129 @@ class CloudStackMCPServer {
                 type: 'string',
                 description: 'Display name for the new VM'
               },
+              account: {
+                type: 'string',
+                description: 'Account name'
+              },
+              group: {
+                type: 'string',
+                description: 'Group name for the VM'
+              },
+              projectid: {
+                type: 'string',
+                description: 'Project ID for deployment'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              // Network configuration
               networkids: {
                 type: 'string',
                 description: 'Network IDs (comma-separated) to attach to VM'
               },
-              account: {
+              securitygroupids: {
                 type: 'string',
-                description: 'Account name (optional)'
+                description: 'Security group IDs (comma-separated)'
               },
-              group: {
+              securitygroupnames: {
                 type: 'string',
-                description: 'Group name for the VM (optional)'
+                description: 'Security group names (comma-separated)'
+              },
+              // Storage configuration
+              diskofferingid: {
+                type: 'string',
+                description: 'Disk offering ID for additional disks'
+              },
+              rootdisksize: {
+                type: 'string',
+                description: 'Root disk size in GB'
+              },
+              size: {
+                type: 'string',
+                description: 'Root disk size (deprecated, use rootdisksize)'
+              },
+              rootdiskcontroller: {
+                type: 'string',
+                description: 'Root disk controller type'
+              },
+              // Placement and affinity
+              affinitygroupids: {
+                type: 'string',
+                description: 'Affinity group IDs (comma-separated)'
+              },
+              affinitygroupnames: {
+                type: 'string',
+                description: 'Affinity group names (comma-separated)'
+              },
+              hostid: {
+                type: 'string',
+                description: 'Host ID for deployment (admin only)'
+              },
+              clusterid: {
+                type: 'string',
+                description: 'Cluster ID for deployment (admin only)'
+              },
+              podid: {
+                type: 'string',
+                description: 'Pod ID for deployment (admin only)'
+              },
+              deploymentplanner: {
+                type: 'string',
+                description: 'Deployment planner to use (admin only)'
+              },
+              hypervisor: {
+                type: 'string',
+                description: 'Hypervisor type'
+              },
+              // Boot configuration
+              bootmode: {
+                type: 'string',
+                description: 'Boot mode: Legacy or Secure'
+              },
+              boottype: {
+                type: 'string',
+                description: 'Boot type: BIOS or UEFI'
+              },
+              startvm: {
+                type: 'boolean',
+                description: 'Whether to start VM after deployment (default: true)'
+              },
+              // Authentication and user data
+              keypair: {
+                type: 'string',
+                description: 'SSH keypair name'
+              },
+              userdata: {
+                type: 'string',
+                description: 'Base64 encoded user data (max 1MB)'
+              },
+              // Advanced configuration
+              details: {
+                type: 'string',
+                description: 'VM details as key-value pairs'
+              },
+              customid: {
+                type: 'string',
+                description: 'Custom ID for the VM'
+              },
+              // Backup configuration
+              backupofferingid: {
+                type: 'string',
+                description: 'Backup offering ID'
+              },
+              // Miscellaneous
+              fordisplay: {
+                type: 'boolean',
+                description: 'Whether to display VM in UI (default: true)'
+              },
+              copyimagetags: {
+                type: 'boolean',
+                description: 'Copy image tags to VM (default: false)'
+              },
+              dynamicscalingenabled: {
+                type: 'boolean',
+                description: 'Enable dynamic scaling (default: false)'
               }
             },
             required: ['serviceofferingid', 'templateid', 'zoneid']
@@ -1988,13 +2248,37 @@ class CloudStackMCPServer {
         },
         {
           name: 'start_virtual_machine',
-          description: 'Start a stopped virtual machine',
+          description: 'Start a stopped virtual machine with advanced deployment options',
           inputSchema: {
             type: 'object',
             properties: {
               id: {
                 type: 'string',
                 description: 'Virtual machine ID to start'
+              },
+              bootintosetup: {
+                type: 'boolean',
+                description: 'Boot into hardware setup menu'
+              },
+              clusterid: {
+                type: 'string',
+                description: 'Destination cluster ID for VM deployment (root admin only)'
+              },
+              considerlasthost: {
+                type: 'boolean',
+                description: 'Consider last host when starting VM (default: true)'
+              },
+              deploymentplanner: {
+                type: 'string',
+                description: 'Deployment planner for VM allocation (root admin only)'
+              },
+              hostid: {
+                type: 'string',
+                description: 'Destination host ID for VM deployment (root admin only)'
+              },
+              podid: {
+                type: 'string',
+                description: 'Destination pod ID for VM deployment (root admin only)'
               }
             },
             required: ['id']
@@ -3824,59 +4108,6 @@ class CloudStackMCPServer {
               networkid: {
                 type: 'string',
                 description: 'Network ID to filter rules'
-              }
-            }
-          }
-        },
-        {
-          name: 'create_network_acl_list',
-          description: 'Create network ACL list',
-          inputSchema: {
-            type: 'object',
-            properties: {
-              name: {
-                type: 'string',
-                description: 'ACL list name'
-              },
-              description: {
-                type: 'string',
-                description: 'ACL list description'
-              },
-              vpcid: {
-                type: 'string',
-                description: 'VPC ID'
-              }
-            },
-            required: ['name', 'vpcid']
-          }
-        },
-        {
-          name: 'delete_network_acl_list',
-          description: 'Delete network ACL list',
-          inputSchema: {
-            type: 'object',
-            properties: {
-              id: {
-                type: 'string',
-                description: 'ACL list ID'
-              }
-            },
-            required: ['id']
-          }
-        },
-        {
-          name: 'list_network_acl_lists',
-          description: 'List network ACL lists',
-          inputSchema: {
-            type: 'object',
-            properties: {
-              vpcid: {
-                type: 'string',
-                description: 'VPC ID to filter ACL lists'
-              },
-              name: {
-                type: 'string',
-                description: 'ACL list name'
               }
             }
           }
@@ -8219,16 +8450,6 @@ class CloudStackMCPServer {
           case 'delete_vpc_offering':
             return await this.handleDeleteVpcOffering(args);
 
-          // Network ACL Lists Handlers  
-          case 'create_network_acl_list':
-            return await this.handleCreateNetworkAclList(args);
-          
-          case 'list_network_acl_lists':
-            return await this.handleListNetworkAclLists(args);
-          
-          case 'delete_network_acl_list':
-            return await this.handleDeleteNetworkAclList(args);
-          
           case 'replace_network_acl_list':
             return await this.handleReplaceNetworkAclList(args);
 
@@ -8516,6 +8737,55 @@ class CloudStackMCPServer {
           
           case 'expunge_virtual_machine':
             return await this.handleExpungeVirtualMachine(args);
+          
+          // Additional VM Management Methods
+          case 'assign_virtual_machine_to_backup_offering':
+            return await this.handleAssignVirtualMachineToBackupOffering(args);
+          
+          case 'remove_virtual_machine_from_backup_offering':
+            return await this.handleRemoveVirtualMachineFromBackupOffering(args);
+          
+          case 'reset_ssh_key_for_virtual_machine':
+            return await this.handleResetSSHKeyForVirtualMachine(args);
+          
+          case 'revert_to_vm_snapshot':
+            return await this.handleRevertToVMSnapshot(args);
+          
+          case 'unmanage_virtual_machine':
+            return await this.handleUnmanageVirtualMachine(args);
+          
+          case 'migrate_virtual_machine_with_volume':
+            return await this.handleMigrateVirtualMachineWithVolume(args);
+          
+          case 'import_unmanaged_instance':
+            return await this.handleImportUnmanagedInstance(args);
+          
+          case 'import_vm':
+            return await this.handleImportVm(args);
+          
+          case 'get_virtual_machine_user_data':
+            return await this.handleGetVirtualMachineUserData(args);
+          
+          case 'list_unmanaged_instances':
+            return await this.handleListUnmanagedInstances(args);
+          
+          case 'list_vm_schedule':
+            return await this.handleListVMSchedule(args);
+          
+          case 'list_virtual_machines_metrics':
+            return await this.handleListVirtualMachinesMetrics(args);
+          
+          case 'list_virtual_machines_usage_history':
+            return await this.handleListVirtualMachinesUsageHistory(args);
+          
+          case 'list_vms_for_import':
+            return await this.handleListVmsForImport(args);
+          
+          case 'update_vm_schedule':
+            return await this.handleUpdateVMSchedule(args);
+          
+          case 'clean_vm_reservations':
+            return await this.handleCleanVMReservations(args);
           
           case 'migrate_volume':
             return await this.handleMigrateVolume(args);
@@ -9159,7 +9429,61 @@ class CloudStackMCPServer {
   }
 
   private async handleListVirtualMachines(args: any): Promise<any> {
-    const params = this.buildParams(args, ['zone', 'state', 'account', 'keyword']);
+    const allowedParams = [
+      // Basic filters
+      'account', 'domainid', 'projectid', 'keyword', 'name', 'id', 'ids',
+      
+      // Location filters  
+      'zoneid', 'clusterid', 'hostid', 'podid', 'storageid',
+      
+      // Resource filters
+      'templateid', 'serviceofferingid', 'diskofferingid', 'networkid', 'vpcid',
+      'isoid', 'securitygroupid', 'affinitygroupid', 'backupofferingid',
+      
+      // State and configuration filters
+      'state', 'haenable', 'hypervisor', 'displayvm', 'forvirtualnetwork',
+      'keypair', 'groupid', 'userid', 'autoscalevmgroupid',
+      
+      // Advanced filters
+      'details', 'userdata', 'accumulate', 'isrecursive', 'listall',
+      'isvnf', 'tags',
+      
+      // Pagination
+      'page', 'pagesize'
+    ];
+    
+    const params = this.buildParams(args, allowedParams);
+    
+    // Parameter validation
+    if (params.account && !params.domainid) {
+      throw new Error('domainid is required when account is specified');
+    }
+    
+    if (params.state && !['Running', 'Stopped', 'Starting', 'Stopping', 'Migrating', 'Error', 'Unknown', 'Shutdowned', 'Destroyed', 'Expunging'].includes(params.state)) {
+      throw new Error('Invalid state. Must be one of: Running, Stopped, Starting, Stopping, Migrating, Error, Unknown, Shutdowned, Destroyed, Expunging');
+    }
+    
+    if (params.hypervisor && !['KVM', 'XenServer', 'VMware', 'Hyperv', 'VirtualBox', 'Parralels', 'BareMetal', 'Ovm', 'None'].includes(params.hypervisor)) {
+      throw new Error('Invalid hypervisor type');
+    }
+    
+    // Validate boolean parameters
+    const booleanParams = ['haenable', 'displayvm', 'forvirtualnetwork', 'userdata', 'accumulate', 'isrecursive', 'listall', 'isvnf'];
+    for (const param of booleanParams) {
+      if (params[param] !== undefined && typeof params[param] !== 'boolean') {
+        throw new Error(`${param} must be a boolean value`);
+      }
+    }
+    
+    // Validate pagination parameters
+    if (params.page && (typeof params.page !== 'number' || params.page < 1)) {
+      throw new Error('page must be a positive number');
+    }
+    
+    if (params.pagesize && (typeof params.pagesize !== 'number' || params.pagesize < 1 || params.pagesize > 500)) {
+      throw new Error('pagesize must be a number between 1 and 500');
+    }
+    
     const response = await this.client.listVirtualMachines(params);
     
     return {
@@ -9609,7 +9933,14 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     };
   }
 
-  private buildParams(args: any, allowedParams: string[]): Record<string, any> {
+  private buildParams(args: any, allowedParams: string[], requiredParams: string[] = []): Record<string, any> {
+    // Validate required parameters
+    for (const required of requiredParams) {
+      if (!args[required] || args[required] === null || args[required] === undefined) {
+        throw new Error(`Required parameter missing: ${required}`);
+      }
+    }
+    
     const params: Record<string, any> = {};
     
     for (const param of allowedParams) {
@@ -9953,14 +10284,75 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
   // Virtual Machine Management Handlers
   private async handleDeployVirtualMachine(args: any): Promise<any> {
     const requiredParams = ['serviceofferingid', 'templateid', 'zoneid'];
-    const optionalParams = ['name', 'displayname', 'networkids', 'account', 'group'];
-    const params = this.buildParams(args, [...requiredParams, ...optionalParams]);
+    const optionalParams = [
+      // Basic VM configuration
+      'name', 'displayname', 'account', 'group', 'projectid', 'domainid',
+      
+      // Network configuration
+      'networkids', 'securitygroupids', 'securitygroupnames', 'iptonetworklist',
+      'nicnetworklist', 'macaddress', 'dhcpoptionsnetworklist',
+      
+      // Storage configuration
+      'diskofferingid', 'rootdisksize', 'size', 'rootdiskcontroller',
+      'datadiskofferinglist', 'overridediskofferingid',
+      
+      // Placement and affinity
+      'affinitygroupids', 'affinitygroupnames', 'hostid', 'clusterid', 'podid',
+      'deploymentplanner', 'hypervisor',
+      
+      // Boot configuration
+      'bootmode', 'boottype', 'startvm',
+      
+      // Authentication and user data
+      'keypair', 'userdata', 'sshkeypairs',
+      
+      // Advanced configuration
+      'details', 'extraconfig', 'properties', 'customid',
+      
+      // Backup and recovery
+      'backupofferingid', 'recoverypoint',
+      
+      // Miscellaneous
+      'fordisplay', 'copyimagetags', 'dynamicscalingenabled'
+    ];
     
-    // Validate required parameters
-    for (const param of requiredParams) {
-      if (!params[param]) {
-        throw new Error(`Missing required parameter: ${param}`);
+    const params = this.buildParams(args, [...requiredParams, ...optionalParams], requiredParams);
+    
+    // Enhanced parameter validation
+    if (params.userdata) {
+      try {
+        const userdataSize = Buffer.byteLength(params.userdata, 'base64');
+        if (userdataSize > 1048576) { // 1MB limit
+          throw new Error('Userdata exceeds 1MB limit');
+        }
+      } catch (error) {
+        throw new Error('Invalid userdata format - must be base64 encoded');
       }
+    }
+    
+    // Validate boot mode options
+    if (params.bootmode && !['Legacy', 'Secure'].includes(params.bootmode)) {
+      throw new Error('Invalid boot mode. Must be Legacy or Secure');
+    }
+    
+    // Validate boot type options
+    if (params.boottype && !['BIOS', 'UEFI'].includes(params.boottype)) {
+      throw new Error('Invalid boot type. Must be BIOS or UEFI');
+    }
+    
+    // Validate mutually exclusive affinity group parameters
+    if (params.affinitygroupids && params.affinitygroupnames) {
+      throw new Error('Cannot specify both affinitygroupids and affinitygroupnames');
+    }
+    
+    // Validate mutually exclusive security group parameters
+    if (params.securitygroupids && params.securitygroupnames) {
+      throw new Error('Cannot specify both securitygroupids and securitygroupnames');
+    }
+    
+    // Validate root disk size parameters
+    if (params.rootdisksize && params.size) {
+      throw new Error('Cannot specify both rootdisksize and size parameters');
     }
     
     const response = await this.client.deployVirtualMachine(params);
@@ -9976,11 +10368,30 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
   }
 
   private async handleStartVirtualMachine(args: any): Promise<any> {
-    if (!args.id) {
-      throw new Error('Virtual machine ID is required');
+    const requiredParams = ['id'];
+    const optionalParams = [
+      'bootintosetup',      // Boot into hardware setup menu
+      'clusterid',          // Destination cluster ID (root admin only)
+      'considerlasthost',   // Consider last host when starting VM (default: true)
+      'deploymentplanner',  // Deployment planner for VM allocation (root admin only)
+      'hostid',             // Destination host ID (root admin only)
+      'podid'               // Destination pod ID (root admin only)
+    ];
+    
+    const params = this.buildParams(args, [...requiredParams, ...optionalParams], requiredParams);
+    
+    // Validate boolean parameters
+    if (params.bootintosetup !== undefined && typeof params.bootintosetup !== 'boolean') {
+      throw new Error('bootintosetup must be a boolean value');
     }
     
-    const params = { id: args.id };
+    if (params.considerlasthost !== undefined && typeof params.considerlasthost !== 'boolean') {
+      throw new Error('considerlasthost must be a boolean value');
+    }
+    
+    // Note: Admin-only parameters (clusterid, deploymentplanner, hostid, podid) 
+    // will be validated by CloudStack API based on user permissions
+    
     const response = await this.client.startVirtualMachine(params);
     
     return {
@@ -10631,6 +11042,268 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
         {
           type: 'text',
           text: this.formatAsyncJobResponse('VM expunge', response)
+        }
+      ]
+    };
+  }
+
+  // Additional VM Management Methods
+  private async handleAssignVirtualMachineToBackupOffering(args: any): Promise<any> {
+    const requiredParams = ['virtualmachineid', 'backupofferingid'];
+    const params = this.buildParams(args, requiredParams, requiredParams);
+    
+    const response = await this.client.assignVirtualMachineToBackupOffering(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('VM backup offering assignment', response)
+        }
+      ]
+    };
+  }
+
+  private async handleRemoveVirtualMachineFromBackupOffering(args: any): Promise<any> {
+    const requiredParams = ['virtualmachineid'];
+    const params = this.buildParams(args, requiredParams, requiredParams);
+    
+    const response = await this.client.removeVirtualMachineFromBackupOffering(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('VM backup offering removal', response)
+        }
+      ]
+    };
+  }
+
+  private async handleResetSSHKeyForVirtualMachine(args: any): Promise<any> {
+    const requiredParams = ['id'];
+    const optionalParams = ['keypair', 'account', 'projectid'];
+    const params = this.buildParams(args, [...requiredParams, ...optionalParams], requiredParams);
+    
+    const response = await this.client.resetSSHKeyForVirtualMachine(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('SSH key reset', response)
+        }
+      ]
+    };
+  }
+
+  private async handleRevertToVMSnapshot(args: any): Promise<any> {
+    const requiredParams = ['vmsnapshotid'];
+    const params = this.buildParams(args, requiredParams, requiredParams);
+    
+    const response = await this.client.revertToVMSnapshot(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('VM snapshot revert', response)
+        }
+      ]
+    };
+  }
+
+  private async handleUnmanageVirtualMachine(args: any): Promise<any> {
+    const requiredParams = ['id'];
+    const params = this.buildParams(args, requiredParams, requiredParams);
+    
+    const response = await this.client.unmanageVirtualMachine(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('VM unmanage', response)
+        }
+      ]
+    };
+  }
+
+  private async handleMigrateVirtualMachineWithVolume(args: any): Promise<any> {
+    const requiredParams = ['virtualmachineid', 'hostid'];
+    const optionalParams = ['migrateto'];
+    const params = this.buildParams(args, [...requiredParams, ...optionalParams], requiredParams);
+    
+    const response = await this.client.migrateVirtualMachineWithVolume(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('VM migration with volume', response)
+        }
+      ]
+    };
+  }
+
+  private async handleImportUnmanagedInstance(args: any): Promise<any> {
+    const requiredParams = ['clusterid', 'name'];
+    const optionalParams = ['displayname', 'hostname', 'account', 'domainid', 'projectid'];
+    const params = this.buildParams(args, [...requiredParams, ...optionalParams], requiredParams);
+    
+    const response = await this.client.importUnmanagedInstance(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Unmanaged instance import', response)
+        }
+      ]
+    };
+  }
+
+  private async handleImportVm(args: any): Promise<any> {
+    const requiredParams = ['name', 'zoneid'];
+    const optionalParams = ['displayname', 'account', 'domainid', 'projectid', 'templateid'];
+    const params = this.buildParams(args, [...requiredParams, ...optionalParams], requiredParams);
+    
+    const response = await this.client.importVm(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('VM import', response)
+        }
+      ]
+    };
+  }
+
+  private async handleGetVirtualMachineUserData(args: any): Promise<any> {
+    const requiredParams = ['virtualmachineid'];
+    const params = this.buildParams(args, requiredParams, requiredParams);
+    
+    const response = await this.client.getVirtualMachineUserData(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatUserDataResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleListUnmanagedInstances(args: any): Promise<any> {
+    const allowedParams = ['clusterid', 'name', 'page', 'pagesize'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listUnmanagedInstances(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatUnmanagedInstancesResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleListVMSchedule(args: any): Promise<any> {
+    const allowedParams = ['virtualmachineid', 'id', 'page', 'pagesize'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listVMSchedule(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatVMScheduleResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleListVirtualMachinesMetrics(args: any): Promise<any> {
+    const allowedParams = ['account', 'domainid', 'projectid', 'zoneid', 'ids', 'page', 'pagesize'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listVirtualMachinesMetrics(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatVirtualMachinesMetricsResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleListVirtualMachinesUsageHistory(args: any): Promise<any> {
+    const allowedParams = ['account', 'domainid', 'projectid', 'zoneid', 'ids', 'startdate', 'enddate', 'page', 'pagesize'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listVirtualMachinesUsageHistory(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatVirtualMachinesUsageHistoryResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleListVmsForImport(args: any): Promise<any> {
+    const allowedParams = ['zoneid', 'clusterid', 'page', 'pagesize'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listVmsForImport(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatVmsForImportResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleUpdateVMSchedule(args: any): Promise<any> {
+    const requiredParams = ['id'];
+    const optionalParams = ['description', 'startdate', 'enddate', 'timezone', 'interval'];
+    const params = this.buildParams(args, [...requiredParams, ...optionalParams], requiredParams);
+    
+    const response = await this.client.updateVMSchedule(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatVMScheduleResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleCleanVMReservations(args: any): Promise<any> {
+    const allowedParams = ['account', 'domainid', 'projectid'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.cleanVMReservations(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('VM reservations cleanup', response)
         }
       ]
     };
@@ -11680,12 +12353,9 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
   }
 
   private async handleCreateNetworkACLList(args: any): Promise<any> {
-    if (!args.name || !args.vpcid) {
-      throw new Error('Name and VPC ID are required');
-    }
-    
     const allowedParams = ['name', 'description', 'vpcid'];
-    const params = this.buildParams(args, allowedParams);
+    const requiredParams = ['name', 'vpcid'];
+    const params = this.buildParams(args, allowedParams, requiredParams);
     
     const response = await this.client.createNetworkACLList(params);
     
@@ -11700,11 +12370,10 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
   }
 
   private async handleDeleteNetworkACLList(args: any): Promise<any> {
-    if (!args.id) {
-      throw new Error('Network ACL list ID is required');
-    }
+    const allowedParams = ['id'];
+    const requiredParams = ['id'];
+    const params = this.buildParams(args, allowedParams, requiredParams);
     
-    const params = { id: args.id };
     const response = await this.client.deleteNetworkACLList(params);
     
     return {
@@ -11728,6 +12397,23 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
         {
           type: 'text',
           text: this.formatNetworkACLListsResponse(response)
+        }
+      ]
+    };
+  }
+
+  private async handleReplaceNetworkAclList(args: any): Promise<any> {
+    const allowedParams = ['aclid', 'networkid'];
+    const requiredParams = ['aclid', 'networkid'];
+    const params = this.buildParams(args, allowedParams, requiredParams);
+    
+    const response = await this.client.replaceNetworkACLList(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatAsyncJobResponse('Network ACL list replacement', response)
         }
       ]
     };
@@ -13018,69 +13704,6 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     };
   }
 
-  // Network ACL Lists Handler Methods
-  private async handleCreateNetworkAclList(args: any): Promise<any> {
-    if (!args.name || !args.vpcid) {
-      throw new Error('Name and VPC ID are required');
-    }
-    
-    const allowedParams = ['name', 'vpcid', 'description', 'fordisplay'];
-    const params = this.buildParams(args, allowedParams);
-    const response = await this.client.createNetworkACLList(params);
-    
-    return {
-      content: [{
-        type: 'text',
-        text: this.formatAsyncJobResponse('Network ACL list creation initiated', response)
-      }]
-    };
-  }
-
-  private async handleListNetworkAclLists(args: any): Promise<any> {
-    const allowedParams = ['account', 'domainid', 'fordisplay', 'id', 'keyword', 'listall', 'name', 'networkid', 'page', 'pagesize', 'projectid', 'vpcid'];
-    const params = this.buildParams(args, allowedParams);
-    const response = await this.client.listNetworkACLLists(params);
-    
-    return {
-      content: [{
-        type: 'text',
-        text: this.formatNetworkAclListResponse(response)
-      }]
-    };
-  }
-
-  private async handleDeleteNetworkAclList(args: any): Promise<any> {
-    if (!args.id) {
-      throw new Error('Network ACL list ID is required');
-    }
-    
-    const params = this.buildParams(args, ['id']);
-    const response = await this.client.deleteNetworkACLList(params);
-    
-    return {
-      content: [{
-        type: 'text',
-        text: this.formatAsyncJobResponse('Network ACL list deletion initiated', response)
-      }]
-    };
-  }
-
-  private async handleReplaceNetworkAclList(args: any): Promise<any> {
-    if (!args.aclid || !args.networkid) {
-      throw new Error('ACL ID and Network ID are required');
-    }
-    
-    const allowedParams = ['aclid', 'networkid'];
-    const params = this.buildParams(args, allowedParams);
-    const response = await this.client.replaceNetworkACLList(params);
-    
-    return {
-      content: [{
-        type: 'text',
-        text: this.formatAsyncJobResponse('Network ACL list replacement initiated', response)
-      }]
-    };
-  }
 
   // System Administration Handler Methods
   private async handleListConfigurations(args: any): Promise<any> {
@@ -17109,6 +17732,129 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
       result += `  Account: ${record.account || 'N/A'}\n\n`;
     }
 
+    return result;
+  }
+
+  // Additional VM Format Methods
+  private formatUserDataResponse(response: any): string {
+    if (!response || !response.userdata) {
+      return 'No user data found.';
+    }
+    
+    return `User Data:\n${response.userdata}\n\nEncoding: ${response.encoding || 'N/A'}`;
+  }
+
+  private formatUnmanagedInstancesResponse(response: any): string {
+    const instances = response.unmanagedinstance || [];
+    
+    if (instances.length === 0) {
+      return 'No unmanaged instances found.';
+    }
+    
+    let result = `Found ${instances.length} unmanaged instance(s):\n\n`;
+    
+    for (const instance of instances) {
+      result += `Instance: ${instance.name || 'N/A'}\n`;
+      result += `  ID: ${instance.id || 'N/A'}\n`;
+      result += `  Host: ${instance.hostname || 'N/A'}\n`;
+      result += `  Cluster: ${instance.clustername || 'N/A'}\n`;
+      result += `  Operating System: ${instance.operatingsystem || 'N/A'}\n`;
+      result += `  CPU: ${instance.cpunumber || 'N/A'} cores\n`;
+      result += `  Memory: ${instance.memory || 'N/A'} MB\n`;
+      result += `  State: ${instance.powerstate || 'N/A'}\n\n`;
+    }
+    
+    return result;
+  }
+
+  private formatVMScheduleResponse(response: any): string {
+    const schedules = response.vmschedule || [];
+    
+    if (schedules.length === 0) {
+      return 'No VM schedules found.';
+    }
+    
+    let result = `Found ${schedules.length} VM schedule(s):\n\n`;
+    
+    for (const schedule of schedules) {
+      result += `Schedule: ${schedule.id || 'N/A'}\n`;
+      result += `  VM: ${schedule.virtualmachinename || 'N/A'}\n`;
+      result += `  Action: ${schedule.action || 'N/A'}\n`;
+      result += `  Start Date: ${schedule.startdate || 'N/A'}\n`;
+      result += `  End Date: ${schedule.enddate || 'N/A'}\n`;
+      result += `  Timezone: ${schedule.timezone || 'N/A'}\n`;
+      result += `  Enabled: ${schedule.enabled || 'N/A'}\n\n`;
+    }
+    
+    return result;
+  }
+
+  private formatVirtualMachinesMetricsResponse(response: any): string {
+    const vms = response.virtualmachine || [];
+    
+    if (vms.length === 0) {
+      return 'No virtual machine metrics found.';
+    }
+    
+    let result = `Found ${vms.length} virtual machine(s) with metrics:\n\n`;
+    
+    for (const vm of vms) {
+      result += `VM: ${vm.name || 'N/A'} (${vm.id || 'N/A'})\n`;
+      result += `  CPU Usage: ${vm.cpuused || 'N/A'}\n`;
+      result += `  Memory Usage: ${vm.memorykbs || 'N/A'} KB\n`;
+      result += `  Network Read: ${vm.networkread || 'N/A'} bytes\n`;
+      result += `  Network Write: ${vm.networkwrite || 'N/A'} bytes\n`;
+      result += `  Disk Read: ${vm.diskread || 'N/A'} bytes\n`;
+      result += `  Disk Write: ${vm.diskwrite || 'N/A'} bytes\n`;
+      result += `  State: ${vm.state || 'N/A'}\n\n`;
+    }
+    
+    return result;
+  }
+
+  private formatVirtualMachinesUsageHistoryResponse(response: any): string {
+    const usage = response.vmUsageHistory || [];
+    
+    if (usage.length === 0) {
+      return 'No virtual machine usage history found.';
+    }
+    
+    let result = `Found ${usage.length} VM usage record(s):\n\n`;
+    
+    for (const record of usage) {
+      result += `VM: ${record.name || 'N/A'}\n`;
+      result += `  ID: ${record.id || 'N/A'}\n`;
+      result += `  Account: ${record.account || 'N/A'}\n`;
+      result += `  Zone: ${record.zonename || 'N/A'}\n`;
+      result += `  Usage Start: ${record.startdate || 'N/A'}\n`;
+      result += `  Usage End: ${record.enddate || 'N/A'}\n`;
+      result += `  Running Hours: ${record.runninghours || 'N/A'}\n`;
+      result += `  CPU Hours: ${record.cpuhours || 'N/A'}\n`;
+      result += `  Memory Hours: ${record.memoryhours || 'N/A'}\n\n`;
+    }
+    
+    return result;
+  }
+
+  private formatVmsForImportResponse(response: any): string {
+    const vms = response.unmanageinstance || [];
+    
+    if (vms.length === 0) {
+      return 'No VMs available for import.';
+    }
+    
+    let result = `Found ${vms.length} VM(s) available for import:\n\n`;
+    
+    for (const vm of vms) {
+      result += `VM: ${vm.name || 'N/A'}\n`;
+      result += `  Host: ${vm.hostname || 'N/A'}\n`;
+      result += `  Cluster: ${vm.clustername || 'N/A'}\n`;
+      result += `  Operating System: ${vm.operatingsystem || 'N/A'}\n`;
+      result += `  CPU: ${vm.cpunumber || 'N/A'} cores\n`;
+      result += `  Memory: ${vm.memory || 'N/A'} MB\n`;
+      result += `  Power State: ${vm.powerstate || 'N/A'}\n\n`;
+    }
+    
     return result;
   }
 
