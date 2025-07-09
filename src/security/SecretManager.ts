@@ -208,6 +208,7 @@ export class SecretManager {
   public getEnvironmentConfig(): Partial<CloudStackEnvironment> {
     const config: Partial<CloudStackEnvironment> = {};
     
+    // Support legacy environment variables
     if (process.env.CLOUDSTACK_API_URL) {
       config.apiUrl = process.env.CLOUDSTACK_API_URL;
     }
@@ -230,6 +231,43 @@ export class SecretManager {
     
     if (process.env.CLOUDSTACK_ENVIRONMENT_NAME) {
       config.name = process.env.CLOUDSTACK_ENVIRONMENT_NAME;
+    }
+    
+    return config;
+  }
+
+  /**
+   * Get environment-specific configuration based on current environment
+   */
+  public getEnvironmentSpecificConfig(environmentName: string = 'default'): Partial<CloudStackEnvironment> {
+    const config: Partial<CloudStackEnvironment> = {};
+    
+    // Map environment names to prefixes
+    const envPrefix = environmentName === 'default' ? 'PROD' : environmentName.toUpperCase();
+    
+    // Get environment-specific variables
+    if (process.env[`CLOUDSTACK_${envPrefix}_NAME`]) {
+      config.name = process.env[`CLOUDSTACK_${envPrefix}_NAME`];
+    }
+    
+    if (process.env[`CLOUDSTACK_${envPrefix}_API_URL`]) {
+      config.apiUrl = process.env[`CLOUDSTACK_${envPrefix}_API_URL`];
+    }
+    
+    if (process.env[`CLOUDSTACK_${envPrefix}_API_KEY`]) {
+      config.apiKey = process.env[`CLOUDSTACK_${envPrefix}_API_KEY`];
+    }
+    
+    if (process.env[`CLOUDSTACK_${envPrefix}_SECRET_KEY`]) {
+      config.secretKey = process.env[`CLOUDSTACK_${envPrefix}_SECRET_KEY`];
+    }
+    
+    if (process.env[`CLOUDSTACK_${envPrefix}_TIMEOUT`]) {
+      config.timeout = parseInt(process.env[`CLOUDSTACK_${envPrefix}_TIMEOUT`], 10);
+    }
+    
+    if (process.env[`CLOUDSTACK_${envPrefix}_RETRIES`]) {
+      config.retries = parseInt(process.env[`CLOUDSTACK_${envPrefix}_RETRIES`], 10);
     }
     
     return config;

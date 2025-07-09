@@ -121,32 +121,59 @@ npm run build
 
 ### Step 2: Configure CloudStack Connection
 
-Create your CloudStack configuration file:
+**🔒 Secure Configuration with Environment Variables (Recommended)**
+
+For security, use environment variables instead of hardcoded credentials:
+
+```bash
+# Copy the example environment file
+cp .env.example .env
+
+# Edit .env with your CloudStack credentials
+# The .env file is automatically excluded from git
+```
+
+Edit `.env` with your actual credentials:
+
+```bash
+# Production CloudStack Environment
+CLOUDSTACK_PROD_NAME="Production CloudStack"
+CLOUDSTACK_PROD_API_URL="https://your-cloudstack.example.com/client/api"
+CLOUDSTACK_PROD_API_KEY="your-production-api-key"
+CLOUDSTACK_PROD_SECRET_KEY="your-production-secret-key"
+
+# Development CloudStack Environment
+CLOUDSTACK_DEV_NAME="Development CloudStack"
+CLOUDSTACK_DEV_API_URL="https://dev-cloudstack.example.com/client/api"
+CLOUDSTACK_DEV_API_KEY="your-dev-api-key"
+CLOUDSTACK_DEV_SECRET_KEY="your-dev-secret-key"
+
+# Default environment to use
+CLOUDSTACK_DEFAULT_ENVIRONMENT="default"
+```
+
+**Alternative: File-based Configuration**
+
+If you prefer file-based configuration (not recommended for production):
 
 ```bash
 # Copy example configuration
 cp config/cloudstack.example.json config/cloudstack.json
 ```
 
-Edit `config/cloudstack.json` with your CloudStack environment details:
+Edit `config/cloudstack.json` with placeholder values (actual credentials should be in environment variables):
 
 ```json
 {
-  "defaultEnvironment": "production",
+  "defaultEnvironment": "default",
   "environments": {
-    "production": {
+    "default": {
       "name": "Production CloudStack",
       "apiUrl": "https://your-cloudstack.example.com/client/api",
-      "apiKey": "your-api-key",
-      "secretKey": "your-secret-key",
+      "apiKey": "your-api-key-here",
+      "secretKey": "your-secret-key-here",
       "timeout": 30000,
       "retries": 3
-    },
-    "staging": {
-      "name": "Staging Environment",
-      "apiUrl": "https://staging-cloudstack.example.com/client/api",
-      "apiKey": "staging-api-key",
-      "secretKey": "staging-secret-key"
     }
   },
   "logging": {
@@ -187,15 +214,39 @@ Add the MCP server to your Claude Desktop configuration:
 
 ### Environment Variables
 
-The server supports configuration through environment variables:
+The server supports comprehensive configuration through environment variables for secure credential management:
 
+**Production Environment:**
 ```bash
-# CloudStack configuration file path
-CLOUDSTACK_CONFIG=/path/to/cloudstack.json
+CLOUDSTACK_PROD_NAME="Production CloudStack"
+CLOUDSTACK_PROD_API_URL="https://cloudstack.example.com/client/api"
+CLOUDSTACK_PROD_API_KEY="your-production-api-key"
+CLOUDSTACK_PROD_SECRET_KEY="your-production-secret-key"
+CLOUDSTACK_PROD_TIMEOUT=30000
+CLOUDSTACK_PROD_RETRIES=3
+```
+
+**Development Environment:**
+```bash
+CLOUDSTACK_DEV_NAME="Development CloudStack"
+CLOUDSTACK_DEV_API_URL="https://dev-cloudstack.example.com/client/api"
+CLOUDSTACK_DEV_API_KEY="your-dev-api-key"
+CLOUDSTACK_DEV_SECRET_KEY="your-dev-secret-key"
+CLOUDSTACK_DEV_TIMEOUT=30000
+CLOUDSTACK_DEV_RETRIES=3
+```
+
+**Configuration Control:**
+```bash
+# Default environment to use ("default" for production, "dev" for development)
+CLOUDSTACK_DEFAULT_ENVIRONMENT="default"
 
 # Logging configuration
-LOG_LEVEL=info
-LOG_FILE=/path/to/logs/cloudstack-mcp.log
+CLOUDSTACK_LOG_LEVEL=info
+CLOUDSTACK_LOG_FILE=logs/cloudstack-mcp.log
+
+# Legacy configuration file path (optional)
+CLOUDSTACK_CONFIG=/path/to/cloudstack.json
 
 # Network settings
 CLOUDSTACK_TIMEOUT=30000
