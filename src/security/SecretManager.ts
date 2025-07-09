@@ -246,28 +246,34 @@ export class SecretManager {
     const envPrefix = environmentName === 'default' ? 'PROD' : environmentName.toUpperCase();
     
     // Get environment-specific variables
-    if (process.env[`CLOUDSTACK_${envPrefix}_NAME`]) {
-      config.name = process.env[`CLOUDSTACK_${envPrefix}_NAME`];
+    const envName = process.env[`CLOUDSTACK_${envPrefix}_NAME`];
+    if (envName) {
+      config.name = envName;
     }
     
-    if (process.env[`CLOUDSTACK_${envPrefix}_API_URL`]) {
-      config.apiUrl = process.env[`CLOUDSTACK_${envPrefix}_API_URL`];
+    const apiUrl = process.env[`CLOUDSTACK_${envPrefix}_API_URL`];
+    if (apiUrl) {
+      config.apiUrl = apiUrl;
     }
     
-    if (process.env[`CLOUDSTACK_${envPrefix}_API_KEY`]) {
-      config.apiKey = process.env[`CLOUDSTACK_${envPrefix}_API_KEY`];
+    const apiKey = process.env[`CLOUDSTACK_${envPrefix}_API_KEY`];
+    if (apiKey) {
+      config.apiKey = apiKey;
     }
     
-    if (process.env[`CLOUDSTACK_${envPrefix}_SECRET_KEY`]) {
-      config.secretKey = process.env[`CLOUDSTACK_${envPrefix}_SECRET_KEY`];
+    const secretKey = process.env[`CLOUDSTACK_${envPrefix}_SECRET_KEY`];
+    if (secretKey) {
+      config.secretKey = secretKey;
     }
     
-    if (process.env[`CLOUDSTACK_${envPrefix}_TIMEOUT`]) {
-      config.timeout = parseInt(process.env[`CLOUDSTACK_${envPrefix}_TIMEOUT`], 10);
+    const timeout = process.env[`CLOUDSTACK_${envPrefix}_TIMEOUT`];
+    if (timeout) {
+      config.timeout = parseInt(timeout, 10);
     }
     
-    if (process.env[`CLOUDSTACK_${envPrefix}_RETRIES`]) {
-      config.retries = parseInt(process.env[`CLOUDSTACK_${envPrefix}_RETRIES`], 10);
+    const retries = process.env[`CLOUDSTACK_${envPrefix}_RETRIES`];
+    if (retries) {
+      config.retries = parseInt(retries, 10);
     }
     
     return config;
