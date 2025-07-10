@@ -1,19 +1,19 @@
 # CloudStack MCP Server
 
-[![Version](https://img.shields.io/badge/version-2.3.0-blue.svg)](https://github.com/mozg31337/cloudstack-mcp-server)
+[![Version](https://img.shields.io/badge/version-3.0.0-blue.svg)](https://github.com/mozg31337/cloudstack-mcp-server)
 [![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
 
-A comprehensive Model Context Protocol (MCP) server that provides complete CloudStack infrastructure management through natural language interactions with Claude Desktop. This implementation offers full coverage of CloudStack 4.20 APIs with 662+ MCP tools covering 693+ API methods across 29 categories.
+A comprehensive Model Context Protocol (MCP) server that provides complete CloudStack infrastructure management through natural language interactions with Claude Desktop. This implementation offers extensive coverage of CloudStack 4.20 APIs with 477+ MCP tools covering 735+ API methods across 32 categories.
 
 ## Overview
 
 The CloudStack MCP Server enables seamless cloud infrastructure management by bridging CloudStack APIs with Claude's natural language interface. Users can perform complex infrastructure operations using conversational commands, eliminating the need to learn CloudStack's API syntax or command-line tools.
 
 **Key Statistics:**
-- **Complete API Coverage**: 662+ MCP tools covering 693+ CloudStack API methods
-- **Comprehensive Categories**: All 29 CloudStack API categories implemented
-- **Enterprise Security**: 94 dangerous operations protected with confirmation system
+- **Extensive API Coverage**: 477+ MCP tools covering 735+ CloudStack API methods (93% coverage)
+- **Comprehensive Categories**: 32 CloudStack API categories implemented including new infrastructure features
+- **Enterprise Security**: 96 dangerous operations protected with confirmation system
 - **Natural Language Interface**: Zero learning curve for infrastructure management
 - **Production Ready**: Enterprise-grade reliability with comprehensive safety controls
 
@@ -22,6 +22,8 @@ The CloudStack MCP Server enables seamless cloud infrastructure management by br
 ### 🏗️ Infrastructure Management
 - **Virtual Machine Operations**: Complete lifecycle management including deployment, scaling, migration, and monitoring
 - **Storage Management**: Volume operations, snapshot management, backup and restore capabilities
+- **Image Store Management**: Complete backend storage management with NFS, S3, and Swift support
+- **Pod Management**: Infrastructure pod operations including creation, dedication, and IP range management
 - **Network Administration**: VPC management, load balancing, firewall rules, and network ACLs
 - **Security Groups**: Ingress/egress rule management and security policy enforcement
 
@@ -35,7 +37,7 @@ The CloudStack MCP Server enables seamless cloud infrastructure management by br
 - **VPC & Networking**: Virtual Private Cloud configuration and management
 - **VPN Services**: Site-to-site and remote access VPN connectivity
 - **Load Balancing**: Application load balancer configuration with health checks
-- **SSL Certificate Management**: Certificate lifecycle and deployment automation
+- **SSL Certificate Management**: Complete certificate lifecycle including issuance, upload, revocation, and CA provider management
 
 ### 📊 Monitoring & Analytics
 - **Resource Metrics**: Infrastructure performance monitoring and capacity planning
@@ -51,13 +53,14 @@ The CloudStack MCP Server enables seamless cloud infrastructure management by br
 - **Tungsten Fabric SDN**: Software-defined networking with micro-segmentation
 
 ### 🛡️ Enterprise Security & Safety
-- **Dangerous Action Confirmation**: Foolproof confirmation system protecting 94 destructive operations
+- **Dangerous Action Confirmation**: Foolproof confirmation system protecting 96 destructive operations
 - **Smart Operation Detection**: Automatic identification of delete, destroy, purge, scale, and restart operations
 - **Rich Context Warnings**: Detailed operation descriptions with severity levels and impact assessment
 - **Confirmation Requirements**: Mandatory typed confirmation for critical operations (e.g., "destroy permanently")
+- **Infrastructure Protection**: Critical protections for image store deletion and pod management operations
 - **Environment Controls**: Smart bypasses for development while enforcing production safety
 - **Comprehensive Auditing**: Full security audit trails with correlation tracking and compliance reporting
-- **Operation Categories**: Protection across VM, Storage, Network, VPC, Kubernetes, and Infrastructure operations
+- **Operation Categories**: Protection across VM, Storage, Network, VPC, Kubernetes, Infrastructure, and Certificate operations
 - **Memory Management**: Efficient tracking with automatic cleanup and configurable timeout policies
 
 ## Test Coverage & Quality Assurance
@@ -278,6 +281,8 @@ Switch environments in Claude by specifying: "List VMs in development environmen
 "Show me running VMs with their IP addresses"
 "What storage volumes are available?"
 "Display network configuration for my VPC"
+"List all image store backends"
+"Show pods in my zone"
 ```
 
 ### Virtual Machine Management
@@ -301,7 +306,18 @@ Switch environments in Claude by specifying: "List VMs in development environmen
 "Create security group for web applications"
 "Allow SSH access from corporate network"
 "Upload SSL certificate for HTTPS load balancer"
+"Issue a Let's Encrypt certificate for my domain"
+"List available certificate authorities"
 "Configure two-factor authentication"
+```
+
+### Infrastructure Management
+```
+"Add a new NFS image store backend"
+"Create a pod for my zone with IP range 192.168.1.10-100"
+"Add S3 bucket as image store with my AWS credentials"
+"Dedicate pod to specific domain"
+"Update pod IP range configuration"
 ```
 
 ## Development
@@ -329,14 +345,15 @@ npm run typecheck
 
 ```
 src/
-├── server.ts              # MCP server implementation with 662+ tools
+├── server.ts              # MCP server implementation with 477+ tools
 ├── cloudstack/
-│   ├── client.ts          # CloudStack API client with 693+ methods
+│   ├── client.ts          # CloudStack API client with 735+ methods
 │   ├── auth.ts            # HMAC signature authentication
 │   └── types.ts           # TypeScript type definitions
 ├── utils/
 │   ├── config.ts          # Configuration management
 │   └── logger.ts          # Structured logging
+├── security/              # Enterprise security framework
 ├── tests/                 # Comprehensive test suite
 └── config/                # Configuration templates
 ```
@@ -355,8 +372,10 @@ src/
 | Account Management | 16 | 17 | 100% |
 | Templates & ISOs | 35 | 25 | 100% |
 | AutoScale | 21 | 21 | 100% |
-| Certificates | 18 | 18 | 100% |
-| **Total** | **693+** | **662+** | **100%** |
+| **Image Store** | **20** | **6** | **100%** |
+| **Pod Management** | **9** | **5** | **100%** |
+| **Certificate Management** | **10** | **4** | **100%** |
+| **Total** | **735+** | **477+** | **93%** |
 
 For detailed API coverage analysis, see [API Coverage Documentation](docs/API-COVERAGE-COMPARISON-v2.0.0.md).
 

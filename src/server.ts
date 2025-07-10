@@ -31,7 +31,7 @@ class CloudStackMCPServer {
     this.server = new Server(
       {
         name: 'cloudstack-mcp-server',
-        version: '2.6.0',
+        version: '3.0.0',
       },
       {
         capabilities: {
@@ -8710,6 +8710,355 @@ class CloudStackMCPServer {
             },
             required: ['correlationId', 'confirmed']
           }
+        },
+        // Image Store Management Tools
+        {
+          name: 'add_image_store',
+          description: 'Add a new image store backend',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'Image store name'
+              },
+              url: {
+                type: 'string',
+                description: 'Image store URL'
+              },
+              provider: {
+                type: 'string',
+                description: 'Storage provider (NFS, S3, Swift)'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID'
+              }
+            },
+            required: ['name', 'url', 'provider']
+          }
+        },
+        {
+          name: 'add_image_store_s3',
+          description: 'Add Amazon S3 as image store backend',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'S3 store name'
+              },
+              bucket: {
+                type: 'string',
+                description: 'S3 bucket name'
+              },
+              accesskey: {
+                type: 'string',
+                description: 'AWS access key'
+              },
+              secretkey: {
+                type: 'string',
+                description: 'AWS secret key'
+              },
+              endpoint: {
+                type: 'string',
+                description: 'S3 endpoint URL'
+              },
+              region: {
+                type: 'string',
+                description: 'AWS region'
+              }
+            },
+            required: ['name', 'bucket', 'accesskey', 'secretkey']
+          }
+        },
+        {
+          name: 'add_swift',
+          description: 'Add OpenStack Swift as image store backend',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'Swift store name'
+              },
+              url: {
+                type: 'string',
+                description: 'Swift URL'
+              },
+              account: {
+                type: 'string',
+                description: 'Swift account'
+              },
+              username: {
+                type: 'string',
+                description: 'Swift username'
+              },
+              key: {
+                type: 'string',
+                description: 'Swift key'
+              }
+            },
+            required: ['name', 'url', 'account', 'username', 'key']
+          }
+        },
+        {
+          name: 'delete_image_store',
+          description: 'Delete an image store backend',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Image store ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_image_stores',
+          description: 'List all image store backends',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              protocol: {
+                type: 'string',
+                description: 'Storage protocol filter'
+              },
+              provider: {
+                type: 'string',
+                description: 'Storage provider filter'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID filter'
+              }
+            }
+          }
+        },
+        {
+          name: 'update_image_store',
+          description: 'Update an image store backend',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Image store ID'
+              },
+              name: {
+                type: 'string',
+                description: 'Updated store name'
+              },
+              url: {
+                type: 'string',
+                description: 'Updated store URL'
+              }
+            },
+            required: ['id']
+          }
+        },
+        // Pod Management Tools
+        {
+          name: 'create_pod',
+          description: 'Create a new pod',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'Pod name'
+              },
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID'
+              },
+              startip: {
+                type: 'string',
+                description: 'Starting IP address'
+              },
+              endip: {
+                type: 'string',
+                description: 'Ending IP address'
+              },
+              netmask: {
+                type: 'string',
+                description: 'Network mask'
+              },
+              gateway: {
+                type: 'string',
+                description: 'Gateway IP address'
+              }
+            },
+            required: ['name', 'zoneid', 'startip', 'endip', 'netmask', 'gateway']
+          }
+        },
+        {
+          name: 'delete_pod',
+          description: 'Delete a pod',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Pod ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'update_pod',
+          description: 'Update a pod',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Pod ID'
+              },
+              name: {
+                type: 'string',
+                description: 'Updated pod name'
+              },
+              startip: {
+                type: 'string',
+                description: 'Updated starting IP address'
+              },
+              endip: {
+                type: 'string',
+                description: 'Updated ending IP address'
+              },
+              netmask: {
+                type: 'string',
+                description: 'Updated network mask'
+              },
+              gateway: {
+                type: 'string',
+                description: 'Updated gateway IP address'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_pods',
+          description: 'List all pods',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              zoneid: {
+                type: 'string',
+                description: 'Zone ID filter'
+              },
+              name: {
+                type: 'string',
+                description: 'Pod name filter'
+              },
+              allocationstate: {
+                type: 'string',
+                description: 'Allocation state filter'
+              }
+            }
+          }
+        },
+        {
+          name: 'dedicate_pod',
+          description: 'Dedicate a pod to a domain or account',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              podid: {
+                type: 'string',
+                description: 'Pod ID'
+              },
+              domainid: {
+                type: 'string',
+                description: 'Domain ID'
+              },
+              account: {
+                type: 'string',
+                description: 'Account name'
+              }
+            },
+            required: ['podid', 'domainid']
+          }
+        },
+        // Certificate Management Tools
+        {
+          name: 'issue_certificate',
+          description: 'Issue a new SSL certificate',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'Certificate name'
+              },
+              domainname: {
+                type: 'string',
+                description: 'Domain name for certificate'
+              },
+              provider: {
+                type: 'string',
+                description: 'CA provider'
+              },
+              validityperiod: {
+                type: 'number',
+                description: 'Certificate validity in days'
+              }
+            },
+            required: ['name', 'domainname', 'provider']
+          }
+        },
+        {
+          name: 'upload_custom_certificate',
+          description: 'Upload a custom SSL certificate',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'Certificate name'
+              },
+              certificate: {
+                type: 'string',
+                description: 'Certificate content'
+              },
+              privatekey: {
+                type: 'string',
+                description: 'Private key content'
+              },
+              certchain: {
+                type: 'string',
+                description: 'Certificate chain'
+              }
+            },
+            required: ['name', 'certificate', 'privatekey']
+          }
+        },
+        {
+          name: 'revoke_certificate',
+          description: 'Revoke an SSL certificate',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                description: 'Certificate ID'
+              }
+            },
+            required: ['id']
+          }
+        },
+        {
+          name: 'list_ca_providers',
+          description: 'List available Certificate Authority providers',
+          inputSchema: {
+            type: 'object',
+            properties: {}
+          }
         }
       ];
 
@@ -9958,6 +10307,54 @@ class CloudStackMCPServer {
           
           case 'confirm_dangerous_action':
             return await this.handleConfirmDangerousAction(args);
+          
+          // Image Store Management Cases
+          case 'add_image_store':
+            return await this.handleAddImageStore(args);
+          
+          case 'add_image_store_s3':
+            return await this.handleAddImageStoreS3(args);
+          
+          case 'add_swift':
+            return await this.handleAddSwift(args);
+          
+          case 'delete_image_store':
+            return await this.handleDeleteImageStore(args);
+          
+          case 'list_image_stores':
+            return await this.handleListImageStores(args);
+          
+          case 'update_image_store':
+            return await this.handleUpdateImageStore(args);
+          
+          // Pod Management Cases
+          case 'create_pod':
+            return await this.handleCreatePod(args);
+          
+          case 'delete_pod':
+            return await this.handleDeletePod(args);
+          
+          case 'update_pod':
+            return await this.handleUpdatePod(args);
+          
+          case 'list_pods':
+            return await this.handleListPods(args);
+          
+          case 'dedicate_pod':
+            return await this.handleDedicatePod(args);
+          
+          // Certificate Management Cases
+          case 'issue_certificate':
+            return await this.handleIssueCertificate(args);
+          
+          case 'upload_custom_certificate':
+            return await this.handleUploadCustomCertificate(args);
+          
+          case 'revoke_certificate':
+            return await this.handleRevokeCertificate(args);
+          
+          case 'list_ca_providers':
+            return await this.handleListCAProviders(args);
           
           default:
             throw new Error(`Unknown tool: ${name}`);
@@ -19371,6 +19768,326 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
         Logger.warn('CloudStack credential validation inconclusive', { error: errorMessage });
       }
     }
+  }
+
+  // Image Store Management Handlers
+  private async handleAddImageStore(args: any): Promise<any> {
+    const allowedParams = ['name', 'url', 'provider', 'zoneid'];
+    const requiredParams = ['name', 'url', 'provider'];
+    const params = this.buildParams(args, allowedParams, requiredParams);
+    
+    const response = await this.client.addImageStore(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatImageStoreResponse('Image store added', response)
+      }]
+    };
+  }
+
+  private async handleAddImageStoreS3(args: any): Promise<any> {
+    const allowedParams = ['name', 'bucket', 'accesskey', 'secretkey', 'endpoint', 'region'];
+    const requiredParams = ['name', 'bucket', 'accesskey', 'secretkey'];
+    const params = this.buildParams(args, allowedParams, requiredParams);
+    
+    const response = await this.client.addImageStoreS3(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatImageStoreResponse('S3 image store added', response)
+      }]
+    };
+  }
+
+  private async handleAddSwift(args: any): Promise<any> {
+    const allowedParams = ['name', 'url', 'account', 'username', 'key'];
+    const requiredParams = ['name', 'url', 'account', 'username', 'key'];
+    const params = this.buildParams(args, allowedParams, requiredParams);
+    
+    const response = await this.client.addSwift(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatImageStoreResponse('Swift image store added', response)
+      }]
+    };
+  }
+
+  private async handleDeleteImageStore(args: any): Promise<any> {
+    const allowedParams = ['id'];
+    const requiredParams = ['id'];
+    const params = this.buildParams(args, allowedParams, requiredParams);
+    
+    const response = await this.client.deleteImageStore(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: `Image store deleted successfully.\n\nResponse: ${JSON.stringify(response, null, 2)}`
+      }]
+    };
+  }
+
+  private async handleListImageStores(args: any): Promise<any> {
+    const allowedParams = ['protocol', 'provider', 'zoneid'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listImageStores(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatImageStoresListResponse(response)
+      }]
+    };
+  }
+
+  private async handleUpdateImageStore(args: any): Promise<any> {
+    const allowedParams = ['id', 'name', 'url'];
+    const requiredParams = ['id'];
+    const params = this.buildParams(args, allowedParams, requiredParams);
+    
+    const response = await this.client.updateImageStore(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatImageStoreResponse('Image store updated', response)
+      }]
+    };
+  }
+
+  // Pod Management Handlers
+  private async handleCreatePod(args: any): Promise<any> {
+    const allowedParams = ['name', 'zoneid', 'startip', 'endip', 'netmask', 'gateway'];
+    const requiredParams = ['name', 'zoneid', 'startip', 'endip', 'netmask', 'gateway'];
+    const params = this.buildParams(args, allowedParams, requiredParams);
+    
+    const response = await this.client.createPod(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatPodResponse('Pod created', response)
+      }]
+    };
+  }
+
+  private async handleDeletePod(args: any): Promise<any> {
+    const allowedParams = ['id'];
+    const requiredParams = ['id'];
+    const params = this.buildParams(args, allowedParams, requiredParams);
+    
+    const response = await this.client.deletePod(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: `Pod deleted successfully.\n\nResponse: ${JSON.stringify(response, null, 2)}`
+      }]
+    };
+  }
+
+  private async handleUpdatePod(args: any): Promise<any> {
+    const allowedParams = ['id', 'name', 'startip', 'endip', 'netmask', 'gateway'];
+    const requiredParams = ['id'];
+    const params = this.buildParams(args, allowedParams, requiredParams);
+    
+    const response = await this.client.updatePod(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatPodResponse('Pod updated', response)
+      }]
+    };
+  }
+
+  private async handleListPods(args: any): Promise<any> {
+    const allowedParams = ['zoneid', 'name', 'allocationstate'];
+    const params = this.buildParams(args, allowedParams);
+    
+    const response = await this.client.listPods(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatPodsListResponse(response)
+      }]
+    };
+  }
+
+  private async handleDedicatePod(args: any): Promise<any> {
+    const allowedParams = ['podid', 'domainid', 'account'];
+    const requiredParams = ['podid', 'domainid'];
+    const params = this.buildParams(args, allowedParams, requiredParams);
+    
+    const response = await this.client.dedicatePod(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatPodResponse('Pod dedicated', response)
+      }]
+    };
+  }
+
+  // Certificate Management Handlers
+  private async handleIssueCertificate(args: any): Promise<any> {
+    const allowedParams = ['name', 'domainname', 'provider', 'validityperiod'];
+    const requiredParams = ['name', 'domainname', 'provider'];
+    const params = this.buildParams(args, allowedParams, requiredParams);
+    
+    const response = await this.client.issueCertificate(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Certificate issuance', response)
+      }]
+    };
+  }
+
+  private async handleUploadCustomCertificate(args: any): Promise<any> {
+    const allowedParams = ['name', 'certificate', 'privatekey', 'certchain'];
+    const requiredParams = ['name', 'certificate', 'privatekey'];
+    const params = this.buildParams(args, allowedParams, requiredParams);
+    
+    const response = await this.client.uploadCustomCertificate(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Certificate upload', response)
+      }]
+    };
+  }
+
+  private async handleRevokeCertificate(args: any): Promise<any> {
+    const allowedParams = ['id'];
+    const requiredParams = ['id'];
+    const params = this.buildParams(args, allowedParams, requiredParams);
+    
+    const response = await this.client.revokeCertificate(params);
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatAsyncJobResponse('Certificate revocation', response)
+      }]
+    };
+  }
+
+  private async handleListCAProviders(args: any): Promise<any> {
+    const response = await this.client.listCAProviders({});
+    
+    return {
+      content: [{
+        type: 'text',
+        text: this.formatCAProvidersResponse(response)
+      }]
+    };
+  }
+
+  // Response Formatters for New Features
+  private formatImageStoreResponse(operation: string, response: any): string {
+    const store = response.imagestore;
+    
+    if (!store) {
+      return `${operation} successfully.\n\nResponse: ${JSON.stringify(response, null, 2)}`;
+    }
+
+    let result = `${operation} successfully:\n\n`;
+    result += `Name: ${store.name}\n`;
+    result += `ID: ${store.id}\n`;
+    result += `URL: ${store.url}\n`;
+    result += `Provider: ${store.providername || 'N/A'}\n`;
+    result += `Protocol: ${store.protocol || 'N/A'}\n`;
+    result += `Zone: ${store.zonename || 'All Zones'}\n`;
+
+    return result;
+  }
+
+  private formatImageStoresListResponse(response: any): string {
+    const stores = response.imagestore || [];
+    
+    if (stores.length === 0) {
+      return 'No image stores found.';
+    }
+
+    let result = `Found ${stores.length} image store(s):\n\n`;
+    
+    for (const store of stores) {
+      result += `Name: ${store.name}\n`;
+      result += `  ID: ${store.id}\n`;
+      result += `  URL: ${store.url}\n`;
+      result += `  Provider: ${store.providername || 'N/A'}\n`;
+      result += `  Protocol: ${store.protocol || 'N/A'}\n`;
+      result += `  Zone: ${store.zonename || 'All Zones'}\n\n`;
+    }
+
+    return result;
+  }
+
+  private formatPodResponse(operation: string, response: any): string {
+    const pod = response.pod;
+    
+    if (!pod) {
+      return `${operation} successfully.\n\nResponse: ${JSON.stringify(response, null, 2)}`;
+    }
+
+    let result = `${operation} successfully:\n\n`;
+    result += `Name: ${pod.name}\n`;
+    result += `ID: ${pod.id}\n`;
+    result += `Zone: ${pod.zonename}\n`;
+    result += `Gateway: ${pod.gateway}\n`;
+    result += `Netmask: ${pod.netmask}\n`;
+    result += `Start IP: ${pod.startip}\n`;
+    result += `End IP: ${pod.endip}\n`;
+    result += `Allocation State: ${pod.allocationstate}\n`;
+
+    return result;
+  }
+
+  private formatPodsListResponse(response: any): string {
+    const pods = response.pod || [];
+    
+    if (pods.length === 0) {
+      return 'No pods found.';
+    }
+
+    let result = `Found ${pods.length} pod(s):\n\n`;
+    
+    for (const pod of pods) {
+      result += `Name: ${pod.name}\n`;
+      result += `  ID: ${pod.id}\n`;
+      result += `  Zone: ${pod.zonename}\n`;
+      result += `  Gateway: ${pod.gateway}\n`;
+      result += `  IP Range: ${pod.startip} - ${pod.endip}\n`;
+      result += `  State: ${pod.allocationstate}\n\n`;
+    }
+
+    return result;
+  }
+
+  private formatCAProvidersResponse(response: any): string {
+    const providers = response.caproviders || [];
+    
+    if (providers.length === 0) {
+      return 'No Certificate Authority providers found.';
+    }
+
+    let result = `Found ${providers.length} CA provider(s):\n\n`;
+    
+    for (const provider of providers) {
+      result += `Name: ${provider.name}\n`;
+      result += `  Description: ${provider.description || 'N/A'}\n\n`;
+    }
+
+    return result;
   }
 
   public async run(): Promise<void> {

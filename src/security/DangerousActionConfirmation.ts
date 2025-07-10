@@ -448,6 +448,28 @@ export class DangerousActionConfirmation {
       reversible: false,
       impactScope: 'multiple-resources'
     });
+
+    // Image Store Operations
+    this.addDangerousAction('delete_image_store', {
+      severity: 'critical',
+      category: 'Image Store Operations',
+      description: 'Delete an image store backend',
+      warningMessage: 'This will PERMANENTLY DELETE the image store backend and may affect templates, ISOs, and snapshots stored on it. This action CANNOT be undone.',
+      requiredConfirmation: 'delete image store permanently',
+      reversible: false,
+      impactScope: 'infrastructure'
+    });
+
+    // Pod Management Operations
+    this.addDangerousAction('delete_pod', {
+      severity: 'critical',
+      category: 'Infrastructure Management',
+      description: 'Delete a pod',
+      warningMessage: 'This will DELETE the pod, affecting ALL hosts, primary storage, and VMs within it. This is IRREVERSIBLE.',
+      requiredConfirmation: 'delete pod permanently',
+      reversible: false,
+      impactScope: 'infrastructure'
+    });
   }
 
   /**

@@ -3256,4 +3256,30 @@ export class CloudStackClient {
     return this.makeRequest('rebootBaremetalHost', params);
   }
 
+  // Missing Image Store Methods
+  public async updateImageStore(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updateImageStore', params);
+  }
+
+  // Pod Management APIs
+  public async createPod(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('createPod', params);
+  }
+
+  public async deletePod(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('deletePod', params);
+  }
+
+  public async updatePod(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('updatePod', params);
+  }
+
+  public async listPods(params: Record<string, any> = {}): Promise<any> {
+    return this.makeRequest('listPods', params);
+  }
+
+  public async dedicatePod(params: Record<string, any>): Promise<any> {
+    return this.makeRequest('dedicatePod', params);
+  }
+
 }
