@@ -83,6 +83,22 @@ export class CloudStackAuth {
     return encodeURIComponent(hash);
   }
 
+  public signRequestRaw(params: Record<string, any>): string {
+    const sortedParams = this.sortParameters(params);
+    const queryString = this.buildQueryString(sortedParams);
+    const hash = crypto
+      .createHmac('sha1', this.secretKey)
+      .update(queryString.toLowerCase())
+      .digest('base64');
+    
+    Logger.debug('Generated CloudStack API raw signature', { 
+      queryString: queryString.substring(0, 200) + '...',
+      signature: hash.substring(0, 20) + '...'
+    });
+
+    return hash; // Return raw base64 hash without URL encoding
+  }
+
   public validateCredentials(): boolean {
     return !!(this.apiKey && this.secretKey);
   }

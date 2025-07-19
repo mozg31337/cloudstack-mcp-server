@@ -132,8 +132,8 @@ export class CloudStackClient {
       response: 'json'
     };
 
-    // Generate signature for POST request using the auth module's encoding
-    const signature = this.auth.signRequest(requestParams);
+    // Generate raw signature for POST request (without URL encoding to avoid double-encoding)
+    const signature = this.auth.signRequestRaw(requestParams);
     
     // Get properly encoded parameters using the same logic as auth module
     const encodedParams = this.auth.getEncodedParameters(requestParams);
@@ -144,7 +144,7 @@ export class CloudStackClient {
       formData.append(key, value);
     });
     
-    // Add signature
+    // Add raw signature (URLSearchParams will handle encoding properly)
     formData.append('signature', signature);
 
     return await this.httpClient.post(this.environment.apiUrl, formData, {
