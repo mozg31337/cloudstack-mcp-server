@@ -64,6 +64,46 @@ describe('CloudStackAuth', () => {
     });
   });
 
+  describe('signRequestRaw', () => {
+    it('should generate consistent raw signatures for the same parameters', () => {
+      const params = {
+        command: 'listVirtualMachines',
+        account: 'testaccount',
+        domainid: '1'
+      };
+
+      const signature1 = auth.signRequestRaw(params);
+      const signature2 = auth.signRequestRaw(params);
+
+      expect(signature1).toBe(signature2);
+      expect(signature1).toBeTruthy();
+    });
+
+    it('should return raw base64 signature without URL encoding', () => {
+      const params = { command: 'listVirtualMachines' };
+
+      const rawSignature = auth.signRequestRaw(params);
+      const encodedSignature = auth.signRequest(params);
+
+      // Raw signature should not contain URL-encoded characters
+      expect(rawSignature).not.toContain('%');
+      // Encoded signature should contain URL-encoded characters (for base64 '+' and '/' chars)
+      expect(encodedSignature).toMatch(/%[0-9A-F]{2}/);
+      // They should be different
+      expect(rawSignature).not.toBe(encodedSignature);
+    });
+
+    it('should generate different raw signatures for different parameters', () => {
+      const params1 = { command: 'listVirtualMachines' };
+      const params2 = { command: 'listNetworks' };
+
+      const signature1 = auth.signRequestRaw(params1);
+      const signature2 = auth.signRequestRaw(params2);
+
+      expect(signature1).not.toBe(signature2);
+    });
+  });
+
   describe('buildAuthenticatedUrl', () => {
     it('should build complete authenticated URL', () => {
       const baseUrl = 'https://cloudstack.example.com/client/api';
