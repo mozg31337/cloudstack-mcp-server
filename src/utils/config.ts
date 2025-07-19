@@ -8,42 +8,25 @@ config();
 
 export class ConfigManager {
   private config: CloudStackConfig;
-  private configPath: string;
   private secretManager: SecretManager;
 
-  constructor(configPath?: string) {
-    this.configPath = configPath || process.env.CLOUDSTACK_CONFIG || 'config/cloudstack.json';
+  constructor() {
     this.secretManager = new SecretManager();
     this.config = this.loadConfig();
   }
 
   private loadConfig(): CloudStackConfig {
     try {
-      let config: CloudStackConfig;
-      
-      // First try to load from environment variables if we have the required ones
-      if (this.hasRequiredEnvironmentVariables()) {
-        config = this.createConfigFromEnvironment();
-      } else {
-        // Fallback to file-based configuration
-        try {
-          config = this.secretManager.loadSecureConfig(this.configPath);
-        } catch (fileError) {
-          // If file doesn't exist or fails, create minimal config from env vars
-          config = this.createConfigFromEnvironment();
-        }
-      }
-      
-      // Merge with environment variables (environment variables take precedence)
-      this.mergeEnvironmentVariables(config);
+      // Always load configuration from environment variables only
+      const config = this.createConfigFromEnvironment();
       
       this.validateConfig(config);
       return config;
     } catch (error) {
       if (error instanceof Error) {
-        throw new Error(`Failed to load CloudStack configuration: ${error.message}`);
+        throw new Error(`Failed to load CloudStack configuration from environment variables: ${error.message}`);
       }
-      throw new Error(`Failed to load CloudStack configuration`);
+      throw new Error(`Failed to load CloudStack configuration from environment variables`);
     }
   }
 
@@ -87,9 +70,7 @@ export class ConfigManager {
       throw new Error(`Environment '${targetEnv}' not found`);
     }
 
-    // Apply environment-specific overrides
-    const envConfig = this.secretManager.getEnvironmentConfig();
-    return { ...environment, ...envConfig };
+    return environment;
   }
 
   public getDefaultEnvironment(): CloudStackEnvironment {
@@ -108,12 +89,6 @@ export class ConfigManager {
     this.config = this.loadConfig();
   }
 
-  /**
-   * Save configuration with encryption
-   */
-  public saveEncryptedConfig(password: string): void {
-    this.secretManager.saveEncryptedConfig(this.config, this.configPath, password);
-  }
 
   /**
    * Rotate credentials for an environment
@@ -142,14 +117,6 @@ export class ConfigManager {
     return this.secretManager.validateCredentials(environment);
   }
 
-  /**
-   * Check if we have required environment variables for configuration
-   */
-  private hasRequiredEnvironmentVariables(): boolean {
-    const hasDefault = process.env.CLOUDSTACK_PROD_API_KEY && process.env.CLOUDSTACK_PROD_SECRET_KEY && process.env.CLOUDSTACK_PROD_API_URL;
-    const hasDev = process.env.CLOUDSTACK_DEV_API_KEY && process.env.CLOUDSTACK_DEV_SECRET_KEY && process.env.CLOUDSTACK_DEV_API_URL;
-    return !!(hasDefault || hasDev);
-  }
 
   /**
    * Create configuration from environment variables
@@ -195,48 +162,4 @@ export class ConfigManager {
     };
   }
 
-  /**
-   * Merge environment variables into configuration
-   */
-  private mergeEnvironmentVariables(config: CloudStackConfig): void {
-    // Merge environment-specific variables for each environment
-    for (const [envName, environment] of Object.entries(config.environments)) {
-      const envConfig = this.secretManager.getEnvironmentSpecificConfig(envName);
-      Object.assign(environment, envConfig);
-    }
-    
-    // Also try legacy environment variables
-    const currentEnv = config.defaultEnvironment;
-    if (config.environments[currentEnv]) {
-      const legacyEnvConfig = this.secretManager.getEnvironmentConfig();
-      Object.assign(config.environments[currentEnv], legacyEnvConfig);
-    }
-
-    // Support default environment override
-    if (process.env.CLOUDSTACK_DEFAULT_ENVIRONMENT) {
-      config.defaultEnvironment = process.env.CLOUDSTACK_DEFAULT_ENVIRONMENT;
-    }
-
-    // Support logging configuration
-    if (process.env.CLOUDSTACK_LOG_LEVEL) {
-      config.logging = config.logging || {};
-      config.logging.level = process.env.CLOUDSTACK_LOG_LEVEL;
-    }
-
-    if (process.env.CLOUDSTACK_LOG_FILE) {
-      config.logging = config.logging || {};
-      config.logging.file = process.env.CLOUDSTACK_LOG_FILE;
-    }
-
-    // Legacy support
-    if (process.env.LOG_LEVEL) {
-      config.logging = config.logging || {};
-      config.logging.level = process.env.LOG_LEVEL;
-    }
-
-    if (process.env.LOG_FILE) {
-      config.logging = config.logging || {};
-      config.logging.file = process.env.LOG_FILE;
-    }
-  }
 }
