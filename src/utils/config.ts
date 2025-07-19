@@ -1,10 +1,17 @@
 import { readFileSync } from 'fs';
 import { config } from 'dotenv';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { CloudStackConfig, CloudStackEnvironment } from '../cloudstack/types.js';
 import { SecretManager } from '../security/SecretManager.js';
 
-// Load environment variables from .env file
-config();
+// Get the project root directory (two levels up from this file)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const projectRoot = join(__dirname, '..', '..');
+
+// Load environment variables from .env file with explicit path
+config({ path: join(projectRoot, '.env') });
 
 export class ConfigManager {
   private config: CloudStackConfig;
