@@ -31,7 +31,7 @@ class CloudStackMCPServer {
     this.server = new Server(
       {
         name: 'cloudstack-mcp-server',
-        version: '3.0.3',
+        version: '3.0.4',
       },
       {
         capabilities: {
@@ -9179,6 +9179,13 @@ class CloudStackMCPServer {
           case 'detach_iso':
             return await this.handleDetachIso(args);
           
+          // OS Type Management Handlers
+          case 'list_os_types':
+            return await this.handleListOsTypes(args);
+          
+          case 'list_os_categories':
+            return await this.handleListOsCategories(args);
+          
           // VPC Management Handlers
           case 'create_vpc':
             return await this.handleCreateVpc(args);
@@ -10921,6 +10928,39 @@ class CloudStackMCPServer {
         {
           type: 'text',
           text: this.formatIsoResponse('ISO detached from VM', response)
+        }
+      ]
+    };
+  }
+
+  // OS Type Management Handlers
+  private async handleListOsTypes(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'id', 'oscategoryid', 'keyword', 'page', 'pagesize'
+    ]);
+    const response = await this.client.listOsTypes(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatOsTypesResponse('Available OS Types', response)
+        }
+      ]
+    };
+  }
+
+  private async handleListOsCategories(args: any): Promise<any> {
+    const params = this.buildParams(args, [
+      'id', 'keyword', 'page', 'pagesize'
+    ]);
+    const response = await this.client.listOsCategories(params);
+    
+    return {
+      content: [
+        {
+          type: 'text',
+          text: this.formatOsCategoriesResponse('Available OS Categories', response)
         }
       ]
     };
@@ -20085,6 +20125,42 @@ Available environments: ${this.configManager.listEnvironments().join(', ')}`
     for (const provider of providers) {
       result += `Name: ${provider.name}\n`;
       result += `  Description: ${provider.description || 'N/A'}\n\n`;
+    }
+
+    return result;
+  }
+
+  private formatOsTypesResponse(title: string, response: any): string {
+    const osTypes = response.ostype || [];
+    
+    if (osTypes.length === 0) {
+      return 'No OS types found.';
+    }
+
+    let result = `${title}:\n\n`;
+    
+    for (const osType of osTypes) {
+      result += `Name: ${osType.description}\n`;
+      result += `  ID: ${osType.id}\n`;
+      result += `  OS Category: ${osType.oscategoryname || osType.oscategoryid || 'N/A'}\n`;
+      result += `  Is User Defined: ${osType.isuserdefined ? 'Yes' : 'No'}\n\n`;
+    }
+
+    return result;
+  }
+
+  private formatOsCategoriesResponse(title: string, response: any): string {
+    const osCategories = response.oscategory || [];
+    
+    if (osCategories.length === 0) {
+      return 'No OS categories found.';
+    }
+
+    let result = `${title}:\n\n`;
+    
+    for (const category of osCategories) {
+      result += `Name: ${category.name}\n`;
+      result += `  ID: ${category.id}\n\n`;
     }
 
     return result;
