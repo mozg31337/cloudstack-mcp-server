@@ -1,6 +1,6 @@
 {
   "name": "cloudstack-mcp-server",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "CloudStack MCP Server for Claude Desktop integration",
   "main": "dist/server.js",
   "type": "module",
